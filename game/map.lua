@@ -3,33 +3,6 @@ chunks = require("game.chunks")
 map = {
     blockSize = 50,
     chunks = {
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.land, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.land, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
-        {chunks.noLand, chunks.noLand, chunks.noLand},
     }
 }
 
@@ -59,6 +32,8 @@ function map.isOnGround(x, y, width, height)
     return false
 end
 
-
+function map.generate(rows)
+    table.insert(map.chunks, rows)
+end
 
 return map
