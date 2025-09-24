@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.2"
+_G.ver = "0.0.3"
 
 function love.load()
     player = require("game.player")
