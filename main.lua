@@ -30,7 +30,7 @@ function love.draw()
                 end
             end
         end
-end
+    end
 
     love.graphics.setColor(1, 1, 1)
     adjPos = camera.calculateZoom(player.x, player.y, player.height, player.width)
