@@ -8,8 +8,8 @@ player = {
 
 function player.init()
     game = require("game.game")
-    player.x = game.width / 2
-    player.y = game.height / 2
+    player.x = 0
+    player.y = 0
 end
 
 return player

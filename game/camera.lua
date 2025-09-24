@@ -12,8 +12,8 @@ function camera.calculateZoom(x, y, height, width)
     --player.width / camera.zoom 
     --player.height / camera.zoom
 
-    posX = (x - camera.x) / camera.zoom  * (1 / camera.zoom)
-    posY = (y - camera.y) / camera.zoom * (1 / camera.zoom)
+    posX = (x - camera.x) / camera.zoom + (game.width / 2)  * (1 / camera.zoom)
+    posY = (y - camera.y) / camera.zoom + (game.height / 2) * (1 / camera.zoom)
     pWidth = width / camera.zoom
     pHeight = height / camera.zoom
 

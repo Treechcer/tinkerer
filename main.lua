@@ -9,7 +9,7 @@ function love.load()
     map = require("game.map")
 
     player.init()
-    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd})
+    map.generate({chunks.landd, chunks.landd, chunks.noLandd})
     map.generate({chunks.landd, chunks.noLandd, chunks.landd})
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd})
 end
