@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.3"
+_G.ver = "0.0.4"
 
 function love.load()
     player = require("game.player")
@@ -8,10 +8,14 @@ function love.load()
     game = require("game.game")
     map = require("game.map")
 
+    map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
+    map.generate({chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
+    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd})
+    map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
+    map.generate({chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
+    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
+    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     player.init()
-    map.generate({chunks.landd, chunks.landd, chunks.noLandd})
-    map.generate({chunks.landd, chunks.noLandd, chunks.landd})
-    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd})
 end
 
 function love.draw()
