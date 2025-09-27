@@ -1,7 +1,7 @@
 chunks = require("game.chunks")
 
 map = {
-    blockSize = 50,
+    blockSize = 48,
     chunks = {
     }
 }

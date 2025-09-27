@@ -1,21 +1,27 @@
 love = require("love")
 
-_G.ver = "0.0.4"
+_G.ver = "0.0.5"
 
 function love.load()
+    love.graphics.setDefaultFilter("nearest")
+
     player = require("game.player")
     camera = require("game.camera")
     game = require("game.game")
     map = require("game.map")
+    spawner = require("game.spawner")
+    spriteLoader = require("sprites.spriteLoader")
 
     map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
-    map.generate({chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
+    map.generate({chunks.noLandd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd})
     map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     map.generate({chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     player.init()
+
+    spawner.createObject(1, 1, "rock", {})
 end
 
 function love.draw()
@@ -36,6 +42,8 @@ function love.draw()
         end
     end
 
+    spawner.drawObjs(spriteLoader)
+
     love.graphics.setColor(1, 1, 1)
     adjPos = camera.calculateZoom(player.x, player.y, player.height, player.width)
     love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
@@ -44,8 +52,14 @@ end
 function love.update(dt)
     if love.keyboard.isDown("q") then
         camera.zoom = camera.zoom + (1 * dt)
+        --qqsif camera.zoom >= 2 then
+        --    camera.zoom = 2
+        --end
     elseif love.keyboard.isDown("e") then
         camera.zoom = camera.zoom - (1 * dt)
+        if camera.zoom <= 0.25 then
+            camera.zoom = 0.25
+        end
     end
 
     if love.keyboard.isDown("w") then
