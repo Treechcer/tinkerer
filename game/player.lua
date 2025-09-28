@@ -5,7 +5,11 @@ player = {
     y = 0,
     width = 32,
     height = 32,
-    speed = 100
+    speed = 100,
+    cursorPos = {
+        x = 0,
+        y = 0
+    }
 }
 
 function player.init()
@@ -29,7 +33,10 @@ function player.cursor(sprites)
 
     local adjPos = camera.calculateZoom(blockX, blockY, map.blockSize, map.blockSize)
 
-    local frame = math.floor(love.timer.getTime() * 7.5) % 4 + 1
+    local frame = math.floor(love.timer.getTime() * 7.5) % #sprites.cursor + 1
+
+    player.cursorPos.x = math.floor(blockX / map.blockSize)
+    player.cursorPos.y = math.floor(blockY / map.blockSize)
 
     love.graphics.setColor(1,1,1)
     love.graphics.draw(sprites.cursor[frame], adjPos.x, adjPos.y, 0, adjPos.width / sprites.cursor[frame]:getWidth(), adjPos.height / sprites.cursor[frame]:getHeight())

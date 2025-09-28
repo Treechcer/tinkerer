@@ -30,4 +30,14 @@ function spawner.drawObjs(sprites)
     end
 end
 
+function spawner.checkCollision(x, y)
+    for index, value in ipairs(spawner.objects) do
+        if (value.x == x) and (value.y == y) then
+            return true
+        end
+    end
+
+    return false
+end
+
 return spawner

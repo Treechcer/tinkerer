@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.9"
+_G.ver = "0.0.10"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -21,10 +21,13 @@ function love.load()
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     player.init()
 
-    spawner.createObject(1, 1, "rock", {})
+    spawner.createObject(30, 30, "rock", {})
 end
 
 function love.draw()
+    love.graphics.print(player.cursorPos.x, 50, 50)
+    love.graphics.print(player.cursorPos.y, 50, 75)
+
     love.graphics.setColor(0.5, 0.5, 0.5)
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
@@ -42,11 +45,11 @@ function love.draw()
         end
     end
 
-    spawner.drawObjs(spriteLoader)
-
     love.graphics.setColor(1, 1, 1)
     adjPos = camera.calculateZoom(player.x, player.y, player.height, player.width)
     love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
+
+    spawner.drawObjs(spriteLoader)
 
     player.cursor(spriteLoader)
 end
@@ -86,5 +89,9 @@ function love.update(dt)
             player.x = player.x + (player.speed * dt)
             camera.x = camera.x + (player.speed * dt)
         end
+    end
+
+    if spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) then
+        love.event.quit() --tempporary thing it does lol
     end
 end
