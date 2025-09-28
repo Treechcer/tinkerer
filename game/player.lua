@@ -36,6 +36,7 @@ player = {
     animation = {
         time = 0,
         timeToChangeCoe = 0,
+        animLength = 0,
         coeficient = 1,
         play = false
     }
@@ -93,13 +94,19 @@ function player.itemAnimation(dt)
     -- not working dong later
 
     player.animation.time = player.animation.time + dt
-    player.inventory.handRad = player.inventory.handRad + 0.5 * dt * player.animation.coeficient
-    if player.animation.timeToChangeCoe >= player.animation.time then
+    player.inventory.handRad = player.inventory.handRad + 2 * dt * player.animation.coeficient
+    if player.animation.timeToChangeCoe <= player.animation.time then
         player.animation.coeficient = -1
     end
 
-    if player.animation.time >= player.animation.timeToChangeCoe * 2 then
+    -- -0.5 so it looks smoother because it doens't go 50 / 50 but like 55 / 45, with this it goes closer to 50 / 50 so it doesn't jump much
+    if player.animation.time - 0.05 >= player.animation.timeToChangeCoe * 2 then
+        player.animation.time = 0
+        player.animation.timeToChangeCoe = 0
+        player.animation.animLength = 0
+        player.animation.coeficient = 1
         player.animation.play = false
+        player.inventory.handRad = 0
     end
 end
 

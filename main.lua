@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.101"
+_G.ver = "0.0.12"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -92,9 +92,21 @@ function love.update(dt)
         end
     end
 
-    if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) then
+    if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
         spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, player.mine.damage)
         player.mine.lastMined = 0
+
+        player.animation.time = 0
+        player.animation.timeToChangeCoe = player.mine.cooldown / 2
+        player.animation.animLength = player.mine.cooldown
+        player.animation.play = true
+    elseif love.mouse.isDown(1) and not player.animation.play then
+        player.mine.lastMined = 0
+
+        player.animation.time = 0
+        player.animation.timeToChangeCoe = player.mine.cooldown / 2
+        player.animation.animLength = player.mine.cooldown
+        player.animation.play = true
     end
 
     if player.animation.play then
