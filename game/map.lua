@@ -43,4 +43,25 @@ function map.generate(rows)
     table.insert(map.chunks, rows)
 end
 
+function map.getBlockPos(x, y)
+    local blockX = math.floor(x / map.blockSize) * map.blockSize
+    local blockY = math.floor(y / map.blockSize) * map.blockSize
+
+    return blockX, blockY
+end
+
+function map.getWorldPos(x, y)
+    local worldX = (x - game.width / 2) * camera.zoom + camera.x - player.width / 2
+    local worldY = (y - game.height / 2) * camera.zoom + camera.y - player.height / 2
+
+    return worldX, worldY
+end
+
+function map.screenPosToBlock(x, y)
+    local worldX, worldY = map.getWorldPos(x, y)
+    local blockX, blockY = map.getBlockPos(worldX, worldY)
+
+    return blockX, blockY
+end
+
 return map
