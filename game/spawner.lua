@@ -40,4 +40,19 @@ function spawner.checkCollision(x, y)
     return false
 end
 
+---@param x integer
+---@param y integer
+---@param damage integer?
+function spawner.damgeObejct(x, y, damage)
+    damage = damage or 1
+    for index, value in ipairs(spawner.objects) do
+        if (value.x == x) and (value.y == y) then
+            value.metadata.hp = value.metadata.hp - damage
+            if value.metadata.hp <= 0 then
+                table.remove(spawner.objects, index)
+            end
+        end
+    end
+end
+
 return spawner

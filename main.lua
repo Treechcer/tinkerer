@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.10"
+_G.ver = "0.0.101"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -21,7 +21,7 @@ function love.load()
     map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
     player.init()
 
-    spawner.createObject(30, 30, "rock", {})
+    spawner.createObject(30, 30, "rock", {hp = 5})
 end
 
 function love.draw()
@@ -48,6 +48,7 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     adjPos = camera.calculateZoom(player.x, player.y, player.height, player.width)
     love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
+    player.drawItem(spriteLoader)
 
     spawner.drawObjs(spriteLoader)
 
@@ -62,8 +63,8 @@ function love.update(dt)
         end
     elseif love.keyboard.isDown("e") then
         camera.zoom = camera.zoom - (1 * dt)
-        if camera.zoom <= 0.25 then
-            camera.zoom = 0.25
+        if camera.zoom <= 0.5 then
+            camera.zoom = 0.5
         end
     end
 
@@ -91,7 +92,13 @@ function love.update(dt)
         end
     end
 
-    if spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) then
-        love.event.quit() --tempporary thing it does lol
+    if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) then
+        spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, player.mine.damage)
+        player.mine.lastMined = 0
     end
+
+    if player.animation.play then
+        player.itemAnimation(dt)
+    end
+    player.cooldown(dt)
 end
