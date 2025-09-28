@@ -1,5 +1,6 @@
 map = require("game.map")
 camera = require("game.camera")
+spriteLoader = require("sprites.spriteLoader")
 
 spawner = {
     objects = {}-- tables of tables, every table will be like : {x, y, sprite, metadata, h, w} -> metadata is additional data, it can be blank ('nil') or have something in, 
@@ -15,8 +16,9 @@ spawner = {
 ---@param h integer?
 ---@param w integer?
 function spawner.createObject(x, y, sprite, metadata, h, w)
-    h = h or 1
-    w = w or 1
+    spriteS = spriteLoader[sprite]
+    h = h or spriteS:getHeight() / 16
+    w = w or spriteS:getWidth() / 16
     table.insert(spawner.objects, {x = x, y = y, sprite = sprite, metadata = metadata, h = h, w = w})
 end
 
