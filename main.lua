@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.8"
+_G.ver = "0.0.9"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")

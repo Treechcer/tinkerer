@@ -29,7 +29,7 @@ function player.cursor(sprites)
 
     local adjPos = camera.calculateZoom(blockX, blockY, map.blockSize, map.blockSize)
 
-    local frame = math.floor(love.timer.getTime() * 7.5) % 2 + 1
+    local frame = math.floor(love.timer.getTime() * 7.5) % 4 + 1
 
     love.graphics.setColor(1,1,1)
     love.graphics.draw(sprites.cursor[frame], adjPos.x, adjPos.y, 0, adjPos.width / sprites.cursor[frame]:getWidth(), adjPos.height / sprites.cursor[frame]:getHeight())
