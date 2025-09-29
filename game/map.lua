@@ -57,6 +57,27 @@ function map.getWorldPos(x, y)
     return worldX, worldY
 end
 
+function map.init()
+
+    local rows = { -- "default" island
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.landd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+    }
+
+    map.generate(rows[1])
+    map.generate(rows[2])
+    map.generate(rows[3])
+    map.generate(rows[4])
+    map.generate(rows[5])
+    map.generate(rows[6])
+    map.generate(rows[7])
+end
+
 function map.screenPosToBlock(x, y)
     local worldX, worldY = map.getWorldPos(x, y)
     local blockX, blockY = map.getBlockPos(worldX, worldY)

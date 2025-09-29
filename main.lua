@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.12"
+_G.ver = "0.0.13"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -12,16 +12,10 @@ function love.load()
     spawner = require("game.spawner")
     spriteLoader = require("sprites.spriteLoader")
 
-    map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
-    map.generate({chunks.noLandd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
-    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd})
-    map.generate({chunks.landd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
-    map.generate({chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.landd, chunks.noLandd, chunks.landd})
-    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
-    map.generate({chunks.noLandd, chunks.landd, chunks.noLandd, chunks.landd, chunks.landd, chunks.noLandd, chunks.noLandd})
+    map.init()
     player.init()
 
-    spawner.createObject(30, 30, "rock", {hp = 5})
+    --spawner.createObject(30, 30, "rock", {hp = 5})
 end
 
 function love.draw()

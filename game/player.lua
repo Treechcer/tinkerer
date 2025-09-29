@@ -5,7 +5,7 @@ player = {
     y = 0,
     width = 32,
     height = 64,
-    speed = 1000,
+    speed = 400,
     cursorPos = {
         x = 0,
         y = 0
@@ -16,7 +16,7 @@ player = {
     },
 
     mine = {
-        cooldown = 0.5,
+        cooldown = 0.40,
         lastMined = 1,
         damage = 1
     },
@@ -94,7 +94,7 @@ function player.itemAnimation(dt)
     -- not working dong later
 
     player.animation.time = player.animation.time + dt
-    player.inventory.handRad = player.inventory.handRad + 2 * dt * player.animation.coeficient
+    player.inventory.handRad = player.inventory.handRad + 5 * dt * player.animation.coeficient
     if player.animation.timeToChangeCoe <= player.animation.time then
         player.animation.coeficient = -1
     end
