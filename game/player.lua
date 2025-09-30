@@ -1,4 +1,6 @@
 map = require("game.map")
+game = require("game.game")
+uiData = require("UI.uiData")
 
 player = {
     x = 0,
@@ -24,7 +26,16 @@ player = {
     inventory = {
         currentEquip = "hammer",
         items = {
-            "hammer"
+            "hammer",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
         },
         hotbar = {
             
@@ -107,6 +118,21 @@ function player.itemAnimation(dt)
         player.animation.coeficient = 1
         player.animation.play = false
         player.inventory.handRad = 0
+    end
+end
+
+function player.drawInventory(sprites)
+    local count = #player.inventory.items
+    local slot = uiData.playerInventory.size
+    local space = uiData.playerInventory.space
+
+    local totalWidth = count * slot + (count - 1) * space
+
+    local startX = (game.width - totalWidth) / 2
+
+
+    for i, item in ipairs(player.inventory.items) do
+        love.graphics.rectangle("line", startX + (i - 1) * (slot + space), game.height - game.height / 10, slot, slot)
     end
 end
 

@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.13"
+_G.ver = "0.0.14"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -47,6 +47,7 @@ function love.draw()
     spawner.drawObjs(spriteLoader)
 
     player.cursor(spriteLoader)
+    player.drawInventory(spriteLoader)
 end
 
 function love.update(dt)
