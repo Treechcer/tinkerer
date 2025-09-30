@@ -133,6 +133,9 @@ function player.drawInventory(sprites)
 
     for i, item in ipairs(player.inventory.items) do
         love.graphics.rectangle("line", startX + (i - 1) * (slot + space), game.height - game.height / 10, slot, slot)
+        if sprites[item] ~= nil then
+            love.graphics.draw(sprites[item], startX + (i - 1) * (slot + space), game.height - game.height / 10, 0, (slot / sprites[item]:getWidth()), (slot / sprites[item]:getHeight()))
+        end
     end
 end
 
