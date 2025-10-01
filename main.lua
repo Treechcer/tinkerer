@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.15"
+_G.ver = "0.0.16"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -22,17 +22,20 @@ function love.draw()
     love.graphics.print(player.cursorPos.x, 50, 50)
     love.graphics.print(player.cursorPos.y, 50, 75)
 
-    love.graphics.setColor(0.5, 0.5, 0.5)
+    love.graphics.setColor(1, 1, 1)
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
-            for by = 1, #chunk do
-                for bx = 1, #chunk[by] do
-                    local tile = chunk[by][bx]
+            for by = 1, #chunk.land do
+                for bx = 1, #chunk.land[by] do
+                    local tile = chunk.land[by][bx]
                     if tile == 1 then
-                        local worldX = (chunkX-1) * #chunk[by] * map.blockSize + (bx-1) * map.blockSize
-                        local worldY = (chunkY-1) * #chunk * map.blockSize + (by-1) * map.blockSize
+                        local worldX = (chunkX-1) * #chunk.land[by] * map.blockSize + (bx-1) * map.blockSize
+                        local worldY = (chunkY-1) * #chunk.land * map.blockSize + (by-1) * map.blockSize
                         local adjPos = camera.calculateZoom(worldX, worldY, map.blockSize, map.blockSize)
-                        love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
+
+                        love.graphics.draw(spriteLoader[chunk.biome], adjPos.x, adjPos.y, 0, adjPos.width / spriteLoader[chunk.biome]:getWidth(), adjPos.width / spriteLoader[chunk.biome]:getHeight())
+
+                        --love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
                     end
                 end
             end

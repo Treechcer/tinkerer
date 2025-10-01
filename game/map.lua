@@ -3,7 +3,7 @@ chunks = require("game.chunks")
 map = {
     blockSize = 48,
     chunks = {
-    }
+    },
 }
 
 function map.isOnGround(x, y, width, height)
@@ -14,12 +14,12 @@ function map.isOnGround(x, y, width, height)
 
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
-            for by = 1, #chunk do
-                for bx = 1, #chunk[by] do
-                    local tile = chunk[by][bx]
+            for by = 1, #chunk.land do
+                for bx = 1, #chunk.land[by] do
+                    local tile = chunk.land[by][bx]
                     if tile == 1 then
-                        local worldX = (chunkX-1) * #chunk[by] * map.blockSize + (bx-1) * map.blockSize
-                        local worldY = (chunkY-1) * #chunk     * map.blockSize + (by-1) * map.blockSize
+                        local worldX = (chunkX-1) * #chunk.land[by] * map.blockSize + (bx-1) * map.blockSize
+                        local worldY = (chunkY-1) * #chunk.land * map.blockSize + (by-1) * map.blockSize
 
                         local blockLeft   = worldX
                         local blockRight  = worldX + map.blockSize
@@ -60,13 +60,13 @@ end
 function map.init()
 
     local rows = { -- "default" island
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.landd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
-        {chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd, chunks.noLandd},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.landd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
     }
 
     map.generate(rows[1])
