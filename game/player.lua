@@ -122,6 +122,7 @@ function player.itemAnimation(dt)
 end
 
 function player.drawInventory(sprites)
+    love.graphics.setLineWidth(uiData.playerInventory.lineSize)
     local count = #player.inventory.items
     local slot = uiData.playerInventory.size
     local space = uiData.playerInventory.space

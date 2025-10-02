@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.16"
+_G.ver = "0.0.17"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -15,25 +15,85 @@ function love.load()
     map.init()
     player.init()
 
-    --spawner.createObject(30, 30, "rock", {hp = 5})
+    spawner.createObject(30, 30, "rock", {hp = 5})
 end
 
 function love.draw()
+    love.graphics.setBackgroundColor(0,0,1)
     love.graphics.print(player.cursorPos.x, 50, 50)
     love.graphics.print(player.cursorPos.y, 50, 75)
 
-    love.graphics.setColor(1, 1, 1)
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
             for by = 1, #chunk.land do
                 for bx = 1, #chunk.land[by] do
                     local tile = chunk.land[by][bx]
                     if tile == 1 then
+                        love.graphics.setColor(1, 1, 1)
                         local worldX = (chunkX-1) * #chunk.land[by] * map.blockSize + (bx-1) * map.blockSize
                         local worldY = (chunkY-1) * #chunk.land * map.blockSize + (by-1) * map.blockSize
                         local adjPos = camera.calculateZoom(worldX, worldY, map.blockSize, map.blockSize)
 
                         love.graphics.draw(spriteLoader[chunk.biome], adjPos.x, adjPos.y, 0, adjPos.width / spriteLoader[chunk.biome]:getWidth(), adjPos.width / spriteLoader[chunk.biome]:getHeight())
+                        love.graphics.setColor(0, 0, 0)
+
+                        --Outline in Y
+
+                        status, err = pcall(function ()
+                            if chunk.land[by][bx + 1] ~= 1 then
+                                tempSize = camera.calculateZoom(1,1,1,2)
+                                love.graphics.setLineWidth(tempSize.width)
+                                love.graphics.line(adjPos.x + adjPos.width, adjPos.y, adjPos.x + adjPos.width, adjPos.y + adjPos.height)
+                            end
+                        end)
+
+                        status, err = pcall(function ()
+                            if chunk.land[by][bx - 1] ~= 1 then
+                                tempSize = camera.calculateZoom(1,1,1,2)
+                                love.graphics.setLineWidth(tempSize.width)
+                                love.graphics.line(adjPos.x, adjPos.y, adjPos.x, adjPos.y + adjPos.height)
+                            end
+                        end)
+
+                        --Outline in X
+                    
+                        status, err = pcall(function()
+                            local belowTile
+                            if by < #chunk.land then
+                                belowTile = chunk.land[by + 1][bx]
+                            else
+                                belowChunk = map.chunks[chunkY + 1] and map.chunks[chunkY + 1][chunkX]
+                                if belowChunk then
+                                    belowTile = belowChunk.land[1][bx]
+                                else
+                                    belowTile = 0
+                                end
+                            end
+                            if belowTile ~= 1 then
+                                tempSize = camera.calculateZoom(1,1,1,2)
+                                love.graphics.setLineWidth(tempSize.width)
+                                love.graphics.line(adjPos.x, adjPos.y + adjPos.height, adjPos.x + adjPos.height, adjPos.y + adjPos.height)
+                            end
+                        end)
+
+                        status, err = pcall(function()
+                            local aboveTile
+                            if by > 1 then
+                                aboveTile = chunk.land[by - 1][bx]
+                            else
+                                local aboveChunk = map.chunks[chunkY - 1] and map.chunks[chunkY - 1][chunkX]
+                                if aboveChunk then
+                                    aboveTile = aboveChunk.land[#aboveChunk.land][bx]
+                                else
+                                    aboveTile = 0
+                                end
+                            end
+                            if aboveTile ~= 1 then
+                                local tempSize = camera.calculateZoom(1,1,1,2)
+                                love.graphics.setLineWidth(tempSize.width)
+                                love.graphics.line(adjPos.x, adjPos.y, adjPos.x + adjPos.width, adjPos.y)
+                            end
+                        end)
 
                         --love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
                     end
