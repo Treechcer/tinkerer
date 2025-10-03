@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.19"
+_G.ver = "0.0.20"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -11,6 +11,7 @@ function love.load()
     map = require("game.map")
     spawner = require("game.spawner")
     spriteLoader = require("sprites.spriteLoader")
+    actionDelay = require("game.actionDelay")
 
     map.init()
     player.init()
@@ -171,4 +172,5 @@ function love.update(dt)
         player.itemAnimation(dt)
     end
     player.cooldown(dt)
+    actionDelay.delayCounter(dt)
 end

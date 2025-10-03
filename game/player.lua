@@ -11,7 +11,9 @@ player = {
     cursorPos = {
         x = 0,
         y = 0,
-        screenSite = -1
+        screenSite = -1,
+        moveTo = -1,
+        isBeingMoved = false
     },
 
     attack = {
@@ -70,11 +72,27 @@ function player.cursor(sprites)
     local game = require("game.game")
 
     local x, y = love.mouse.getPosition()
+    local temp = player.cursorPos.screenSite
+    if x >= game.width / 2 and player.cursorPos.moveTo ~= 1 then 
+        player.cursorPos.moveTo = 1
+        actionDelay.stopPrematurely("playerItemMove")
+        player.cursorPos.isBeingMoved = false
+    elseif x <= game.width / 2 and player.cursorPos.moveTo ~= -1 then
+        player.cursorPos.moveTo = -1
+        actionDelay.stopPrematurely("playerItemMove")
+        player.cursorPos.isBeingMoved = false
+    end
 
-    if x >= game.width / 2 then
-        player.cursorPos.screenSite = 1
-    else
-        player.cursorPos.screenSite = -1
+    if player.cursorPos.moveTo ~= player.cursorPos.screenSite and not player.cursorPos.isBeingMoved then
+        player.cursorPos.lastPlace = player.cursorPos.screenSite
+        actionDelay.addDelay("playerItemMove", "incremental", function (dt, jump, ending)
+            player.cursorPos.screenSite = player.cursorPos.screenSite + (4 * dt * player.cursorPos.moveTo)
+            if ending or (player.cursorPos.screenSite >= 1 or player.cursorPos.screenSite <= -1 )then
+                player.cursorPos.isBeingMoved = false
+                player.cursorPos.screenSite = player.cursorPos.moveTo
+            end
+        end, 0.5, 0)
+        player.cursorPos.isBeingMoved = true
     end
 
     local blockX, blockY = map.screenPosToBlock(x, y)
@@ -117,7 +135,7 @@ function player.itemAnimation(dt)
         player.animation.coeficient = -1
     end
 
-    -- -0.5 so it looks smoother because it doens't go 50 / 50 but like 55 / 45, with this it goes closer to 50 / 50 so it doesn't jump much
+    -- -0.05 so it looks smoother because it doens't go 50 / 50 but like 55 / 45, with this it goes closer to 50 / 50 so it doesn't jump much
     if player.animation.time - 0.05 >= player.animation.timeToChangeCoe * 2 then
         player.animation.time = 0
         player.animation.timeToChangeCoe = 0
