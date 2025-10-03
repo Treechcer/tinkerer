@@ -10,7 +10,8 @@ player = {
     speed = 400,
     cursorPos = {
         x = 0,
-        y = 0
+        y = 0,
+        screenSite = -1
     },
 
     attack = {
@@ -70,6 +71,12 @@ function player.cursor(sprites)
 
     local x, y = love.mouse.getPosition()
 
+    if x >= game.width / 2 then
+        player.cursorPos.screenSite = 1
+    else
+        player.cursorPos.screenSite = -1
+    end
+
     local blockX, blockY = map.screenPosToBlock(x, y)
 
     local adjPos = camera.calculateZoom(blockX, blockY, map.blockSize, map.blockSize)
@@ -90,10 +97,10 @@ end
 function player.drawItem(sprites)
     local map = require("game.map")
     -- magic numbers here are just to move it so it looks better, they're random ngl
-    adjPos = camera.calculateZoom(player.x + (4 * player.width / 3), player.y + (player.height / 3), map.blockSize - 10, map.blockSize - 10)
+    adjPos = camera.calculateZoom((player.x + player.width / 2) + (player.width) * player.cursorPos.screenSite, player.y + (player.height / 3), map.blockSize - 10, map.blockSize - 10)
 
     love.graphics.draw(sprites[player.inventory.currentEquip], adjPos.x, adjPos.y, player.inventory.handRad,
-        adjPos.height / sprites[player.inventory.currentEquip]:getWidth(),
+        adjPos.height / sprites[player.inventory.currentEquip]:getWidth() * player.cursorPos.screenSite,
         adjPos.width / sprites[player.inventory.currentEquip]:getHeight(),
         sprites[player.inventory.currentEquip]:getWidth() / 2,
         sprites[player.inventory.currentEquip]:getHeight() / 2
@@ -102,10 +109,10 @@ end
 
 function player.itemAnimation(dt)
 
-    -- not working dong later
+    -- not working will do later
 
     player.animation.time = player.animation.time + dt
-    player.inventory.handRad = player.inventory.handRad + 5 * dt * player.animation.coeficient
+    player.inventory.handRad = player.inventory.handRad + 5 * dt * player.animation.coeficient * player.cursorPos.screenSite
     if player.animation.timeToChangeCoe <= player.animation.time then
         player.animation.coeficient = -1
     end

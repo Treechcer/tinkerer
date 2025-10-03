@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.18"
+_G.ver = "0.0.19"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -127,24 +127,24 @@ function love.update(dt)
     end
 
     if love.keyboard.isDown("w") then
-        if map.isOnGround(player.x, player.y - (player.speed * dt), (player.width / 2), (player.height / 2)) then
+        if map.isOnGround(player.x, player.y - (player.speed * dt), (player.width / 5), (player.height / 5)) then
             player.y = player.y - (player.speed * dt)
             camera.y = camera.y - (player.speed * dt)
         end
     elseif love.keyboard.isDown("s") then
-        if map.isOnGround(player.x, player.y + (player.speed * dt) + (player.height / 2), (player.width / 2), (player.height / 2)) then
+        if map.isOnGround(player.x, player.y + (player.speed * dt) + (4 * player.height / 5), (player.width / 5), (player.height / 5)) then
             player.y = player.y + (player.speed * dt)
             camera.y = camera.y + (player.speed * dt)
         end
     end
 
     if love.keyboard.isDown("a") then
-        if map.isOnGround(player.x - (player.speed * dt), player.y, (player.width / 2), (player.height / 2)) then
+        if map.isOnGround(player.x - (player.speed * dt), player.y, (player.width / 5), (player.height / 5)) then
             player.x = player.x - (player.speed * dt)
             camera.x = camera.x - (player.speed * dt)
         end
     elseif love.keyboard.isDown("d") then
-        if map.isOnGround(player.x + (player.speed * dt) + (player.width / 2), player.y, (player.width / 2), (player.height / 2)) then
+        if map.isOnGround(player.x + (player.speed * dt) + (4 * player.width / 5), player.y, (player.width / 2), (player.height / 2)) then
             player.x = player.x + (player.speed * dt)
             camera.x = camera.x + (player.speed * dt)
         end
