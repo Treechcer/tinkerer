@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.21"
+_G.ver = "0.0.22"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -12,6 +12,7 @@ function love.load()
     spawner = require("game.spawner")
     spriteLoader = require("sprites.spriteLoader")
     actionDelay = require("game.actionDelay")
+    mathLib = require("libraries.mathLib")
 
     map.init()
     player.init()
@@ -127,29 +128,47 @@ function love.update(dt)
         end
     end
 
+    mov = {x = 0, y = 0}
+
     if love.keyboard.isDown("w") then
         if map.isGround(player.x + (2 * player.width / 3), player.y - (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y - (player.speed * dt) + (player.height / 3)) then
-            player.y = player.y - (player.speed * dt)
-            camera.y = camera.y - (player.speed * dt)
+            mov.y = - (player.speed * dt)
+            --player.y = player.y - (player.speed * dt)
+            --camera.y = camera.y - (player.speed * dt)
         end
     elseif love.keyboard.isDown("s") then
         if map.isGround(player.x + (2 * player.width / 3), player.y + (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y + (player.speed * dt) + (player.height / 3)) then
-            player.y = player.y + (player.speed * dt)
-            camera.y = camera.y + (player.speed * dt)
+            mov.y = (player.speed * dt)
+            --player.y = player.y + (player.speed * dt)
+            --camera.y = camera.y + (player.speed * dt)
         end
     end
 
     if love.keyboard.isDown("a") then
         if map.isGround(player.x - (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x - (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
-            player.x = player.x - (player.speed * dt)
-            camera.x = camera.x - (player.speed * dt)
+            mov.x = - (player.speed * dt)
+            --player.x = player.x - (player.speed * dt)
+            --camera.x = camera.x - (player.speed * dt)
         end
     elseif love.keyboard.isDown("d") then
         if map.isGround(player.x + (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x + (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
-            player.x = player.x + (player.speed * dt)
-            camera.x = camera.x + (player.speed * dt)
+            mov.x = (player.speed * dt)
+            --player.x = player.x + (player.speed * dt)
+            --camera.x = camera.x + (player.speed * dt)
         end
     end
+
+    if mov.x ~= 0 and mov.y ~= 0 then
+        local nx, ny = mathLib.normaliseVec(mov.x, mov.y)
+        mov.x = nx * player.speed * dt
+        mov.y = ny * player.speed * dt
+    end
+
+    player.x = player.x + mov.x
+    player.y = player.y + mov.y
+    camera.x = camera.x + mov.x
+    camera.y = camera.y + mov.y
+
 
     if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
         spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, player.mine.damage)
