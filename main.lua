@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.20"
+_G.ver = "0.0.21"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -42,7 +42,7 @@ function love.draw()
 
                         status, err = pcall(function ()
                             if chunk.land[by][bx + 1] ~= 1 then
-                                tempSize = camera.calculateZoom(1,1,1,2)
+                                tempSize = camera.calculateZoom(1,1,1,2.5)
                                 love.graphics.setLineWidth(tempSize.width)
                                 love.graphics.line(adjPos.x + adjPos.width, adjPos.y, adjPos.x + adjPos.width, adjPos.y + adjPos.height)
                             end
@@ -128,24 +128,24 @@ function love.update(dt)
     end
 
     if love.keyboard.isDown("w") then
-        if map.isOnGround(player.x, player.y - (player.speed * dt), (player.width / 5), (player.height / 5)) then
+        if map.isGround(player.x + (2 * player.width / 3), player.y - (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y - (player.speed * dt) + (player.height / 3)) then
             player.y = player.y - (player.speed * dt)
             camera.y = camera.y - (player.speed * dt)
         end
     elseif love.keyboard.isDown("s") then
-        if map.isOnGround(player.x, player.y + (player.speed * dt) + (4 * player.height / 5), (player.width / 5), (player.height / 5)) then
+        if map.isGround(player.x + (2 * player.width / 3), player.y + (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y + (player.speed * dt) + (player.height / 3)) then
             player.y = player.y + (player.speed * dt)
             camera.y = camera.y + (player.speed * dt)
         end
     end
 
     if love.keyboard.isDown("a") then
-        if map.isOnGround(player.x - (player.speed * dt), player.y, (player.width / 5), (player.height / 5)) then
+        if map.isGround(player.x - (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x - (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
             player.x = player.x - (player.speed * dt)
             camera.x = camera.x - (player.speed * dt)
         end
     elseif love.keyboard.isDown("d") then
-        if map.isOnGround(player.x + (player.speed * dt) + (4 * player.width / 5), player.y, (player.width / 2), (player.height / 2)) then
+        if map.isGround(player.x + (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x + (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
             player.x = player.x + (player.speed * dt)
             camera.x = camera.x + (player.speed * dt)
         end

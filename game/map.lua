@@ -6,38 +6,47 @@ map = {
     },
 }
 
-function map.isOnGround(x, y, width, height)
-    local left = x
-    local right = x + width
-    local top = y
-    local bottom = y + height
+function printTable(t, indent, visited)
+    indent = indent or 0
+    visited = visited or {}
 
-    for chunkY, rowChunks in ipairs(map.chunks) do
-        for chunkX, chunk in ipairs(rowChunks) do
-            for by = 1, #chunk.land do
-                for bx = 1, #chunk.land[by] do
-                    local tile = chunk.land[by][bx]
-                    if tile == 1 then
-                        local worldX = (chunkX-1) * #chunk.land[by] * map.blockSize + (bx-1) * map.blockSize
-                        local worldY = (chunkY-1) * #chunk.land * map.blockSize + (by-1) * map.blockSize
+    if visited[t] then
+        print(string.rep(" ", indent) .. "*circular reference*")
+        return
+    end
+    visited[t] = true
 
-                        local blockLeft   = worldX
-                        local blockRight  = worldX + map.blockSize
-                        local blockTop    = worldY
-                        local blockBottom = worldY + map.blockSize
-
-                        if right > blockLeft and left < blockRight and bottom > blockTop and top < blockBottom then
-                            return true
-                        end
-                    end
-                end
-            end
-        end
+    if type(t) ~= "table" then
+        print(string.rep(" ", indent) .. tostring(t))
+        return
     end
 
-    return false
+    for k, v in pairs(t) do
+        local keyStr = tostring(k)
+        if type(v) == "table" then
+            print(string.rep(" ", indent) .. keyStr .. " = {")
+            printTable(v, indent + 2, visited)
+            print(string.rep(" ", indent) .. "}")
+        else
+            print(string.rep(" ", indent) .. keyStr .. " = " .. tostring(v))
+        end
+    end
 end
 
+function map.isGround(x, y)
+    local tileX = math.floor(x / map.blockSize) + 1
+    local tileY = math.floor(y / map.blockSize) + 1
+    local block = map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1]
+    [math.floor((tileX - 1) / #map.chunks[1][1].land) + 1]
+    .land[(tileY - 1) % #map.chunks[1][1].land + 1]
+    [(tileX - 1) % #map.chunks[1][1].land + 1]
+
+    if block == 0 then
+        return false
+    elseif block == 1 then
+        return true
+    end
+end
 
 function map.generate(rows)
     table.insert(map.chunks, rows)

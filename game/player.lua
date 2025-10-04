@@ -60,8 +60,8 @@ function player.init()
     local camera = require("game.camera")
     local map = require("game.map")
 
-    player.x = (map.blockSize * ((#map.chunks * 9) - 5)) / 2
-    player.y = (map.blockSize * ((#map.chunks * 9) - 5)) / 2
+    player.x = (map.blockSize * ((#map.chunks * 9) - 5)) / 2 + 15
+    player.y = (map.blockSize * ((#map.chunks * 9) - 5)) / 2 + 15
     camera.x = player.x + (player.width / 2)
     camera.y = player.y + (player.height / 2)
 end
@@ -86,12 +86,12 @@ function player.cursor(sprites)
     if player.cursorPos.moveTo ~= player.cursorPos.screenSite and not player.cursorPos.isBeingMoved then
         player.cursorPos.lastPlace = player.cursorPos.screenSite
         actionDelay.addDelay("playerItemMove", "incremental", function (dt, jump, ending)
-            player.cursorPos.screenSite = player.cursorPos.screenSite + (4 * dt * player.cursorPos.moveTo)
+            player.cursorPos.screenSite = player.cursorPos.screenSite + (8 * dt * player.cursorPos.moveTo)
             if ending or (player.cursorPos.screenSite >= 1 or player.cursorPos.screenSite <= -1 )then
                 player.cursorPos.isBeingMoved = false
                 player.cursorPos.screenSite = player.cursorPos.moveTo
             end
-        end, 0.5, 0)
+        end, 0.25, 0)
         player.cursorPos.isBeingMoved = true
     end
 
