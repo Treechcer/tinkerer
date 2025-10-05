@@ -27,6 +27,9 @@ player = {
     },
 
     inventory = {
+        itemSwitchCD = 0.25,
+        lastItemSqitch = 0.25,
+        inventoryIndex = 1,
         currentEquip = "hammer",
         items = {
             {name = "hammer", quantity = "non-quantifiable"},
@@ -110,6 +113,7 @@ end
 
 function player.cooldown(dt)
     player.mine.lastMined = player.mine.lastMined + dt
+    player.inventory.lastItemSqitch = player.inventory.lastItemSqitch + dt
 end
 
 function player.drawItem(sprites)
@@ -117,11 +121,35 @@ function player.drawItem(sprites)
     -- magic numbers here are just to move it so it looks better, they're random ngl
     adjPos = camera.calculateZoom((player.x + player.width / 2) + (player.width) * player.cursorPos.screenSite, player.y + (player.height / 3), map.blockSize - 10, map.blockSize - 10)
 
-    love.graphics.draw(sprites[player.inventory.currentEquip], adjPos.x, adjPos.y, player.inventory.handRad,
-        adjPos.height / sprites[player.inventory.currentEquip]:getWidth() * player.cursorPos.screenSite,
-        adjPos.width / sprites[player.inventory.currentEquip]:getHeight(),
-        sprites[player.inventory.currentEquip]:getWidth() / 2,
-        sprites[player.inventory.currentEquip]:getHeight() / 2
+    local item = player.inventory.currentEquip
+
+    if item == "" then
+        item = "rock"
+    end
+
+    --[[love.graphics.draw(sprites[item], adjPos.x, adjPos.y, player.inventory.handRad,
+        adjPos.height / sprites[item]:getWidth() * player.cursorPos.screenSite,
+        adjPos.width / sprites[item]:getHeight(),
+        sprites[item]:getWidth() / 2,
+        sprites[item]:getHeight() / 2
+    )]]
+
+    x, y = love.mouse.getPosition()
+
+    local switch
+
+    if player.cursorPos.screenSite == -1 then
+        switch = math.pi
+    else
+        switch = 0
+    end
+
+    love.graphics.draw(sprites[item], adjPos.x, adjPos.y,
+        math.atan2(y - adjPos.y, x - adjPos.x) + switch,
+        adjPos.height / sprites[item]:getWidth() * player.cursorPos.screenSite,
+        adjPos.width / sprites[item]:getHeight(),
+        sprites[item]:getWidth() / 2,
+        sprites[item]:getHeight() / 2
     )
 end
 

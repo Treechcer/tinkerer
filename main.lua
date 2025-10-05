@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.23"
+_G.ver = "0.0.24"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -192,4 +192,24 @@ function love.update(dt)
     end
     player.cooldown(dt)
     actionDelay.delayCounter(dt)
+end
+
+function love.wheelmoved(x, y)
+    if player.inventory.lastItemSqitch >= player.inventory.itemSwitchCD and y > 0 then
+        player.inventory.inventoryIndex = player.inventory.inventoryIndex + 1
+        if player.inventory.inventoryIndex >= #player.inventory.items then
+            player.inventory.inventoryIndex = #player.inventory.items
+        else
+            player.inventory.lastItemSqitch = 0
+        end
+        player.inventory.currentEquip = player.inventory.items[player.inventory.inventoryIndex].name
+    elseif player.inventory.lastItemSqitch >= player.inventory.itemSwitchCD and y < 0 then
+        player.inventory.inventoryIndex = player.inventory.inventoryIndex - 1
+        if player.inventory.inventoryIndex <= 1 then
+            player.inventory.inventoryIndex = 1
+        else
+            player.inventory.lastItemSqitch = 0
+        end
+        player.inventory.currentEquip = player.inventory.items[player.inventory.inventoryIndex].name
+    end
 end
