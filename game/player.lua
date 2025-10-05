@@ -29,16 +29,16 @@ player = {
     inventory = {
         currentEquip = "hammer",
         items = {
-            "hammer",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            {name = "hammer", quantity = "non-quantifiable"},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0},
+            {name = "", quantity = 0}
         },
         hotbar = {
             
@@ -158,10 +158,48 @@ function player.drawInventory(sprites)
 
 
     for i, item in ipairs(player.inventory.items) do
+        love.graphics.setColor(1,1,1)
         love.graphics.rectangle("line", startX + (i - 1) * (slot + space), game.height - game.height / 10, slot, slot)
-        if sprites[item] ~= nil then
-            love.graphics.draw(sprites[item], startX + (i - 1) * (slot + space), game.height - game.height / 10, 0, (slot / sprites[item]:getWidth()), (slot / sprites[item]:getHeight()))
+        if sprites[item.name] ~= nil then
+            love.graphics.draw(sprites[item.name], startX + (i - 1) * (slot + space), game.height - game.height / 10, 0, (slot / sprites[item.name]:getWidth()), (slot / sprites[item.name]:getHeight()))
+            if item.quantity ~= "non-quantifiable" then
+                love.graphics.setColor(0,0,0)
+                love.graphics.print(item.quantity, startX + (i - 1) * (slot + space), game.height - game.height / 10) 
+            end
         end
+    end
+end
+
+function player.addItemToInventory(item, quantity)
+    for key, value in pairs(player.inventory.items) do
+        if value.name == item then
+            if value.quantity + quantity > 128 then
+               value.quantity = 128
+               quantity = (value.quantity + quantity) % 128
+            else
+                value.quantity = value.quantity + quantity
+                return
+            end
+        end
+    end
+    local i = 1
+    for key, value in pairs(player.inventory.items) do
+        if value.name == "" and value.quantity == 0 then
+            player.inventory.items[i] = {name = item, quantity = quantity}
+            return
+        end
+        i = i + 1
+    end
+end
+
+function player.createNewInventoryItem(item, quantity)
+    local i = 1
+    for key, value in pairs(player.inventory.items) do
+        if value.name == "" and value.quantity == 0 then
+            player.inventory.items[i] = {name = item, quantity = quantity}
+            return
+        end
+        i = i + 1
     end
 end
 
