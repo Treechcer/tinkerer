@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.24"
+_G.ver = "0.0.25"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -17,7 +17,7 @@ function love.load()
     map.init()
     player.init()
 
-    spawner.createObject(30, 30, "rock", {hp = 5})
+    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}})
 end
 
 function love.draw()

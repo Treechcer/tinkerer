@@ -145,7 +145,7 @@ function player.drawItem(sprites)
     end
 
     love.graphics.draw(sprites[item], adjPos.x, adjPos.y,
-        math.atan2(y - adjPos.y, x - adjPos.x) + switch,
+        math.atan2(y - adjPos.y, x - adjPos.x) + switch + player.inventory.handRad,
         adjPos.height / sprites[item]:getWidth() * player.cursorPos.screenSite,
         adjPos.width / sprites[item]:getHeight(),
         sprites[item]:getWidth() / 2,
