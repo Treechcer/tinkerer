@@ -49,7 +49,7 @@ function spawner.damgeObejct(x, y, damage)
         if (value.x == x) and (value.y == y) then
             value.metadata.hp = value.metadata.hp - damage
             if value.metadata.hp <= 0 then
-                spawner.breakStatus(spawner.objects[index], x, y)
+                spawner.breakStatus(spawner.objects[index])
                 table.remove(spawner.objects, index)
             end
         end
