@@ -28,7 +28,7 @@ player = {
 
     inventory = {
         itemSwitchCD = 0.25,
-        lastItemSqitch = 0.25,
+        lastItemSwitch = 0.25,
         inventoryIndex = 1,
         currentEquip = "hammer",
         items = {
@@ -113,7 +113,7 @@ end
 
 function player.cooldown(dt)
     player.mine.lastMined = player.mine.lastMined + dt
-    player.inventory.lastItemSqitch = player.inventory.lastItemSqitch + dt
+    player.inventory.lastItemSwitch = player.inventory.lastItemSwitch + dt
 end
 
 function player.drawItem(sprites)
@@ -230,5 +230,6 @@ function player.createNewInventoryItem(item, quantity)
         i = i + 1
     end
 end
+
 
 return player
