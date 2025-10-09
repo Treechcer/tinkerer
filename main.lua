@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.25"
+_G.ver = "0.0.26"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -13,6 +13,7 @@ function love.load()
     spriteLoader = require("sprites.spriteLoader")
     actionDelay = require("game.actionDelay")
     mathLib = require("libraries.mathLib")
+    itemIdex = require("game.itemIndex")
 
     map.init()
     player.init()

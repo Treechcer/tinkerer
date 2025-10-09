@@ -13,7 +13,9 @@ player = {
         y = 0,
         screenSite = -1,
         moveTo = -1,
-        isBeingMoved = false
+        isBeingMoved = false,
+        width = 1,
+        height = 1
     },
 
     attack = {
@@ -108,7 +110,7 @@ function player.cursor(sprites)
     player.cursorPos.y = math.floor(blockY / map.blockSize)
 
     love.graphics.setColor(1,1,1)
-    love.graphics.draw(sprites.cursor[frame], adjPos.x, adjPos.y, 0, adjPos.width / sprites.cursor[frame]:getWidth(), adjPos.height / sprites.cursor[frame]:getHeight())
+    love.graphics.draw(sprites.cursor[frame], adjPos.x, adjPos.y, 0, adjPos.width / sprites.cursor[frame]:getWidth() * player.cursorPos.width, adjPos.height / sprites.cursor[frame]:getHeight() * player.cursorPos.height)
 end
 
 function player.cooldown(dt)
