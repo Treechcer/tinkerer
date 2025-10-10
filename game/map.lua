@@ -36,10 +36,7 @@ end
 function map.isGround(x, y)
     local tileX = math.floor(x / map.blockSize) + 1
     local tileY = math.floor(y / map.blockSize) + 1
-    local block = map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1]
-    [math.floor((tileX - 1) / #map.chunks[1][1].land) + 1]
-    .land[(tileY - 1) % #map.chunks[1][1].land + 1]
-    [(tileX - 1) % #map.chunks[1][1].land + 1]
+    local block = map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].land[(tileY - 1) % #map.chunks[1][1].land + 1][(tileX - 1) % #map.chunks[1][1].land + 1]
 
     if block == 0 then
         return false

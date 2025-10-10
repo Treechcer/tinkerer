@@ -56,6 +56,16 @@ function itemIdex.makeItemUsable(item)
 
     if itemIdex[item].type == "buildable" then
         spawner = require("game.spawner")
+
+        for width = 0, itemIdex[item].width - 1 do
+            for height = 0, itemIdex[item].height - 1 do
+                print(player.cursorPos.x + width)
+                if not map.isGround((player.cursorPos.x + width) * map.blockSize, (player.cursorPos.y + height) * map.blockSize) then
+                    return
+                end
+            end
+        end
+
         spawner.createObject(player.cursorPos.x, player.cursorPos.y, player.inventory.items[player.inventory.inventoryIndex].name, {hp = itemIdex[item].hp, dmgType = itemIdex[item].dmgType}, 2, 2)
 
         player.inventory.items[player.inventory.inventoryIndex].quantity = player.inventory.items[player.inventory.inventoryIndex].quantity - 1
