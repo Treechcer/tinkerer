@@ -12,6 +12,7 @@ spriteLoader = {
     grass = love.graphics.newImage("sprites/grass.png"),
     snow = love.graphics.newImage("sprites/snow.png"),
     sand = love.graphics.newImage("sprites/sand.png"),
+    furnace = love.graphics.newImage("sprites/furnace.png"),
 }
 
 return spriteLoader

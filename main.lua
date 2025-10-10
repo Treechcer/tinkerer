@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.26"
+_G.ver = "0.0.27"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -18,7 +18,8 @@ function love.load()
     map.init()
     player.init()
 
-    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}})
+    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"})
+    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"})
 end
 
 function love.draw()
@@ -172,7 +173,10 @@ function love.update(dt)
 
 
     if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
-        spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, player.mine.damage)
+        
+        dmg = spawner.getDmgNum(player.cursorPos.x, player.cursorPos.y)
+        print(dmg)
+        spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, dmg)
         player.mine.lastMined = 0
 
         player.animation.time = 0
@@ -188,6 +192,10 @@ function love.update(dt)
         player.animation.play = true
     end
 
+    if love.mouse.isDown(2) then
+        itemIdex.makeItemUsable(player.inventory.currentEquip)
+    end
+
     if player.animation.play then
         player.itemAnimation(dt)
     end
@@ -196,21 +204,25 @@ function love.update(dt)
 end
 
 function love.wheelmoved(x, y)
-    if player.inventory.lastItemSqitch >= player.inventory.itemSwitchCD and y > 0 then
+    if player.inventory.lastItemSwitch >= player.inventory.itemSwitchCD and y > 0 then
         player.inventory.inventoryIndex = player.inventory.inventoryIndex + 1
         if player.inventory.inventoryIndex >= #player.inventory.items then
             player.inventory.inventoryIndex = #player.inventory.items
         else
-            player.inventory.lastItemSqitch = 0
+            player.inventory.lastItemSwitch = 0
         end
         player.inventory.currentEquip = player.inventory.items[player.inventory.inventoryIndex].name
-    elseif player.inventory.lastItemSqitch >= player.inventory.itemSwitchCD and y < 0 then
+
+        itemIdex.changeCursor(player.inventory.currentEquip)
+    elseif player.inventory.lastItemSwitch >= player.inventory.itemSwitchCD and y < 0 then
         player.inventory.inventoryIndex = player.inventory.inventoryIndex - 1
         if player.inventory.inventoryIndex <= 1 then
             player.inventory.inventoryIndex = 1
         else
-            player.inventory.lastItemSqitch = 0
+            player.inventory.lastItemSwitch = 0
         end
         player.inventory.currentEquip = player.inventory.items[player.inventory.inventoryIndex].name
+
+        itemIdex.changeCursor(player.inventory.currentEquip)
     end
 end

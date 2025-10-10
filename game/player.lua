@@ -35,7 +35,7 @@ player = {
         currentEquip = "hammer",
         items = {
             {name = "hammer", quantity = "non-quantifiable"},
-            {name = "", quantity = 0},
+            {name = "furnace", quantity = 1},
             {name = "", quantity = 0},
             {name = "", quantity = 0},
             {name = "", quantity = 0},
@@ -189,12 +189,20 @@ function player.drawInventory(sprites)
 
     for i, item in ipairs(player.inventory.items) do
         love.graphics.setColor(1,1,1)
+        if i == player.inventory.inventoryIndex then
+            love.graphics.setColor(1,0,0)
+        end
         love.graphics.rectangle("line", startX + (i - 1) * (slot + space), game.height - game.height / 10, slot, slot)
         if sprites[item.name] ~= nil then
+            love.graphics.setColor(1,1,1)
             love.graphics.draw(sprites[item.name], startX + (i - 1) * (slot + space), game.height - game.height / 10, 0, (slot / sprites[item.name]:getWidth()), (slot / sprites[item.name]:getHeight()))
             if item.quantity ~= "non-quantifiable" then
                 love.graphics.setColor(0,0,0)
-                love.graphics.print(item.quantity, startX + (i - 1) * (slot + space), game.height - game.height / 10) 
+                love.graphics.print(item.quantity, startX + (i - 1) * (slot + space), game.height - game.height / 10)
+                if item.quantity <= 0 then
+                    player.inventory.items[player.inventory.inventoryIndex] = {name = "", quantity = 0}
+                    player.inventory.currentEquip = ""
+                end
             end
         end
     end
