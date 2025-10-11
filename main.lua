@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.28"
+_G.ver = "0.0.29"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -18,14 +18,16 @@ function love.load()
     map.init()
     player.init()
 
-    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"})
-    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"})
+    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true)
+    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, false)
 end
 
 function love.draw()
     love.graphics.setBackgroundColor(0,0,1)
     --love.graphics.print(player.cursorPos.x, 50, 50)
     --love.graphics.print(player.cursorPos.y, 50, 75)
+    love.graphics.print(math.floor(player.x / map.blockSize), 50, 50)
+    love.graphics.print(math.floor(player.y / map.blockSize), 50, 75)
 
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
@@ -109,9 +111,9 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     adjPos = camera.calculateZoom(player.x, player.y, player.height, player.width)
     love.graphics.rectangle("fill", adjPos.x, adjPos.y, adjPos.width, adjPos.height)
-    player.drawItem(spriteLoader)
 
     spawner.drawObjs(spriteLoader)
+    player.drawItem(spriteLoader)
 
     player.cursor(spriteLoader)
     player.drawInventory(spriteLoader)
@@ -130,16 +132,20 @@ function love.update(dt)
         end
     end
 
-    mov = {x = 0, y = 0}
+    --print(spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize)))
 
+    mov = {x = 0, y = 0}
     if love.keyboard.isDown("w") then
-        if map.isGround(player.x + (2 * player.width / 3), player.y - (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y - (player.speed * dt) + (player.height / 3)) then
+        if map.isGround(player.x + (2 * player.width / 3), player.y - (player.speed * dt) + (2 * player.height / 3))
+        and map.isGround(player.x + (player.width / 3), player.y - (player.speed * dt) + (player.height / 3))
+        and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height) then
             mov.y = - (player.speed * dt)
             --player.y = player.y - (player.speed * dt)
             --camera.y = camera.y - (player.speed * dt)
         end
     elseif love.keyboard.isDown("s") then
-        if map.isGround(player.x + (2 * player.width / 3), player.y + (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y + (player.speed * dt) + (player.height / 3)) then
+        if map.isGround(player.x + (2 * player.width / 3), player.y + (player.speed * dt) + (2 * player.height / 3)) and map.isGround(player.x + (player.width / 3), player.y + (player.speed * dt) + (player.height / 3))
+        and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height) then
             mov.y = (player.speed * dt)
             --player.y = player.y + (player.speed * dt)
             --camera.y = camera.y + (player.speed * dt)
@@ -147,13 +153,15 @@ function love.update(dt)
     end
 
     if love.keyboard.isDown("a") then
-        if map.isGround(player.x - (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x - (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
+        if map.isGround(player.x - (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x - (player.speed * dt) + (player.width / 3), player.y + (player.height / 3))
+        and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height) then
             mov.x = - (player.speed * dt)
             --player.x = player.x - (player.speed * dt)
             --camera.x = camera.x - (player.speed * dt)
         end
     elseif love.keyboard.isDown("d") then
-        if map.isGround(player.x + (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x + (player.speed * dt) + (player.width / 3), player.y + (player.height / 3)) then
+        if map.isGround(player.x + (player.speed * dt) + (2 * player.width / 3), player.y + (2 * player.height / 3)) and map.isGround(player.x + (player.speed * dt) + (player.width / 3), player.y + (player.height / 3))
+        and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height) then
             mov.x = (player.speed * dt)
             --player.x = player.x + (player.speed * dt)
             --camera.x = camera.x + (player.speed * dt)

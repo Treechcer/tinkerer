@@ -6,33 +6,6 @@ map = {
     },
 }
 
-function printTable(t, indent, visited)
-    indent = indent or 0
-    visited = visited or {}
-
-    if visited[t] then
-        print(string.rep(" ", indent) .. "*circular reference*")
-        return
-    end
-    visited[t] = true
-
-    if type(t) ~= "table" then
-        print(string.rep(" ", indent) .. tostring(t))
-        return
-    end
-
-    for k, v in pairs(t) do
-        local keyStr = tostring(k)
-        if type(v) == "table" then
-            print(string.rep(" ", indent) .. keyStr .. " = {")
-            printTable(v, indent + 2, visited)
-            print(string.rep(" ", indent) .. "}")
-        else
-            print(string.rep(" ", indent) .. keyStr .. " = " .. tostring(v))
-        end
-    end
-end
-
 function map.isGround(x, y)
     local tileX = math.floor(x / map.blockSize) + 1
     local tileY = math.floor(y / map.blockSize) + 1
@@ -41,6 +14,7 @@ function map.isGround(x, y)
     if block == 0 then
         return false
     elseif block == 1 then
+        
         return true
     end
 end

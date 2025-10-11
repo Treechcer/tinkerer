@@ -66,7 +66,7 @@ function itemIdex.makeItemUsable(item)
             end
         end
 
-        spawner.createObject(player.cursorPos.x, player.cursorPos.y, player.inventory.items[player.inventory.inventoryIndex].name, {hp = itemIdex[item].hp, dmgType = itemIdex[item].dmgType}, 2, 2)
+        spawner.createObject(player.cursorPos.x, player.cursorPos.y, player.inventory.items[player.inventory.inventoryIndex].name, {hp = itemIdex[item].hp, dmgType = itemIdex[item].dmgType}, true, itemIdex[item].height, itemIdex[item].width)
 
         player.inventory.items[player.inventory.inventoryIndex].quantity = player.inventory.items[player.inventory.inventoryIndex].quantity - 1
 

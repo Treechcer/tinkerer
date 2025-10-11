@@ -17,29 +17,19 @@ spawner = {
 ---@param metadata table
 ---@param h integer?
 ---@param w integer?
-function spawner.createObject(x, y, sprite, metadata, h, w)
+function spawner.createObject(x, y, sprite, metadata, isInteractable, isSolid, h, w)
     spriteS = spriteLoader[sprite]
     h = h or spriteS:getHeight() / 16
     w = w or spriteS:getWidth() / 16
-    table.insert(spawner.objects, {x = x, y = y, sprite = sprite, metadata = metadata, h = h, w = w})
+    table.insert(spawner.objects, {x = x, y = y, sprite = sprite, metadata = metadata, h = h, w = w, isInteractable = isInteractable, isSolid = isSolid})
 end
 
 function spawner.drawObjs(sprites)
     love.graphics.setColor(1,1,1)
     for index, value in ipairs(spawner.objects) do
         adjPos = camera.calculateZoom(value.x * map.blockSize, value.y * map.blockSize, map.blockSize, map.blockSize)
-        love.graphics.draw(sprites[value.sprite], adjPos.x, adjPos.y, 0, (3 * value.h) / camera.zoom, (3 * value.w) / camera.zoom)
+        love.graphics.draw(sprites[value.sprite], adjPos.x, adjPos.y, 0, (3 * value.w) / camera.zoom, (3 * value.h) / camera.zoom)
     end
-end
-
-function spawner.checkCollision(x, y)
-    for index, value in ipairs(spawner.objects) do
-        if mathLib.AABBcol({x = x, y = y, width = player.cursorPos.width, height = player.cursorPos.height}, {x = value.x, y = value.y, height = value.h, width = value.w}) then
-            return true
-        end
-    end
-
-    return false
 end
 
 ---@param x integer
@@ -70,6 +60,21 @@ function spawner.getObject(x, y)
             return spawner.objects[index]
         end
     end
+end
+
+function spawner.objCol(x, y, w, h)
+    --print(x, y)
+
+    local obj = spawner.getObject(x, y)
+
+    --print(obj)
+    if obj ~= nil then
+        if obj.isSolid then
+            return true
+        end
+    end
+
+    return false
 end
 
 function spawner.getDmgType(x, y)
