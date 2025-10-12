@@ -73,17 +73,11 @@ function spawner.getObject(x, y)
 end
 
 function spawner.objCol(x, y, w, h)
-    --print(x, y)
-
-    local obj = spawner.getObject(x, y)
-
-    --print(obj)
-    if obj ~= nil then
-        if obj.isSolid then
+    for _, obj in ipairs(spawner.objects) do
+        if obj.isSolid and mathLib.AABBcol({x = x, y = y, width = w, height = h}, {x = obj.x * map.blockSize, y = obj.y * map.blockSize, width = obj.w * map.blockSize, height = obj.h * map.blockSize}) then
             return true
         end
     end
-
     return false
 end
 

@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.33"
+_G.ver = "0.0.34"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -19,8 +19,8 @@ function love.load()
     map.init()
     player.init()
 
-    spawner.createObject(30, 30, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true)
-    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, false)
+    spawner.createObject(30, 32, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true, 1, 1)
+    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, false, 1, 1)
 end
 
 function love.draw()
@@ -148,6 +148,9 @@ function love.draw()
 
     player.cursor(spriteLoader)
     player.drawInventory(spriteLoader)
+    if uiData.interactible.draw then
+        uiData.interactibleDraw(player.cursorPos.x * map.blockSize, player.cursorPos.y * map.blockSize)
+    end
 end
 
 function love.update(dt)
@@ -220,13 +223,13 @@ function love.update(dt)
         local nextX = player.x + nx * player.speed * dt
         local nextY = player.y + ny * player.speed * dt
 
-        local canMoveX = map.isGround(nextX + player.width / 2, player.y + player.height / 2) and not spawner.objCol(math.floor(nextX / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height)
+        local canMoveX = map.isGround(nextX + player.width / 2, player.y + player.height / 2) and not spawner.objCol(nextX, player.y, player.width, player.height)
         if canMoveX then
             player.x = nextX
             camera.x = camera.x + nx * player.speed * dt
         end
 
-        local canMoveY = map.isGround(player.x + player.width / 2, nextY + player.height / 2) and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(nextY / map.blockSize), player.width, player.height)
+        local canMoveY = map.isGround(player.x + player.width / 2, nextY + player.height / 2) and not spawner.objCol(player.x, nextY, player.width, player.height)
         if canMoveY then
             player.y = nextY
             camera.y = camera.y + ny * player.speed * dt
@@ -238,7 +241,7 @@ function love.update(dt)
         soundLoader.miscSounds.hitSound:setPitch(math.random(60, 140) / 100)
         
         dmg = spawner.getDmgNum(player.cursorPos.x, player.cursorPos.y)
-        print(dmg)
+        --print(dmg)
         spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, dmg)
         player.mine.lastMined = 0
 
@@ -257,6 +260,15 @@ function love.update(dt)
 
     if love.mouse.isDown(2) then
         itemIdex.makeItemUsable(player.inventory.currentEquip)
+    end
+
+    if spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) then
+        local obj = spawner.getObject(player.cursorPos.x, player.cursorPos.y)
+        if obj.isInteractable then
+            uiData.interactible.draw = true
+        end
+    elseif not spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and uiData.interactible.draw then
+        uiData.interactible.draw = false
     end
 
     if player.animation.play then

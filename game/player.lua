@@ -15,7 +15,10 @@ player = {
         moveTo = -1,
         isBeingMoved = false,
         width = 1,
-        height = 1
+        height = 1,
+
+        screenX = 0,
+        screenY = 0
     },
 
     attack = {
@@ -101,6 +104,9 @@ function player.cursor(sprites)
     end
 
     local blockX, blockY = map.screenPosToBlock(x, y)
+
+    player.cursorPos.screenX = x
+    player.cursorPos.screenY = y
 
     local adjPos = camera.calculateZoom(blockX, blockY, map.blockSize, map.blockSize)
 

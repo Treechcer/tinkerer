@@ -59,14 +59,14 @@ function itemIdex.makeItemUsable(item)
 
         for width = 0, itemIdex[item].width - 1 do
             for height = 0, itemIdex[item].height - 1 do
-                print(player.cursorPos.x + width)
+                --print(player.cursorPos.x + width)
                 if not map.isGround((player.cursorPos.x + width) * map.blockSize, (player.cursorPos.y + height) * map.blockSize) then
                     return
                 end
             end
         end
 
-        spawner.createObject(player.cursorPos.x, player.cursorPos.y, player.inventory.items[player.inventory.inventoryIndex].name, {hp = itemIdex[item].hp, dmgType = itemIdex[item].dmgType}, true, itemIdex[item].height, itemIdex[item].width)
+        spawner.createObject(player.cursorPos.x, player.cursorPos.y, player.inventory.items[player.inventory.inventoryIndex].name, {hp = itemIdex[item].hp, dmgType = itemIdex[item].dmgType}, true, true, itemIdex[item].height, itemIdex[item].width)
 
         player.inventory.items[player.inventory.inventoryIndex].quantity = player.inventory.items[player.inventory.inventoryIndex].quantity - 1
 
