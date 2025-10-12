@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.31"
+_G.ver = "0.0.32"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -165,7 +165,10 @@ function love.update(dt)
     --print(spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize)))
 
     mov = {x = 0, y = 0}
-    if love.keyboard.isDown("w") then
+
+    --old movement code lol
+
+    --[[if love.keyboard.isDown("w") then
         if map.isGround(player.x + (2 * player.width / 3), player.y - (player.speed * dt) + (2 * player.height / 3))
         and map.isGround(player.x + (player.width / 3), player.y - (player.speed * dt) + (player.height / 3))
         and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height) then
@@ -196,19 +199,38 @@ function love.update(dt)
             --player.x = player.x + (player.speed * dt)
             --camera.x = camera.x + (player.speed * dt)
         end
+    end]]
+
+    if love.keyboard.isDown("w") then
+        mov.y = - (player.speed * dt)
+    elseif love.keyboard.isDown("s") then
+        mov.y = (player.speed * dt)
+
     end
 
-    if mov.x ~= 0 and mov.y ~= 0 then
+    if love.keyboard.isDown("a") then
+        mov.x = -(player.speed * dt)
+    elseif love.keyboard.isDown("d") then
+        mov.x = (player.speed * dt)
+    end
+
+    if mov.x ~= 0 or mov.y ~= 0 then
         local nx, ny = mathLib.normaliseVec(mov.x, mov.y)
-        mov.x = nx * player.speed * dt
-        mov.y = ny * player.speed * dt
+        local nextX = player.x + nx * player.speed * dt
+        local nextY = player.y + ny * player.speed * dt
+
+        local canMoveX = map.isGround(nextX + player.width / 2, player.y + player.height / 2) and not spawner.objCol(math.floor(nextX / map.blockSize), math.floor(player.y / map.blockSize), player.width, player.height)
+        if canMoveX then
+            player.x = nextX
+            camera.x = camera.x + nx * player.speed * dt
+        end
+
+        local canMoveY = map.isGround(player.x + player.width / 2, nextY + player.height / 2) and not spawner.objCol(math.floor(player.x / map.blockSize), math.floor(nextY / map.blockSize), player.width, player.height)
+        if canMoveY then
+            player.y = nextY
+            camera.y = camera.y + ny * player.speed * dt
+        end
     end
-
-    player.x = player.x + mov.x
-    player.y = player.y + mov.y
-    camera.x = camera.x + mov.x
-    camera.y = camera.y + mov.y
-
 
     if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
         dmg = spawner.getDmgNum(player.cursorPos.x, player.cursorPos.y)
