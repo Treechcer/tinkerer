@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.32"
+_G.ver = "0.0.33"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -14,6 +14,7 @@ function love.load()
     actionDelay = require("game.actionDelay")
     mathLib = require("libraries.mathLib")
     itemIdex = require("game.itemIndex")
+    soundLoader = require("sounds.soundLoader")
 
     map.init()
     player.init()
@@ -233,6 +234,9 @@ function love.update(dt)
     end
 
     if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
+        love.audio.play(soundLoader.miscSounds.hitSound)
+        soundLoader.miscSounds.hitSound:setPitch(math.random(60, 140) / 100)
+        
         dmg = spawner.getDmgNum(player.cursorPos.x, player.cursorPos.y)
         print(dmg)
         spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, dmg)
