@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.29"
+_G.ver = "0.0.30"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -26,8 +26,8 @@ function love.draw()
     love.graphics.setBackgroundColor(0,0,1)
     --love.graphics.print(player.cursorPos.x, 50, 50)
     --love.graphics.print(player.cursorPos.y, 50, 75)
-    love.graphics.print(math.floor(player.x / map.blockSize), 50, 50)
-    love.graphics.print(math.floor(player.y / map.blockSize), 50, 75)
+    --love.graphics.print(math.floor(player.x / map.blockSize), 50, 50)
+    --love.graphics.print(math.floor(player.y / map.blockSize), 50, 75)
 
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
@@ -45,19 +45,49 @@ function love.draw()
 
                         --Outline in Y
 
-                        status, err = pcall(function ()
-                            if chunk.land[by][bx + 1] ~= 1 then
-                                tempSize = camera.calculateZoom(1,1,1,2.5)
+                        status, err = pcall(function()
+                            local rightTile
+                            if bx < #chunk.land[by] then
+                                rightTile = chunk.land[by][bx + 1]
+                            else
+                                local rightChunk = map.chunks[chunkY] and map.chunks[chunkY][chunkX + 1]
+                                if rightChunk then
+                                    rightTile = rightChunk.land[by][1]
+                                else
+                                    rightTile = 0
+                                end
+                            end
+
+                            if rightTile ~= 1 then
+                                local tempSize = camera.calculateZoom(1, 1, 1, 2.5)
                                 love.graphics.setLineWidth(tempSize.width)
-                                love.graphics.line(adjPos.x + adjPos.width, adjPos.y, adjPos.x + adjPos.width, adjPos.y + adjPos.height)
+                                love.graphics.line(
+                                    adjPos.x + adjPos.width, adjPos.y,
+                                    adjPos.x + adjPos.width, adjPos.y + adjPos.height
+                                )
                             end
                         end)
 
-                        status, err = pcall(function ()
-                            if chunk.land[by][bx - 1] ~= 1 then
-                                tempSize = camera.calculateZoom(1,1,1,2)
+                        status, err = pcall(function()
+                            local leftTile
+                            if bx > 1 then
+                                leftTile = chunk.land[by][bx - 1]
+                            else
+                                local leftChunk = map.chunks[chunkY] and map.chunks[chunkY][chunkX - 1]
+                                if leftChunk then
+                                    leftTile = leftChunk.land[by][#leftChunk.land[by]]
+                                else
+                                    leftTile = 0
+                                end
+                            end
+
+                            if leftTile ~= 1 then
+                                local tempSize = camera.calculateZoom(1, 1, 1, 2)
                                 love.graphics.setLineWidth(tempSize.width)
-                                love.graphics.line(adjPos.x, adjPos.y, adjPos.x, adjPos.y + adjPos.height)
+                                love.graphics.line(
+                                    adjPos.x, adjPos.y,
+                                    adjPos.x, adjPos.y + adjPos.height
+                                )
                             end
                         end)
 

@@ -38,16 +38,47 @@ function map.getWorldPos(x, y)
 end
 
 function map.init()
+    noiseLib = require("libraries.noiseLib")
 
-    local rows = { -- "default" island
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.special, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
-        {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --local rows = { -- "default" island
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land =chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.special, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --    {{land = chunks.noLandd, biome = "snow"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "sand"}, {land = chunks.noLandd, biome = "grass"}, {land = chunks.noLandd, biome = "snow"}},
+    --}
+    
+    -- 7x7
+    local rows = {
+        
     }
+
+    for y = 1, 7 do
+        local row = {}
+        for x = 1, 7 do
+
+            --temp biome making, it'll be different later, it's here mostly for test or something
+
+            local biome = y % 3
+
+            if biome == chunks.biomeData.grass.eq then
+                biome = "grass"
+            elseif biome == chunks.biomeData.snow.eq then
+                biome = "snow"
+            else 
+                biome = "sand"
+            end
+
+            if x == 4 and y == 4 then
+                table.insert(row, {land = chunks.specialPrefabs.starter, biome = "grass"})
+            else
+                table.insert(row, {land = chunks.prefabs[math.ceil(noiseLib.generation(x,y) * chunks.count)], biome = biome})
+            end
+        end
+        table.insert(rows, row)
+    end
 
     map.generate(rows[1])
     map.generate(rows[2])
