@@ -61,14 +61,16 @@ function map.init()
 
             --temp biome making, it'll be different later, it's here mostly for test or something
 
-            local biome = y % 3
-
-            if biome == chunks.biomeData.grass.eq then
+            if (x % 7 == 3 or x % 7 == 4 or x % 7 == 5) and (y == 3 or y == 4 or y == 5) then
                 biome = "grass"
-            elseif biome == chunks.biomeData.snow.eq then
-                biome = "snow"
-            else 
+            elseif (x % 7 == 1 or x % 7 == 2) and (y == 2 or y == 3 or y == 4 or y == 5 or y == 6) and not (x % 7 == 2 and (y == 6 or y == 2)) then
                 biome = "sand"
+            elseif (x % 7 == 6 or x % 7 == 0) and (y == 2 or y == 3 or y == 4 or y == 5 or y == 6) and not (x % 7 == 6 and (y == 6 or y == 2)) then
+                biome = "rocky"
+            elseif y == 6 or y == 7 then
+                biome = "snow"
+            else
+                biome = "void"
             end
 
             if x == 4 and y == 4 then

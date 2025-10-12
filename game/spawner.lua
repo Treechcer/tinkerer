@@ -32,6 +32,16 @@ function spawner.drawObjs(sprites)
     end
 end
 
+function spawner.checkCollision(x, y)
+    for index, value in ipairs(spawner.objects) do
+        if mathLib.AABBcol({x = x, y = y, width = player.cursorPos.width, height = player.cursorPos.height}, {x = value.x, y = value.y, height = value.h, width = value.w}) then
+            return true
+        end
+    end
+
+    return false
+end
+
 ---@param x integer
 ---@param y integer
 ---@param damage integer?

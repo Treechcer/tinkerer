@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.30"
+_G.ver = "0.0.31"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -211,7 +211,6 @@ function love.update(dt)
 
 
     if love.mouse.isDown(1) and spawner.checkCollision(player.cursorPos.x, player.cursorPos.y) and (player.mine.cooldown <= player.mine.lastMined) and not player.animation.play then
-        
         dmg = spawner.getDmgNum(player.cursorPos.x, player.cursorPos.y)
         print(dmg)
         spawner.damgeObejct(player.cursorPos.x, player.cursorPos.y, dmg)
