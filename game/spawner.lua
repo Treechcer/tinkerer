@@ -5,9 +5,25 @@ itemIdex = require("game.itemIndex")
 mathLib = require("libraries.mathLib")
 
 spawner = {
-    objects = {}-- tables of tables, every table will be like : {x, y, sprite, metadata, h, w} -> metadata is additional data, it can be blank ('nil') or have something in, 
-                -- for example stone can have how much it gives XP when broken or how many stones drop etc.
-                -- x and y are tiles, every chunk is 9x9 and there are 7x7 chunks, so its 63x63 map I think?
+    objects = {},-- tables of tables, every table will be like : {x, y, sprite, metadata, h, w} -> metadata is additional data, it can be blank ('nil') or have something in, 
+                 -- for example stone can have how much it gives XP when broken or how many stones drop etc.
+                 -- x and y are tiles, every chunk is 9x9 and there are 7x7 chunks, so its 63x63 map I think?
+    possibleSpawns = {
+        -- x and y are always determined in the spawner function
+        --30, 32, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true, 1, 1
+        {
+            sprite = "rock",
+            metadata = {
+                hp = 5,
+                drop = {count = 5, item = "rock"},
+                dmgType = "stoneDMG"
+            },
+            isInteractable = false,
+            isSolid = true,
+            h = 1,
+            w = 1
+        },
+    }
 }
 
 -- this is here because VS code was screaming at me (I should use this ngl)
@@ -50,10 +66,12 @@ function spawner.damgeObejct(x, y, damage)
     for index, value in ipairs(spawner.objects) do
         if mathLib.AABBcol({x = x, y = y, width = player.cursorPos.width, height = player.cursorPos.height}, {x = value.x, y = value.y, height = value.h, width = value.w}) then
             value.metadata.hp = value.metadata.hp - damage
+            --print(value.metadata.hp, damage)
             if value.metadata.hp <= 0 then
                 spawner.breakStatus(spawner.objects[index])
                 table.remove(spawner.objects, index)
             end
+            break
         end
     end
 end
@@ -99,6 +117,27 @@ function spawner.getDmgNum(x,y)
         return dmg
     else
         return 0
+    end
+end
+
+function spawner.spawnRandomObject()
+    x = math.random(1,63) - 1
+    y = math.random(1,63) - 1
+    obj = spawner.possibleSpawns[math.random(1, #spawner.possibleSpawns)]
+
+    if map.isGround(x,y) then
+        local metadata = mathLib.deepCopy(obj.metadata)
+
+        if metadata.hp ~= nil then
+            metadata.hp = metadata.hp + (math.random(0,3) - 1)
+            print(metadata.hp)
+        end
+        if metadata.drop ~= nil then
+            metadata.drop.count = metadata.drop.count + (math.random(0,2) - 1)
+            print(metadata.drop.count)
+        end
+
+        spawner.createObject(x, y, obj.sprite, metadata, obj.isInteractable, obj.isSolid, obj.h, obj.w)
     end
 end
 

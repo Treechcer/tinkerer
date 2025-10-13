@@ -22,4 +22,19 @@ function mathLib.AABBcol(rect1, rect2)
     end
 end
 
+function mathLib.deepCopy(orig) -- this is to deeply copy tables because lua sucks, this if from GPT, I forgot about this and I ain't writing this
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[mathLib.deepCopy(orig_key)] = mathLib.deepCopy(orig_value)
+        end
+        setmetatable(copy, mathLib.deepCopy(getmetatable(orig)))
+    else
+        copy = orig
+    end
+    return copy
+end
+
 return mathLib

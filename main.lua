@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.34"
+_G.ver = "0.0.35"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -19,8 +19,8 @@ function love.load()
     map.init()
     player.init()
 
-    spawner.createObject(30, 32, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true, 1, 1)
-    spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, false, 1, 1)
+    --spawner.createObject(30, 32, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, true, 1, 1)
+    --spawner.createObject(30, 31, "rock", {hp = 5, drop = {count = 5, item = "rock"}, dmgType = "stoneDMG"}, false, false, 1, 1)
 end
 
 function love.draw()
@@ -154,10 +154,11 @@ function love.draw()
 end
 
 function love.update(dt)
+    spawner.spawnRandomObject()
     if love.keyboard.isDown("q") then
         camera.zoom = camera.zoom + (1 * dt)
-        if camera.zoom >= 1.80 then
-            camera.zoom = 1.80
+        if camera.zoom >= 50 then
+            camera.zoom = 50
         end
     elseif love.keyboard.isDown("e") then
         camera.zoom = camera.zoom - (1 * dt)
