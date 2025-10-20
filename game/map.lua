@@ -11,11 +11,10 @@ function map.isGround(x, y)
     local tileY = math.floor(y / map.blockSize) + 1
     local block = map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].land[(tileY - 1) % #map.chunks[1][1].land + 1][(tileX - 1) % #map.chunks[1][1].land + 1]
 
-    if block == 0 then
-        return false
-    elseif block == 1 then
-        
+    if block == 1 and map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].owned then
         return true
+    else
+        return false
     end
 end
 
@@ -74,9 +73,9 @@ function map.init()
             end
 
             if x == 4 and y == 4 then
-                table.insert(row, {land = chunks.specialPrefabs.starter, biome = "grass"})
+                table.insert(row, {land = chunks.specialPrefabs.starter, biome = "grass", owned = true})
             else
-                table.insert(row, {land = chunks.prefabs[math.ceil(noiseLib.generation(x,y) * chunks.count)], biome = biome})
+                table.insert(row, {land = chunks.prefabs[math.ceil(noiseLib.generation(x,y) * chunks.count)], biome = biome, owned = false})
             end
         end
         table.insert(rows, row)

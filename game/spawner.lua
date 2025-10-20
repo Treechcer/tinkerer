@@ -121,20 +121,18 @@ function spawner.getDmgNum(x,y)
 end
 
 function spawner.spawnRandomObject()
-    x = math.random(1,63) - 1
-    y = math.random(1,63) - 1
-    obj = spawner.possibleSpawns[math.random(1, #spawner.possibleSpawns)]
+    local x = math.random(1,63) - 1
+    local y = math.random(1,63) - 1
+    local obj = spawner.possibleSpawns[math.random(1, #spawner.possibleSpawns)]
 
-    if map.isGround(x,y) then
+    if map.isGround(x * map.blockSize, y * map.blockSize) then
         local metadata = mathLib.deepCopy(obj.metadata)
 
         if metadata.hp ~= nil then
             metadata.hp = metadata.hp + (math.random(0,3) - 1)
-            print(metadata.hp)
         end
         if metadata.drop ~= nil then
             metadata.drop.count = metadata.drop.count + (math.random(0,2) - 1)
-            print(metadata.drop.count)
         end
 
         spawner.createObject(x, y, obj.sprite, metadata, obj.isInteractable, obj.isSolid, obj.h, obj.w)

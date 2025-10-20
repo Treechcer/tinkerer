@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.35"
+_G.ver = "0.0.36"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -32,6 +32,9 @@ function love.draw()
 
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
+            if not chunk.owned then
+                goto continue
+            end
             for by = 1, #chunk.land do
                 for bx = 1, #chunk.land[by] do
                     local tile = chunk.land[by][bx]
@@ -136,6 +139,7 @@ function love.draw()
                     end
                 end
             end
+            ::continue::
         end
     end
 
