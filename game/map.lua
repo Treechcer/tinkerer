@@ -18,6 +18,24 @@ function map.isGround(x, y)
     end
 end
 
+function map.isChunkOwned(x, y)
+    local tileX = math.floor(x / map.blockSize) + 1
+    local tileY = math.floor(y / map.blockSize) + 1
+
+    if  map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].owned then
+        return true
+    else
+        return false
+    end
+end
+
+function map.getChunkPosXY(x, y)
+    local tileX = math.floor(x / map.blockSize) + 1
+    local tileY = math.floor(y / map.blockSize) + 1
+
+    return {x = tileX, y = tileY}
+end
+
 function map.generate(rows)
     table.insert(map.chunks, rows)
 end

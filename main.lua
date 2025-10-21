@@ -1,9 +1,12 @@
 love = require("love")
 
-_G.ver = "0.0.36"
+_G.ver = "0.0.37"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
+
+    defaultFont = love.graphics.getFont()
+    love.graphics.setFont(defaultFont)
 
     player = require("game.player")
     camera = require("game.camera")
