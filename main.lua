@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.37"
+_G.ver = "0.0.38"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -161,7 +161,12 @@ function love.draw()
 end
 
 function love.update(dt)
-    spawner.spawnRandomObject()
+    if spawner.delays.lastSpawn >= spawner.delays.timeCD then
+        spawner.spawnRandomObject()
+        spawner.delays.lastSpawn = 0
+    else
+        spawner.delays.lastSpawn = spawner.delays.lastSpawn + dt
+    end
     if love.keyboard.isDown("q") then
         camera.zoom = camera.zoom + (1 * dt)
         if camera.zoom >= 50 then

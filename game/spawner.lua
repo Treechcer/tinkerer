@@ -23,6 +23,10 @@ spawner = {
             h = 1,
             w = 1
         },
+    },
+    delays = {
+        lastSpawn = 0,
+        timeCD = 0.2,
     }
 }
 

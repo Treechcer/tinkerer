@@ -22,18 +22,38 @@ function map.isChunkOwned(x, y)
     local tileX = math.floor(x / map.blockSize) + 1
     local tileY = math.floor(y / map.blockSize) + 1
 
-    if  map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].owned then
+    status, err = pcall(function ()
+        if map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].owned == nil then
+            return false
+        end
+    end)
+
+    if not status then
+        return false
+    end
+
+    if map.chunks[math.floor((tileY - 1) / #map.chunks[1][1].land) + 1][math.floor((tileX - 1) / #map.chunks[1][1].land) + 1].owned then
         return true
     else
         return false
     end
 end
 
-function map.getChunkPosXY(x, y)
+function map.getChunkPosXYBlock(x, y)
     local tileX = math.floor(x / map.blockSize) + 1
     local tileY = math.floor(y / map.blockSize) + 1
 
     return {x = tileX, y = tileY}
+end
+
+function map.getChunkPosXY(x, y)
+    local tileX = math.floor(x / map.blockSize) + 1
+    local tileY = math.floor(y / map.blockSize) + 1
+
+    local chunkX = math.floor((tileX - 1) / #map.chunks[1][1].land) + 1
+    local chunkY = math.floor((tileY - 1) / #map.chunks[1][1].land) + 1
+
+    return {x = chunkX, y = chunkY}
 end
 
 function map.generate(rows)

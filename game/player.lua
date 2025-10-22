@@ -113,16 +113,35 @@ function player.cursor(sprites)
 
     local frame = math.floor(love.timer.getTime() * 7.5) % #sprites.cursor + 1
 
-    local obj = map.getChunkPosXY(x * map.blockSize, y * map.blockSize)
+    local obj = map.getChunkPosXYBlock(x * map.blockSize, y * map.blockSize)
 
     if not map.isChunkOwned(player.cursorPos.x * map.blockSize, player.cursorPos.y * map.blockSize) then
-        player.cursorPos.width = 9
-        player.cursorPos.height = 9
-        blockX = blockX - (blockX % (9 * map.blockSize))
-        blockY = blockY - (blockY % (9 * map.blockSize))
+        local worldX, worldY = map.getWorldPos(x, y)
+        local obj1 = map.getChunkPosXY(worldX, worldY)
+        status, err = pcall(function()
+            if map.chunks[obj1.y][obj1.x].owned then
+                
+            end
+        end)
+        if not status then
+            player.cursorPos.width = 1
+            player.cursorPos.height = 1
+        end
+        if status then
+            player.cursorPos.width = 9
+            player.cursorPos.height = 9
+            blockX = blockX - (blockX % (9 * map.blockSize))
+            blockY = blockY - (blockY % (9 * map.blockSize))
 
-        local adjPos = camera.calculateZoom(blockX + (4.5 * map.blockSize), blockY + (4.5 * map.blockSize), map.blockSize, map.blockSize)
-        love.graphics.print("E", adjPos.x - ((love.graphics.getFont():getWidth("E") * adjPos.width / love.graphics.getFont():getWidth("E")) / 2), adjPos.y - ((love.graphics.getFont():getHeight("E") * adjPos.height / love.graphics.getFont():getHeight("E")) / 2), 0, adjPos.width / love.graphics.getFont():getWidth("E"), adjPos.height / love.graphics.getFont():getHeight("E"))
+            local adjPos = camera.calculateZoom(blockX + (4.5 * map.blockSize), blockY + (4.5 * map.blockSize), map.blockSize, map.blockSize)
+            love.graphics.print("E", adjPos.x - ((love.graphics.getFont():getWidth("E") * adjPos.width / love.graphics.getFont():getWidth("E")) / 2), adjPos.y - ((love.graphics.getFont():getHeight("E") * adjPos.height / love.graphics.getFont():getHeight("E")) / 2), 0, adjPos.width / love.graphics.getFont():getWidth("E"), adjPos.height / love.graphics.getFont():getHeight("E"))
+
+            if love.keyboard.isDown("f") then
+                pcall(function()
+                    map.chunks[obj1.y][obj1.x].owned = true
+                end)
+            end
+        end
     else
         player.cursorPos.width = 1
         player.cursorPos.height = 1
@@ -130,8 +149,6 @@ function player.cursor(sprites)
 
     player.cursorPos.x = math.floor(blockX / map.blockSize)
     player.cursorPos.y = math.floor(blockY / map.blockSize)
-
-    print(blockX, blockY)
 
     local adjPos = camera.calculateZoom(blockX, blockY, map.blockSize, map.blockSize)
 
