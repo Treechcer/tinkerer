@@ -8,6 +8,7 @@ player = {
     width = 32,
     height = 64,
     speed = 300,
+    money = 1,
     cursorPos = {
         x = 0,
         y = 0,
@@ -123,11 +124,13 @@ function player.cursor(sprites)
                 
             end
         end)
+        
         if not status then
             player.cursorPos.width = 1
             player.cursorPos.height = 1
         end
-        if status then
+
+        if status and not map.chunks[obj1.y][obj1.x].owned then
             player.cursorPos.width = 9
             player.cursorPos.height = 9
             blockX = blockX - (blockX % (9 * map.blockSize))
@@ -138,7 +141,10 @@ function player.cursor(sprites)
 
             if love.keyboard.isDown("f") then
                 pcall(function()
-                    map.chunks[obj1.y][obj1.x].owned = true
+                    if player.money >= map.chunks[obj1.y][obj1.x].cost then
+                        map.chunks[obj1.y][obj1.x].owned = true
+                        player.money = player.money - map.chunks[obj1.y][obj1.x].cost
+                    end
                 end)
             end
         end

@@ -111,9 +111,9 @@ function map.init()
             end
 
             if x == 4 and y == 4 then
-                table.insert(row, {land = chunks.specialPrefabs.starter, biome = "grass", owned = true})
+                table.insert(row, {land = chunks.specialPrefabs.starter, biome = "grass", owned = true, cost = 0})
             else
-                table.insert(row, {land = chunks.prefabs[math.ceil(noiseLib.generation(x,y) * chunks.count)], biome = biome, owned = false})
+                table.insert(row, {land = chunks.prefabs[math.ceil(noiseLib.generation(x,y) * chunks.count)], biome = biome, owned = false, cost = chunks.biomeCost.makeCost(x, y)})
             end
         end
         table.insert(rows, row)

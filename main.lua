@@ -1,6 +1,6 @@
 love = require("love")
 
-_G.ver = "0.0.38"
+_G.ver = "0.0.39"
 
 function love.load()
     love.graphics.setDefaultFilter("nearest")
@@ -32,6 +32,8 @@ function love.draw()
     --love.graphics.print(player.cursorPos.y, 50, 75)
     --love.graphics.print(math.floor(player.x / map.blockSize), 50, 50)
     --love.graphics.print(math.floor(player.y / map.blockSize), 50, 75)
+
+    love.graphics.print(player.money, 50,50)
 
     for chunkY, rowChunks in ipairs(map.chunks) do
         for chunkX, chunk in ipairs(rowChunks) do
