@@ -1,7 +1,9 @@
+local game = require("source.game.game")
+
 player = {
     position = {
-        x = 50,
-        y = 50
+        x = 0,
+        y = 0
     },
     size = {
         width = 48,
@@ -15,10 +17,19 @@ player = {
         tileY = 0,
 
         frameNum = 0,
+    },
+    camera = {
+        x = 0,
+        y = 0,
     }
 }
 
-function player.cursor.updatePos()
+function player.init() -- initialises the position of player
+    player.position.x = math.floor(game.width / 2 - player.size.width / 2)
+    player.position.y = math.floor(game.height / 2 - player.size.height / 2)
+end
+
+function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
     player.cursor.x = love.mouse.getX()
     player.cursor.y = love.mouse.getY()
 

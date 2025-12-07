@@ -1,7 +1,8 @@
 spw = {
     sprites = {
-        cursor = {
-            sprs = {love.graphics.newImage("source/assets/sprites/cursor00.png"),
+        cursor = { -- to create animated thing you have to do this structure, table
+            sprs = {
+                love.graphics.newImage("source/assets/sprites/cursor00.png"),
                 love.graphics.newImage("source/assets/sprites/cursor01.png"),
                 love.graphics.newImage("source/assets/sprites/cursor02.png"),
                 love.graphics.newImage("source/assets/sprites/cursor03.png")
@@ -13,7 +14,7 @@ spw = {
     }
 }
 
-function spw.changeFrames(dt)
+function spw.changeFrames(dt) -- this is for changing the frames it's in every n seconds
     for name, sprite in pairs(spw.sprites) do
         if type(sprite) == "table" then
             if sprite.lastChange >= sprite.timer then

@@ -11,3 +11,7 @@ Initial version, no gameplay, just some basic variables and basic code
 sprites can now move if you make it table and add timer etc.
 Framework for better sprite work added
 also changed the path to assets
+
+## [[0.0.3]]
+
+added initAll to init all things that has to be initialized when it starts, added player init, added camera and positions relative to camera

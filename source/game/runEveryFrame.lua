@@ -3,12 +3,12 @@ spw = require("source.assets.sprites.spriteWorker")
 
 run = {}
 
-function run.everyFrameStart(dt)
+function run.everyFrameStart(dt) -- used to run on every frame when it starts
     player.cursor.updatePos()
     spw.changeFrames(dt)
 end
 
-function run.everyFrameEnd(dt)
+function run.everyFrameEnd(dt) -- used to run on every frame when it ends
     
 end
 

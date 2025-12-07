@@ -8,6 +8,9 @@ function love.load()
     REF = require("source.game.runEveryFrame")
     renderer = require("source.graphics.renderer")
     game = require("source.game.game")
+    init = require("source.game.init")
+
+    init.initAll()
 end
 
 function love.draw()
