@@ -1,18 +1,28 @@
 spw = {
     sprites = {
-        cursor = { -- to create animated thing you have to do this structure, table
-            sprs = {
-                love.graphics.newImage("source/assets/sprites/cursor00.png"),
-                love.graphics.newImage("source/assets/sprites/cursor01.png"),
-                love.graphics.newImage("source/assets/sprites/cursor02.png"),
-                love.graphics.newImage("source/assets/sprites/cursor03.png")
-            },
-        timer = 0.15,
-        lastChange = 0,
-        index = 1
-        }
+        --cursor = { -- to create animated thing you have to do this structure, table
+        --    sprs = {
+        --        love.graphics.newImage("source/assets/sprites/cursor00.png"),
+        --        love.graphics.newImage("source/assets/sprites/cursor01.png"),
+        --        love.graphics.newImage("source/assets/sprites/cursor02.png"),
+        --        love.graphics.newImage("source/assets/sprites/cursor03.png")
+        --    },
+        --    timer = 0.15,
+        --    lastChange = 0,
+        --    index = 1
+        --}
     }
 }
+
+function spw.init()
+    spw.generateNewSprite("cursor",{love.graphics.newImage("source/assets/sprites/cursor00.png"), love.graphics.newImage("source/assets/sprites/cursor01.png"), love.graphics.newImage("source/assets/sprites/cursor02.png"), love.graphics.newImage("source/assets/sprites/cursor03.png")}, 0.25)
+end
+
+function spw.generateNewSprite(name, sprs, timer)
+    local lastChange = 0;
+    local index = 1
+    spw.sprites[name] = { sprs = sprs, timer = timer, lastChange = lastChange, index = index }
+end
 
 function spw.changeFrames(dt) -- this is for changing the frames it's in every n seconds
     for name, sprite in pairs(spw.sprites) do

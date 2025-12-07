@@ -21,6 +21,9 @@ player = {
     camera = {
         x = 0,
         y = 0,
+    },
+    atributes = {
+        speed = 250
     }
 }
 

@@ -22,5 +22,23 @@ end
 function love.update(dt)
     REF.everyFrameStart(dt)
 
+    --this is temp walking
+
+    if love.keyboard.isDown("w") then
+        player.camera.y = player.camera.y - player.atributes.speed * dt
+        player.position.y = player.position.y - player.atributes.speed * dt
+    elseif love.keyboard.isDown("s") then
+        player.camera.y = player.camera.y + player.atributes.speed * dt
+        player.position.y = player.position.y + player.atributes.speed * dt
+    end
+
+    if love.keyboard.isDown("a") then
+        player.camera.x = player.camera.x - player.atributes.speed * dt
+        player.position.x = player.position.x - player.atributes.speed * dt
+    elseif love.keyboard.isDown("d") then
+        player.camera.x = player.camera.x + player.atributes.speed * dt
+        player.position.x = player.position.x + player.atributes.speed * dt
+    end
+
     REF.everyFrameEnd(dt)
 end
