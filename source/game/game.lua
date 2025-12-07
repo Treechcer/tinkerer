@@ -1,6 +1,6 @@
 game = {
     version = {
-        code = "0.0.1", -- this is normal versiong for code 
+        code = "0.0.2", -- this is normal versiong for code 
         public = "25.12.0", --[[this is for major versions, it's year.month.patch - 
                                 patch can be major or minor, this won't be really used outside of modding (if there will be modding*)
                                 and for the technical people, for normal people will be used release, which will be like ALPHA 1, BETA 5... 

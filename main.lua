@@ -1,13 +1,19 @@
 love = require("love")
 
 function love.load()
+    love.graphics.setDefaultFilter("nearest", "nearest")
+
     player = require("source.game.player")
     map = require("source.world.map")
     REF = require("source.game.runEveryFrame")
+    renderer = require("source.graphics.renderer")
+    game = require("source.game.game")
 end
 
 function love.draw()
-    love.graphics.rectangle("fill", player.cursor.x, player.cursor.y, map.tileSize, map.tileSize)
+    if game.state == "game" then
+        renderer.gameStateRenderer()
+    end
 end
 
 function love.update(dt)
