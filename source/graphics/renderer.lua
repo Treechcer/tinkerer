@@ -10,7 +10,6 @@ function renderer.mapRender()
 
     for chunkY, row in pairs(chunkGrid) do
         for chunkX, chunk in pairs(row) do
-            -- chunk = 2D pole 10x9
             for tileY, tileRow in pairs(chunk) do
                 for tileX, tile in pairs(tileRow) do
                     if tile == 1 then
