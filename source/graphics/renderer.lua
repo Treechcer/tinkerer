@@ -39,17 +39,27 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
     love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
+
+    love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
+        map.tileSize, map.tileSize)
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time
 
 end
 
-function renderer.getAbsolutePos(x, y) -- this gets the absolute postion relative to camera 
+function renderer.getAbsolutePos(x, y) -- this gets the absolute postion relative to camera
     tempX = x - player.camera.x
     tempY = y - player.camera.y
-    
+
     return tempX, tempY
+end
+
+function renderer.calculateTile(x, y)
+    local xT = math.floor(x / map.tileSize)
+    local yT = math.floor(y / map.tileSize)
+
+    return xT,yT
 end
 
 return renderer
