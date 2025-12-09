@@ -35,12 +35,12 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     cursor = spw.sprites.cursor
 
     local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-
-    love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
-        0, map.tileSize / cursor.sprs[cursor.index]:getWidth(), map.tileSize / cursor.sprs[cursor.index]:getHeight())
-
-    x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
+    if (renderer.checkCollsion(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))) then
+        love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
+            0, map.tileSize / cursor.sprs[cursor.index]:getWidth(), map.tileSize / cursor.sprs[cursor.index]:getHeight())
+    end
+        x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
+        love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
 
     love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
         map.tileSize, map.tileSize)
@@ -69,6 +69,29 @@ function renderer.calculateTile(x, y)
     local yT = math.floor(y / map.tileSize)
 
     return xT,yT
+end
+
+function renderer.checkCollsion(worldXpos, worldYpos)
+    local xTile, yTile = renderer.calculateTile(worldXpos, worldYpos)
+    xTile = xTile + 1
+    yTile = yTile + 1
+
+    if xTile <= 0 or yTile <= 0 then
+        return false
+    end
+
+    local chunkX = math.floor((xTile - 1) / map.chunkWidth) + 1
+    local chunkY = math.floor((yTile - 1) / map.chunkHeight) + 1
+
+    local tileInChunkX = ((xTile - 1) % map.chunkWidth) + 1
+    local tileInChunkY = ((yTile - 1) % map.chunkHeight) + 1
+
+    local chunk = map.map.chunks[chunkY] and map.map.chunks[chunkY][chunkX]
+
+    if not chunk then
+        return false
+    end
+    return not (chunk[tileInChunkY][tileInChunkX] == 0)
 end
 
 return renderer
