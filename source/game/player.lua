@@ -27,6 +27,48 @@ player = {
     }
 }
 
+function player.move(dt)
+    local mvXp = 0
+    local mvYp = 0
+    local mvXc = 0
+    local mvYc = 0
+    if love.keyboard.isDown("w") then
+        mvYp = player.atributes.speed * dt * (-1)
+        mvYc = player.atributes.speed * dt * (-1)
+    elseif love.keyboard.isDown("s") then
+        mvYp = player.atributes.speed * dt
+        mvYc = player.atributes.speed * dt
+    end
+
+    if love.keyboard.isDown("a") then
+        mvXp = player.atributes.speed * dt * (-1)
+        mvXc = player.atributes.speed * dt * (-1)
+    elseif love.keyboard.isDown("d") then
+        mvXp = player.atributes.speed * dt
+        mvXc = player.atributes.speed * dt
+    end
+
+    local nextX = player.position.x + mvXp
+    local nextY = player.position.y + mvYp
+
+    --this sctrict movemt is temporary until I need to redo it, when I'll need to redo it it'll be redone
+
+    if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY))) and
+        renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + player.size.height))) and
+        renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY))) and
+        renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height))) and
+        renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + (player.size.height / 2)))) and
+        renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY + (player.size.height / 2)))) then
+        player.position.x = nextX
+        player.position.y = nextY
+
+        player.camera.x = player.camera.x + mvXc
+        player.camera.y = player.camera.y + mvYc
+    end
+
+
+end
+
 function player.init() -- initialises the position of player
     player.position.x = math.floor(game.width / 2 - player.size.width / 2)
     player.position.y = math.floor(game.height / 2 - player.size.height / 2)

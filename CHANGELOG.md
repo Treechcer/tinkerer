@@ -19,3 +19,7 @@ added initAll to init all things that has to be initialized when it starts, adde
 ## [[0.0.4]]
 
 added generator for making new sprites easily, I don't have to write everything like that, again, added temporary walking / movement code just for testing / demonstration even though it's not perfect, added simple renderer for map, temporary kinda too, made map / chunks working, ver 0.0.4
+
+## [[0.0.5]]
+
+collision calculation, collision for walking (TEMPORARILY STRICT!!)
