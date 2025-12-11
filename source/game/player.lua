@@ -33,24 +33,27 @@ function player.move(dt)
     local mvXc = 0
     local mvYc = 0
     if love.keyboard.isDown("w") then
-        mvYp = player.atributes.speed * dt * (-1)
-        mvYc = player.atributes.speed * dt * (-1)
+        mvYp = -1
+        mvYc = -1
     elseif love.keyboard.isDown("s") then
-        mvYp = player.atributes.speed * dt
-        mvYc = player.atributes.speed * dt
+        mvYp = 1
+        mvYc = 1
     end
 
     if love.keyboard.isDown("a") then
-        mvXp = player.atributes.speed * dt * (-1)
-        mvXc = player.atributes.speed * dt * (-1)
+        mvXp = -1
+        mvXc = -1
     elseif love.keyboard.isDown("d") then
-        mvXp = player.atributes.speed * dt
-        mvXc = player.atributes.speed * dt
+        mvXp = 1
+        mvXc = 1
     end
 
-    local nextX = player.position.x + mvXp
-    local nextY = player.position.y + mvYp
+    mvXp, mvYp = vectors.normalise(mvXp, mvYp)
+    mvXc, mvYc = mvXp, mvYp
 
+    local nextX = player.position.x + mvXp * player.atributes.speed * dt
+    local nextY = player.position.y + mvYp * player.atributes.speed * dt
+    
     --this sctrict movemt is temporary until I need to redo it, when I'll need to redo it it'll be redone
 
     if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY))) and
@@ -62,11 +65,9 @@ function player.move(dt)
         player.position.x = nextX
         player.position.y = nextY
 
-        player.camera.x = player.camera.x + mvXc
-        player.camera.y = player.camera.y + mvYc
+        player.camera.x = player.camera.x + mvXc * player.atributes.speed * dt
+        player.camera.y = player.camera.y + mvYc * player.atributes.speed * dt
     end
-
-
 end
 
 function player.init() -- initialises the position of player

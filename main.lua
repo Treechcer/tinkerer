@@ -9,6 +9,7 @@ function love.load()
     renderer = require("source.graphics.renderer")
     game = require("source.game.game")
     init = require("source.game.init")
+    vectors = require("source.graphics.vectors")
 
     init.initAll()
 end
