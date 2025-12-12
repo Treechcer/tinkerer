@@ -10,12 +10,12 @@ function renderer.mapRender()
 
     for chunkY, row in pairs(chunkGrid) do
         for chunkX, chunk in pairs(row) do
-            for tileY, tileRow in pairs(chunk) do
+            for tileY, tileRow in pairs(chunk.chunkData) do
                 for tileX, tile in pairs(tileRow) do
                     if tile == 1 then
-                        love.graphics.setColor(0.5,0.5,0.5)
-                        local worldX = ((chunkX - 1) * #chunk[1] + (tileX - 1)) * tileSize
-                        local worldY = ((chunkY - 1) * #chunk + (tileY - 1)) * tileSize
+                        love.graphics.setColor(chunk.colorScheme)
+                        local worldX = ((chunkX - 1) * #chunk.chunkData[1] + (tileX - 1)) * tileSize
+                        local worldY = ((chunkY - 1) * #chunk.chunkData + (tileY - 1)) * tileSize
 
                         local CHx, CHy = renderer.getAbsolutePos(worldX, worldY)
 
@@ -91,7 +91,7 @@ function renderer.checkCollsion(worldXpos, worldYpos)
     if not chunk then
         return false
     end
-    return not (chunk[tileInChunkY][tileInChunkX] == 0)
+    return not (chunk.chunkData[tileInChunkY][tileInChunkX] == 0)
 end
 
 return renderer
