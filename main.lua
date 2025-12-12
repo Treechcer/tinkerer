@@ -10,6 +10,10 @@ function love.load()
     game = require("source.game.game")
     init = require("source.game.init")
     vectors = require("source.graphics.vectors")
+    bit = require("source.workers.bit")
+
+    bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
+    love.event.quit()
 
     init.initAll()
 end
