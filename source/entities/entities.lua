@@ -3,14 +3,17 @@ entities = {
 }
 
 function entities.render()
-    for key, value in pairs(entities.ents) do
-        local dx = value.tileX - player.position.tileX
-        local dy = value.tileY - player.position.tileY
+    local renderDistance = settings.graphic.renderDistance^2
+    local defaultColor = { 1, 1, 1, 1 }
+    local px, py = player.position.tileX, player.position.tileY
+    for index, value in ipairs(entities.ents) do
+        local dx = value.tileX - px
+        local dy = value.tileY - py
         local d = dx*dx + dy*dy
-        love.graphics.print(d, 10, 45)
-        if d <= settings.graphic.renderDistance^2 then
-            love.graphics.setColor(value.col or {1,1,1,1})
-            posX, posY = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
+        --love.graphics.print(d, 10, 45)
+        if d <= renderDistance then
+            love.graphics.setColor(value.col or defaultColor)
+            local posX, posY = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
             love.graphics.rectangle("fill", posX, posY, map.tileSize,
             map.tileSize)
         end
