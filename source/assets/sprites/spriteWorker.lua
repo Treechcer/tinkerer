@@ -17,6 +17,7 @@ spw = {
 function spw.init()
     spw.generateNewSprite("cursor",{love.graphics.newImage("source/assets/sprites/cursor00.png"), love.graphics.newImage("source/assets/sprites/cursor01.png"), love.graphics.newImage("source/assets/sprites/cursor02.png"), love.graphics.newImage("source/assets/sprites/cursor03.png")}, 0.25)
     spw.generateNewSprite("rock", love.graphics.newImage("source/assets/sprites/rock.png"))
+    spw.generateNewSprite("hammer", love.graphics.newImage("source/assets/sprites/hammer.png"))
 end
 
 ---@param timer number?

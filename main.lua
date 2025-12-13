@@ -15,6 +15,7 @@ function love.load()
     entitiesIndex = require("source.entities.entitiesIndex")
     settings = require("source.game.settings")
     spriteWorker = require("source.assets.sprites.spriteWorker")
+    inventory = require("source.items.inventory")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()

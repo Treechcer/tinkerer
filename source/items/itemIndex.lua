@@ -5,7 +5,16 @@
 items = {
     ironOre = {
         maxStackSize = 64,
-        use = "furnace",
         attack = 1,
+        weakness = bit.addBit({ bit.BIT1 }),
+        strength = 1
+    },
+    hammer = {
+        maxStackSize = 1,
+        attack = 1,
+        weakness = bit.addBit({ bit.BIT1, bit.BIT8 }),
+        strength = 1
     }
 }
+
+return items

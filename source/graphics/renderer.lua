@@ -44,6 +44,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
+    inventory.functions.renderHotbar()
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time
