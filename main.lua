@@ -16,6 +16,8 @@ function love.load()
     settings = require("source.game.settings")
     spriteWorker = require("source.assets.sprites.spriteWorker")
     inventory = require("source.items.inventory")
+    itemInteraction = require("source.items.itemInteraction")
+    itemIndex = require("source.items.itemIndex")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -45,4 +47,8 @@ function love.wheelmoved(x, y)
         inventory.hotBar.selectedItem = inventory.hotBar.selectedItem - 1
         inventory.hotBar.lastTime = 0
     end
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    itemInteraction.breakEntity()
 end

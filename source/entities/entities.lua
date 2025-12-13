@@ -1,5 +1,5 @@
 entities = {
-    ents = { { tileX = 1, tileY = 1, index = "rock" } }, --all entity data stored here!
+    ents = { { tileX = 1, tileY = 1, index = "rock", health = 5, drop = {item = "rock", count = 70} } }, --all entity data stored here!
 }
 
 function entities.render()
@@ -23,6 +23,27 @@ function entities.render()
                     map.tileSize)
             end
         end
+    end
+end
+
+function entities.isEntityOnTile(tileX,tileY)
+    for index, value in ipairs(entities.ents) do
+        if value.tileX == tileX and value.tileY == tileY then
+            return index
+        end
+    end
+
+    return -1
+end
+
+function entities.damageEntity(entityIndex, damageNumber)
+    local en = entities.ents[entityIndex]
+    en.health = en.health - damageNumber
+    if en.health <= 0 then
+        if en.drop ~= nil then
+            inventory.functions.addItem(en.drop.item, en.drop.count)
+        end
+        table.remove(entities.ents, entityIndex)
     end
 end
 

@@ -3,17 +3,21 @@
 --This is temporary item, it shows how I want to store items later
 
 items = {
-    ironOre = {
+    rock = {
         maxStackSize = 64,
         attack = 1,
-        weakness = bit.addBit({ bit.BIT1 }),
-        strength = 1
+        weakness = bit.addBit({ bit.BIT4 }),
+        strength = 1,
+        defaultHp = 5,
+        drop = {item = "rock", count = 5}
     },
     hammer = {
         maxStackSize = 1,
         attack = 1,
         weakness = bit.addBit({ bit.BIT1, bit.BIT8 }),
-        strength = 1
+        strength = 1,
+        defaultHp = nil,
+        drop = nil
     }
 }
 
