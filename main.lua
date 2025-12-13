@@ -35,3 +35,14 @@ function love.update(dt)
 
     REF.everyFrameEnd(dt)
 end
+
+function love.wheelmoved(x, y)
+    if y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) then
+        inventory.hotBar.selectedItem = inventory.hotBar.selectedItem + 1
+        inventory.hotBar.lastTime = 0
+    end
+    if y <= -1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem <= 1) then
+        inventory.hotBar.selectedItem = inventory.hotBar.selectedItem - 1
+        inventory.hotBar.lastTime = 0
+    end
+end

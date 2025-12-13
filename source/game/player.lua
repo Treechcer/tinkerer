@@ -20,6 +20,7 @@ player = {
         tileY = 0,
 
         frameNum = 0,
+        screenSide = 0, -- 1 => right side of screen, -1 => left side of screen
     },
     camera = {
         x = 0,
@@ -88,6 +89,8 @@ function player.cursor.updatePos() -- updates mouse position every frame - even 
     player.cursor.y = love.mouse.getY() + player.camera.y
 
     player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+
+    player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
 end
 
 return player

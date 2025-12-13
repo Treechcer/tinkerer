@@ -45,6 +45,16 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
     inventory.functions.renderHotbar()
+
+    local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
+
+    if inventory.hotBar.items[inventory.hotBar.selectedItem] ~= nil then
+        local spr = spw.sprites[inventory.hotBar.items[inventory.hotBar.selectedItem].item].sprs
+        local bonus = (player.cursor.screenSide == -1) and map.tileSize or 0
+        love.graphics.draw(spr, xT + (player.size.width) * player.cursor.screenSide + bonus, yT + (player.size.width / 3), 0,
+            map.tileSize / spr:getWidth() * player.cursor.screenSide,
+            map.tileSize / spr:getHeight())
+    end
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time

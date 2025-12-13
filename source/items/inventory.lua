@@ -2,12 +2,15 @@ inventory = {
     hotBar = {
         maxItems = 4,
         items = {
-            { item = "hammer", count = 5 }
+            { item = "hammer", count = 1 },
+            { item = "rock", count = 1 }
         },
         boxSize = 50, --pixels
         paddingBottom = 15,
         itemPad = 3,
-        selectedItem = 1
+        selectedItem = 1,
+        lastTime = 0,
+        coolDown = 0.2
     },
     functions = {}
 }
@@ -29,6 +32,10 @@ function inventory.functions.renderHotbar()
                 (hotbar.boxSize - hotbar.itemPad * 2) / spr:getHeight())
         end
     end
+end
+
+function inventory.functions.update(dt)
+    inventory.hotBar.lastTime = inventory.hotBar.lastTime + dt
 end
 
 return inventory
