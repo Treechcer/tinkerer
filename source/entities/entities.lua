@@ -1,5 +1,5 @@
 entities = {
-    ents = {{tileX = 1, tileY = 1, col = {.5,.5,.5,1}}}, --all entity data stored here!
+    ents = { { tileX = 1, tileY = 1, index = "rock" } }, --all entity data stored here!
 }
 
 function entities.render()
@@ -12,10 +12,16 @@ function entities.render()
         local d = dx*dx + dy*dy
         --love.graphics.print(d, 10, 45)
         if d <= renderDistance then
-            love.graphics.setColor(value.col or defaultColor)
             local posX, posY = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
-            love.graphics.rectangle("fill", posX, posY, map.tileSize,
-            map.tileSize)
+            if value.index ~= nil then
+                love.graphics.setColor(defaultColor)
+                local spr = spriteWorker.sprites[entitiesIndex[value.index].spwName].sprs
+                love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth(), map.tileSize / spr:getHeight())
+            else
+                love.graphics.setColor(value.col or defaultColor)
+                love.graphics.rectangle("fill", posX, posY, map.tileSize,
+                    map.tileSize)
+            end
         end
     end
 end

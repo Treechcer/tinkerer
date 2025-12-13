@@ -1,6 +1,6 @@
 entitiesIndex = {
     f = {
-        --for functions needed for htis "LUASON"
+        --for functions needed for this "LUASON"
     },
     rock = {
         entityName = "rock", --this has to be same the name of the Index, it'll be used as "relations" from databases to save RAM (lookupTable)
@@ -25,7 +25,7 @@ entitiesIndex = {
 ---@param HP integer
 ---@param weakness integer
 ---@param strenght integer
-function entitiesIndex.f.addIndex(entityName, spwName, HP, weakness, strenght)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName)
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName
@@ -36,6 +36,10 @@ function entitiesIndex.f.addIndex(entityName, spwName, HP, weakness, strenght)
     end
 
     spw.sprites[entityName] = { spwName = spwName, HP = HP, weakness = weakness, strenght = strenght }
+end
+
+function entitiesIndex.f.init()
+    entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({bit.BIT1, bit.BIT4}))
 end
 
 return entitiesIndex

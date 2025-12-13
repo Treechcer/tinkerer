@@ -32,6 +32,7 @@ end
 function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     --love.graphics.rectangle("fill", player.cursor.tileX * map.tileSize, player.cursor.tileY * map.tileSize, map.tileSize, map.tileSize)
     renderer.mapRender()
+    entities.render()
     cursor = spw.sprites.cursor
 
     local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
@@ -41,7 +42,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     end
         x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
         love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
-
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
 end

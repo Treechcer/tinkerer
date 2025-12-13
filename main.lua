@@ -12,7 +12,9 @@ function love.load()
     vectors = require("source.graphics.vectors")
     bit = require("source.workers.bit")
     entities = require("source.entities.entities")
+    entitiesIndex = require("source.entities.entitiesIndex")
     settings = require("source.game.settings")
+    spriteWorker = require("source.assets.sprites.spriteWorker")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -24,7 +26,6 @@ function love.draw()
     love.graphics.print(player.position.tileY, 10, 25)
     if game.state == "game" then
         renderer.gameStateRenderer()
-        entities.render()
     end
 end
 
