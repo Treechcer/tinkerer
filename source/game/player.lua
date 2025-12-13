@@ -3,7 +3,10 @@ local game = require("source.game.game")
 player = {
     position = {
         x = 0,
-        y = 0
+        y = 0,
+
+        tileX = 0,
+        tileY = 0
     },
     size = {
         width = 48,
@@ -67,6 +70,8 @@ function player.move(dt)
 
         player.camera.x = player.camera.x + mvXc * player.atributes.speed * dt
         player.camera.y = player.camera.y + mvYc * player.atributes.speed * dt
+
+        player.position.tileX, player.position.tileY = renderer.calculateTile(player.position.x, player.position.y)
     end
 end
 

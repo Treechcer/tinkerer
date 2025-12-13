@@ -20,8 +20,6 @@ function bit.addBit(t)
         finalBit = bitLib.bor(finalBit, value)
     end
 
-    print(finalBit)
-
     return finalBit
 end
 

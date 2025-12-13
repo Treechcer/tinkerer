@@ -10,7 +10,7 @@ entitiesIndex = {
         --it's three bits for now, (pickaxe, axe, nothing)
         --if bit for something is set to 1, you can damage
         --it if the item in use has mask with one on the same place
-        weakness = bit.addBit(bit.BIT4),
+        weakness = bit.addBit({bit.BIT4}),
         --every tool with every material will have strenght, the lowest
         --variant will have 1, after that it will be 2...
         strengthMin = 1,
@@ -32,7 +32,7 @@ function entitiesIndex.f.addIndex(entityName, spwName, HP, weakness, strenght)
     end
 
     if type(weakness) == "table" then
-        weakness = bit.addBit(weakness)
+        weakness = bit.addBit({weakness})
     end
 
     spw.sprites[entityName] = { spwName = spwName, HP = HP, weakness = weakness, strenght = strenght }
