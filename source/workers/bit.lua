@@ -11,13 +11,24 @@ bit = {
     BIT128 = 128,
     BIT256 = 256,
     BIT512 = 512,
-    BIT1024 = 1024
+    BIT1024 = 1024,
+
+    maxBit = 2047
 }
 
 function bit.addBit(t)
     finalBit = 0
     for key, value in pairs(t) do
         finalBit = bitLib.bor(finalBit, value)
+    end
+
+    return finalBit
+end
+
+function bit.timesBit(t)
+    finalBit = bit.maxBit
+    for key, value in pairs(t) do
+        finalBit = bitLib.band(finalBit, value)
     end
 
     return finalBit

@@ -36,6 +36,14 @@ function entities.isEntityOnTile(tileX,tileY)
     return -1
 end
 
+function entities.canWeDamage(indexEnt, attackWeakness, attackStrength)
+    local enIndex = entitiesIndex[entities.ents[indexEnt].index]
+    if enIndex.strengthMin <= attackStrength and bit.timesBit({attackWeakness, enIndex.weakness}) > 0 then
+        return true
+    end
+    return false
+end
+
 function entities.damageEntity(entityIndex, damageNumber)
     local en = entities.ents[entityIndex]
     en.health = en.health - damageNumber
