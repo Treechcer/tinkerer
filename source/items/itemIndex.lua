@@ -4,7 +4,7 @@
 
 items = {
     rock = {
-        maxStackSize = 2,
+        maxStackSize = 64,
         attack = 1,
         weakness = bit.addBit({ bit.BIT4 }),
         strength = 1,

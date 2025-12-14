@@ -48,24 +48,44 @@ function inventory.functions.update(dt)
 end
 
 function inventory.functions.addNewItem(item, count)
-    if (inventory.hotBar.maxItems >= #inventory.hotBar.items) then
-        table.insert(inventory.hotBar.items, {item = item, count = count})
+    if (inventory.hotBar.maxItems > #inventory.hotBar.items) then
+        if count <= itemIndex[item].maxStackSize then
+            table.insert(inventory.hotBar.items, { item = item, count = count })
+        else
+            table.insert(inventory.hotBar.items, { item = item, count = itemIndex[item].maxStackSize })
+            inventory.functions.addItem(item, count - itemIndex[item].maxStackSize)
+        end
     end
 end
 
 function inventory.functions.addItem(item, count)
-    --print(item, count)
+    print(item, count)
+
+    if count <= 0 then
+        return
+    end
+
+    local found = false
+
     for index, value in ipairs(inventory.hotBar.items) do
-        if value.item == item then
+        if value.item == item and value.count < itemIndex[item].maxStackSize then
             if itemIndex[item].maxStackSize < value.count + count then
                 local overflow = (itemIndex[item].maxStackSize - (value.count + count)) * (-1)
                 value.count = itemIndex[item].maxStackSize
+                print(itemIndex[item].maxStackSize)
+                print(value.count)
+                print(count)
                 inventory.functions.addNewItem(item, overflow)
             else
                 value.count = value.count + count
             end
+            found = true
             break
         end
+    end
+
+    if not found then
+        inventory.functions.addNewItem(item, count)
     end
 end
 
