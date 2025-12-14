@@ -11,7 +11,10 @@ inventory = {
         selectedItem = 1,
         lastTime = 0,
         coolDown = 0.2,
-        numberPad = 15
+        numberPad = 15,
+        moveVal = 0,
+        moveItem = false,
+        moving = false
     },
     inventoryBar = {
 
@@ -63,6 +66,23 @@ function inventory.functions.addItem(item, count)
             end
             break
         end
+    end
+end
+
+
+function inventory.functions.itemMove(dt)
+    if inventory.hotBar.moveVal >= 1.5 then
+        inventory.hotBar.moveItem = false
+    end
+
+    if inventory.hotBar.moveItem then
+        inventory.hotBar.moveVal = inventory.hotBar.moveVal + dt * 5
+        inventory.hotBar.moving = true
+    elseif (not inventory.hotBar.moveItem) and (inventory.hotBar.moveVal >= 0) then
+        inventory.hotBar.moveVal = inventory.hotBar.moveVal - dt * 5
+        inventory.hotBar.moving = true
+    else
+        inventory.hotBar.moving = false
     end
 end
 

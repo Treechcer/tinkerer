@@ -51,9 +51,13 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     if inventory.hotBar.items[inventory.hotBar.selectedItem] ~= nil then
         local spr = spw.sprites[inventory.hotBar.items[inventory.hotBar.selectedItem].item].sprs
         local bonus = (player.cursor.screenSide == -1) and map.tileSize or 0
-        love.graphics.draw(spr, xT + (player.size.width) * player.cursor.screenSide + bonus, yT + (player.size.width / 3), 0,
+        love.graphics.draw(spr,
+        xT + (map.tileSize * player.cursor.screenSide) + bonus + 1 / 2 * (map.tileSize * player.cursor.screenSide),
+            yT + player.size.height / 3, inventory.hotBar.moveVal,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,
-            map.tileSize / spr:getHeight())
+            map.tileSize / spr:getHeight(),
+            spr:getWidth() / 2,
+            spr:getHeight() / 2)
     end
 end
 

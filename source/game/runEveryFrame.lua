@@ -8,6 +8,7 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
     spw.changeFrames(dt)
     player.move(dt)
     inventory.functions.update(dt)
+    inventory.functions.itemMove(dt)
 end
 
 function run.everyFrameEnd(dt) -- used to run on every frame when it ends
