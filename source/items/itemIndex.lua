@@ -4,12 +4,14 @@
 
 items = {
     rock = {
-        maxStackSize = 64,
+        maxStackSize = 2,
         attack = 1,
         weakness = bit.addBit({ bit.BIT4 }),
         strength = 1,
         defaultHp = 5,
-        drop = {item = "rock", count = 5}
+        drop = { item = "rock", count = 5 },
+        speedAttackMultiplayer = 7, -- 5 = normal speed
+        attackRotation = 1, --1.5 is normal rotation for most items, rock can attack faster, not like it's strong
     },
     hammer = {
         maxStackSize = 1,
@@ -17,7 +19,9 @@ items = {
         weakness = bit.addBit({ bit.BIT1, bit.BIT4 }),
         strength = 1,
         defaultHp = nil,
-        drop = nil
+        drop = nil,
+        speedAttackMultiplayer = 5,
+        attackRotation = 1.5
     }
 }
 

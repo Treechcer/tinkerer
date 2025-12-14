@@ -71,15 +71,19 @@ end
 
 
 function inventory.functions.itemMove(dt)
-    if inventory.hotBar.moveVal >= 1.5 then
+    if inventory.hotBar.items[inventory.hotBar.selectedItem] == nil then
+        return
+    end
+    local item = itemIndex[inventory.hotBar.items[inventory.hotBar.selectedItem].item]
+    if inventory.hotBar.moveVal >= item.attackRotation then
         inventory.hotBar.moveItem = false
     end
 
     if inventory.hotBar.moveItem then
-        inventory.hotBar.moveVal = inventory.hotBar.moveVal + dt * 5
+        inventory.hotBar.moveVal = inventory.hotBar.moveVal + dt * item.speedAttackMultiplayer
         inventory.hotBar.moving = true
     elseif (not inventory.hotBar.moveItem) and (inventory.hotBar.moveVal >= 0) then
-        inventory.hotBar.moveVal = inventory.hotBar.moveVal - dt * 5
+        inventory.hotBar.moveVal = inventory.hotBar.moveVal - dt * item.speedAttackMultiplayer
         inventory.hotBar.moving = true
     else
         inventory.hotBar.moving = false
