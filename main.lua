@@ -18,6 +18,7 @@ function love.load()
     inventory = require("source.items.inventory")
     itemInteraction = require("source.items.itemInteraction")
     itemIndex = require("source.items.itemIndex")
+    entitySpawner = require("source.entities.entitySpawner")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -27,6 +28,7 @@ function love.draw()
 
     love.graphics.print(player.position.tileX, 10, 10)
     love.graphics.print(player.position.tileY, 10, 25)
+    love.graphics.print(#entities.ents, 10, 40)
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
@@ -34,7 +36,7 @@ end
 
 function love.update(dt)
     REF.everyFrameStart(dt)
-    
+    entitySpawner.func.spawn()
     REF.everyFrameEnd(dt)
 end
 

@@ -2,6 +2,10 @@ entities = {
     ents = { { tileX = 1, tileY = 1, index = "rock", health = 5, drop = {item = "rock", count = 14} } }, --all entity data stored here!
 }
 
+function entities.makeNewOne(tileX, tileY, index, health, drop)
+    table.insert(entities.ents, {tileX = tileX, tileY = tileY, index = index, health = health, drop = drop})
+end
+
 function entities.render()
     local renderDistance = settings.graphic.renderDistance^2
     local defaultColor = { 1, 1, 1, 1 }

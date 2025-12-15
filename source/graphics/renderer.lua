@@ -106,6 +106,7 @@ function renderer.checkCollsion(worldXpos, worldYpos)
     if not chunk then
         return false
     end
+    
     return not (chunk.chunkData[tileInChunkY][tileInChunkX] == 0)
 end
 

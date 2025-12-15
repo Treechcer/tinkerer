@@ -1,6 +1,6 @@
 settings = {
     graphic = {
-        renderDistance = 10 --this lowers how far you can see
+        renderDistance = 11.5 --this lowers how far you can see
     }
 }
 
