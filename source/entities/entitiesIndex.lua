@@ -16,6 +16,7 @@ entitiesIndex = {
         strengthMin = 1,
         --you have to :
         --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
+        drop = { item = "rock", count = 5 },
     }
 }
 
