@@ -26,7 +26,8 @@ entitiesIndex = {
 ---@param HP integer
 ---@param weakness integer
 ---@param strenght integer
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName, drop)
+---@param spawnable boolean?
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName)
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName
@@ -40,6 +41,10 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName, d
         weakness = bit.addBit({weakness})
     end
 
+    if spawnable then
+        table.insert(entitySpawner.possibleSpawns, entityName)
+    end
+
     entitiesIndex[entityName] = {
         entityName = entityName,
         spwName = spwName,
@@ -51,7 +56,7 @@ end
 
 function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({ bit.BIT1, bit.BIT4 }))
-    --entitiesIndex.f.addIndex("snow", 0, 0, 0)
+    --entitiesIndex.f.addIndex("snow", 0, 0, 0, true)
 end
 
 return entitiesIndex
