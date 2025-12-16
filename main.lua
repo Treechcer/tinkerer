@@ -37,7 +37,7 @@ end
 
 function love.update(dt)
     REF.everyFrameStart(dt)
-    entitySpawner.func.spawn()
+    
     REF.everyFrameEnd(dt)
 end
 
