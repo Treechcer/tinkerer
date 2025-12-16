@@ -3,7 +3,7 @@ entitySpawner = {
     timeToSpawn = 1, --seconds
     lastTimeSpawned = 0,
     possibleSpawns = {
-        "rock"
+        "rock", "snow"
     },
 }
 
@@ -17,9 +17,10 @@ function entitySpawner.func.spawn()
         return
     end
 
-    if entities.isEntityOnTile(tileX, tileY) >= 1 then
+    if entities.isEntityOnTile(tileX, tileY) ~= -1 then
         return
     end
+    --tables.writeTable(entitiesIndex)
 
     entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop)
 end

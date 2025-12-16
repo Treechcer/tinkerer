@@ -26,21 +26,32 @@ entitiesIndex = {
 ---@param HP integer
 ---@param weakness integer
 ---@param strenght integer
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName, drop)
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName
+    end
+
+    if drop == nil then
+        drop = {}
     end
 
     if type(weakness) == "table" then
         weakness = bit.addBit({weakness})
     end
 
-    spw.sprites[entityName] = { spwName = spwName, HP = HP, weakness = weakness, strenght = strenght }
+    entitiesIndex[entityName] = {
+        entityName = entityName,
+        spwName = spwName,
+        HP = HP,
+        weakness = weakness,
+        strengthMin =
+    strenght, drop = drop }
 end
 
 function entitiesIndex.f.init()
-    entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({bit.BIT1, bit.BIT4}))
+    entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({ bit.BIT1, bit.BIT4 }))
+    entitiesIndex.f.addIndex("snow", 0, 0, 0)
 end
 
 return entitiesIndex

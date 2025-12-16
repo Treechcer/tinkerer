@@ -19,6 +19,7 @@ function love.load()
     itemInteraction = require("source.items.itemInteraction")
     itemIndex = require("source.items.itemIndex")
     entitySpawner = require("source.entities.entitySpawner")
+    tables = require("source.workers.tableWorker")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
