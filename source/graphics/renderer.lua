@@ -110,4 +110,12 @@ function renderer.checkCollsion(worldXpos, worldYpos)
     return not (chunk.chunkData[tileInChunkY][tileInChunkX] == 0)
 end
 
+function renderer.AABB(aX, aY, aW, aH, bX, bY, bW, bH)
+    if aX < bX + bW and aX + aW > bX and aY < bY + bH and aY + aH > bY then
+        return true
+    end
+
+    return false
+end
+
 return renderer

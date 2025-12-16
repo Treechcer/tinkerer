@@ -3,7 +3,7 @@ entitySpawner = {
     timeToSpawn = 1, --seconds
     lastTimeSpawned = 0,
     possibleSpawns = {
-        "rock", "snow"
+        "rock",
     },
 }
 

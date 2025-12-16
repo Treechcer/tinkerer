@@ -1,5 +1,5 @@
 entities = {
-    ents = { { tileX = 1, tileY = 1, index = "rock", health = 5, drop = {item = "rock", count = 14} } }, --all entity data stored here!
+    ents = { }, --all entity data stored here!
 }
 
 function entities.makeNewOne(tileX, tileY, index, health, drop)

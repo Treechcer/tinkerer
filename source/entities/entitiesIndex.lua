@@ -50,8 +50,8 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spwName, d
 end
 
 function entitiesIndex.f.init()
-    entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({ bit.BIT1, bit.BIT4 }))
-    entitiesIndex.f.addIndex("snow", 0, 0, 0)
+    --entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({ bit.BIT1, bit.BIT4 }))
+    --entitiesIndex.f.addIndex("snow", 0, 0, 0)
 end
 
 return entitiesIndex
