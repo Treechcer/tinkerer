@@ -18,7 +18,7 @@ function entitySpawner.func.spawn(dt)
     entitySpawner.lastTimeSpawned = 0
 
     spawns = math.random(1, entitySpawner.maxSpawns)
-    
+
     for i=0,spawns do
         local item = entitiesIndex[entitySpawner.possibleSpawns[math.random(1, #entitySpawner.possibleSpawns)]]
 

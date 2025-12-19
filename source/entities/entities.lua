@@ -2,8 +2,11 @@ entities = {
     ents = { }, --all entity data stored here!
 }
 
-function entities.makeNewOne(tileX, tileY, index, health, drop)
-    table.insert(entities.ents, {tileX = tileX, tileY = tileY, index = index, health = health, drop = drop})
+function entities.makeNewOne(tileX, tileY, index, health, drop, width, height)
+    width = width or 1
+    height = height or 1
+
+    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height })
 end
 
 function entities.render()
@@ -30,11 +33,39 @@ function entities.render()
     end
 end
 
-function entities.isEntityOnTile(tileX,tileY)
+function entities.isEntityOnTile(tileX, tileY)
     for index, value in ipairs(entities.ents) do
         if value.tileX == tileX and value.tileY == tileY then
             return index
         end
+    end
+
+    return -1
+end
+
+function entities.isEntityOnTileTableRet(tileX, tileY, width, height)
+    width = width or 1
+    height = height or 1
+    local tbl = {}
+    for index, value in ipairs(entities.ents) do
+        --if value.tileX == tileX and value.tileY == tileY then
+        --    return index
+        --end
+        --if (width ~= 1) then
+        --    print(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height)
+        --end
+
+        if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) then
+            if width ~= 1 or height ~= 1 then
+                table.insert(tbl, index)
+            else
+                return index
+            end
+        end
+    end
+
+    if next(tbl) ~= nil then
+        return tbl
     end
 
     return -1

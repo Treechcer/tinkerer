@@ -24,6 +24,9 @@ player = {
 
         frameNum = 0,
         screenSide = 0, -- 1 => right side of screen, -1 => left side of screen
+
+        height = 1,
+        width = 1,
     },
     camera = {
         x = 0,
