@@ -6,7 +6,10 @@ player = {
         y = 0,
 
         tileX = 0,
-        tileY = 0
+        tileY = 0,
+
+        chunkX = 0,
+        chunkY = 0
     },
     size = {
         width = 48,
@@ -57,9 +60,9 @@ function player.move(dt)
 
     local nextX = player.position.x + mvXp * player.atributes.speed * dt
     local nextY = player.position.y + mvYp * player.atributes.speed * dt
-    
-    --this sctrict movemt is temporary until I need to redo it, when I'll need to redo it it'll be redone
 
+    --this sctrict movemt is temporary until I need to redo it, when I'll need to redo it it'll be redone
+    --TODO make good movement that doesn't suck balls
     if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY))) and
         renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + player.size.height))) and
         renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY))) and
@@ -76,6 +79,9 @@ function player.move(dt)
         player.camera.y = player.camera.y + mvYc * player.atributes.speed * dt
 
         player.position.tileX, player.position.tileY = renderer.calculateTile(player.position.x, player.position.y)
+
+        player.position.chunkX = math.ceil((player.position.x + (player.size.width / 2)) / map.chunkWidth / map.tileSize)
+        player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
     end
 end
 

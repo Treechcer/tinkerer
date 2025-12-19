@@ -5,7 +5,7 @@ entitySpawner = {
     possibleSpawns = {
         "rock",
     },
-    maxSpawns = 5
+    maxSpawns = 3
 }
 
 function entitySpawner.func.spawn(dt)

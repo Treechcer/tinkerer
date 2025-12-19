@@ -27,8 +27,8 @@ end
 
 function love.draw()
 
-    love.graphics.print(player.position.tileX, 10, 10)
-    love.graphics.print(player.position.tileY, 10, 25)
+    love.graphics.print(player.position.chunkX, 10, 10)
+    love.graphics.print(player.position.chunkY, 10, 25)
     love.graphics.print(#entities.ents, 10, 40)
     if game.state == "game" then
         renderer.gameStateRenderer()
