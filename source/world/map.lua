@@ -10,9 +10,9 @@ map = { -- this will be the things to see the whole map, generate it etc.
     chunkHeightNum = 0,
     map = {
         chunks = {
-            { {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}} },
-            { {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}} },
-            { {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "test", colorScheme = {math.random(),math.random(),math.random(),math.random()}} }
+            { {chunkData = chunks.chunk1, biome = "hill", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "void", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "snow", colorScheme = {math.random(),math.random(),math.random(),math.random()}} },
+            { {chunkData = chunks.chunk1, biome = "grass", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "sand", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "void", colorScheme = {math.random(),math.random(),math.random(),math.random()}} },
+            { {chunkData = chunks.chunk1, biome = "snow", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "grass", colorScheme = {math.random(),math.random(),math.random(),math.random()}}, {chunkData = chunks.chunk1, biome = "grass", colorScheme = {math.random(),math.random(),math.random(),math.random()}} }
          },
         data = {
             buildings = {},

@@ -11,6 +11,7 @@ function tables.writeTable(t, index)
     local tableStart = (index > 1) and string.rep(" ", (index * 2) - 1) or ""
 
     print(tableStart .. "{")
+
     for key, value in pairs(t) do
         if type(value) == "table" then
             print(indent .. key .. " : ")
