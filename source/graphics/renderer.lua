@@ -35,12 +35,11 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     entities.render()
     cursor = spw.sprites.cursor
 
-    local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX - (player.cursor.width / 2),
-        player.cursor.tileY - (player.cursor.height / 2)))
+    local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
     if (renderer.checkCollsion(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))) then
         love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
-            0, map.tileSize / cursor.sprs[cursor.index]:getWidth() * player.cursor.width,
-            map.tileSize / cursor.sprs[cursor.index]:getHeight() * player.cursor.height)
+            0, (map.tileSize * player.cursor.width) / cursor.sprs[cursor.index]:getWidth(),
+        (map.tileSize * player.cursor.height) / cursor.sprs[cursor.index]:getHeight())
     end
         x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
         love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)

@@ -102,6 +102,11 @@ function player.cursor.updatePos() -- updates mouse position every frame - even 
 
     player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
+    --offset for it being better looking (if the width or height is > 2)
+
+    player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
+    player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
+
     player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
 end
 
