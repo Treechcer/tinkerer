@@ -7,6 +7,10 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     --local spw = require("source.assets.sprites.spriteWorker")
     spw.init()
 
+    biomeData.f.init()
+
+    entitySpawner.func.init()
+
     entitiesIndex.f.init()
 end
 

@@ -2,15 +2,18 @@ entitySpawner = {
     func = {},
     timeToSpawn = 1, --seconds
     lastTimeSpawned = 0,
-    possibleSpawns = {
-        grass = { "rock" },
-        sand = { "rock" },
-        void = { "rock" },
-        snow = { "rock" },
-        hill = { "rock" }
-    },
     maxSpawns = 3
 }
+
+function entitySpawner.func.init()
+    entitySpawner.possibleSpawns = {
+        grass = biomeData.grass.spawns,
+        sand  = biomeData.sand.spawns,
+        void  = biomeData.void.spawns,
+        snow  = biomeData.sand.spawns,
+        hill  = biomeData.hill.spawns
+    }
+end
 
 function entitySpawner.func.spawn(dt)
     entitySpawner.lastTimeSpawned = entitySpawner.lastTimeSpawned + dt

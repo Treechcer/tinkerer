@@ -19,6 +19,10 @@ function spw.init()
     spw.generateNewSprite("rock", love.graphics.newImage("source/assets/sprites/rock.png"))
     spw.generateNewSprite("hammer", love.graphics.newImage("source/assets/sprites/hammer.png"))
     spw.generateNewSprite("snow", love.graphics.newImage("source/assets/sprites/snow.png"))
+    spw.generateNewSprite("grass", love.graphics.newImage("source/assets/sprites/grass.png"))
+    spw.generateNewSprite("void", love.graphics.newImage("source/assets/sprites/void.png"))
+    spw.generateNewSprite("hill", love.graphics.newImage("source/assets/sprites/hill.png"))
+    spw.generateNewSprite("sand", love.graphics.newImage("source/assets/sprites/sand.png"))
 end
 
 ---@param timer number?
