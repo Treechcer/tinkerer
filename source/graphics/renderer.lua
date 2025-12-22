@@ -36,7 +36,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     cursor = spw.sprites.cursor
 
     local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-    if (renderer.checkCollsion(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))) then
+    if (renderer.checkCollsion(renderer.getWorldPos(player.cursor.tileX + (math.ceil(player.cursor.width / 2) - 1), player.cursor.tileY + (math.ceil(player.cursor.width / 2) - 1)))) then
         love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
             0, (map.tileSize * player.cursor.width) / cursor.sprs[cursor.index]:getWidth(),
         (map.tileSize * player.cursor.height) / cursor.sprs[cursor.index]:getHeight())
@@ -54,7 +54,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         local bonus = (player.cursor.screenSide == -1) and map.tileSize or 0
         love.graphics.draw(spr,
         xT + (map.tileSize * player.cursor.screenSide) + bonus + 1 / 2 * (map.tileSize * player.cursor.screenSide),
-            yT + player.size.height / 3, inventory.hotBar.moveVal,
+            yT + player.size.height / 3, inventory.hotBar.moveVal * player.cursor.screenSide,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,
             map.tileSize / spr:getHeight(),
             spr:getWidth() / 2,
