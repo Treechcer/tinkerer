@@ -1,0 +1,5 @@
+soundWorker = {
+
+}
+
+return soundWorker
