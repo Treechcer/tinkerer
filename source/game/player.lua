@@ -25,8 +25,8 @@ player = {
         frameNum = 0,
         screenSide = 0, -- 1 => right side of screen, -1 => left side of screen
 
-        height = 3,
-        width = 3,
+        height = 1,
+        width = 1,
     },
     camera = {
         x = 0,
@@ -85,6 +85,17 @@ function player.move(dt)
 
         player.position.chunkX = math.ceil((player.position.x + (player.size.width / 2)) / map.chunkWidth / map.tileSize)
         player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
+    end
+end
+
+function player.checkIfColided(dt)
+    if not renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x, player.position.y))) then
+
+        --this is temporary thingy, I would have to make my movement final yk
+
+        local mov = (player.atributes.speed / 2) * dt
+        player.position.x = player.position.x + mov
+        player.camera.x = player.camera.x + mov
     end
 end
 
