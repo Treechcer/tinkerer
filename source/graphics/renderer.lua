@@ -109,6 +109,18 @@ function renderer.calculateTile(x, y)
     return xT,yT
 end
 
+function renderer.checkCollsionWidthHeight(worldXpos, worldYpos, width, height)
+    for x=0, width - 1 do
+        for y=0, height - 1 do
+            if renderer.checkCollsion(worldXpos + x * map.tileSize, worldYpos + y * map.tileSize) then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 function renderer.checkCollsion(worldXpos, worldYpos)
     local xTile, yTile = renderer.calculateTile(worldXpos, worldYpos)
     xTile = xTile + 1
@@ -130,7 +142,7 @@ function renderer.checkCollsion(worldXpos, worldYpos)
         return false
     end
 
-    return not (chunk.chunkData[tileInChunkY][tileInChunkX] == 0) and chunk.owned
+    return chunk.chunkData[tileInChunkY][tileInChunkX] ~= 0 and chunk.owned
 end
 
 function renderer.getChunkData(worldXpos, worldYpos, atr) --uses worldPos

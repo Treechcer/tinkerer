@@ -2,7 +2,7 @@ entitySpawner = {
     func = {},
     timeToSpawn = 1, --seconds
     lastTimeSpawned = 0,
-    maxSpawns = 3
+    maxSpawns = 999
 }
 
 function entitySpawner.func.init()
@@ -43,16 +43,14 @@ function entitySpawner.func.spawn(dt)
         --tables.writeTable(entitySpawner.possibleSpawns)
         local item = entitiesIndex[entitySpawner.possibleSpawns[biome][math.random(1, #entitySpawner.possibleSpawns[biome])]]
 
-        if not renderer.checkCollsion(renderer.getWorldPos(tileX, tileY)) then
-            return
-        end
-
-        if entities.isEntityOnTile(tileX, tileY) ~= -1 then
-            return
+        --if not renderer.checkCollsion(renderer.getWorldPos(tileX, tileY)) then
+        --    return
+        --end
+        local wX, wY = renderer.getWorldPos(tileX, tileY)
+        if entities.isEntityOnTile(tileX, tileY, 5, 2) == -1 and renderer.checkCollsionWidthHeight(wX, wY, 5, 2) then
+            entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop, 5, 2)
         end
         --tables.writeTable(entitiesIndex)
-
-        entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop)
     end
 end
 

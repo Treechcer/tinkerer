@@ -2,6 +2,7 @@ love = require("love")
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
+    math.randomseed(os.time())
 
     player = require("source.game.player")
     map = require("source.world.map")

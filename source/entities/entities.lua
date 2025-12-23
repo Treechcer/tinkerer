@@ -23,7 +23,7 @@ function entities.render()
             if value.index ~= nil then
                 love.graphics.setColor(defaultColor)
                 local spr = spriteWorker.sprites[entitiesIndex[value.index].spwName].sprs
-                love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth(), map.tileSize / spr:getHeight())
+                love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * value.width, map.tileSize / spr:getHeight() * value.height)
             else
                 love.graphics.setColor(value.col or defaultColor)
                 love.graphics.rectangle("fill", posX, posY, map.tileSize,
@@ -33,9 +33,12 @@ function entities.render()
     end
 end
 
-function entities.isEntityOnTile(tileX, tileY)
+function entities.isEntityOnTile(tileX, tileY, width, height)
+    width = width or 1
+    height = height or 1
+
     for index, value in ipairs(entities.ents) do
-        if value.tileX == tileX and value.tileY == tileY then
+        if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) then
             return index
         end
     end
