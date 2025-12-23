@@ -37,6 +37,20 @@ player = {
     }
 }
 
+function player.init() -- initialises the position of player
+    local xMove = (map.chunkWidth * map.tileSize)
+    local yMove = (map.chunkHeight * map.tileSize)
+
+    player.position.x = math.floor(game.width / 2 - player.size.width / 2) + xMove
+    player.position.y = math.floor(game.height / 2 - player.size.height / 2) + yMove
+
+    player.camera.x = player.camera.x + xMove
+    player.camera.y = player.camera.y + yMove
+
+    player.position.absX, player.position.absY = renderer.calculateTile(player.position.x, player.position.y)
+    --print(player.position.absX, " ", player.position.absY)
+end
+
 function player.move(dt)
     local mvXp = 0
     local mvYp = 0
@@ -97,14 +111,6 @@ function player.checkIfColided(dt)
         player.position.x = player.position.x + mov
         player.camera.x = player.camera.x + mov
     end
-end
-
-function player.init() -- initialises the position of player
-    player.position.x = math.floor(game.width / 2 - player.size.width / 2)
-    player.position.y = math.floor(game.height / 2 - player.size.height / 2)
-
-    player.position.absX, player.position.absY = renderer.calculateTile(player.position.x, player.position.y)
-    --print(player.position.absX, " ", player.position.absY)
 end
 
 function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on

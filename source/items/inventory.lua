@@ -19,6 +19,9 @@ inventory = {
     inventoryBar = {
 
     },
+    itemsOutsideOfInventory = {
+        coins = 0,
+    },
     functions = {}
 }
 
