@@ -46,9 +46,8 @@ function entitySpawner.func.spawn(dt)
         --if not renderer.checkCollsion(renderer.getWorldPos(tileX, tileY)) then
         --    return
         --end
-        local wX, wY = renderer.getWorldPos(tileX, tileY)
-        if entities.isEntityOnTile(tileX, tileY, 5, 2) == -1 and renderer.checkCollsionWidthHeight(wX, wY, 5, 2) then
-            entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop, 5, 2)
+        if entities.isEntityOnTile(tileX, tileY, item.width, item.height) == -1 and renderer.checkCollsionWidthHeight(tileX, tileY, item.width, item.height) then
+            entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop, item.width, item.height)
         end
         --tables.writeTable(entitiesIndex)
     end

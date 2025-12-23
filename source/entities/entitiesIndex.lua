@@ -17,6 +17,8 @@ entitiesIndex = {
         --you have to :
         --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
         drop = { item = "rock", count = 5 },
+        width = 2,
+        height = 2
     }
 }
 
@@ -27,7 +29,11 @@ entitiesIndex = {
 ---@param weakness integer
 ---@param strenght integer
 ---@param spawnable boolean?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName)
+---@param width integer?
+---@param height integer?
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height)
+    width = width or 1
+    height = height or 1
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName
@@ -51,7 +57,11 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable,
         HP = HP,
         weakness = weakness,
         strengthMin =
-    strenght, drop = drop }
+        strenght,
+        drop = drop,
+        height = height,
+        width = width
+    }
 end
 
 function entitiesIndex.f.init()

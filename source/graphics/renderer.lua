@@ -109,10 +109,11 @@ function renderer.calculateTile(x, y)
     return xT,yT
 end
 
-function renderer.checkCollsionWidthHeight(worldXpos, worldYpos, width, height)
+function renderer.checkCollsionWidthHeight(tileX, tileY, width, height)
     for x=0, width - 1 do
         for y=0, height - 1 do
-            if renderer.checkCollsion(worldXpos + x * map.tileSize, worldYpos + y * map.tileSize) then
+            worldXpos, worldYpos = renderer.getWorldPos(tileX + x, tileY + y)
+            if renderer.checkCollsion(worldXpos, worldYpos) then
                 return true
             end
         end
