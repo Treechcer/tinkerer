@@ -17,9 +17,9 @@ function tables.writeTable(t, index)
             print(indent .. key .. " : ")
             tables.writeTable(value, index + 1)
         elseif type(value) == "function" then
-            print(indent .. key .. " : " .. tostring(value) .. "()")
+            print(indent .. tostring(key) .. " : " .. tostring(value) .. "()")
         else
-            print(indent .. key .. " : " .. value)
+            print(indent .. tostring(key) .. " : " .. tostring(value))
         end
     end
     print(tableStart .. "}")

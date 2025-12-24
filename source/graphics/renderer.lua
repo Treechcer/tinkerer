@@ -53,15 +53,19 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         local chunkX = math.floor((xTile - 1) / map.chunkWidth) + 1
         local chunkY = math.floor((yTile - 1) / map.chunkHeight) + 1
 
-        local worldX = (chunkX - 1) * map.chunkWidth * map.tileSize
-        local worldY = (chunkY - 1) * map.chunkHeight * map.tileSize
+        if not (chunkX <= 0 or chunkY <= 0) and chunkY <= map.chunkHeightNum and chunkX <= map.chunkWidthNum then
+            local worldX = (chunkX - 1) * map.chunkWidth * map.tileSize
+            local worldY = (chunkY - 1) * map.chunkHeight * map.tileSize
 
-        local absX, absY = renderer.getAbsolutePos(worldX, worldY)
+            local absX, absY = renderer.getAbsolutePos(worldX, worldY)
 
-        --love.graphics.rectangle("fill", absX, absY, map.chunkWidth * map.tileSize, map.chunkHeight * map.tileSize)
-        local cursorBuyer = spw.sprites.cursorBuy
-        local spr = cursorBuyer.sprs[cursorBuyer.index]
-        love.graphics.draw(spr, absX, absY, 0, (map.chunkWidth * map.tileSize) / spr:getWidth(), (map.chunkWidth * map.tileSize) / spr:getHeight())
+            --love.graphics.rectangle("fill", absX, absY, map.chunkWidth * map.tileSize, map.chunkHeight * map.tileSize)
+            local cursorBuyer = spw.sprites.cursorBuy
+            local spr = cursorBuyer.sprs[cursorBuyer.index]
+            love.graphics.draw(spr, absX, absY, 0, (map.chunkWidth * map.tileSize) / spr:getWidth(), (map.chunkWidth * map.tileSize) / spr:getHeight())
+
+            map.f.buyIsland(chunkX, chunkY)
+        end
     end
         x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
         love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)

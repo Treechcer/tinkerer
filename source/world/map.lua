@@ -17,8 +17,13 @@ map = { -- this will be the things to see the whole map, generate it etc.
         data = {
             buildings = {},
         }
-    }
+    },
+    f = {}
 }
+
+function map.f.buyIsland(chX, chY)
+    map.map.chunks[chY][chX].owned = true
+end
 
 map.chunkHeightNum = #map.map.chunks
 map.chunkWidthNum = #map.map.chunks[1]

@@ -2,7 +2,7 @@ entitySpawner = {
     func = {},
     timeToSpawn = 1, --seconds
     lastTimeSpawned = 0,
-    maxSpawns = 999
+    maxSpawns = 5
 }
 
 function entitySpawner.func.init()

@@ -17,11 +17,10 @@ entitiesIndex = {
         --you have to :
         --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
         drop = { item = "rock", count = 5 },
-        width = 2,
-        height = 2
+        width = 1,
+        height = 1
     }
 }
-
 
 ---@param entityName string
 ---@param spwName string?
