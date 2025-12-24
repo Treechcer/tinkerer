@@ -112,14 +112,14 @@ end
 function renderer.checkCollsionWidthHeight(tileX, tileY, width, height)
     for x=0, width - 1 do
         for y=0, height - 1 do
-            worldXpos, worldYpos = renderer.getWorldPos(tileX + x, tileY + y)
-            if renderer.checkCollsion(worldXpos, worldYpos) then
-                return true
+            local worldXpos, worldYpos = renderer.getWorldPos(tileX + x, tileY + y)
+            if not renderer.checkCollsion(worldXpos, worldYpos) then
+                return false
             end
         end
     end
 
-    return false
+    return true
 end
 
 function renderer.checkCollsion(worldXpos, worldYpos)
