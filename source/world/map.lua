@@ -10,9 +10,9 @@ map = { -- this will be the things to see the whole map, generate it etc.
     chunkHeightNum = 0,
     map = {
         chunks = {
-            { { chunkData = chunks.chunk4, biome = "hill",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } } },
-            { { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "sand",  owned = true,  colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } } },
-            { { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() } } }
+            { { chunkData = chunks.chunk4, biome = "hill",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } },
+            { { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "sand",  owned = true,  colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } },
+            { { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } }
          },
         data = {
             buildings = {},
@@ -22,7 +22,12 @@ map = { -- this will be the things to see the whole map, generate it etc.
 }
 
 function map.f.buyIsland(chX, chY)
-    map.map.chunks[chY][chX].owned = true
+    local mapData = map.map.chunks[chY][chX]
+    local coins = inventory.itemsOutsideOfInventory.coins
+    if coins >= mapData.price then
+        mapData.owned = true
+        inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - mapData.price
+    end
 end
 
 map.chunkHeightNum = #map.map.chunks
