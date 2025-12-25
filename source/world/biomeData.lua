@@ -1,5 +1,6 @@
 biomeData = {
     f = {},
+    chunkNames = {"grass", "sand", "void", "snow", "hill"}
 }
 
 function biomeData.f.init()

@@ -1,5 +1,5 @@
 chunks = { -- this will store all needed things with chunks, like all possible ones to generate etc.
-    chunk1 = {
+    {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -10,7 +10,7 @@ chunks = { -- this will store all needed things with chunks, like all possible o
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     },
-    chunk2 = {
+    {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 0, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 0, 1, 1, 1, 1 },
@@ -21,7 +21,7 @@ chunks = { -- this will store all needed things with chunks, like all possible o
         { 1, 1, 1, 1, 0, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     },
-    chunk3 = {
+    {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 0, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 0, 1, 1, 1, 1, 1, 0, 1 },
@@ -32,7 +32,7 @@ chunks = { -- this will store all needed things with chunks, like all possible o
         { 1, 0, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     },
-    chunk4 = {
+    {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 0, 1 },
@@ -43,7 +43,7 @@ chunks = { -- this will store all needed things with chunks, like all possible o
         { 1, 1, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     },
-    chunk5 = {
+    {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1 },

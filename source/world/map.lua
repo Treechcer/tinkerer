@@ -1,18 +1,19 @@
 local chunks = require("source.world.chunks")
+local chunkGenerate = require("source.world.chunkGenerate")
 
 math.randomseed(os.time())
 
 map = { -- this will be the things to see the whole map, generate it etc.
     tileSize = 48,
-    chunkWidth = #chunks.chunk1[1],
-    chunkHeight = #chunks.chunk1,
-    chunkWidthNum = 0,
-    chunkHeightNum = 0,
+    chunkWidth = #chunks[1][1],
+    chunkHeight = #chunks[1],
+    chunkWidthNum = 7,
+    chunkHeightNum = 7,
     map = {
         chunks = {
-            { { chunkData = chunks.chunk4, biome = "hill",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } },
-            { { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "sand",  owned = true,  colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "void",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } },
-            { { chunkData = chunks.chunk1, biome = "snow",  owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10 }, { chunkData = chunks.chunk1, biome = "grass", owned = false, colorScheme = { math.random(), math.random(), math.random(), math.random() }, price = 10  } }
+            --{ chunkGenerate.f.makeChunk(), chunkGenerate.f.makeChunk(),     chunkGenerate.f.makeChunk() },
+            --{ chunkGenerate.f.makeChunk(), chunkGenerate.f.makeChunk(true), chunkGenerate.f.makeChunk() },
+            --{ chunkGenerate.f.makeChunk(), chunkGenerate.f.makeChunk(),     chunkGenerate.f.makeChunk() }
          },
         data = {
             buildings = {},
@@ -20,6 +21,16 @@ map = { -- this will be the things to see the whole map, generate it etc.
     },
     f = {}
 }
+
+function map.f.init()
+    for y = 1, map.chunkWidthNum do
+        map.map.chunks[y] = {}
+        for x = 1, map.chunkHeightNum do
+            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(true))
+            --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
+        end
+    end
+end
 
 function map.f.buyIsland(chX, chY)
     local mapData = map.map.chunks[chY][chX]
@@ -29,8 +40,5 @@ function map.f.buyIsland(chX, chY)
         inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - mapData.price
     end
 end
-
-map.chunkHeightNum = #map.map.chunks
-map.chunkWidthNum = #map.map.chunks[1]
 
 return map
