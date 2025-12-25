@@ -38,10 +38,10 @@ player = {
 }
 
 function player.init() -- initialises the position of player
-    local xMove = (map.chunkWidth * map.tileSize)
-    local yMove = (map.chunkHeight * map.tileSize)
+    local xMove = (map.chunkWidthNum * map.tileSize * map.chunkWidth) / 2
+    local yMove = (map.chunkHeightNum * map.tileSize * map.chunkHeight) / 2
 
-    player.position.x = math.floor(game.width / 2 - player.size.width / 2) + xMove
+    player.position.x = math.floor(game.width / 2 - player.size.width / 2) +  xMove
     player.position.y = math.floor(game.height / 2 - player.size.height / 2) + yMove
 
     player.camera.x = player.camera.x + xMove

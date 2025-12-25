@@ -20,7 +20,7 @@ inventory = {
 
     },
     itemsOutsideOfInventory = {
-        coins = 10,
+        coins = 999999999999,
     },
     functions = {}
 }

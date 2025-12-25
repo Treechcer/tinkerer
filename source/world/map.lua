@@ -7,8 +7,8 @@ map = { -- this will be the things to see the whole map, generate it etc.
     tileSize = 48,
     chunkWidth = #chunks[1][1],
     chunkHeight = #chunks[1],
-    chunkWidthNum = 7,
-    chunkHeightNum = 7,
+    chunkWidthNum = 9,
+    chunkHeightNum = 9,
     map = {
         chunks = {
             --{ chunkGenerate.f.makeChunk(), chunkGenerate.f.makeChunk(),     chunkGenerate.f.makeChunk() },
@@ -26,7 +26,7 @@ function map.f.init()
     for y = 1, map.chunkWidthNum do
         map.map.chunks[y] = {}
         for x = 1, map.chunkHeightNum do
-            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(true))
+            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(map.chunkWidthNum / 2 == x / 2 and map.chunkHeightNum / 2 == y / 2))
             --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
         end
     end
