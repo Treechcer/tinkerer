@@ -41,11 +41,14 @@ function player.init() -- initialises the position of player
     local xMove = (map.chunkWidthNum * map.tileSize * map.chunkWidth) / 2
     local yMove = (map.chunkHeightNum * map.tileSize * map.chunkHeight) / 2
 
-    player.position.x = math.floor(game.width / 2 - player.size.width / 2) +  xMove
-    player.position.y = math.floor(game.height / 2 - player.size.height / 2) + yMove
+    local midX = math.floor(game.width / 2 - player.size.width / 2)
+    local midY = math.floor(game.height / 2 - player.size.height / 2)
 
-    player.camera.x = player.camera.x + xMove
-    player.camera.y = player.camera.y + yMove
+    player.position.x = xMove
+    player.position.y = yMove
+
+    player.camera.x = player.camera.x + xMove - midX
+    player.camera.y = player.camera.y + yMove - midY
 
     player.position.absX, player.position.absY = renderer.calculateTile(player.position.x, player.position.y)
     --print(player.position.absX, " ", player.position.absY)

@@ -26,7 +26,8 @@ function map.f.init()
     for y = 1, map.chunkWidthNum do
         map.map.chunks[y] = {}
         for x = 1, map.chunkHeightNum do
-            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(map.chunkWidthNum / 2 == x / 2 and map.chunkHeightNum / 2 == y / 2))
+            local isMiddle = (x == math.ceil(map.chunkWidthNum / 2)) and (y == math.ceil(map.chunkHeightNum / 2))
+            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(isMiddle))
             --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
         end
     end
