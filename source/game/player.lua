@@ -27,6 +27,9 @@ player = {
 
         height = 1,
         width = 1,
+
+        chunkX = 0,
+        chunkY = 0,
     },
     camera = {
         x = 0,
@@ -128,6 +131,9 @@ function player.cursor.updatePos() -- updates mouse position every frame - even 
     player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
 
     player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+
+    player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
+    player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
 end
 
 return player

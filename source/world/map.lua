@@ -39,7 +39,10 @@ function map.f.buyIsland(chX, chY)
     if coins >= mapData.price then
         mapData.owned = true
         inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - mapData.price
+        return true
     end
+
+    return false
 end
 
 return map

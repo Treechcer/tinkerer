@@ -53,6 +53,9 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         local chunkX = math.floor((xTile - 1) / map.chunkWidth) + 1
         local chunkY = math.floor((yTile - 1) / map.chunkHeight) + 1
 
+        player.cursor.chunkX = chunkX
+        player.cursor.chunkY = chunkY
+
         if not (chunkX <= 0 or chunkY <= 0) and chunkY <= map.chunkHeightNum and chunkX <= map.chunkWidthNum then
             local worldX = (chunkX - 1) * map.chunkWidth * map.tileSize
             local worldY = (chunkY - 1) * map.chunkHeight * map.tileSize
@@ -64,7 +67,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             local spr = cursorBuyer.sprs[cursorBuyer.index]
             love.graphics.draw(spr, absX, absY, 0, (map.chunkWidth * map.tileSize) / spr:getWidth(), (map.chunkWidth * map.tileSize) / spr:getHeight())
 
-            map.f.buyIsland(chunkX, chunkY)
+            --map.f.buyIsland(chunkX, chunkY)
         end
     end
         x, y = renderer.getAbsolutePos(player.position.x, player.position.y)

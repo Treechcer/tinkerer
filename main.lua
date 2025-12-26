@@ -55,5 +55,13 @@ function love.wheelmoved(x, y)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    itemInteraction.breakEntity()
+    if button == 1 then
+            if itemInteraction.breakEntity() then
+                return
+            end
+
+        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+            return
+        end
+    end
 end
