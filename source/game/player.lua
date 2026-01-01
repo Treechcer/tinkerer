@@ -16,8 +16,8 @@ player = {
         height = 96
     },
     cursor = {
-        x = love.mouse.getX(),
-        y = love.mouse.getY(),
+        x = 0,
+        y = 0,
 
         tileX = 0,
         tileY = 0,
@@ -62,18 +62,18 @@ function player.move(dt)
     local mvYp = 0
     local mvXc = 0
     local mvYc = 0
-    if love.keyboard.isDown("w") then
+    if love.keyboard.isDown(settings.keys.up) then
         mvYp = -1
         mvYc = -1
-    elseif love.keyboard.isDown("s") then
+    elseif love.keyboard.isDown(settings.keys.down) then
         mvYp = 1
         mvYc = 1
     end
 
-    if love.keyboard.isDown("a") then
+    if love.keyboard.isDown(settings.keys.left) then
         mvXp = -1
         mvXc = -1
-    elseif love.keyboard.isDown("d") then
+    elseif love.keyboard.isDown(settings.keys.right) then
         mvXp = 1
         mvXc = 1
     end
@@ -120,20 +120,44 @@ function player.checkIfColided(dt)
 end
 
 function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
-    player.cursor.x = love.mouse.getX() + player.camera.x
-    player.cursor.y = love.mouse.getY() + player.camera.y
+    if game.os ~= "PSP" then
+        player.cursor.x = love.mouse.getX() + player.camera.x
+        player.cursor.y = love.mouse.getY() + player.camera.y
 
-    player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+        player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
-    --offset for it being better looking (if the width or height is > 2)
+        --offset for it being better looking (if the width or height is > 2)
 
-    player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
-    player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
+        player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
+        player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
 
-    player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+        player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
 
-    player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
-    player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+        player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
+        player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+    end
+
+    player.cursor.pressing()
+end
+
+function player.cursor.pressing()
+    local down = false
+
+    if game.os ~=  "PSP" then
+        down = love.mouse.isDown(1)
+    elseif game.os == "PSP" then
+        down = love.keyboard.isDown(settings.keys.up)
+    end
+
+    if down then
+        if itemInteraction.breakEntity() then
+            return
+        end
+
+        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+            return
+        end
+    end
 end
 
 return player

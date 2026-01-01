@@ -15,9 +15,19 @@ game = {
             etc = 1
         },
     },
-    height = 272,
-    width = 480, --this will be possible to change of course, but I have to have some basic info for beginning
-    state = "game" -- this is to know what to render and what behaviour it neeeds to do, if menu, game etc...
+    --height = 272,
+    --width = 480, --this will be possible to change of course, but I have to have some basic info for beginning
+    state = "game", -- this is to know what to render and what behaviour it neeeds to do, if menu, game etc...
 }
+
+game.os = love.system.getOS()
+
+if game.os ~= "PSP" and game.os ~= "Vita" and game.os ~= "PS3" then
+    game.width  = love.graphics.getWidth()
+    game.height = love.graphics.getHeight()
+elseif game.os == "PSP" then
+    game.width  = 480
+    game.height = 272
+end
 
 return game

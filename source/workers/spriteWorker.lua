@@ -40,15 +40,17 @@ end
 function spw.changeFrames(dt) -- this is for changing the frames it's in every n seconds
     for name, sprite in pairs(spw.sprites) do
         if type(sprite.sprs) == "table" then
-            if sprite.lastChange >= sprite.timer then
-                sprite.index = sprite.index + 1
-                sprite.lastChange = 0
+            if sprite.lastChange ~= nil and sprite.timer ~= nil then
+                if sprite.lastChange >= sprite.timer then
+                    sprite.index = sprite.index + 1
+                    sprite.lastChange = 0
 
-                if sprite.index > #sprite.sprs then
-                    sprite.index = 1
+                    if sprite.index > #sprite.sprs then
+                        sprite.index = 1
+                    end
+                else
+                    sprite.lastChange = sprite.lastChange + dt
                 end
-            else
-                sprite.lastChange = sprite.lastChange + dt
             end
         end
         --sprite = spw[index]

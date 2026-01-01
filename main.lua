@@ -1,7 +1,11 @@
 love = require("love")
 
 function love.load()
-    love.graphics.setDefaultFilter("nearest", "nearest")
+    game = require("source.game.game")
+
+    if game.os ~= "PSP" then
+        love.graphics.setDefaultFilter("nearest", "nearest")
+    end
     math.randomseed(os.time())
 
     player = require("source.game.player")
@@ -9,7 +13,6 @@ function love.load()
     map = require("source.world.map")
     REF = require("source.game.runEveryFrame")
     renderer = require("source.graphics.renderer")
-    game = require("source.game.game")
     init = require("source.game.init")
     vectors = require("source.graphics.vectors")
     bit = require("source.workers.bit")
@@ -54,14 +57,14 @@ function love.wheelmoved(x, y)
     end
 end
 
-function love.mousepressed(x, y, button, istouch, presses)
-    if button == 1 then
-            if itemInteraction.breakEntity() then
-                return
-            end
-
-        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
-            return
-        end
-    end
-end
+--function love.mousepressed(x, y, button, istouch, presses)
+--    if button == 1 then
+--            if itemInteraction.breakEntity() then
+--                return
+--            end
+--
+--        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+--            return
+--        end
+--    end
+--end

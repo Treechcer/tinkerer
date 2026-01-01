@@ -1,4 +1,4 @@
-bitLib = require("bit")
+--bitLib = require("bit")
 
 bit = {
     BIT1 = 1,
@@ -16,10 +16,38 @@ bit = {
     maxBit = 2047
 }
 
+function bor(a, b)
+    local result = 0
+    local bitval = 1
+    while a > 0 or b > 0 do
+        if a % 2 == 1 or b % 2 == 1 then
+            result = result + bitval
+        end
+        a = math.floor(a / 2)
+        b = math.floor(b / 2)
+        bitval = bitval * 2
+    end
+    return result
+end
+
+function band(a, b)
+    local result = 0
+    local bitval = 1
+    while a > 0 and b > 0 do
+        if a % 2 == 1 and b % 2 == 1 then
+            result = result + bitval
+        end
+        a = math.floor(a / 2)
+        b = math.floor(b / 2)
+        bitval = bitval * 2
+    end
+    return result
+end
+
 function bit.addBit(t)
     finalBit = 0
     for key, value in pairs(t) do
-        finalBit = bitLib.bor(finalBit, value)
+        finalBit = bor(finalBit, value)
     end
 
     return finalBit
@@ -28,7 +56,7 @@ end
 function bit.timesBit(t)
     finalBit = bit.maxBit
     for key, value in pairs(t) do
-        finalBit = bitLib.band(finalBit, value)
+        finalBit = band(finalBit, value)
     end
 
     return finalBit
