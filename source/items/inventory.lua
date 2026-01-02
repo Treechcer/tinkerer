@@ -1,10 +1,7 @@
 inventory = {
     hotBar = {
         maxItems = 4,
-        items = {
-            { item = "hammer", count = 1 },
-            { item = "rock", count = 5 }
-        },
+        --items = {},
         boxSize = 50, --pixels
         paddingBottom = 15,
         itemPad = 3,
@@ -17,7 +14,15 @@ inventory = {
         moving = false
     },
     inventoryBar = {
-
+        inventory = {
+            {},
+            {},
+            {},
+            {
+                { item = "hammer", count = 1 },
+                { item = "rock", count = 5 }
+            },
+        } --this is sectioned into 4 x 4 inventory parts, the last one is hotbar
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,
@@ -28,6 +33,7 @@ inventory = {
 function inventory.functions.renderHotbar()
     --TODO fix the number color and stuff not important rn
     local hotbar = inventory.hotBar
+    local inventoryHB = inventory.inventoryBar.inventory[4]
     local totalWidth = hotbar.maxItems * hotbar.boxSize
     local startX = (game.width - totalWidth) / 2
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
@@ -41,14 +47,14 @@ function inventory.functions.renderHotbar()
         love.graphics.rectangle("fill", startX + (i - 1) * hotbar.boxSize, y, hotbar.boxSize, hotbar.boxSize)
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("line", startX + (i - 1) * hotbar.boxSize, y, hotbar.boxSize, hotbar.boxSize)
-        if hotbar.items[i] ~= nil then
+        if inventoryHB[i] ~= nil then
             love.graphics.setColor(1, 1, 1)
-            local spr = spw.sprites[hotbar.items[i].item].sprs
+            local spr = spw.sprites[inventoryHB[i].item].sprs
             love.graphics.draw(spr, startX + (i - 1) * hotbar.boxSize + hotbar.itemPad, y + hotbar.itemPad, 0,
                 (hotbar.boxSize - hotbar.itemPad * 2) / spr:getWidth(),
                 (hotbar.boxSize - hotbar.itemPad * 2) / spr:getHeight())
             love.graphics.setColor(1,1,1)
-            love.graphics.print(math.floor(hotbar.items[i].count),
+            love.graphics.print(math.floor(inventoryHB[i].count),
                 startX + (i) * hotbar.boxSize - hotbar.numberPad,
                 y + hotbar.boxSize - hotbar.numberPad)
         end
@@ -62,11 +68,11 @@ function inventory.functions.update(dt)
 end
 
 function inventory.functions.addNewItem(item, count)
-    if (inventory.hotBar.maxItems > #inventory.hotBar.items) then
+    if (inventory.hotBar.maxItems > #inventory.inventoryBar.inventory[4]) then
         if count <= itemIndex[item].maxStackSize then
-            table.insert(inventory.hotBar.items, { item = item, count = count })
+            table.insert(inventory.inventoryBar.inventory[4], { item = item, count = count })
         else
-            table.insert(inventory.hotBar.items, { item = item, count = itemIndex[item].maxStackSize })
+            table.insert(inventory.inventoryBar.inventory[4], { item = item, count = itemIndex[item].maxStackSize })
             inventory.functions.addItem(item, count - itemIndex[item].maxStackSize)
         end
     end
@@ -81,7 +87,7 @@ function inventory.functions.addItem(item, count)
 
     local found = false
 
-    for index, value in ipairs(inventory.hotBar.items) do
+    for index, value in ipairs(inventory.inventoryBar.inventory[4]) do
         if value.item == item and value.count < itemIndex[item].maxStackSize then
             if itemIndex[item].maxStackSize < value.count + count then
                 local overflow = (itemIndex[item].maxStackSize - (value.count + count)) * (-1)
@@ -105,10 +111,10 @@ end
 
 
 function inventory.functions.itemMove(dt)
-    if inventory.hotBar.items[inventory.hotBar.selectedItem] == nil then
+    if inventory.inventoryBar.inventory[4][inventory.hotBar.selectedItem] == nil then
         return
     end
-    local item = itemIndex[inventory.hotBar.items[inventory.hotBar.selectedItem].item]
+    local item = itemIndex[inventory.inventoryBar.inventory[4][inventory.hotBar.selectedItem].item]
     if inventory.hotBar.moveVal >= item.attackRotation then
         inventory.hotBar.moveItem = false
     end
