@@ -22,7 +22,7 @@ inventory = {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 }
             },
-        } --this is sectioned into 4 x 4 inventory parts, the last one is hotbar
+        } --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,
@@ -33,7 +33,7 @@ inventory = {
 function inventory.functions.renderHotbar()
     --TODO fix the number color and stuff not important rn
     local hotbar = inventory.hotBar
-    local inventoryHB = inventory.inventoryBar.inventory[4]
+    local inventoryHB = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]
     local totalWidth = hotbar.maxItems * hotbar.boxSize
     local startX = (game.width - totalWidth) / 2
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
@@ -68,11 +68,11 @@ function inventory.functions.update(dt)
 end
 
 function inventory.functions.addNewItem(item, count)
-    if (inventory.hotBar.maxItems > #inventory.inventoryBar.inventory[4]) then
+    if (inventory.hotBar.maxItems > #inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]) then
         if count <= itemIndex[item].maxStackSize then
-            table.insert(inventory.inventoryBar.inventory[4], { item = item, count = count })
+            table.insert(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory], { item = item, count = count })
         else
-            table.insert(inventory.inventoryBar.inventory[4], { item = item, count = itemIndex[item].maxStackSize })
+            table.insert(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory], { item = item, count = itemIndex[item].maxStackSize })
             inventory.functions.addItem(item, count - itemIndex[item].maxStackSize)
         end
     end
@@ -87,7 +87,7 @@ function inventory.functions.addItem(item, count)
 
     local found = false
 
-    for index, value in ipairs(inventory.inventoryBar.inventory[4]) do
+    for index, value in ipairs(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]) do
         if value.item == item and value.count < itemIndex[item].maxStackSize then
             if itemIndex[item].maxStackSize < value.count + count then
                 local overflow = (itemIndex[item].maxStackSize - (value.count + count)) * (-1)
@@ -111,10 +111,10 @@ end
 
 
 function inventory.functions.itemMove(dt)
-    if inventory.inventoryBar.inventory[4][inventory.hotBar.selectedItem] == nil then
+    if inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem] == nil then
         return
     end
-    local item = itemIndex[inventory.inventoryBar.inventory[4][inventory.hotBar.selectedItem].item]
+    local item = itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item]
     if inventory.hotBar.moveVal >= item.attackRotation then
         inventory.hotBar.moveItem = false
     end
