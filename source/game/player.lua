@@ -129,39 +129,20 @@ function player.checkIfColided(dt)
 end
 
 function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
-    if game.os ~= "PSP" then
-        player.cursor.x = love.mouse.getX() + player.camera.x
-        player.cursor.y = love.mouse.getY() + player.camera.y
+    player.cursor.x = love.mouse.getX() + player.camera.x
+    player.cursor.y = love.mouse.getY() + player.camera.y
 
-        player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+    player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
-        --offset for it being better looking (if the width or height is > 2)
+    --offset for it being better looking (if the width or height is > 2)
 
-        player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
-        player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
+    player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
+    player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
 
-        player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+    player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
 
-        player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
-        player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
-    elseif game.os == "PSP" and (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
-        player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
-
-        player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) * map.tileSize + player.cursor.tileX
-        player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) * map.tileSize + player.cursor.tileY
-
-        --offset for it being better looking (if the width or height is > 2)
-
-        player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
-        player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
-
-        player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
-
-        player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
-        player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
-
-        player.cursor.consoles.last = 0
-    end
+    player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
+    player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
 
     player.cursor.pressing()
 end
@@ -169,17 +150,13 @@ end
 function player.cursor.pressing()
     local down = false
 
-    if game.os ~=  "PSP" then
-        down = love.mouse.isDown(1)
-    elseif game.os == "PSP" then
-        down = love.keyboard.isDown(settings.keys.scrollMinus) and love.keyboard.isDown(settings.keys.scrollPlus)
-    end
+    down = love.mouse.isDown(1)
 
     if down then
         if itemInteraction.breakEntity() ~= false then
             return
         end
-    
+
         if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
             return
         end

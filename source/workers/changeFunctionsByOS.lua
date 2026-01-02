@@ -70,17 +70,57 @@ if game.os == "PSP" then
         player.checkIfColided(dt)
 
         player.scroll = function ()
-            if love.keyboard.isDown(settings.keys.scrollMinus) and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) then
+            local leftTrigger = love.keyboard.isDown(settings.keys.scrollMinus)
+            local rightTrigger = love.keyboard.isDown(settings.keys.scrollPlus)
+
+            if leftTrigger and not rightTrigger and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) then
                 inventory.hotBar.selectedItem = inventory.hotBar.selectedItem + 1
                 inventory.hotBar.lastTime = 0
             end
 
-            if love.keyboard.isDown(settings.keys.scrollPlus) and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem <= 1) then
+            if rightTrigger and not leftTrigger and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem <= 1) then
                 inventory.hotBar.selectedItem = inventory.hotBar.selectedItem - 1
                 inventory.hotBar.lastTime = 0
             end
         end
 
         player.cursor.consoles.last = player.cursor.consoles.last + dt
+    end
+
+    function player.cursor.pressing()
+        local down = false
+
+        down = love.keyboard.isDown(settings.keys.scrollMinus) and love.keyboard.isDown(settings.keys.scrollPlus)
+
+        if down then
+            if itemInteraction.breakEntity() ~= false then
+                return
+            end
+        
+            if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+                return
+            end
+        end
+    end
+
+    function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
+        if (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
+            player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+
+            player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) * map.tileSize + player.cursor.tileX
+            player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) * map.tileSize + player.cursor.tileY
+
+            player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
+            player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
+
+            player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+
+            player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
+            player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+
+            player.cursor.consoles.last = 0
+        end
+
+        player.cursor.pressing()
     end
 end
