@@ -63,6 +63,9 @@ function player.init() -- initialises the position of player
 
     player.cursor.x = xMove
     player.cursor.y = yMove
+
+    player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+
 end
 
 ---@diagnostic disable: duplicate-set-field

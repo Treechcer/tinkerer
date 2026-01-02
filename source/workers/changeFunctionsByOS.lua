@@ -87,7 +87,7 @@ if game.os == "PSP" then
         player.cursor.consoles.last = player.cursor.consoles.last + dt
     end
 
-    function player.cursor.pressing()
+    player.cursor.pressing = function ()
         local down = false
 
         down = love.keyboard.isDown(settings.keys.scrollMinus) and love.keyboard.isDown(settings.keys.scrollPlus)
@@ -103,12 +103,12 @@ if game.os == "PSP" then
         end
     end
 
-    function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
+    player.cursor.updatePos = function () -- updates mouse position every frame - even calculates the tiles it's on
         if (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
-            player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+            --player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
-            player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) * map.tileSize + player.cursor.tileX
-            player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) * map.tileSize + player.cursor.tileY
+            player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) + player.cursor.tileX
+            player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) + player.cursor.tileY
 
             player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
             player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
@@ -117,6 +117,18 @@ if game.os == "PSP" then
 
             player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
             player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+
+            --some kinds of limits so it's harder to lose it yk
+
+            local dx = player.cursor.tileX - player.position.tileX
+            if math.abs(dx) > 6 then
+                player.cursor.tileX = player.position.tileX + 7 * ((dx > 0) and 1 or -1)
+            end
+
+            local dy = player.cursor.tileY - player.position.tileY
+            if math.abs(dy) > 3 then
+                player.cursor.tileY = player.position.tileY + 4 * ((dy > 0) and 1 or -1)
+            end
 
             player.cursor.consoles.last = 0
         end

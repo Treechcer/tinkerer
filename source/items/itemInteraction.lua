@@ -26,7 +26,7 @@ function itemInteraction.breakEntity()
 end
 
 function itemInteraction.hit(entIndex)
-    local item = inventory.hotBar.items[inventory.hotBar.selectedItem].item
+    local item = inventory.inventoryBar.inventory[4][inventory.hotBar.selectedItem].item
     if entIndex >= 1 and entities.canWeDamage(entIndex, itemIndex[item].weakness, itemIndex[item].strength) then
         entities.damageEntity(entIndex, itemIndex[item].attack)
         return true
