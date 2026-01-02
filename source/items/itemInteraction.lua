@@ -15,15 +15,14 @@ function itemInteraction.breakEntity()
         table.sort(entIndexs, function(x, y) return x > y end)
         for index, value in ipairs(entIndexs) do
             --print("hit?", c, " ", #entIndexs)
-            return itemInteraction.hit(value)
+            inventory.hotBar.moveItem = itemInteraction.hit(value)
+            return inventory.hotBar.moveItem
             --c = c + 1
         end
     else
-        return itemInteraction.hit(entIndexs)
+        inventory.hotBar.moveItem = itemInteraction.hit(entIndexs)
+        return inventory.hotBar.moveItem
     end
-
-
-    inventory.hotBar.moveItem = true
 end
 
 function itemInteraction.hit(entIndex)

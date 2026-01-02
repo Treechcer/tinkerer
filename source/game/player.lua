@@ -65,6 +65,7 @@ function player.init() -- initialises the position of player
     player.cursor.y = yMove
 end
 
+---@diagnostic disable: duplicate-set-field
 function player.move(dt)
     local mvXp = 0
     local mvYp = 0
@@ -175,10 +176,10 @@ function player.cursor.pressing()
     end
 
     if down then
-        if itemInteraction.breakEntity() then
+        if itemInteraction.breakEntity() ~= false then
             return
         end
-
+    
         if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
             return
         end

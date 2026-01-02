@@ -26,24 +26,35 @@ inventory = {
 }
 
 function inventory.functions.renderHotbar()
-    love.graphics.setColor(1, 1, 1)
+    --TODO fix the number color and stuff not important rn
     local hotbar = inventory.hotBar
     local totalWidth = hotbar.maxItems * hotbar.boxSize
     local startX = (game.width - totalWidth) / 2
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
 
     for i = 1, hotbar.maxItems do
+        if (i == inventory.hotBar.selectedItem) then
+            love.graphics.setColor(0.7, 0.5, 1)
+        else
+            love.graphics.setColor(0.8, 0.8, 0.8)
+        end
+        love.graphics.rectangle("fill", startX + (i - 1) * hotbar.boxSize, y, hotbar.boxSize, hotbar.boxSize)
+        love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("line", startX + (i - 1) * hotbar.boxSize, y, hotbar.boxSize, hotbar.boxSize)
         if hotbar.items[i] ~= nil then
+            love.graphics.setColor(1, 1, 1)
             local spr = spw.sprites[hotbar.items[i].item].sprs
             love.graphics.draw(spr, startX + (i - 1) * hotbar.boxSize + hotbar.itemPad, y + hotbar.itemPad, 0,
                 (hotbar.boxSize - hotbar.itemPad * 2) / spr:getWidth(),
                 (hotbar.boxSize - hotbar.itemPad * 2) / spr:getHeight())
+            love.graphics.setColor(1,1,1)
             love.graphics.print(math.floor(hotbar.items[i].count),
                 startX + (i) * hotbar.boxSize - hotbar.numberPad,
                 y + hotbar.boxSize - hotbar.numberPad)
         end
     end
+
+    love.graphics.setColor(1, 1, 1)
 end
 
 function inventory.functions.update(dt)

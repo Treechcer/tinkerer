@@ -1,4 +1,5 @@
 if game.os == "PSP" then
+    ---@diagnostic disable: duplicate-set-field
     player.move = function (dt)
         local mvXp = 0
         local mvYp = 0
@@ -56,6 +57,7 @@ if game.os == "PSP" then
         end
     end
 
+    ---@diagnostic disable: duplicate-set-field
     run.everyFrameStart = function (dt)
         player.cursor.updatePos()
         spw.changeFrames(dt)
