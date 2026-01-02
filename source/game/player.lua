@@ -23,13 +23,18 @@ player = {
         tileY = 0,
 
         frameNum = 0,
-        screenSide = 0, -- 1 => right side of screen, -1 => left side of screen
+        screenSide = 1, -- 1 => right side of screen, -1 => left side of screen
 
         height = 1,
         width = 1,
 
         chunkX = 0,
         chunkY = 0,
+
+        consoles = {
+            cooldown = 0.1,
+            last = 0
+        }
     },
     camera = {
         x = 0,
@@ -55,6 +60,9 @@ function player.init() -- initialises the position of player
 
     player.position.absX, player.position.absY = renderer.calculateTile(player.position.x, player.position.y)
     --print(player.position.absX, " ", player.position.absY)
+
+    player.cursor.x = xMove
+    player.cursor.y = yMove
 end
 
 function player.move(dt)
@@ -135,6 +143,23 @@ function player.cursor.updatePos() -- updates mouse position every frame - even 
 
         player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
         player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+    elseif game.os == "PSP" and (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
+        player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+
+        player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) * map.tileSize + player.cursor.tileX
+        player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) * map.tileSize + player.cursor.tileY
+
+        --offset for it being better looking (if the width or height is > 2)
+
+        player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
+        player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
+
+        player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+
+        player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
+        player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
+
+        player.cursor.consoles.last = 0
     end
 
     player.cursor.pressing()
@@ -146,7 +171,7 @@ function player.cursor.pressing()
     if game.os ~=  "PSP" then
         down = love.mouse.isDown(1)
     elseif game.os == "PSP" then
-        down = love.keyboard.isDown(settings.keys.up)
+        down = love.keyboard.isDown(settings.keys.scrollMinus) and love.keyboard.isDown(settings.keys.scrollPlus)
     end
 
     if down then

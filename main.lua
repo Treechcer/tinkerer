@@ -5,6 +5,9 @@ function love.load()
 
     if game.os ~= "PSP" then
         love.graphics.setDefaultFilter("nearest", "nearest")
+    elseif game.os == "PSP" then
+        --idk the change, does like nothing
+        love.graphics.setDefaultFilter(1)
     end
     math.randomseed(os.time())
 
@@ -28,9 +31,12 @@ function love.load()
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
+
+    require("source/workers/changeFunctionsByOS")
 end
 
 function love.draw()
+    love.graphics.setColor(1,1,1)
 
     love.graphics.print(player.position.chunkX, 10, 10)
     love.graphics.print(player.position.chunkY, 10, 25)
@@ -38,6 +44,8 @@ function love.draw()
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
+
+    love.graphics.print(love.timer.getFPS(), 50, 50)
 end
 
 function love.update(dt)

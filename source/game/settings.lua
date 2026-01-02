@@ -15,6 +15,9 @@ elseif game.os == "PSP" then
     settings.keys.down = "cross"
     settings.keys.left = "square"
     settings.keys.right = "circle"
+
+    settings.keys.scrollMinus = "l"
+    settings.keys.scrollPlus = "r"
 end
 
 return settings
