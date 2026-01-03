@@ -131,7 +131,10 @@ function player.checkIfColided(dt)
     end
 end
 
-function player.cursor.updatePos() -- updates mouse position every frame - even calculates the tiles it's on
+function player.cursor.updatePos(dt) -- updates mouse position every frame - even calculates the tiles it's on
+
+    --dt is ignored because I have to parse it here from runEveryFrame, it's easier than other solution
+
     player.cursor.x = love.mouse.getX() + player.camera.x
     player.cursor.y = love.mouse.getY() + player.camera.y
 

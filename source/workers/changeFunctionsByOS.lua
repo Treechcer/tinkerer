@@ -57,24 +57,8 @@ if game.os == "PSP" then
         end
     end
 
-    ---@diagnostic disable: duplicate-set-field
-    run.everyFrameStart = function (dt)
-        player.cursor.updatePos()
-        spw.changeFrames(dt)
-        player.move(dt)
-        inventory.functions.update(dt)
-        inventory.functions.itemMove(dt)
-
-        entitySpawner.func.spawn(dt)
-
-        player.checkIfColided(dt)
-
-        player.scroll()
-
-        player.cursor.consoles.last = player.cursor.consoles.last + dt
-    end
-
-    player.scroll = function ()
+    player.scroll = function (dt)
+            player.cursor.consoles.last = player.cursor.consoles.last + dt
             local leftTrigger = love.keyboard.isDown(settings.keys.scrollMinus)
             local rightTrigger = love.keyboard.isDown(settings.keys.scrollPlus)
 

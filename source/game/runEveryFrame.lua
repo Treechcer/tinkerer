@@ -3,16 +3,40 @@ spw = require("source.workers.spriteWorker")
 
 run = {}
 
+if game.os ~= "PSP" then
+    run.functionsToRun = {
+        player.cursor.updatePos,
+        spw.changeFrames,
+        player.move,
+        inventory.functions.update,
+        inventory.functions.itemMove,
+
+        entitySpawner.func.spawn,
+
+        player.checkIfColided,
+        inventory.functions.coolDown,
+    }
+else
+    run.functionsToRun = {
+        player.cursor.updatePos,
+        spw.changeFrames,
+        player.move,
+        inventory.functions.update,
+        inventory.functions.itemMove,
+
+        entitySpawner.func.spawn,
+
+        player.checkIfColided,
+        inventory.functions.coolDown,
+
+        player.scroll,
+    }
+end
+
 function run.everyFrameStart(dt) -- used to run on every frame when it starts
-    player.cursor.updatePos()
-    spw.changeFrames(dt)
-    player.move(dt)
-    inventory.functions.update(dt)
-    inventory.functions.itemMove(dt)
-
-    entitySpawner.func.spawn(dt)
-
-    player.checkIfColided(dt)
+    for _, func in pairs(run.functionsToRun) do
+        func(dt)
+    end
 end
 
 function run.everyFrameEnd(dt) -- used to run on every frame when it ends
