@@ -28,6 +28,9 @@ if game.os ~= "PSP" and game.os ~= "Vita" and game.os ~= "PS3" then
 elseif game.os == "PSP" then
     game.width  = 480
     game.height = 272
+
+    temp = love.joystick.getJoysticks()
+    game.leftJoy = temp[1]
 end
 
 love.window.setMode(game.width, game.height)

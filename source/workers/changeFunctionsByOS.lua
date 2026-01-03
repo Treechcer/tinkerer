@@ -92,9 +92,14 @@ if game.os == "PSP" then
     player.cursor.updatePos = function () -- updates mouse position every frame - even calculates the tiles it's on
         if (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
             --player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+            local moveByX = game.leftJoy:getGamepadAxis("leftx")
+            local moveByY = game.leftJoy:getGamepadAxis("lefty")
 
-            player.cursor.tileX = ((love.keyboard.isDown("right") and 1 or 0) - (love.keyboard.isDown("left") and 1 or 0)) + player.cursor.tileX
-            player.cursor.tileY = ((love.keyboard.isDown("down") and 1 or 0) - (love.keyboard.isDown("up") and 1 or 0)) + player.cursor.tileY
+            moveByX = moveByX > 0.2 and 1 or moveByX < -0.2 and -1 or 0
+            moveByY = moveByY > 0.2 and 1 or moveByY < -0.2 and -1 or 0
+
+            player.cursor.tileX = moveByX + player.cursor.tileX
+            player.cursor.tileY = moveByY + player.cursor.tileY
 
             player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
             player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
@@ -116,7 +121,7 @@ if game.os == "PSP" then
                 player.cursor.tileY = player.position.tileY + 4 * ((dy > 0) and 1 or -1)
             end
 
-            player.cursor.consoles.last = 0
+            player.cursor.consoles.last = (moveByX ~= 0 or moveByY ~= 0) and 0 or player.cursor.consoles.last
         end
 
         player.cursor.pressing()
