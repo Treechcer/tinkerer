@@ -33,7 +33,8 @@ inventory = {
 function inventory.functions.renderHotbar()
     --TODO fix the number color and stuff not important rn
     local hotbar = inventory.hotBar
-    local inventoryHB = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]
+    local i = inventory.inventoryBar.inventory
+    local inventoryHB = i[#i]
     local totalWidth = hotbar.maxItems * hotbar.boxSize
     local startX = (game.width - totalWidth) / 2
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
@@ -68,11 +69,12 @@ function inventory.functions.update(dt)
 end
 
 function inventory.functions.addNewItem(item, count)
-    if (inventory.hotBar.maxItems > #inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]) then
+    local i = inventory.inventoryBar.inventory
+    if (inventory.hotBar.maxItems > #i[#i]) then
         if count <= itemIndex[item].maxStackSize then
-            table.insert(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory], { item = item, count = count })
+            table.insert(i[#i], { item = item, count = count })
         else
-            table.insert(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory], { item = item, count = itemIndex[item].maxStackSize })
+            table.insert(i[#i], { item = item, count = itemIndex[item].maxStackSize })
             inventory.functions.addItem(item, count - itemIndex[item].maxStackSize)
         end
     end
@@ -86,8 +88,9 @@ function inventory.functions.addItem(item, count)
     end
 
     local found = false
+    local i = inventory.inventoryBar.inventory
 
-    for index, value in ipairs(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory]) do
+    for index, value in ipairs(i[#i]) do
         if value.item == item and value.count < itemIndex[item].maxStackSize then
             if itemIndex[item].maxStackSize < value.count + count then
                 local overflow = (itemIndex[item].maxStackSize - (value.count + count)) * (-1)
@@ -111,10 +114,13 @@ end
 
 
 function inventory.functions.itemMove(dt)
-    if inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem] == nil then
+    local i = inventory.inventoryBar.inventory
+
+    if i[#i][inventory.hotBar.selectedItem] == nil then
         return
     end
-    local item = itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item]
+
+    local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
     if inventory.hotBar.moveVal >= item.attackRotation then
         inventory.hotBar.moveItem = false
     end

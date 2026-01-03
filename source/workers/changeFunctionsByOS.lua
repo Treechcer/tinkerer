@@ -69,7 +69,12 @@ if game.os == "PSP" then
 
         player.checkIfColided(dt)
 
-        player.scroll = function ()
+        player.scroll()
+
+        player.cursor.consoles.last = player.cursor.consoles.last + dt
+    end
+
+    player.scroll = function ()
             local leftTrigger = love.keyboard.isDown(settings.keys.scrollMinus)
             local rightTrigger = love.keyboard.isDown(settings.keys.scrollPlus)
 
@@ -83,9 +88,6 @@ if game.os == "PSP" then
                 inventory.hotBar.lastTime = 0
             end
         end
-
-        player.cursor.consoles.last = player.cursor.consoles.last + dt
-    end
 
     player.cursor.pressing = function ()
         local down = false

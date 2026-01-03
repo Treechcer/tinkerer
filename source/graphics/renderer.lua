@@ -77,9 +77,10 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     inventory.functions.renderHotbar()
 
     local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
+    local i = inventory.inventoryBar.inventory
 
-    if inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem] ~= nil then
-        local spr = spw.sprites[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item].sprs
+    if i[#i][inventory.hotBar.selectedItem] ~= nil then
+        local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         local bonus = (player.cursor.screenSide == -1) and map.tileSize or 0
         love.graphics.draw(spr,
         xT + (map.tileSize * player.cursor.screenSide) + bonus + 1 / 2 * (map.tileSize * player.cursor.screenSide),

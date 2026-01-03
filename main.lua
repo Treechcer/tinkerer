@@ -1,4 +1,4 @@
-love = require("love")
+--love = require("love")
 
 function love.load()
     game = require("source.game.game")
