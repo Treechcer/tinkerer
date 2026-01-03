@@ -16,7 +16,8 @@ elseif game.os == "PSP" then
     settings.keys.down = "cross"
     settings.keys.left = "square"
     settings.keys.right = "circle"
-    settings.keys.openInventory = "cross" --this is temporary, I have to figure out how to work with analog to move player / cursor idk what
+
+    settings.keys.openInventory = "left"
 
     settings.keys.scrollMinus = "l"
     settings.keys.scrollPlus = "r"
