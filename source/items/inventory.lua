@@ -15,9 +15,9 @@ inventory = {
     },
     inventoryBar = {
         inventory = {
-            {{item = "rock", count = 5}},
-            {{item = "rock", count = 5}},
-            {{item = "rock", count = 5}},
+            {{item = "rock", count = 5},{},{},{},{}},
+            {{item = "rock", count = 5},{},{},{},{}},
+            {{item = "rock", count = 5},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 }
@@ -29,7 +29,8 @@ inventory = {
         padText = 5,
         render = false,
         openCooldown = 0.25,
-        lastOpened = 0
+        lastOpened = 0,
+        indexOnCursor = {},
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,
@@ -75,16 +76,39 @@ function inventory.functions.click(dt)
 
     if love.mouse.isDown(1) then
         local x, y = love.mouse.getPosition()
-        if renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y) then
+        local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
+        
+        local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
+        local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
+        
+        if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
+            return
+        end
 
-            local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
-            local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
-
+        if posHit and next(inventory.inventoryBar.indexOnCursor) == nil then
             local item = inventory.inventoryBar.inventory[itemRow][itemCol]
-            print(itemCol,itemRow)
 
             if item ~= nil and next(item) ~= nil then
-                love.event.quit()
+                inventory.inventoryBar.indexOnCursor = {
+                    row = itemRow,
+                    col = itemCol
+                }
+            end
+        elseif posHit and next(inventory.inventoryBar.indexOnCursor) ~= nil then
+            local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+
+            local ind = inventory.inventoryBar.indexOnCursor
+
+            if item == nil or next(item) == nil then
+                inventory.inventoryBar.inventory[itemRow][itemCol] = inventory.inventoryBar.inventory[ind.row][ind.col]
+                inventory.inventoryBar.inventory[ind.row][ind.col] = {}
+                inventory.inventoryBar.indexOnCursor = {}
+            else
+                if item.item == inventory.inventoryBar.inventory[ind.row][ind.col].item then
+                    item.count = item.count + inventory.inventoryBar.inventory[ind.row][ind.col].count
+                    inventory.inventoryBar.inventory[ind.row][ind.col] = {}
+                    inventory.inventoryBar.indexOnCursor = {}
+                end
             end
         end
     end
