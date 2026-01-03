@@ -15,9 +15,9 @@ inventory = {
     },
     inventoryBar = {
         inventory = {
-            {},
-            {},
-            {{}, {}, {item = "rock", count = 5}},
+            {{item = "rock", count = 5}},
+            {{item = "rock", count = 5}},
+            {{item = "rock", count = 5}},
             {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 }
@@ -34,8 +34,61 @@ inventory = {
     itemsOutsideOfInventory = {
         coins = 999999999999,
     },
+    hitboxTable = {},
     functions = {}
 }
+
+function inventory.functions.fillHitBoxTable()
+    --I'm lazy writing the vars so I made this fuction lmao
+    local i = inventory.inventoryBar.inventory
+    local barI = inventory.inventoryBar
+
+    local rows = #i - 1
+    local cols = barI.maxItemsPerInventory
+    local totalW = cols * barI.blockSize
+    local totalH = rows * barI.blockSize
+
+    inventory.hitboxTable = {
+        start = {
+            x = (game.width / 2) - (totalW / 2) + (barI.pad / 2),
+            y = (game.height / 2) - (totalH / 2) + (barI.pad / 2)
+        },
+    }
+
+    inventory.hitboxTable.endPos = {
+        x = inventory.hitboxTable.start.x + cols * barI.blockSize,
+        y = inventory.hitboxTable.start.y + rows * barI.blockSize
+    }
+
+    inventory.hitboxTable.length = {
+        x = cols * barI.blockSize,
+        y = rows * barI.blockSize
+    }
+end
+
+function inventory.functions.click(dt)
+    --PC ONLY!!
+
+    if not inventory.inventoryBar.render then
+        return
+    end
+
+    if love.mouse.isDown(1) then
+        local x, y = love.mouse.getPosition()
+        if renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y) then
+
+            local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
+            local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
+
+            local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+            print(itemCol,itemRow)
+
+            if item ~= nil and next(item) ~= nil then
+                love.event.quit()
+            end
+        end
+    end
+end
 
 function inventory.functions.renderWholeInventory()
     local i = inventory.inventoryBar.inventory
@@ -46,6 +99,7 @@ function inventory.functions.renderWholeInventory()
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
     local font = UI.fonts.normal
+
     love.graphics.setFont(font)
     for inventroyIndex = 1, rows, 1 do
         for itemIndex = 1, cols, 1 do
@@ -90,7 +144,7 @@ function inventory.functions.renderHotbar()
         love.graphics.rectangle("fill", blockX, y, hotbar.boxSize, hotbar.boxSize)
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("line", blockX, y, hotbar.boxSize, hotbar.boxSize)
-        if inventoryHB[i] ~= nil then
+        if inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
             love.graphics.setColor(1, 1, 1)
             local spr = spw.sprites[inventoryHB[i].item].sprs
 
@@ -171,6 +225,11 @@ function inventory.functions.itemMove(dt)
     end
 
     local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
+
+    if item == nil then
+        return
+    end
+
     if inventory.hotBar.moveVal >= item.attackRotation then
         inventory.hotBar.moveItem = false
     end
@@ -193,6 +252,10 @@ function inventory.functions.coolDown(dt)
     end
 
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
+end
+
+function inventory.functions.init()
+    inventory.functions.fillHitBoxTable()
 end
 
 return inventory

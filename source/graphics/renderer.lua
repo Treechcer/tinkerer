@@ -79,7 +79,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
     local i = inventory.inventoryBar.inventory
 
-    if i[#i][inventory.hotBar.selectedItem] ~= nil then
+    if i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
         local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         local bonus = (player.cursor.screenSide == -1) and map.tileSize or 0
         love.graphics.draw(spr,

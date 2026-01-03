@@ -19,6 +19,11 @@ elseif game.os == "PSP" then
 
     settings.keys.openInventory = "left"
 
+    settings.keys.moveUpInventory = "up"
+    settings.keys.moveDownInventory = "down"
+    settings.keys.moveLeftInventory = "left"
+    settings.keys.moveRightInventory = "right"
+
     settings.keys.scrollMinus = "l"
     settings.keys.scrollPlus = "r"
 end

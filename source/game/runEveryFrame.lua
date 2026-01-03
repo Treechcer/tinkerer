@@ -15,6 +15,7 @@ if game.os ~= "PSP" then
 
         player.checkIfColided,
         inventory.functions.coolDown,
+        inventory.functions.click
     }
 else
     run.functionsToRun = {
