@@ -27,13 +27,13 @@ function love.load()
     itemIndex = require("source.items.itemIndex")
     entitySpawner = require("source.entities.entitySpawner")
     tables = require("source.workers.tableWorker")
-    REF = require("source.game.runEveryFrame")
     UI = require("source.graphics.UI")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
 
     require("source/workers/changeFunctionsByOS")
+    REF = require("source.game.runEveryFrame")
 end
 
 function love.draw()

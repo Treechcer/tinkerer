@@ -145,9 +145,9 @@ function inventory.functions.addItem(item, count)
                 if itemIndex[item].maxStackSize < value.count + count then
                     local overflow = (itemIndex[item].maxStackSize - (value.count + count)) * (-1)
                     value.count = itemIndex[item].maxStackSize
-                    print(itemIndex[item].maxStackSize)
-                    print(value.count)
-                    print(count)
+                    --print(itemIndex[item].maxStackSize)
+                    --print(value.count)
+                    --print(count)
                     inventory.functions.addNewItem(item, overflow)
                 else
                     value.count = value.count + count
