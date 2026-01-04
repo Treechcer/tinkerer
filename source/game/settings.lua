@@ -18,6 +18,8 @@ elseif game.os == "PSP" then
     settings.keys.right = "circle"
 
     settings.keys.openInventory = "left"
+    settings.keys.closeInventory = "left"
+    settings.keys.placeInventory = "right"
 
     settings.keys.moveUpInventory = "up"
     settings.keys.moveDownInventory = "down"

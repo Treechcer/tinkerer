@@ -80,6 +80,7 @@ function inventory.functions.fillHitBoxTable()
     }
 end
 
+---@diagnostic disable: duplicate-set-field
 function inventory.functions.click()
     --PC ONLY!!
 
@@ -98,39 +99,49 @@ function inventory.functions.click()
             return
         end
 
-        if posHit and next(inventory.inventoryBar.indexOnCursor) == nil then
-            local item = inventory.inventoryBar.inventory[itemRow][itemCol]
-
-            if item ~= nil and next(item) ~= nil then
-                inventory.inventoryBar.indexOnCursor = {
-                    row = itemRow,
-                    col = itemCol
-                }
-            end
-
-            return true
-        elseif posHit and next(inventory.inventoryBar.indexOnCursor) ~= nil then
-            local item = inventory.inventoryBar.inventory[itemRow][itemCol]
-
-            local ind = inventory.inventoryBar.indexOnCursor
-
-            if item == nil or next(item) == nil then
-                inventory.inventoryBar.inventory[itemRow][itemCol] = inventory.inventoryBar.inventory[ind.row][ind.col]
-                inventory.inventoryBar.inventory[ind.row][ind.col] = {}
-                inventory.inventoryBar.indexOnCursor = {}
-            else
-                if item.item == inventory.inventoryBar.inventory[ind.row][ind.col].item then
-                    item.count = item.count + inventory.inventoryBar.inventory[ind.row][ind.col].count
-                    inventory.inventoryBar.inventory[ind.row][ind.col] = {}
-                    inventory.inventoryBar.indexOnCursor = {}
-                end
-            end
-
-            return true
-        end
+        inventory.functions.moveItems(posHit, itemRow, itemCol, 1)
     end
 
     return false
+end
+
+function inventory.functions.moveItems(posHit, itemRow, itemCol, button)
+    --button not used for now
+
+    if (itemRow == inventory.inventoryBar.indexOnCursor.row and itemCol == inventory.inventoryBar.indexOnCursor.col) then
+        return false
+    end
+
+    if posHit and next(inventory.inventoryBar.indexOnCursor) == nil then
+        local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+
+        if item ~= nil and next(item) ~= nil then
+            inventory.inventoryBar.indexOnCursor = {
+                row = itemRow,
+                col = itemCol
+            }
+        end
+
+        return true
+    elseif posHit and next(inventory.inventoryBar.indexOnCursor) ~= nil then
+        local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+
+        local ind = inventory.inventoryBar.indexOnCursor
+
+        if item == nil or next(item) == nil then
+            inventory.inventoryBar.inventory[itemRow][itemCol] = inventory.inventoryBar.inventory[ind.row][ind.col]
+            inventory.inventoryBar.inventory[ind.row][ind.col] = {}
+            inventory.inventoryBar.indexOnCursor = {}
+        else
+            if item.item == inventory.inventoryBar.inventory[ind.row][ind.col].item then
+                item.count = item.count + inventory.inventoryBar.inventory[ind.row][ind.col].count
+                inventory.inventoryBar.inventory[ind.row][ind.col] = {}
+                inventory.inventoryBar.indexOnCursor = {}
+            end
+        end
+
+        return true
+    end
 end
 
 function inventory.functions.renderWholeInventory()

@@ -139,7 +139,10 @@ if game.os == "PSP" then
         player.cursor.pressing()
     end
 
+    ---@diagnostic disable: duplicate-set-field
     inventory.functions.click = function (dt)
+        local cd = inventory.inventoryBar.controller.cd
+        cd.last = cd.last + love.timer.getDelta()
         if not inventory.inventoryBar.render then
             return false
         end
@@ -149,13 +152,15 @@ if game.os == "PSP" then
         local tilePos = inventory.inventoryBar.controller.pos
         local inv = inventory.inventoryBar
         local bl = inv.blockSize - inv.pad
+        local place = false
+        if cd.last >= cd.cd then
+           place = love.keyboard.isDown(settings.keys.placeInventory) 
+        end
 
         love.graphics.setColor(1,0,0)
         love.graphics.rectangle("line", inventory.hitboxTable.start.x + ((tilePos.x - 1) * inv.blockSize), inventory.hitboxTable.start.y + ((tilePos.y - 1) * inv.blockSize), bl, bl)
-        
-        local cd = inventory.inventoryBar.controller.cd
-        cd.last = cd.last + love.timer.getDelta()
-        if cd.last <= cd.cd then
+
+        if (cd.last <= cd.cd or (xMV == 0 and yMV == 0)) and not place then
             return false
         end
 
@@ -174,8 +179,16 @@ if game.os == "PSP" then
             cd.last = 0
         end
 
+        res = false
+        
+        if place then
+            local posHit = next(inv.inventory[tilePos.y][tilePos.x]) ~= nil
+            res = inventory.functions.moveItems(posHit, tilePos.y, tilePos.x, settings.keys.placeInventory)
+            cd.last = 0
+        end
+
         love.graphics.print(tilePos.x .. " " .. tilePos.y, 10, 50)
 
-        return false
+        return res
     end
 end
