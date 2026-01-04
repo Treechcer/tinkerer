@@ -38,14 +38,12 @@ end
 
 function love.draw()
     love.graphics.setColor(1,1,1)
-
-    love.graphics.print(player.position.chunkX, 10, 10)
-    love.graphics.print(player.position.chunkY, 10, 25)
-    love.graphics.print(#entities.ents, 10, 40)
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
-
+    love.graphics.print(player.position.chunkX, 10, 10)
+    love.graphics.print(player.position.chunkY, 10, 25)
+    love.graphics.print(#entities.ents, 10, 40)
     love.graphics.print(love.timer.getFPS(), 50, 50)
 end
 
@@ -66,14 +64,18 @@ function love.wheelmoved(x, y)
     end
 end
 
---function love.mousepressed(x, y, button, istouch, presses)
---    if button == 1 then
---            if itemInteraction.breakEntity() then
---                return
---            end
---
---        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
---            return
---        end
---    end
---end
+function love.mousepressed(x, y, button, istouch, presses)
+    if button == 1 then
+        if inventory.functions.click() then
+            return
+        end
+        
+        if itemInteraction.breakEntity() ~= false then
+            return
+        end
+
+        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+            return
+        end
+    end
+end

@@ -44,7 +44,7 @@ function inventory.functions.fillHitBoxTable()
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
-    local rows = #i - 1
+    local rows = #i
     local cols = barI.maxItemsPerInventory
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
@@ -67,20 +67,20 @@ function inventory.functions.fillHitBoxTable()
     }
 end
 
-function inventory.functions.click(dt)
+function inventory.functions.click()
     --PC ONLY!!
 
     if not inventory.inventoryBar.render then
-        return
+        return false
     end
 
     if love.mouse.isDown(1) then
         local x, y = love.mouse.getPosition()
         local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
-        
+
         local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
         local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
-        
+
         if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
             return
         end
@@ -94,6 +94,8 @@ function inventory.functions.click(dt)
                     col = itemCol
                 }
             end
+
+            return true
         elseif posHit and next(inventory.inventoryBar.indexOnCursor) ~= nil then
             local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
@@ -110,15 +112,24 @@ function inventory.functions.click(dt)
                     inventory.inventoryBar.indexOnCursor = {}
                 end
             end
+
+            return true
         end
     end
+
+    return false
 end
 
 function inventory.functions.renderWholeInventory()
+
+    if not inventory.inventoryBar.render then
+        return
+    end
+
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
-    local rows = #i - 1
+    local rows = #i
     local cols = barI.maxItemsPerInventory
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
@@ -182,10 +193,6 @@ function inventory.functions.renderHotbar()
 
             love.graphics.print(inventoryHB[i].count, textX, textY)
         end
-    end
-
-    if inventory.inventoryBar.render then
-        inventory.functions.renderWholeInventory()
     end
 
     love.graphics.setColor(1, 1, 1)

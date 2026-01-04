@@ -150,23 +150,23 @@ function player.cursor.updatePos(dt) -- updates mouse position every frame - eve
     player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
     player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
 
-    player.cursor.pressing()
+    --player.cursor.pressing()
 end
 
-function player.cursor.pressing()
-    local down = false
-
-    down = love.mouse.isDown(1)
-
-    if down then
-        if itemInteraction.breakEntity() ~= false then
-            return
-        end
-
-        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
-            return
-        end
-    end
-end
+--function player.cursor.pressing()
+--    local down = false
+--
+--    down = love.mouse.isDown(1)
+--
+--    if down then
+--        if itemInteraction.breakEntity() ~= false then
+--            return
+--        end
+--
+--        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+--            return
+--        end
+--    end
+--end
 
 return player

@@ -74,7 +74,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
-    inventory.functions.renderHotbar()
 
     local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
     local i = inventory.inventoryBar.inventory
@@ -90,6 +89,9 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getWidth() / 2,
             spr:getHeight() / 2)
     end
+    
+    inventory.functions.renderHotbar()
+    inventory.functions.renderWholeInventory()
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time
