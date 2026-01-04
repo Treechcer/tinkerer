@@ -1,6 +1,6 @@
 inventory = {
     hotBar = {
-        maxItems = 4,
+        maxItems = 5,
         --items = {},
         boxSize = 50, --pixels
         paddingBottom = 15,
@@ -11,7 +11,7 @@ inventory = {
         numberPad = 2,
         moveVal = 0,
         moveItem = false,
-        moving = false
+        moving = false,
     },
     inventoryBar = {
         inventory = {
@@ -20,7 +20,10 @@ inventory = {
             {{item = "rock", count = 5},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
-                { item = "rock", count = 5 }
+                { item = "rock", count = 5 },
+                {},
+                {},
+                {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
         maxItemsPerInventory = 5, --this is except hotbar btw
@@ -31,6 +34,16 @@ inventory = {
         openCooldown = 0.25,
         lastOpened = 0,
         indexOnCursor = {},
+        controller = {
+            pos = {
+                x = 1,
+                y = 1,
+            },
+            cd = {
+                cd = 0.1,
+                last = 0
+            }
+        }
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,

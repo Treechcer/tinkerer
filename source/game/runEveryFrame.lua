@@ -17,6 +17,10 @@ if game.os ~= "PSP" then
         inventory.functions.coolDown,
         --inventory.functions.click
     }
+
+    run.functionsToRunEnd = {
+    
+    }
 else
     run.functionsToRun = {
         player.cursor.updatePos,
@@ -30,10 +34,13 @@ else
         player.checkIfColided,
         inventory.functions.coolDown,
 
-        player.scroll,
+        player.scroll
+    }
+
+    run.functionsToRunEnd = {
+        
     }
 end
-
 function run.everyFrameStart(dt) -- used to run on every frame when it starts
     for _, func in pairs(run.functionsToRun) do
         func(dt)
@@ -41,7 +48,9 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
 end
 
 function run.everyFrameEnd(dt) -- used to run on every frame when it ends
-    
+    for _, func in pairs(run.functionsToRunEnd) do
+        func(dt)
+    end
 end
 
 return run

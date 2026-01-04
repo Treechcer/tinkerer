@@ -89,9 +89,12 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getWidth() / 2,
             spr:getHeight() / 2)
     end
-    
+
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
+    if game.os == "PSP" then -- not rewriting the while functions just because PSP
+        inventory.functions.click()
+    end
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time

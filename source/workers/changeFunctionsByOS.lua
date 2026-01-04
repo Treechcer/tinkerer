@@ -1,6 +1,11 @@
 if game.os == "PSP" then
     ---@diagnostic disable: duplicate-set-field
     player.move = function (dt)
+
+        if inventory.inventoryBar.render then
+            return
+        end
+
         local mvXp = 0
         local mvYp = 0
         local mvXc = 0
@@ -92,6 +97,10 @@ if game.os == "PSP" then
     player.cursor.updatePos = function () -- updates mouse position every frame - even calculates the tiles it's on
         if (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
             --player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
+            if inventory.inventoryBar.render then
+                return
+            end
+
             local moveByX = game.leftJoy:getGamepadAxis("leftx")
             local moveByY = game.leftJoy:getGamepadAxis("lefty")
 
@@ -128,5 +137,45 @@ if game.os == "PSP" then
         end
 
         player.cursor.pressing()
+    end
+
+    inventory.functions.click = function (dt)
+        if not inventory.inventoryBar.render then
+            return false
+        end
+
+        local xMV = love.keyboard.isDown(settings.keys.left) and -1 or love.keyboard.isDown(settings.keys.right) and 1 or 0
+        local yMV = love.keyboard.isDown(settings.keys.up) and -1 or love.keyboard.isDown(settings.keys.down) and 1 or 0
+        local tilePos = inventory.inventoryBar.controller.pos
+        local inv = inventory.inventoryBar
+        local bl = inv.blockSize - inv.pad
+
+        love.graphics.setColor(1,0,0)
+        love.graphics.rectangle("line", inventory.hitboxTable.start.x + ((tilePos.x - 1) * inv.blockSize), inventory.hitboxTable.start.y + ((tilePos.y - 1) * inv.blockSize), bl, bl)
+        
+        local cd = inventory.inventoryBar.controller.cd
+        cd.last = cd.last + love.timer.getDelta()
+        if cd.last <= cd.cd then
+            return false
+        end
+
+        --tilePos.y = ((tilePos.y + yMV) >= 1 and (tilePos.y + yMV) <= #inv.inventory)            and tilePos.y + yMV or tilePos.y
+        --tilePos.x = ((tilePos.x + xMV) >= 1 and (tilePos.x + xMV) <= #inv.inventory[tilePos.y]) and tilePos.x + xMV or tilePos.x
+
+        local newY = tilePos.y + yMV
+        if newY >= 1 and newY <= #inv.inventory then
+            tilePos.y = newY
+            cd.last = 0
+        end
+
+        local newX = tilePos.x + xMV
+        if newX >= 1 and newX <= #inv.inventory[tilePos.y] then
+            tilePos.x = newX
+            cd.last = 0
+        end
+
+        love.graphics.print(tilePos.x .. " " .. tilePos.y, 10, 50)
+
+        return false
     end
 end
