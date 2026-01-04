@@ -145,7 +145,7 @@ function player.cursor.updatePos(dt) -- updates mouse position every frame - eve
     player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
     player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
 
-    player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+    player.cursor.screenSide = (game.width / 2 <= (player.cursor.x - player.camera.x)) and 1 or -1
 
     player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
     player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1
