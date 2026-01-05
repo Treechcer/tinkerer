@@ -154,13 +154,13 @@ if game.os == "PSP" then
         local bl = inv.blockSize - inv.pad
         local place = false
         if cd.last >= cd.cd then
-           place = love.keyboard.isDown(settings.keys.placeInventory) 
+           place = love.keyboard.isDown(settings.keys.placeInventory)
         end
 
         love.graphics.setColor(1,0,0)
         love.graphics.rectangle("line", inventory.hitboxTable.start.x + ((tilePos.x - 1) * inv.blockSize), inventory.hitboxTable.start.y + ((tilePos.y - 1) * inv.blockSize), bl, bl)
 
-        if (cd.last <= cd.cd or (xMV == 0 and yMV == 0)) and not place then
+        if cd.last <= cd.cd then
             return false
         end
 
@@ -168,22 +168,21 @@ if game.os == "PSP" then
         --tilePos.x = ((tilePos.x + xMV) >= 1 and (tilePos.x + xMV) <= #inv.inventory[tilePos.y]) and tilePos.x + xMV or tilePos.x
 
         local newY = tilePos.y + yMV
-        if newY >= 1 and newY <= #inv.inventory then
+        if newY >= 1 and newY <= #inv.inventory and yMV ~= 0 then
             tilePos.y = newY
             cd.last = 0
         end
 
         local newX = tilePos.x + xMV
-        if newX >= 1 and newX <= #inv.inventory[tilePos.y] then
+        if newX >= 1 and newX <= #inv.inventory[tilePos.y] and xMV ~= 0 then
             tilePos.x = newX
             cd.last = 0
         end
 
-        res = false
+        local res = false
         
         if place then
-            local posHit = next(inv.inventory[tilePos.y][tilePos.x]) ~= nil
-            res = inventory.functions.moveItems(posHit, tilePos.y, tilePos.x, settings.keys.placeInventory)
+            res = inventory.functions.moveItems(tilePos.y, tilePos.x, settings.keys.placeInventory)
             cd.last = 0
         end
 

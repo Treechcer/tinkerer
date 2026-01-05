@@ -99,14 +99,17 @@ function inventory.functions.click()
             return
         end
 
-        inventory.functions.moveItems(posHit, itemRow, itemCol, 1)
+        inventory.functions.moveItems(itemRow, itemCol, 1, posHit)
     end
 
     return false
 end
 
-function inventory.functions.moveItems(posHit, itemRow, itemCol, button)
+---@param posHit boolean?
+function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     --button not used for now
+
+    posHit = posHit or true
 
     if (itemRow == inventory.inventoryBar.indexOnCursor.row and itemCol == inventory.inventoryBar.indexOnCursor.col) then
         return false
