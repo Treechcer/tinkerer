@@ -153,6 +153,8 @@ if game.os == "PSP" then
         local inv = inventory.inventoryBar
         local bl = inv.blockSize - inv.pad
         local place = false
+        local split = false
+
         if cd.last >= cd.cd then
            place = love.keyboard.isDown(settings.keys.placeInventory)
         end
