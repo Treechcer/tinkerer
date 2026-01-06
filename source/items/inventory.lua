@@ -33,7 +33,7 @@ inventory = {
         render = false,
         openCooldown = 0.25,
         lastOpened = 0,
-        indexOnCursor = {},
+        itemOnCursor = {},
         controller = {
             pos = {
                 x = 1,
@@ -95,14 +95,29 @@ function inventory.functions.click()
         local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
         local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
 
-        if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
-            return
-        end
+        --if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
+        --    return
+        --end
 
         inventory.functions.moveItems(itemRow, itemCol, 1, posHit)
     end
 
     return false
+end
+
+function inventory.functions.renderItemOnCursor(x, y)
+    if inventory.inventoryBar.render and inventory.inventoryBar.itemOnCursor.item ~= nil then
+        local spr = spriteWorker.sprites[inventory.inventoryBar.itemOnCursor.item].sprs
+        local w = spr:getWidth()
+        local h = spr:getHeight()
+
+        local realWidth = w * (inventory.inventoryBar.blockSize / w)
+        local realHeight = h * (inventory.inventoryBar.blockSize / h)
+
+        love.graphics.draw(spr, x - (realWidth / 2), y - (realHeight / 2), 0, inventory.inventoryBar.blockSize / w, inventory.inventoryBar.blockSize / h)
+
+        love.graphics.print(inventory.inventoryBar.itemOnCursor.count, x + (realWidth / 3), y + (realHeight / 4)) -- 3 and 4 are random values, they work well ngl
+    end
 end
 
 ---@param posHit boolean?
@@ -111,36 +126,41 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
 
     posHit = posHit or true
 
-    if (itemRow == inventory.inventoryBar.indexOnCursor.row and itemCol == inventory.inventoryBar.indexOnCursor.col) then
-        return false
-    end
+    --if itemRow == inventory.inventoryBar.itemOnCursor.row and itemCol == inventory.inventoryBar.itemOnCursor.col then
+    --    return false
+    --end
 
-    if posHit and next(inventory.inventoryBar.indexOnCursor) == nil then
+    if posHit and next(inventory.inventoryBar.itemOnCursor) == nil then
         local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
         if item ~= nil and next(item) ~= nil then
-            inventory.inventoryBar.indexOnCursor = {
+            inventory.inventoryBar.itemOnCursor = {
+                item = item.item,
+                count = item.count,
+
                 row = itemRow,
                 col = itemCol
             }
+
+            inventory.inventoryBar.inventory[itemRow][itemCol] = {}
         end
 
         return true
-    elseif posHit and next(inventory.inventoryBar.indexOnCursor) ~= nil then
+    elseif posHit and next(inventory.inventoryBar.itemOnCursor) ~= nil then
         local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
-        local ind = inventory.inventoryBar.indexOnCursor
+        local ind = inventory.inventoryBar.itemOnCursor
 
         if item == nil or next(item) == nil then
-            inventory.inventoryBar.inventory[itemRow][itemCol] = inventory.inventoryBar.inventory[ind.row][ind.col]
-            inventory.inventoryBar.inventory[ind.row][ind.col] = {}
-            inventory.inventoryBar.indexOnCursor = {}
-        else
-            if item.item == inventory.inventoryBar.inventory[ind.row][ind.col].item then
-                item.count = item.count + inventory.inventoryBar.inventory[ind.row][ind.col].count
-                inventory.inventoryBar.inventory[ind.row][ind.col] = {}
-                inventory.inventoryBar.indexOnCursor = {}
-            end
+            inventory.inventoryBar.inventory[itemRow][itemCol] = {
+                item = ind.item,
+                count = ind.count,
+            }
+
+            inventory.inventoryBar.itemOnCursor = {}
+        elseif item.item == ind.item then
+            item.count = item.count + ind.count
+            inventory.inventoryBar.itemOnCursor = {}
         end
 
         return true

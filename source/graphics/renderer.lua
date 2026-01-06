@@ -92,6 +92,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
+    inventory.functions.renderItemOnCursor(love.mouse.getPosition())
     if game.os == "PSP" then -- not rewriting the while functions just because PSP
         inventory.functions.click()
     end
