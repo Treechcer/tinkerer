@@ -17,7 +17,7 @@ inventory = {
         inventory = {
             {{item = "rock", count = 5},{},{},{},{}},
             {{item = "rock", count = 5},{},{},{},{}},
-            {{item = "rock", count = 5},{},{},{},{}},
+            {{item = "rock", count = 5},{item = "rock", count = 62},{},{},{}},
             {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 },
@@ -99,7 +99,7 @@ function inventory.functions.click()
         --    return
         --end
 
-        inventory.functions.moveItems(itemRow, itemCol, 1, posHit)
+        return inventory.functions.moveItems(itemRow, itemCol, 1, posHit)
     end
 
     return false
@@ -159,8 +159,19 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
 
             inventory.inventoryBar.itemOnCursor = {}
         elseif item.item == ind.item then
-            item.count = item.count + ind.count
-            inventory.inventoryBar.itemOnCursor = {}
+            local tempC = item.count + ind.count
+            local itemStackMax = itemIndex[item.item].maxStackSize
+            if tempC <= itemStackMax then
+                item.count = item.count + ind.count
+                inventory.inventoryBar.itemOnCursor = {}                
+            else
+                if item.count == itemStackMax then
+                    ind.count, item.count =  item.count, ind.count
+                else
+                    inventory.inventoryBar.itemOnCursor.count = inventory.inventoryBar.itemOnCursor.count - (itemStackMax - item.count)
+                    item.count = itemStackMax
+                end
+            end
         end
 
         return true
