@@ -113,10 +113,11 @@ if game.os == "PSP" then
             player.cursor.tileX = player.cursor.tileX - (math.ceil(player.cursor.width / 2) - 1)
             player.cursor.tileY = player.cursor.tileY - (math.ceil(player.cursor.height / 2) - 1)
 
-            player.cursor.x = player.cursor.tileX * map.tileSize
-            player.cursor.y = player.cursor.tileY * map.tileSize
-            
-            player.cursor.screenSide = (game.width / 2 <= (player.cursor.x - player.camera.x)) and 1 or -1
+            --TODO: Fix the screenSide because on PSP id doesn't switch? idk why
+
+            player.cursor.x, player.cursor.y = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+
+            player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
 
             player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
             player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1

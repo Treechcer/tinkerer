@@ -92,10 +92,11 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
-    inventory.functions.renderItemOnCursor(love.mouse.getPosition())
     if game.os == "PSP" then -- not rewriting the while functions just because PSP
         inventory.functions.click()
     end
+
+    inventory.functions.renderItemOnCursor(renderer.getAbsolutePos(player.cursor.x, player.cursor.y))
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time
@@ -103,15 +104,15 @@ function renderer.menuStateRenderer() -- render when it's menu time
 end
 
 function renderer.getWorldPos(x,y) -- this gets you world position **from tile**
-    wx = x * map.tileSize
-    wy = y * map.tileSize
+    local wx = x * map.tileSize
+    local wy = y * map.tileSize
 
     return wx, wy
 end
 
 function renderer.getAbsolutePos(x, y) -- this gets the absolute postion relative to camera 
-    tempX = x - player.camera.x
-    tempY = y - player.camera.y
+    local tempX = x - player.camera.x
+    local tempY = y - player.camera.y
 
     return tempX, tempY
 end
@@ -138,8 +139,8 @@ end
 
 function renderer.checkCollsion(worldXpos, worldYpos)
     local xTile, yTile = renderer.calculateTile(worldXpos, worldYpos)
-    xTile = xTile + 1
-    yTile = yTile + 1
+    local xTile = xTile + 1
+    local yTile = yTile + 1
 
     if xTile <= 0 or yTile <= 0 then
         return false
@@ -162,8 +163,8 @@ end
 
 function renderer.getChunkData(worldXpos, worldYpos, atr) --uses worldPos
     local xTile, yTile = renderer.calculateTile(worldXpos, worldYpos)
-    xTile = xTile + 1
-    yTile = yTile + 1
+    local xTile = xTile + 1
+    local yTile = yTile + 1
 
     if xTile <= 0 or yTile <= 0 then
         return nil
