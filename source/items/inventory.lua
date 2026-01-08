@@ -81,25 +81,27 @@ function inventory.functions.fillHitBoxTable()
 end
 
 ---@diagnostic disable: duplicate-set-field
-function inventory.functions.click()
+function inventory.functions.click(button)
     --PC ONLY!!
 
     if not inventory.inventoryBar.render then
         return false
     end
 
-    if love.mouse.isDown(1) then
-        local x, y = love.mouse.getPosition()
-        local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
+    local x, y = love.mouse.getPosition()
+    local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
 
-        local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
-        local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
+    local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
+    local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
 
+    if button == 1 then
         --if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
         --    return
         --end
 
         return inventory.functions.moveItems(itemRow, itemCol, 1, posHit)
+    elseif button == 2 then
+        return inventory.functions.split(itemRow, itemCol, 1, posHit)
     end
 
     return false
@@ -178,8 +180,31 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     end
 end
 
-function inventory.functions.renderWholeInventory()
+function inventory.functions.split(itemRow, itemCol, button, posHit)
+    if next(inventory.inventoryBar.itemOnCursor) == nil then
+        return false
+    end
 
+    local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+    local itemCursor = inventory.inventoryBar.itemOnCursor
+
+    if next(item) ~= nil then
+        return false
+    end
+
+    if item.item ~= itemCursor.item and item.item ~= nil then
+        return false
+    end
+
+    if next(item) == nil then
+        item.item = itemCursor.item
+        item.count = math.floor(itemCursor.count / 2)
+        itemCursor.count = math.ceil(itemCursor.count / 2)
+    end
+end
+
+function inventory.functions.renderWholeInventory()
+    inventory.functions.clean()
     if not inventory.inventoryBar.render then
         return
     end

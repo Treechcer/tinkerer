@@ -66,7 +66,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        if inventory.functions.click() then
+        if inventory.functions.click(button) then
             return
         end
         
@@ -75,6 +75,10 @@ function love.mousepressed(x, y, button, istouch, presses)
         end
 
         if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+            return
+        end
+    elseif button == 2 then
+        if inventory.functions.click(button) then
             return
         end
     end
