@@ -13,3 +13,7 @@ If you want to see more progress look into CHANGELOG.md, there will be most chan
 ## Future
 
 I want to release this game on major platforms (itch.io, steam...) and I want to have some "demo" beta or something version on my github, the full version won't be fully open-source on release, maybe it'll be fully open-source after some time after release but that is probably years away (and we will see even if it'll be release)
+
+## PSP
+
+This is game is also being ported to PSP because why not, it's made in [my fork](https://github.com/Treechcer/LOVE-WrapLua) of [LOVE-WrapLua](https://github.com/LukeZGD/LOVE-WrapLua).
