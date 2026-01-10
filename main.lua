@@ -45,6 +45,8 @@ function love.draw()
     love.graphics.print(player.position.chunkY, 10, 25)
     love.graphics.print(#entities.ents, 10, 40)
     love.graphics.print(love.timer.getFPS(), 50, 50)
+
+    love.graphics.print(player.cursor.screenSide, 10, 65)
 end
 
 function love.update(dt)

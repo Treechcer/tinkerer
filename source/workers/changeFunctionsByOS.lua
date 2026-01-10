@@ -95,11 +95,12 @@ if game.os == "PSP" then
     end
 
     player.cursor.updatePos = function () -- updates mouse position every frame - even calculates the tiles it's on
+        if inventory.inventoryBar.render then
+            return
+        end
+
         if (player.cursor.consoles.cooldown <= player.cursor.consoles.last) then
             --player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
-            if inventory.inventoryBar.render then
-                return
-            end
 
             local moveByX = game.leftJoy:getGamepadAxis("leftx")
             local moveByY = game.leftJoy:getGamepadAxis("lefty")
@@ -115,9 +116,9 @@ if game.os == "PSP" then
 
             --TODO: Fix the screenSide because on PSP id doesn't switch? idk why
 
-            player.cursor.x, player.cursor.y = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+            player.cursor.x, player.cursor.y = renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY)
 
-            player.cursor.screenSide = (game.width / 2 <= player.cursor.x) and 1 or -1
+            player.cursor.screenSide = (player.cursor.x - player.position.x) >= 0 and 1 or -1
 
             player.cursor.chunkX = math.floor((player.cursor.tileX - 1) / map.chunkWidth) + 1
             player.cursor.chunkY = math.floor((player.cursor.tileY - 1) / map.chunkHeight) + 1

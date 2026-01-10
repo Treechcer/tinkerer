@@ -81,12 +81,14 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     if i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
         local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         love.graphics.draw(spr,
-        (game.width / 2) + (player.size.width * player.cursor.screenSide),
-            yT + player.size.height / 3, inventory.hotBar.moveVal * player.cursor.screenSide,
+            (game.width / 2) + (player.size.width * player.cursor.screenSide),
+            yT + player.size.height / 3, --[[inventory.hotBar.moveVal * player.cursor.screenSide]]0,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,
             map.tileSize / spr:getHeight(),
             spr:getWidth() / 2,
             spr:getHeight() / 2)
+
+            love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
     end
 
     inventory.functions.renderHotbar()
