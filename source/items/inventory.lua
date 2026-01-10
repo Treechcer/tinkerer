@@ -181,6 +181,7 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
 end
 
 function inventory.functions.split(itemRow, itemCol, button, posHit)
+    posHit = posHit or true
     if next(inventory.inventoryBar.itemOnCursor) == nil then
         return false
     end
@@ -200,7 +201,7 @@ function inventory.functions.split(itemRow, itemCol, button, posHit)
         if math.floor(itemCursor.count / 2) <= 0 then
             return false
         end
-        
+
         item.item = itemCursor.item
         item.count = math.floor(itemCursor.count / 2)
         itemCursor.count = math.ceil(itemCursor.count / 2)

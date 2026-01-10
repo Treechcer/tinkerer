@@ -158,6 +158,7 @@ if game.os == "PSP" then
 
         if cd.last >= cd.cd then
            place = love.keyboard.isDown(settings.keys.placeInventory)
+           split = love.keyboard.isDown(settings.keys.splitInventory)
         end
 
         love.graphics.setColor(1,0,0)
@@ -187,7 +188,20 @@ if game.os == "PSP" then
         if place then
             res = inventory.functions.moveItems(tilePos.y, tilePos.x, settings.keys.placeInventory)
             cd.last = 0
+        elseif split then
+            res = inventory.functions.split(tilePos.y, tilePos.x, settings.keys.placeInventory)
+            cd.last = 0
         end
+
+        local barI = inventory.inventoryBar
+        local rows = #barI.inventory
+        local cols = barI.maxItemsPerInventory
+        local totalW = cols * barI.blockSize
+        local totalH = rows * barI.blockSize
+        local xP = (game.width / 2) + ((tilePos.x - 1) * barI.blockSize) - (totalW / 2) + (barI.pad / 2) + (barI.blockSize / 1.75)
+        local yP = (game.height / 2) + ((tilePos.y - 1) * barI.blockSize) - (totalH / 2) + (barI.pad / 2) + (barI.blockSize / 1.75)
+
+        inventory.functions.renderItemOnCursor(xP, yP)
 
         love.graphics.print(tilePos.x .. " " .. tilePos.y, 10, 50)
 
