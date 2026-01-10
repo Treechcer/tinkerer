@@ -82,7 +82,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         love.graphics.draw(spr,
             (game.width / 2) + (player.size.width * player.cursor.screenSide),
-            yT + player.size.height / 3, --[[inventory.hotBar.moveVal * player.cursor.screenSide]]0,
+            yT + player.size.height / 3, inventory.hotBar.moveVal * player.cursor.screenSide,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,
             map.tileSize / spr:getHeight(),
             spr:getWidth() / 2,
