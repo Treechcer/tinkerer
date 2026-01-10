@@ -11,9 +11,9 @@ function love.load()
     end
     math.randomseed(os.time())
 
-    player = require("source.game.player")
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
+    player = require("source.game.player")
     renderer = require("source.graphics.renderer")
     init = require("source.game.init")
     vectors = require("source.graphics.vectors")

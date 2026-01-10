@@ -117,7 +117,7 @@ function inventory.functions.renderItemOnCursor(x, y)
         local realHeight = h * (inventory.inventoryBar.blockSize / h)
 
         love.graphics.draw(spr, x - (realWidth / 2), y - (realHeight / 2), 0, inventory.inventoryBar.blockSize / w, inventory.inventoryBar.blockSize / h)
-
+        love.graphics.setColor(1,1,1)
         love.graphics.print(inventory.inventoryBar.itemOnCursor.count, x + (realWidth / 3), y + (realHeight / 4)) -- 3 and 4 are random values, they work well ngl
     end
 end
@@ -197,14 +197,20 @@ function inventory.functions.split(itemRow, itemCol, button, posHit)
     end
 
     if next(item) == nil then
+        if math.floor(itemCursor.count / 2) <= 0 then
+            return false
+        end
+        
         item.item = itemCursor.item
         item.count = math.floor(itemCursor.count / 2)
         itemCursor.count = math.ceil(itemCursor.count / 2)
+
+        return true
     end
 end
 
 function inventory.functions.renderWholeInventory()
-    inventory.functions.clean()
+    --inventory.functions.clean()
     if not inventory.inventoryBar.render then
         return
     end

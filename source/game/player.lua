@@ -12,8 +12,8 @@ player = {
         chunkY = 0
     },
     size = {
-        width = 48,
-        height = 96
+        width = math.floor(map.tileSize - (map.tileSize / 5)),
+        height = math.floor(map.tileSize * 2 - (map.tileSize / 2))
     },
     cursor = {
         x = 0,
