@@ -42,6 +42,9 @@ player = {
     },
     atributes = {
         speed = 250
+    },
+    vals = {
+        walking = false
     }
 }
 
@@ -117,6 +120,12 @@ function player.move(dt)
 
         player.position.chunkX = math.ceil((player.position.x + (player.size.width / 2)) / map.chunkWidth / map.tileSize)
         player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
+        
+        player.vals.walking = true
+    end
+
+    if mvXp == 0 and mvYp == 0 then
+        player.vals.walking = false
     end
 end
 
