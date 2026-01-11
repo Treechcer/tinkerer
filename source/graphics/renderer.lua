@@ -70,8 +70,10 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             --map.f.buyIsland(chunkX, chunkY)
         end
     end
-        x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-        love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
+    x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
+    local dudeSpr = spw.sprites.dude.sprs[1]
+    love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
+    --love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
 
