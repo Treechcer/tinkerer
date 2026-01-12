@@ -25,17 +25,18 @@ function spw.init()
     spw.generateNewSprite("sand", love.graphics.newImage("source/assets/sprites/sand.png"))
     spw.generateNewSprite("cursorBuy",{ love.graphics.newImage("source/assets/sprites/cursor00.png"), love.graphics.newImage("source/assets/sprites/cursor01.png"), love.graphics.newImage("source/assets/sprites/cursor02.png"), love.graphics.newImage("source/assets/sprites/cursor03.png") }, 0.25)
     spw.generateNewSprite("dude", { love.graphics.newImage("source/assets/sprites/dude.png")})
-    spw.generateNewSprite("dudeWalking", { love.graphics.newImage("source/assets/sprites/dude.png"), love.graphics.newImage("source/assets/sprites/dudeW1.png")}, 0.25)
+    spw.generateNewSprite("dudeWalking", { love.graphics.newImage("source/assets/sprites/dude.png"), love.graphics.newImage("source/assets/sprites/dudeW1.png")}, 0.15, function () return player.vals.walking end)
 end
 
 ---@param timer number?
-function spw.generateNewSprite(name, sprs, timer)
+function spw.generateNewSprite(name, sprs, timer, canMove)
     if timer == nil then
         spw.sprites[name] = { sprs = sprs }
     else
         local lastChange = 0;
         local index = 1
-        spw.sprites[name] = { sprs = sprs, timer = timer, lastChange = lastChange, index = index }
+        canMove = canMove or function() return true end
+        spw.sprites[name] = { sprs = sprs, timer = timer, lastChange = lastChange, index = index, canMove = canMove }
     end
 end
 
@@ -43,7 +44,9 @@ function spw.changeFrames(dt) -- this is for changing the frames it's in every n
     for name, sprite in pairs(spw.sprites) do
         if type(sprite.sprs) == "table" then
             if sprite.lastChange ~= nil and sprite.timer ~= nil then
-                if sprite.lastChange >= sprite.timer then
+                local res = sprite.canMove()
+
+                if sprite.lastChange >= sprite.timer and res then
                     sprite.index = sprite.index + 1
                     sprite.lastChange = 0
 
@@ -52,6 +55,11 @@ function spw.changeFrames(dt) -- this is for changing the frames it's in every n
                     end
                 else
                     sprite.lastChange = sprite.lastChange + dt
+                end
+
+                if not res then
+                    sprite.lastChange = 0
+                    sprite.index = 1
                 end
             end
         end
