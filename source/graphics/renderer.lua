@@ -100,7 +100,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
-    if game.os == "PSP" then -- not rewriting the while functions just because PSP
+    if game.os == "PSP" or game.os == "PS3" then -- not rewriting the while functions just because PSP
         inventory.functions.click()
     end
 

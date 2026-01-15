@@ -25,7 +25,7 @@ game.os = love.system.getOS()
 if game.os ~= "PSP" and game.os ~= "Vita" and game.os ~= "PS3" then
     game.width  = 800
     game.height = 600
-elseif game.os == "PSP" then
+elseif game.os == "PSP" or game.os == "PS3" then
     game.width  = 480
     game.height = 272
 
