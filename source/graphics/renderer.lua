@@ -147,8 +147,8 @@ end
 
 function renderer.checkCollsion(worldXpos, worldYpos)
     local xTile, yTile = renderer.calculateTile(worldXpos, worldYpos)
-    local xTile = xTile + 1
-    local yTile = yTile + 1
+    xTile = xTile + 1
+    yTile = yTile + 1
 
     if xTile <= 0 or yTile <= 0 then
         return false
