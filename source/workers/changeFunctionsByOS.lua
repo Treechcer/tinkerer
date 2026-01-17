@@ -1,4 +1,4 @@
-if game.os == "PSP" or game.os == "PS3" then
+if game.os == "PSP" then
     ---@diagnostic disable: duplicate-set-field
     player.move = function (dt)
 
