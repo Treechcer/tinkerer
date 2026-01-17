@@ -14,6 +14,7 @@ game = {
             dialogue = 1,
             etc = 1
         },
+        difficulty = 1, -- this is number that can range from 1 to 5 and makes the game harder the bigger it is
     },
     --height = 272,
     --width = 480, --this will be possible to change of course, but I have to have some basic info for beginning

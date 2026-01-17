@@ -1,4 +1,4 @@
-player = require("source.game.player")
+player = require("source.player.player")
 spw = require("source.workers.spriteWorker")
 
 run = {}
