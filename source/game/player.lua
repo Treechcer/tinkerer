@@ -111,7 +111,16 @@ function player.move(dt)
     --    entities.isEntityOnTile(renderer.calculateTile(nextX + (map.tileSize / 2), nextY + map.tileSize)) < 0 and
     --    entities.isEntityOnTile(renderer.calculateTile(nextX + (map.tileSize / 2), nextY + (2 * map.tileSize))) < 0 then
 
-    if not renderer.checkCollsion(renderer.getWorldPos(nextX, nextY)) then
+    if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY)))
+            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + (player.size.height))))
+            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY)))
+            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY + (player.size.height))))
+            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY)) < 0
+            and entities.isEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY)) < 0
+            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY + player.size.height)) < 0
+            and entities.isEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height)) < 0
+            and entities.isEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
+            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
         player.position.x = nextX
         player.position.y = nextY
 
