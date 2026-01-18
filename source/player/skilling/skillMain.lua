@@ -40,16 +40,17 @@ function skills.f.levelUp(skills)
         if pSkill.xp < pSkill.xpForNextLvl then
             return false
         end
-
-        if pSkill.xp > pSkill.xpForNextLvl then
+        local r = false
+        
+        while pSkill.xp >= pSkill.xpForNextLvl do
             pSkill.xp = pSkill.xp - pSkill.xpForNextLvl
             pSkill.lvl = pSkill.lvl + 1
-            skills.f.xpCountNext(pSkill.lvl)
-            
+            pSkill.xpForNextLvl = skills.f.xpCountNext(pSkill.lvl)
+            r = true
             skills.f.addStatsAfterLVL(skill)
-
-            return true
         end
+
+        return r
     end
 
     for index, skill in ipairs(skills) do
