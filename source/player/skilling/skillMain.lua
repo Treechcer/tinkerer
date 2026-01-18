@@ -1,5 +1,31 @@
 skills = {
     f = {},
+    skillStatAdds = {
+        foraging = function (lvl)
+            player.atributes.foragingLuck = player.atributes.foragingLuck + (0.1 * lvl)
+        end,
+        crafting = function (lvl)
+            --TODO implement crafting upgrades
+        end,
+        mining = function (lvl)
+            player.atributes.miningLuck = player.atributes.miningLuck + (0.1 * lvl)
+        end,
+        walking = function (lvl)
+            player.atributes.speed = 250 + lvl * 8
+        end,
+        engineering = function (lvl)
+            --TODO implement engineering upgrades
+        end,
+        fighting = function (lvl)
+            --TODO implement fighting upgrades
+        end,
+        defense = function (lvl)
+            --TODO implement defense upgrades
+        end,
+        merchanting = function (lvl)
+            --TODO implement merchanting upgrades
+        end,
+    }
 }
 
 function skills.f.addXP(skills)
@@ -26,7 +52,7 @@ function skills.f.xpCountNext(lvl)
 end
 
 function skills.f.addStatsAfterLVL(skill)
-    --TODO later
+    skill.skillStatAdds[skill](player.skills[skill].lvl)
 end
 
 function skills.f.levelUp(skills)

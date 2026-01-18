@@ -41,7 +41,10 @@ player = {
         y = 0,
     },
     atributes = {
-        speed = 250
+        speed = 250,
+        miningLuck = 0,
+        foragingLuck = 0,
+        
     },
     vals = {
         walking = false
