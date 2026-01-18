@@ -13,6 +13,7 @@ function love.load()
 
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
+    skills = require("source.player.skilling.skillMain")
     player = require("source.player.player")
     renderer = require("source.graphics.renderer")
     init = require("source.game.init")
@@ -41,12 +42,16 @@ function love.draw()
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
-    love.graphics.print(player.position.chunkX, 10, 10)
-    love.graphics.print(player.position.chunkY, 10, 25)
-    love.graphics.print(#entities.ents, 10, 40)
-    love.graphics.print(love.timer.getFPS(), 50, 50)
+    --love.graphics.print(player.position.chunkX, 10, 10)
+    --love.graphics.print(player.position.chunkY, 10, 25)
+    --love.graphics.print(#entities.ents, 10, 40)
+    --love.graphics.print(love.timer.getFPS(), 50, 50)
+    --love.graphics.print(player.cursor.screenSide, 10, 65)
 
-    love.graphics.print(player.cursor.screenSide, 10, 65)
+    love.graphics.print(player.skills.walking.xp, 10, 10)
+    love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
+    love.graphics.print(player.skills.walking.lvl, 10, 40)
+    love.graphics.print(player.atributes.speed, 10, 65)
 end
 
 function love.update(dt)

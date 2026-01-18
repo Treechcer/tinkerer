@@ -25,13 +25,15 @@ skills = {
         merchanting = function (lvl)
             --TODO implement merchanting upgrades
         end,
-    }
+    },
+    maxLVL = 10
 }
 
-function skills.f.addXP(skills)
+function skills.f.addXP(skillsInput)
     --skills is just table with name of skill (as key) and as value the XP value, it can have more skills
-    for key, value in pairs(skills) do
-        player.skills[key] = player.skills[key] + value 
+    for key, value in pairs(skillsInput) do
+        player.skills[key].xp = player.skills[key].xp + value
+        skills.f.levelUp({key})
     end
 end
 
@@ -52,10 +54,10 @@ function skills.f.xpCountNext(lvl)
 end
 
 function skills.f.addStatsAfterLVL(skill)
-    skill.skillStatAdds[skill](player.skills[skill].lvl)
+    skills.skillStatAdds[skill](player.skills[skill].lvl)
 end
 
-function skills.f.levelUp(skills)
+function skills.f.levelUp(skillsInput)
     local function checkLVL(skill)
         local pSkill = player.skills[skill]
 
@@ -73,13 +75,15 @@ function skills.f.levelUp(skills)
             pSkill.lvl = pSkill.lvl + 1
             pSkill.xpForNextLvl = skills.f.xpCountNext(pSkill.lvl)
             r = true
-            skills.f.addStatsAfterLVL(skill)
+            if skill.lvl <= skills.maxLVL then
+                skills.f.addStatsAfterLVL(skill)
+            end
         end
 
         return r
     end
 
-    for index, skill in ipairs(skills) do
+    for index, skill in ipairs(skillsInput) do
         checkLVL(skill)
     end
 end

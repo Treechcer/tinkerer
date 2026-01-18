@@ -44,7 +44,7 @@ player = {
         speed = 250,
         miningLuck = 0,
         foragingLuck = 0,
-        
+
     },
     vals = {
         walking = false
@@ -53,42 +53,42 @@ player = {
         foraging    = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         crafting    = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         mining      = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         walking     = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         engineering = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         fighting    = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         defense     = {
         xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
         merchanting = {
             xp = 0,
             lvl = 1,
-            xpForNextLvl = 100,
+            xpForNextLvl = skills.f.xpCountNext(1),
         },
     }
 }
@@ -166,6 +166,8 @@ function player.move(dt)
             and entities.isEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height)) < 0
             and entities.isEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
             and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
+
+
         player.position.x = nextX
         player.position.y = nextY
 
@@ -178,6 +180,11 @@ function player.move(dt)
         player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
         
         player.vals.walking = true
+        
+        if mvXc ~= 0 or mvYp ~= 0 then
+            skills.f.addXP({walking = 0.05 * dt}) -- ~4-5 or whatever hours to max it
+        end
+
     end
 
     if mvXp == 0 and mvYp == 0 then
