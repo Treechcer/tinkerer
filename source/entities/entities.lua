@@ -87,6 +87,8 @@ function entities.damageEntity(entityIndex, damageNumber)
     en.health = en.health - damageNumber
     if en.health <= 0 then
         if en.drop ~= nil then
+            --not yet implemented kianfiao
+            local bonus = player.atributes[en.luck]
             inventory.functions.addItem(en.drop.item, en.drop.count)
         end
         table.remove(entities.ents, entityIndex)

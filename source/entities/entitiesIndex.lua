@@ -16,13 +16,28 @@ entitiesIndex = {
         strengthMin = 1,
         --you have to :
         --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
-        drop = { item = "rock", count = 5 },
+        drop = { item = "rock", baseCount = 3},
         width = 1,
-        height = 1
+        height = 1,
+        luck = "miningLuck"
     }
 }
 
----@param entityName string
+function entitiesIndex.f.getCount (luck, baseCount) -- luck => 1 - 10 (base skill lvl, maybe there can be added more?)
+    local number = baseCount
+
+    for i = 0, luck, 1 do
+        number = number + math.random(0,1)
+    end
+
+    return number
+end
+
+function entitiesIndex.f.getBaseCount(name)
+    return entitiesIndex[name].baseCount
+end
+
+---@param entityName stringd
 ---@param spwName string?
 ---@param HP integer
 ---@param weakness integer
@@ -30,7 +45,7 @@ entitiesIndex = {
 ---@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height, luck)
     width = width or 1
     height = height or 1
     --this function adds a new thing into entitiesIndex
@@ -59,7 +74,8 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable,
         strenght,
         drop = drop,
         height = height,
-        width = width
+        width = width,
+        luck = luck
     }
 end
 
