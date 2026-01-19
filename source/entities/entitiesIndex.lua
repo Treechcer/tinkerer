@@ -19,7 +19,8 @@ entitiesIndex = {
         drop = { item = "rock", baseCount = 3},
         width = 1,
         height = 1,
-        luck = "miningLuck"
+        luck = "miningLuck",
+        xp = {mining = 50}
     }
 }
 
@@ -37,7 +38,7 @@ function entitiesIndex.f.getBaseCount(name)
     return entitiesIndex[name].baseCount
 end
 
----@param entityName stringd
+---@param entityName string
 ---@param spwName string?
 ---@param HP integer
 ---@param weakness integer
@@ -45,9 +46,10 @@ end
 ---@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height, luck)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height, luck, xp)
     width = width or 1
     height = height or 1
+    xp = xp or {}
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName

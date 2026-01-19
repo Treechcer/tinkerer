@@ -75,7 +75,7 @@ function skills.f.levelUp(skillsInput)
             pSkill.lvl = pSkill.lvl + 1
             pSkill.xpForNextLvl = skills.f.xpCountNext(pSkill.lvl)
             r = true
-            if skill.lvl <= skills.maxLVL then
+            if pSkill.lvl <= skills.maxLVL then
                 skills.f.addStatsAfterLVL(skill)
             end
         end

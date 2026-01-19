@@ -81,7 +81,7 @@ player = {
             xpForNextLvl = skills.f.xpCountNext(1),
         },
         defense     = {
-        xp = 0,
+            xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
         },
@@ -90,6 +90,16 @@ player = {
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
         },
+    },
+    skillOrder = {
+        "foraging",
+        "crafting",
+        "mining",
+        "walking",
+        "engineering",
+        "fighting",
+        "defense",
+        "merchanting"
     }
 }
 
@@ -182,7 +192,7 @@ function player.move(dt)
         player.vals.walking = true
         
         if mvXc ~= 0 or mvYp ~= 0 then
-            skills.f.addXP({walking = 0.05 * dt}) -- ~4-5 or whatever hours to max it
+            skills.f.addXP({walking = 50 * dt}) -- ~4-5 or whatever hours to max it
         end
 
     end

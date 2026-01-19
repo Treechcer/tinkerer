@@ -100,11 +100,13 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
-    if game.os == "PSP" then -- not rewriting the while functions just because PSP
-        inventory.functions.click()
-    end
+    --ENABLE THIS FOR PSP RELEASE!!! IF THERE EVER BE ONE!
+    --if game.os == "PSP" then -- not rewriting the while functions just because PSP
+    --    inventory.functions.click()
+    --end
 
     inventory.functions.renderItemOnCursor(renderer.getAbsolutePos(player.cursor.x, player.cursor.y))
+    skillUI.f.render()
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time

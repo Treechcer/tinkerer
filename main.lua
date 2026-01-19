@@ -11,9 +11,11 @@ function love.load()
     end
     math.randomseed(os.time())
 
+    mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
     skills = require("source.player.skilling.skillMain")
+    skillsUI = require("source.player.skilling.skillUI")
     player = require("source.player.player")
     renderer = require("source.graphics.renderer")
     init = require("source.game.init")

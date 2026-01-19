@@ -2,11 +2,11 @@ entities = {
     ents = { }, --all entity data stored here!
 }
 
-function entities.makeNewOne(tileX, tileY, index, health, drop, width, height)
+function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp)
     width = width or 1
     height = height or 1
 
-    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height })
+    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp })
 end
 
 function entities.render()
@@ -91,6 +91,18 @@ function entities.damageEntity(entityIndex, damageNumber)
             local bonus = player.atributes[en.luck]
             inventory.functions.addItem(en.drop.item, en.drop.count)
         end
+
+        if en.xp ~= nil then
+            skills.f.addXP(en.xp)
+            tables.writeTable(en.xp)
+            --for index, value in ipairs(en.xp) do
+            --    print(value)
+            --    skills.f.addXP(value)
+            --end
+        end
+
+        print(en.xp)
+
         table.remove(entities.ents, entityIndex)
     end
 end
