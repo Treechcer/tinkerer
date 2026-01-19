@@ -61,6 +61,10 @@ function skills.f.levelUp(skillsInput)
     local function checkLVL(skill)
         local pSkill = player.skills[skill]
 
+        if pSkill.lvl >= skills.maxLVL then
+            pSkill.canProgres = false
+        end
+
         if pSkill == nil then
             return false
         end
@@ -71,12 +75,15 @@ function skills.f.levelUp(skillsInput)
         local r = false
         
         while pSkill.xp >= pSkill.xpForNextLvl do
-            pSkill.xp = pSkill.xp - pSkill.xpForNextLvl
-            pSkill.lvl = pSkill.lvl + 1
-            pSkill.xpForNextLvl = skills.f.xpCountNext(pSkill.lvl)
-            r = true
-            if pSkill.lvl <= skills.maxLVL then
+            if pSkill.lvl < skills.maxLVL then
+                pSkill.xp = pSkill.xp - pSkill.xpForNextLvl
+                pSkill.lvl = pSkill.lvl + 1
+                pSkill.xpForNextLvl = skills.f.xpCountNext(pSkill.lvl)
+                r = true
                 skills.f.addStatsAfterLVL(skill)
+            else
+                pSkill.canProgres = false
+                break
             end
         end
 

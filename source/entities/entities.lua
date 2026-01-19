@@ -94,7 +94,7 @@ function entities.damageEntity(entityIndex, damageNumber)
 
         if en.xp ~= nil then
             skills.f.addXP(en.xp)
-            tables.writeTable(en.xp)
+            --tables.writeTable(en.xp)
             --for index, value in ipairs(en.xp) do
             --    print(value)
             --    skills.f.addXP(value)

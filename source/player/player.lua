@@ -54,41 +54,49 @@ player = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         crafting    = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         mining      = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         walking     = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         engineering = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         fighting    = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         defense     = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
         merchanting = {
             xp = 0,
             lvl = 1,
             xpForNextLvl = skills.f.xpCountNext(1),
+            canProgres = true
         },
     },
     skillOrder = {
@@ -192,7 +200,7 @@ function player.move(dt)
         player.vals.walking = true
         
         if mvXc ~= 0 or mvYp ~= 0 then
-            skills.f.addXP({walking = 50 * dt}) -- ~4-5 or whatever hours to max it
+            skills.f.addXP({walking = 500 * dt}) -- ~4-5 or whatever hours to max it
         end
 
     end
