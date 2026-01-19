@@ -101,7 +101,7 @@ function entities.damageEntity(entityIndex, damageNumber)
             --end
         end
 
-        print(en.xp)
+        --print(en.xp)
 
         table.remove(entities.ents, entityIndex)
     end

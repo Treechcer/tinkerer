@@ -200,7 +200,7 @@ function player.move(dt)
         player.vals.walking = true
         
         if mvXc ~= 0 or mvYp ~= 0 then
-            skills.f.addXP({walking = 500 * dt}) -- ~4-5 or whatever hours to max it
+            skills.f.addXP({walking = 50 * dt}) -- ~4-5 or whatever hours to max it
         end
 
     end

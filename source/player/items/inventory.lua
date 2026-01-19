@@ -305,7 +305,7 @@ function inventory.functions.addNewItem(item, count)
 end
 
 function inventory.functions.addItem(item, count)
-    print(item, count)
+    --print(item, count)
 
     if count <= 0 then
         return
