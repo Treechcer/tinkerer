@@ -2,10 +2,15 @@ skillUI = {
     f = {},
     pad = 55,
     maxLength = 250,
-    height = 12.5
+    height = 12.5,
+    render = false
 }
 
 function skillUI.f.render()
+    if not skillUI.render then
+        return
+    end
+
     local index = 1
     local totalY = (#player.skillOrder - 1) * skillUI.pad + 10
     local startY = (game.height - totalY) / 2

@@ -15,9 +15,9 @@ inventory = {
     },
     inventoryBar = {
         inventory = {
-            {{item = "rock", count = 5},{},{},{},{}},
-            {{item = "rock", count = 5},{},{},{},{}},
-            {{item = "rock", count = 5},{item = "rock", count = 62},{},{},{}},
+            {{item = "stick", count = 5},{},{},{},{}},
+            {{item = "log", count = 5},{},{},{},{}},
+            {{item = "leaf", count = 5},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 },
@@ -377,6 +377,23 @@ end
 
 function inventory.functions.init()
     inventory.functions.fillHitBoxTable()
+
+    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, 10, 1)
+    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, 10, 1)
+    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, 10, 1)
+end
+
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation)
+    itemIndex[item] = {
+        maxStackSize = maxStackSize,
+        attack = attack,
+        weakness = weakness,
+        strength = strength,
+        defaultHp = defaultHp,
+        drop = drop,
+        speedAttackMultiplayer = speedAttackMultiplayer,
+        attackRotation = attackRotation
+    }
 end
 
 return inventory

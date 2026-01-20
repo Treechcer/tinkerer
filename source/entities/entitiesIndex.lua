@@ -20,13 +20,13 @@ entitiesIndex = {
         width = 1,
         height = 1,
         luck = "miningLuck",
-        xp = {mining = 50}
+        xp = {mining = 20}
     }
 }
 
 function entitiesIndex.f.getCount (luck, baseCount) -- luck => 1 - 10 (base skill lvl, maybe there can be added more?)
     local number = baseCount
-
+    --print(luck, baseCount)
     for i = 0, luck, 1 do
         number = number + math.random(0,1)
     end
@@ -43,10 +43,10 @@ end
 ---@param HP integer
 ---@param weakness integer
 ---@param strenght integer
----@param spawnable boolean?
+----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable, drop, spwName, width, height, luck, xp)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, spwName)
     width = width or 1
     height = height or 1
     xp = xp or {}
@@ -63,9 +63,9 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, spawnable,
         weakness = bit.addBit({weakness})
     end
 
-    if spawnable then
+    --[[if spawnable then
         table.insert(entitySpawner.possibleSpawns, entityName)
-    end
+    end]]
 
     entitiesIndex[entityName] = {
         entityName = entityName,
@@ -84,6 +84,12 @@ end
 function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("second", 1, 5, bit.addBit({ bit.BIT1, bit.BIT4 }))
     --entitiesIndex.f.addIndex("snow", 0, 0, 0, true)
+    
+    --correct tree, now there's not any axe
+    --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
+
+    --pickaxeble tree!!!
+    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 end
 
 return entitiesIndex

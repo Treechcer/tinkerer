@@ -5,27 +5,27 @@ biomeData = {
 
 function biomeData.f.init()
     biomeData.grass = {
-        spawns = { "rock" },
+        spawns = { "rock", "tree" },
         sprite = spriteWorker.sprites.grass.sprs
     }
 
     biomeData.sand = {
-        spawns = { "rock" },
+        spawns = { "rock", "tree" },
         sprite = spriteWorker.sprites.sand.sprs
     }
 
     biomeData.void = {
-        spawns = { "rock" },
+        spawns = { "rock", "tree" },
         sprite = spriteWorker.sprites.void.sprs
     }
 
     biomeData.snow = {
-        spawns = { "rock" },
+        spawns = { "rock", "tree" },
         sprite = spriteWorker.sprites.snow.sprs
     }
 
     biomeData.hill = {
-        spawns = { "rock" },
+        spawns = { "rock", "tree" },
         sprite = spriteWorker.sprites.hill.sprs
     }
 end

@@ -26,6 +26,10 @@ function spw.init()
     spw.generateNewSprite("cursorBuy",{ love.graphics.newImage("assets/sprites/cursor00.png"), love.graphics.newImage("assets/sprites/cursor01.png"), love.graphics.newImage("assets/sprites/cursor02.png"), love.graphics.newImage("assets/sprites/cursor03.png") }, 0.25)
     spw.generateNewSprite("dude", { love.graphics.newImage("assets/sprites/dude.png")})
     spw.generateNewSprite("dudeWalking", { love.graphics.newImage("assets/sprites/dude.png"), love.graphics.newImage("assets/sprites/dudeW1.png")}, 0.15, function () return player.vals.walking end)
+    spw.generateNewSprite("leaf", love.graphics.newImage("assets/sprites/leaf.png"))
+    spw.generateNewSprite("log", love.graphics.newImage("assets/sprites/log.png"))
+    spw.generateNewSprite("stick", love.graphics.newImage("assets/sprites/stick.png"))
+    spw.generateNewSprite("tree", love.graphics.newImage("assets/sprites/tree.png"))
 end
 
 ---@param timer number?
