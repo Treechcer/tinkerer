@@ -86,10 +86,16 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     local i = inventory.inventoryBar.inventory
 
     if i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
+        local moveX = player.floatyMovement.timeX / player.floatyMovement.maxTimeX
+        local moveY = player.floatyMovement.timeY / player.floatyMovement.maxTimeY
+
+        player.floatyMovement.x = mathWorker.lerp(player.floatyMovement.x, player.floatyMovement.maxX, (moveX < 1) and moveX or 1)
+        player.floatyMovement.y = mathWorker.lerp(player.floatyMovement.y, player.floatyMovement.maxY, (moveY < 1) and moveY or 1)
         local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         love.graphics.draw(spr,
-            (game.width / 2) + (player.size.width * player.cursor.screenSide),
-            yT + player.size.height / 3, inventory.hotBar.moveVal * player.cursor.screenSide,
+            (game.width / 2) + (player.size.width * player.cursor.screenSide) + player.floatyMovement.x,
+            yT + player.size.height / 3 + player.floatyMovement.y,
+            inventory.hotBar.moveVal * player.cursor.screenSide,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,
             map.tileSize / spr:getHeight(),
             spr:getWidth() / 2,

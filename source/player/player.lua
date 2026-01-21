@@ -9,7 +9,20 @@ player = {
         tileY = 0,
 
         chunkX = 0,
-        chunkY = 0
+        chunkY = 0,
+    },
+    floatyMovement = {
+        x = 0,
+        y = 0,
+
+        maxX = 5,
+        maxY = 2.5,
+
+        timeX = 0,
+        timeY = 0,
+
+        maxTimeX = 1,
+        maxTimeY = 1,
     },
     size = {
         width = math.floor(map.tileSize),
@@ -203,10 +216,45 @@ function player.move(dt)
             skills.f.addXP({walking = 0.4 * dt})
         end
 
+        if mvXc ~= 0 then
+            player.floatyMovement.timeX = player.floatyMovement.timeX + dt
+            local temp = player.floatyMovement.maxX
+            player.floatyMovement.maxX = (mvXc < 0) and -5 or 5
+
+            if temp ~= player.floatyMovement.maxX then
+                player.floatyMovement.timeX = 0.000000001
+            end
+        else
+            --player.floatyMovement.timeX = player.floatyMovement.timeX - dt
+        end
+
+        if mvYc ~= 0 then
+            player.floatyMovement.timeY = player.floatyMovement.timeY + dt
+            local temp = player.floatyMovement.maxY
+            player.floatyMovement.maxY = (mvYc < 0) and -2.5 or 2.5
+
+            if temp ~= player.floatyMovement.maxY then
+                player.floatyMovement.timeY = 0.000000001
+            end
+        end
+
     end
 
     if mvXp == 0 and mvYp == 0 then
         player.vals.walking = false
+
+        player.floatyMovement.timeX = 0.000000001
+        player.floatyMovement.timeY = 0.000000001
+    end
+
+    if mvYp == 0 then
+        player.floatyMovement.timeY = player.floatyMovement.timeY + (dt * 3)
+        player.floatyMovement.maxY = 0
+    end
+
+    if mvXp == 0 then
+        player.floatyMovement.timeX = player.floatyMovement.timeX + (dt * 3)
+        player.floatyMovement.maxX = 0
     end
 end
 
