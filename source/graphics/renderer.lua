@@ -101,7 +101,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getWidth() / 2,
             spr:getHeight() / 2)
 
-            love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
+            --love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
     end
 
     inventory.functions.renderHotbar()
