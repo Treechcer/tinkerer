@@ -52,10 +52,10 @@ function love.draw()
     --love.graphics.print(love.timer.getFPS(), 50, 50)
     --love.graphics.print(player.cursor.screenSide, 10, 65)
 
-    love.graphics.print(player.skills.walking.xp, 10, 10)
-    love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
-    love.graphics.print(player.skills.walking.lvl, 10, 40)
-    love.graphics.print(player.atributes.speed, 10, 65)
+    --love.graphics.print(player.skills.walking.xp, 10, 10)
+    --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
+    --love.graphics.print(player.skills.walking.lvl, 10, 40)
+    --love.graphics.print(player.atributes.speed, 10, 65)
 end
 
 function love.update(dt)
