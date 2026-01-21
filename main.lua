@@ -40,6 +40,8 @@ function love.load()
 end
 
 function love.draw()
+    love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
+
     love.graphics.setColor(1,1,1)
     if game.state == "game" then
         renderer.gameStateRenderer()
