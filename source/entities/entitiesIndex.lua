@@ -46,10 +46,15 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, spwName)
+function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, spwName)
+
+    --interactivyKeys => {key = function ...........} returns true / false, if it did something
+
     width = width or 1
     height = height or 1
     xp = xp or {}
+    interactivityKeys = interactivityKeys or {}
+
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
         spwName = entityName
@@ -77,7 +82,8 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawna
         drop = drop,
         height = height,
         width = width,
-        luck = luck
+        luck = luck,
+        interactivityKeys = interactivityKeys
     }
 end
 
@@ -89,7 +95,7 @@ function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
     --pickaxeble tree!!!
-    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
+    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"}, {f = function() love.event.quit() end})
 end
 
 return entitiesIndex
