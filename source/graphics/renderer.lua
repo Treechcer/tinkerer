@@ -93,7 +93,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         player.floatyMovement.y = mathWorker.lerp(player.floatyMovement.y, player.floatyMovement.maxY, (moveY < 1) and moveY or 1)
         local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
         love.graphics.draw(spr,
-            (game.width / 2) + (player.size.width * player.cursor.screenSide) + player.floatyMovement.x,
+            (game.width / 2) + ((player.size.width * 0.75) * player.cursor.screenSide) + player.floatyMovement.x,
             yT + player.size.height / 3 + player.floatyMovement.y,
             inventory.hotBar.moveVal * player.cursor.screenSide,
             map.tileSize / spr:getWidth() * player.cursor.screenSide,

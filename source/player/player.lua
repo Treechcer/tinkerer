@@ -15,7 +15,7 @@ player = {
         x = 0,
         y = 0,
 
-        maxX = 5,
+        maxX = 3,
         maxY = 2.5,
 
         timeX = 0,

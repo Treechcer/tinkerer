@@ -35,6 +35,11 @@ end
 
 function map.f.buyIsland(chX, chY)
     local mapData = map.map.chunks[chY][chX]
+
+    if mapData == nil then
+        return false
+    end
+
     local coins = inventory.itemsOutsideOfInventory.coins
     if coins >= mapData.price then
         mapData.owned = true
