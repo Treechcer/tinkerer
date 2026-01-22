@@ -17,11 +17,11 @@ inventory = {
         inventory = {
             {{item = "stick", count = 5},{},{},{},{}},
             {{item = "log", count = 5},{},{},{},{}},
-            {{item = "leaf", count = 5},{},{},{},{}},
+            {{},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
                 { item = "rock", count = 5 },
-                {},
+                {item = "leaf", count = 5},
                 {},
                 {}
             },
