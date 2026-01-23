@@ -101,6 +101,9 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getWidth() / 2,
             spr:getHeight() / 2)
 
+        sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+        building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize)
+
         --love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
     end
 
