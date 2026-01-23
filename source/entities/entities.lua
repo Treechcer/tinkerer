@@ -89,7 +89,7 @@ function entities.damageEntity(entityIndex, damageNumber)
             --not yet implemented kianfiao
             --local bonus = player.atributes[en.luck]
             for __, val in ipairs(en.drop) do
-                tables.writeTable(val)
+                --tables.writeTable(val)
                 inventory.functions.addItem(val.item, val.baseCount)
             end
         end
