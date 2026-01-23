@@ -15,13 +15,13 @@ inventory = {
     },
     inventoryBar = {
         inventory = {
-            {{item = "stick", count = 5},{},{},{},{}},
-            {{item = "log", count = 5},{},{},{},{}},
+            {{},{},{},{},{}},
+            {{},{},{},{},{}},
             {{},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
-                { item = "rock", count = 5 },
-                {item = "leaf", count = 5},
+                {},
+                {},
                 {},
                 {}
             },
@@ -329,13 +329,22 @@ function inventory.functions.addItem(item, count)
                 end
                 found = true
                 break
+            elseif next(value) == nil then
+                value.count = count
+                value.item = item
+                found = true
+                break
             end
+        end
+        
+        if found then
+            break
         end
     end
 
-    if not found then
-        inventory.functions.addNewItem(item, count)
-    end
+    --if not found then
+    --    inventory.functions.addNewItem(item, count)
+    --end
 end
 
 function inventory.functions.itemMove(dt)
