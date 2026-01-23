@@ -47,7 +47,7 @@ function entitySpawner.func.spawn(dt)
         --    return
         --end
         if entities.isEntityOnTile(tileX, tileY, item.width, item.height) == -1 and renderer.checkCollsionWidthHeight(tileX, tileY, item.width, item.height) then
-            entities.makeNewOne(tileX, tileY, item.entityName, item.HP, {item = item.drop.item, count = entitiesIndex.f.getCount(player.atributes[item.luck], item.drop.baseCount)}, item.width, item.height, item.xp)
+            entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop, item.width, item.height, item.xp)
         end
         --tables.writeTable(entitiesIndex)
     end

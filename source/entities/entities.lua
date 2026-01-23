@@ -26,8 +26,7 @@ function entities.render()
                 love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * value.width, map.tileSize / spr:getHeight() * value.height)
             else
                 love.graphics.setColor(value.col or defaultColor)
-                love.graphics.rectangle("fill", posX, posY, map.tileSize,
-                    map.tileSize)
+                love.graphics.rectangle("fill", posX, posY, map.tileSize, map.tileSize)
             end
         end
     end
@@ -88,8 +87,11 @@ function entities.damageEntity(entityIndex, damageNumber)
     if en.health <= 0 then
         if en.drop ~= nil then
             --not yet implemented kianfiao
-            local bonus = player.atributes[en.luck]
-            inventory.functions.addItem(en.drop.item, en.drop.count)
+            --local bonus = player.atributes[en.luck]
+            for __, val in ipairs(en.drop) do
+                tables.writeTable(val)
+                inventory.functions.addItem(val.item, val.baseCount)
+            end
         end
 
         if en.xp ~= nil then

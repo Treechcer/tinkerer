@@ -16,7 +16,7 @@ entitiesIndex = {
         strengthMin = 1,
         --you have to :
         --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
-        drop = { item = "rock", baseCount = 3},
+        drop = { {item = "rock", baseCount = 3} },
         width = 1,
         height = 1,
         luck = "miningLuck",
@@ -95,7 +95,7 @@ function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
     --pickaxeble tree!!!
-    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"}, {f = function() love.event.quit() end})
+    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"}, {f = function() love.event.quit() end})
 end
 
 return entitiesIndex
