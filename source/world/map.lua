@@ -34,7 +34,15 @@ function map.f.init()
 end
 
 function map.f.buyIsland(chX, chY)
-    local mapData = map.map.chunks[chY][chX]
+    --checking by the chunk prevents crashes on the bottom row
+
+    local mapData = map.map.chunks[chY]
+
+    if mapData == nil then
+        return false
+    end
+
+    mapData = map.map.chunks[chY][chX]
 
     if mapData == nil then
         return false
