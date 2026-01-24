@@ -384,7 +384,7 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable)
     itemIndex[item] = {
         maxStackSize = maxStackSize,
         attack = attack,
@@ -393,7 +393,8 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         defaultHp = defaultHp,
         drop = drop,
         speedAttackMultiplayer = speedAttackMultiplayer,
-        attackRotation = attackRotation
+        attackRotation = attackRotation,
+        buildable = buildable
     }
 end
 
@@ -402,10 +403,10 @@ function inventory.functions.init()
 
     --initialising ALL items that you can carry
 
-    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1)
-    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1)
-    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1)
-    inventory.functions.AddNewItemIndex("small-chair", 16, 0, 0, 0, 0, {}, 10, 1)
+    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false)
+    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false)
+    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false)
+    inventory.functions.AddNewItemIndex("small-chair", 16, 0, 0, 0, 0, {}, 10, 1, true)
 end
 
 return inventory

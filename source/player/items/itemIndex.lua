@@ -12,6 +12,7 @@ items = {
         drop = { item = "rock", count = 5 },
         speedAttackMultiplayer = 7, -- 5 = normal speed
         attackRotation = 1, --1.5 is normal rotation for most items, rock can attack faster, not like it's strong
+        buildable = false,
     },
     hammer = {
         maxStackSize = 1,
@@ -21,7 +22,8 @@ items = {
         defaultHp = nil,
         drop = nil,
         speedAttackMultiplayer = 5,
-        attackRotation = 1.5
+        attackRotation = 1.5,
+        buildable = false,
     }
 }
 

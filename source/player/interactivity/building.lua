@@ -9,6 +9,7 @@ function building.f.build(tileX, tileY, width, height, enName)
     end
 
     entities.makeNewOne(tileX, tileY, enName)
+    return true
 end
 
 function building.f.render(sprite, x, y, width, height)
