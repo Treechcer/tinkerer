@@ -8,7 +8,11 @@ function building.f.build(tileX, tileY, width, height, enName)
         return false
     end
 
-    entities.makeNewOne(tileX, tileY, enName)
+    local en = entitiesIndex[enName]
+
+    --tables.writeTable(en)
+
+    entities.makeNewOne(tileX, tileY, enName, en.HP, en.drop, en.width, en.height, en.xp)
     return true
 end
 
