@@ -98,6 +98,7 @@ function entitiesIndex.f.init()
     --pickaxeble tree!!!
     entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function () player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
+    entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {f = function () player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
 end
 
 return entitiesIndex

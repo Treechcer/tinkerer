@@ -13,6 +13,8 @@ items = {
         speedAttackMultiplayer = 7, -- 5 = normal speed
         attackRotation = 1, --1.5 is normal rotation for most items, rock can attack faster, not like it's strong
         buildable = false,
+        width = 1,
+        height = 1,
     },
     hammer = {
         maxStackSize = 1,
@@ -24,6 +26,8 @@ items = {
         speedAttackMultiplayer = 5,
         attackRotation = 1.5,
         buildable = false,
+        width = 1,
+        height = 1,
     }
 }
 

@@ -100,16 +100,16 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
         local spr = spw.sprites[itemName].sprs
         love.graphics.draw(spr,
-            (game.width / 2) + ((player.size.width * 0.75) * player.cursor.screenSide) + player.floatyMovement.x,
+            (game.width / 2) + ((player.size.width * 0.75 + (map.tileSize * itemIndex[itemName].width / 5)) * player.cursor.screenSide) + player.floatyMovement.x,
             yT + player.size.height / 3 + player.floatyMovement.y,
             inventory.hotBar.moveVal * player.cursor.screenSide,
-            map.tileSize / spr:getWidth() * player.cursor.screenSide,
-            map.tileSize / spr:getHeight(),
+            (map.tileSize * itemIndex[itemName].width) / spr:getWidth() * player.cursor.screenSide,
+            (map.tileSize * itemIndex[itemName].height) / spr:getHeight(),
             spr:getWidth() / 2,
             spr:getHeight() / 2)
         if itemIndex[itemName].buildable then
             sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-            building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize)
+            building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
         end
         
         --local itemName = i[#i][inventory.hotBar.selectedItem].item

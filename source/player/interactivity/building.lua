@@ -16,9 +16,9 @@ function building.f.build(tileX, tileY, width, height, enName)
     return true
 end
 
-function building.f.render(sprite, x, y, width, height)
+function building.f.render(sprite, x, y, width, height, itemName)
     love.graphics.setColor(0.35,1,0.35,0.75)
-    love.graphics.draw(sprite, x, y, 0, width / sprite:getWidth(), height / sprite:getHeight())
+    love.graphics.draw(sprite, x, y, 0, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight())
     love.graphics.setColor(1,1,1,1)
 end
 
