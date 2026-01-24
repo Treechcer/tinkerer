@@ -46,7 +46,7 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, spwName)
+function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, spwName)
 
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
@@ -74,6 +74,7 @@ function entitiesIndex.f.addIndex(entityName, HP, weakness, strenght, --[[spawna
 
     entitiesIndex[entityName] = {
         entityName = entityName,
+        walkable = walkable,
         spwName = spwName,
         HP = HP,
         weakness = weakness,
@@ -95,8 +96,8 @@ function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
     --pickaxeble tree!!!
-    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
-    entitiesIndex.f.addIndex("small-chair", 2, bit.addBit({bit.BIT4}), 1, {{item = "small-chair", baseCount = 1}}, 1, 1, "", {})
+    entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
+    entitiesIndex.f.addIndex("small-chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small-chair", baseCount = 1}}, 1, 1, "", {}, {f = function () player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
 end
 
 return entitiesIndex

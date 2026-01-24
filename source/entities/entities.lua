@@ -49,6 +49,19 @@ function entities.isEntityOnTile(tileX, tileY, width, height)
     return -1
 end
 
+function entities.isNonWalkableEntityOnTile(tileX, tileY, width, height)
+    width = width or 1
+    height = height or 1
+
+    for index, value in ipairs(entities.ents) do
+        if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) and value.walkable then
+            return index
+        end
+    end
+
+    return -1
+end
+
 function entities.isEntityOnTileTableRet(tileX, tileY, width, height)
     width = width or 1
     height = height or 1

@@ -60,7 +60,8 @@ player = {
 
     },
     vals = {
-        walking = false
+        walking = false,
+        state = "walking"
     },
     skills = {
         foraging    = {
@@ -147,8 +148,22 @@ function player.init() -- initialises the position of player
 
 end
 
+function player.moveToTile(xTile, yTile)
+    player.position.x = xTile * map.tileSize
+    player.position.y = yTile * map.tileSize
+
+    local midX = math.floor(game.width / 2 - player.size.width / 2)
+    local midY = math.floor(game.height / 2 - player.size.height / 2)
+
+    player.camera.x = xTile * map.tileSize - midX
+    player.camera.y = yTile * map.tileSize - midY
+end
+
 ---@diagnostic disable: duplicate-set-field
 function player.move(dt)
+
+    player.vals.state = "walking"
+
     local mvXp = 0
     local mvYp = 0
     local mvXc = 0
@@ -191,12 +206,12 @@ function player.move(dt)
             and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + (player.size.height))))
             and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY)))
             and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY + (player.size.height))))
-            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY)) < 0
-            and entities.isEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY)) < 0
-            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY + player.size.height)) < 0
-            and entities.isEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height)) < 0
-            and entities.isEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
-            and entities.isEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY)) < 0
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY)) < 0
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY + player.size.height)) < 0
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height)) < 0
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
+            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
 
 
         player.position.x = nextX
@@ -209,9 +224,9 @@ function player.move(dt)
 
         player.position.chunkX = math.ceil((player.position.x + (player.size.width / 2)) / map.chunkWidth / map.tileSize)
         player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
-        
+
         player.vals.walking = true
-        
+
         if mvXc ~= 0 or mvYp ~= 0 then
             skills.f.addXP({walking = 0.4 * dt})
         end
