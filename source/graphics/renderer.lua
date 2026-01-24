@@ -70,9 +70,14 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             --map.f.buyIsland(chunkX, chunkY)
         end
     end
+
+    --love.graphics.print(player.vals.state, 10, 10)
+
     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    if player.vals.walking then
+    if player.vals.walking and player.vals.state == "walking" then
         dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
+    elseif player.vals.state == "sitting" then
+        dudeSpr = spw.sprites.dude_sitting.sprs
     else
         dudeSpr = spw.sprites.dude.sprs[1]
     end
@@ -102,9 +107,10 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             map.tileSize / spr:getHeight(),
             spr:getWidth() / 2,
             spr:getHeight() / 2)
-
-        sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-        building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize)
+        if itemIndex[itemName].buildable then
+            sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+            building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize)
+        end
         
         --local itemName = i[#i][inventory.hotBar.selectedItem].item
         --local enData = entitiesIndex[itemName]

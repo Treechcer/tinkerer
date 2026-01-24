@@ -161,9 +161,6 @@ end
 
 ---@diagnostic disable: duplicate-set-field
 function player.move(dt)
-
-    player.vals.state = "walking"
-
     local mvXp = 0
     local mvYp = 0
     local mvXc = 0
@@ -213,7 +210,6 @@ function player.move(dt)
             and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
             and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
 
-
         player.position.x = nextX
         player.position.y = nextY
 
@@ -229,6 +225,7 @@ function player.move(dt)
 
         if mvXc ~= 0 or mvYp ~= 0 then
             skills.f.addXP({walking = 0.4 * dt})
+            player.vals.state = "walking"
         end
 
         if mvXc ~= 0 then
