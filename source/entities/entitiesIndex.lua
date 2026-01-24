@@ -95,7 +95,8 @@ function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
     --pickaxeble tree!!!
-    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"}, {f = function() love.event.quit() end})
+    entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
+    entitiesIndex.f.addIndex("small-chair", 2, bit.addBit({bit.BIT4}), 1, {{item = "small-chair", baseCount = 1}}, 1, 1, "", {})
 end
 
 return entitiesIndex

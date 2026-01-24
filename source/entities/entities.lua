@@ -6,6 +6,10 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     width = width or 1
     height = height or 1
 
+    health = health or entitiesIndex[index].health
+    drop = drop or entitiesIndex[index].drop
+    xp = xp or entitiesIndex[index].xp
+
     table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp })
 end
 

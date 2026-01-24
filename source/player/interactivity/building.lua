@@ -3,8 +3,12 @@ building = {
 
 }
 
-function building.f.build()
-    
+function building.f.build(tileX, tileY, width, height, enName)
+    if entities.isEntityOnTile(tileX, tileY, width, height) ~= -1 then
+        return false
+    end
+
+    entities.makeNewOne(tileX, tileY, enName)
 end
 
 function building.f.render(sprite, x, y, width, height)

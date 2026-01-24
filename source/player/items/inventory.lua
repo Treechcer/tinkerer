@@ -20,7 +20,7 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
-                {},
+                { item = "small-chair", count = 1},
                 {},
                 {},
                 {}
@@ -384,14 +384,6 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.init()
-    inventory.functions.fillHitBoxTable()
-
-    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, 10, 1)
-    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, 10, 1)
-    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, 10, 1)
-end
-
 function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation)
     itemIndex[item] = {
         maxStackSize = maxStackSize,
@@ -403,6 +395,17 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         speedAttackMultiplayer = speedAttackMultiplayer,
         attackRotation = attackRotation
     }
+end
+
+function inventory.functions.init()
+    inventory.functions.fillHitBoxTable()
+
+    --initialising ALL items that you can carry
+
+    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1)
+    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1)
+    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1)
+    inventory.functions.AddNewItemIndex("small-chair", 16, 0, 0, 0, 0, {}, 10, 1)
 end
 
 return inventory

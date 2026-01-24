@@ -91,7 +91,9 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
         player.floatyMovement.x = mathWorker.lerp(player.floatyMovement.x, player.floatyMovement.maxX, (moveX < 1) and moveX or 1)
         player.floatyMovement.y = mathWorker.lerp(player.floatyMovement.y, player.floatyMovement.maxY, (moveY < 1) and moveY or 1)
-        local spr = spw.sprites[i[#i][inventory.hotBar.selectedItem].item].sprs
+        local itemName = i[#i][inventory.hotBar.selectedItem].item
+
+        local spr = spw.sprites[itemName].sprs
         love.graphics.draw(spr,
             (game.width / 2) + ((player.size.width * 0.75) * player.cursor.screenSide) + player.floatyMovement.x,
             yT + player.size.height / 3 + player.floatyMovement.y,
@@ -103,7 +105,11 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
         sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
         building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize)
-
+        
+        --local itemName = i[#i][inventory.hotBar.selectedItem].item
+        --local enData = entitiesIndex[itemName]
+        --building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName)
+        
         --love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
     end
 

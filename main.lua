@@ -39,6 +39,8 @@ function love.load()
 
     require("source/workers/changeFunctionsByOS")
     REF = require("source.game.runEveryFrame")
+
+    --tables.writeTable(map.map.chunks)
 end
 
 function love.draw()
@@ -93,6 +95,13 @@ function love.mousepressed(x, y, button, istouch, presses)
     elseif button == 2 then
         if inventory.functions.click(button) then
             return
+        end
+
+        if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileX) then
+            local i = inventory.inventoryBar.inventory
+            local itemName = i[#i][inventory.hotBar.selectedItem].item
+            local enData = entitiesIndex[itemName]
+            building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName)
         end
     end
 end

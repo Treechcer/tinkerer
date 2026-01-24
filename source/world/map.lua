@@ -50,4 +50,30 @@ function map.f.buyIsland(chX, chY)
     return false
 end
 
+function map.f.accesibleTile(tileX, tileY)
+    --local chX = math.floor(tileX / map.chunkWidth)
+    --local chY = math.floor(tileY / map.chunkHeight)
+
+    local chX = math.floor((tileX - 1) / map.chunkWidth) + 1
+    local chY = math.floor((tileY - 1) / map.chunkHeight) + 1
+
+    local mapData = map.map.chunks[chY][chX]
+
+    if mapData == nil then
+        return false
+    end
+
+    if not mapData.owned then
+        return false
+    end
+
+    local specificTileX = tileX - ((chX - 1) * map.chunkWidth)
+    local specificTileY = tileY - ((chY - 1) * map.chunkHeight)
+    if map.map.chunks[chY][chX].chunkData[specificTileY][specificTileX] == 1 then
+        return true
+    end
+
+    return false
+end
+
 return map
