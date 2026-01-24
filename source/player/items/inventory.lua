@@ -110,13 +110,18 @@ end
 function inventory.functions.renderItemOnCursor(x, y)
     if inventory.inventoryBar.render and inventory.inventoryBar.itemOnCursor.item ~= nil then
         local spr = spriteWorker.sprites[inventory.inventoryBar.itemOnCursor.item].sprs
-        local w = spr:getWidth()
-        local h = spr:getHeight()
+        local blockSize = inventory.inventoryBar.blockSize
+        local item = itemIndex[inventory.inventoryBar.itemOnCursor.item]
+        local w = spr:getWidth() * item.height
+        local h = spr:getHeight() * item.width
 
-        local realWidth = w * (inventory.inventoryBar.blockSize / w)
-        local realHeight = h * (inventory.inventoryBar.blockSize / h)
+        local scaleX = inventory.inventoryBar.blockSize / w
+        local scaleY = inventory.inventoryBar.blockSize / h
 
-        love.graphics.draw(spr, x - (realWidth / 2), y - (realHeight / 2), 0, inventory.inventoryBar.blockSize / w, inventory.inventoryBar.blockSize / h)
+        local realWidth = w * (blockSize / w)
+        local realHeight = h * (blockSize / h)
+
+        love.graphics.draw(spr, x, y, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
         love.graphics.setColor(1,1,1)
         love.graphics.print(inventory.inventoryBar.itemOnCursor.count, x + (realWidth / 3), y + (realHeight / 4)) -- 3 and 4 are random values, they work well ngl
     end
@@ -227,17 +232,22 @@ function inventory.functions.renderWholeInventory()
 
     love.graphics.setFont(font)
     for inventroyIndex = 1, rows, 1 do
-        for itemIndex = 1, cols, 1 do
+        for itemIndexNum = 1, cols, 1 do
             love.graphics.setColor(0.8, 0.8, 0.8)
             local bl = barI.blockSize - barI.pad
-            local xP = (game.width / 2) + ((itemIndex - 1) * barI.blockSize) - (totalW / 2) + (barI.pad / 2)
+            local xP = (game.width / 2) + ((itemIndexNum - 1) * barI.blockSize) - (totalW / 2) + (barI.pad / 2)
             local yP = (game.height / 2) + ((inventroyIndex - 1) * barI.blockSize) - (totalH / 2) + (barI.pad / 2)
             love.graphics.rectangle("fill", xP, yP, bl, bl)
-            local indexItem = i[inventroyIndex][itemIndex]
+            local indexItem = i[inventroyIndex][itemIndexNum]
             if indexItem ~= nil and next(indexItem) ~= nil then
                 local item = indexItem.item
                 local spr = spw.sprites[item].sprs
-                love.graphics.draw(spr,xP, yP, 0, bl / spr:getHeight(), bl / spr:getWidth())
+                local itemW = spr:getWidth()  * itemIndex[item].height
+                local itemH = spr:getHeight() * itemIndex[item].width
+
+                local scaleX = bl / itemW
+                local scaleY = bl / itemH
+                love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
                 love.graphics.setColor(1,1,1)
                 local w = font:getWidth(indexItem.count)
                 local h = font:getHeight()
@@ -272,8 +282,22 @@ function inventory.functions.renderHotbar()
         if inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
             love.graphics.setColor(1, 1, 1)
             local spr = spw.sprites[inventoryHB[i].item].sprs
+            local item = itemIndex[inventoryHB[i].item]
 
-            love.graphics.draw(spr, blockX + hotbar.itemPad, y + hotbar.itemPad, 0, (hotbar.boxSize - hotbar.itemPad * 2) / spr:getWidth(), (hotbar.boxSize - hotbar.itemPad * 2) / spr:getHeight())
+            local itemWidth = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getWidth() * item.height)
+            local itemHeight = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getHeight() * item.width)
+
+            local scaleX = itemWidth
+            local scaleY = itemHeight
+
+            local sprW = spr:getWidth() * scaleX
+            local sprH = spr:getHeight() * scaleY
+
+            local centerX = blockX + hotbar.boxSize / 2
+            local centerY = y + hotbar.boxSize / 2
+
+            love.graphics.draw( spr, centerX - sprW / 2, centerY - sprH / 2, 0, scaleX, scaleY)
+
             love.graphics.setColor(1,1,1)
 
             local w = font:getWidth(tostring(inventoryHB[i].count))
