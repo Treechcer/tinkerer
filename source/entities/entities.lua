@@ -6,7 +6,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     width = width or 1
     height = height or 1
 
-    health = health or entitiesIndex[index].health
+    health = health or entitiesIndex[index].HP
     drop = drop or entitiesIndex[index].drop
     xp = xp or entitiesIndex[index].xp
 
