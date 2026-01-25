@@ -12,7 +12,7 @@ if game.os ~= "PSP" then
     settings.keys.right = "d"
     settings.keys.openInventory = "e"
 
-    settings.keys.entityInteract = "f"
+    settings.keys.entityInteract = {"f"}
 elseif game.os == "PSP" then
     settings.keys.up = "triangle"
     settings.keys.down = "cross"

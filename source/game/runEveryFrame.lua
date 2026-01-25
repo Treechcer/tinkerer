@@ -64,7 +64,7 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
 
     player.checkIfColided(dt)
     inventory.functions.coolDown(dt)
-    entityInteractivity.f.interact({settings.keys.entityInteract})
+    entityInteractivity.f.interact(settings.keys.entityInteract)
     --inventory.functions.click()
 end
 

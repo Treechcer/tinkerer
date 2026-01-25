@@ -20,7 +20,7 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
-                { item = "table", count = 1},
+                { item = "furnace", count = 1},
                 {},
                 {},
                 {}
@@ -437,6 +437,7 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false)
     inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true)
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, 2, 1)
+    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, 1, 1)
 end
 
 return inventory
