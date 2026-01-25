@@ -20,9 +20,9 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { item = "hammer", count = 1 },
-                { item = "furnace", count = 1},
-                {},
-                {},
+                { item = "furnace", count = 1 },
+                { item = "small_chair", count = 1 },
+                { item = "table", count = 1 },
                 {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
@@ -440,6 +440,7 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10)
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, 2, 1)
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0)
+    inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
 end
 
 return inventory
