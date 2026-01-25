@@ -81,7 +81,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        if inventory.functions.click(button) then
+        if inventory.functions.click(button) ~= false then
             return
         end
         
