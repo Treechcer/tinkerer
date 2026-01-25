@@ -22,4 +22,17 @@ function building.f.render(sprite, x, y, width, height, itemName)
     love.graphics.setColor(1,1,1,1)
 end
 
+function building.f.furnaceInteractivity()
+    local i = inventory.inventoryBar.inventory
+    local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
+
+    if item == nil then
+        return
+    end
+
+    if item.burnable then
+        love.event.quit()
+    end
+end
+
 return building

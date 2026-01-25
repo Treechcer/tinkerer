@@ -408,10 +408,10 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, width, height)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, width, height)
     width = width or 1
     height = height or 1
-    
+    burnStrength = burnStrength or 0
     itemIndex[item] = {
         maxStackSize = maxStackSize,
         attack = attack,
@@ -423,7 +423,9 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         attackRotation = attackRotation,
         buildable = buildable,
         width = width,
-        height = height
+        height = height,
+        burnable = burnable,
+        burnStrength = burnStrength
     }
 end
 
@@ -432,12 +434,12 @@ function inventory.functions.init()
 
     --initialising ALL items that you can carry
 
-    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false)
-    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false)
-    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false)
-    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true)
-    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, 2, 1)
-    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, 1, 1)
+    inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
+    inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 5)
+    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
+    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10)
+    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, 2, 1)
+    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0)
 end
 
 return inventory

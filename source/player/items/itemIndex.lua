@@ -15,6 +15,8 @@ items = {
         buildable = false,
         width = 1,
         height = 1,
+        burnable = false,
+        burnStrength = 0,
     },
     hammer = {
         maxStackSize = 1,
@@ -28,6 +30,8 @@ items = {
         buildable = false,
         width = 1,
         height = 1,
+        burnable = false,
+        burnStrength = 0,
     }
 }
 
