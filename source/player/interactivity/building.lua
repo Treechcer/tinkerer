@@ -28,6 +28,26 @@ function building.f.renderIncorrect(sprite, x, y, width, height, itemName)
     love.graphics.setColor(1,1,1,1)
 end
 
+function building.f.canBuild(itemName)
+    local isItemOnGround = true
+    
+    for buildHeight = 0, itemIndex[itemName].height - 1 do
+        for buildWidth = 0, itemIndex[itemName].width - 1 do
+            isItemOnGround = map.f.accesibleTile(player.cursor.tileX + buildWidth, player.cursor.tileY + buildHeight)
+
+            if not isItemOnGround then
+                break
+            end
+        end
+
+        if not isItemOnGround then
+            break
+        end
+    end
+
+    return isItemOnGround
+end
+
 function building.f.furnaceInteractivity()
     local i = inventory.inventoryBar.inventory
     local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
