@@ -23,9 +23,9 @@ map = { -- this will be the things to see the whole map, generate it etc.
 }
 
 function map.f.init()
-    for y = 1, map.chunkWidthNum do
+    for y = 1, map.chunkHeightNum do
         map.map.chunks[y] = {}
-        for x = 1, map.chunkHeightNum do
+        for x = 1, map.chunkWidthNum do
             local isMiddle = (x == math.ceil(map.chunkWidthNum / 2)) and (y == math.ceil(map.chunkHeightNum / 2))
             table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(isMiddle))
             --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
@@ -61,6 +61,9 @@ end
 function map.f.accesibleTile(tileX, tileY)
     --local chX = math.floor(tileX / map.chunkWidth)
     --local chY = math.floor(tileY / map.chunkHeight)
+
+    tileX = tileX + 1
+    tileY = tileY + 1
 
     local chX = math.floor((tileX - 1) / map.chunkWidth) + 1
     local chY = math.floor((tileY - 1) / map.chunkHeight) + 1

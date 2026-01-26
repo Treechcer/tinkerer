@@ -109,7 +109,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getHeight() / 2)
         if itemIndex[itemName].buildable then
             sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-            if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 then
+            if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY) then
                 building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
             else
                 building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
