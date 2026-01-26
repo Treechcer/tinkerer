@@ -22,6 +22,12 @@ function building.f.render(sprite, x, y, width, height, itemName)
     love.graphics.setColor(1,1,1,1)
 end
 
+function building.f.renderIncorrect(sprite, x, y, width, height, itemName)
+    love.graphics.setColor(1,0.35,0.35,0.75)
+    love.graphics.draw(sprite, x, y, 0, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight())
+    love.graphics.setColor(1,1,1,1)
+end
+
 function building.f.furnaceInteractivity()
     local i = inventory.inventoryBar.inventory
     local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
