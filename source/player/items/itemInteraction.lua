@@ -3,7 +3,7 @@ itemInteraction = {}
 function itemInteraction.breakEntity()
 
     if inventory.hotBar.moving then
-        return
+        return false
     end
 
     local entIndexs = entities.isEntityOnTileTableRet(player.cursor.tileX - (player.cursor.width / 2),
@@ -31,7 +31,7 @@ function itemInteraction.hit(entIndex)
     local item = (slot ~= nil) and slot.item or nil
 
     if item == nil then
-        return
+        return false
     end
 
     if entIndex >= 1 and entities.canWeDamage(entIndex, itemIndex[item].weakness, itemIndex[item].strength) then

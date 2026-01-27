@@ -89,7 +89,7 @@ function love.mousepressed(x, y, button, istouch, presses)
             return
         end
 
-        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) then
+        if map.f.buyIsland(player.cursor.chunkX, player.cursor.chunkY) ~= false then
             return
         end
     elseif button == 2 then
