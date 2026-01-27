@@ -39,13 +39,71 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     renderer.mapRender()
     entities.render()
 
-    local cursorWorldPosX, cursorWorldPosY = renderer.getWorldPos(player.cursor.tileX + (math.ceil(player.cursor.width / 2) - 1), player.cursor.tileY + (math.ceil(player.cursor.width / 2) - 1))
+    --love.graphics.print(player.vals.state, 10, 10)
+
+    x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
+    if player.vals.walking and player.vals.state == "walking" then
+        dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
+    elseif player.vals.state == "sitting" then
+        dudeSpr = spw.sprites.dude_sitting.sprs
+    else
+        dudeSpr = spw.sprites.dude.sprs[1]
+    end
+
+    love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
+    --love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
+    --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
+    --    map.tileSize, map.tileSize)
+
+    local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
+    local i = inventory.inventoryBar.inventory
+
+    local cursorHeight, cursorWidth = player.cursor.height, player.cursor.width
+
+    if i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
+        local moveX = player.floatyMovement.timeX / player.floatyMovement.maxTimeX
+        local moveY = player.floatyMovement.timeY / player.floatyMovement.maxTimeY
+
+        player.floatyMovement.x = mathWorker.lerp(player.floatyMovement.x, player.floatyMovement.maxX, (moveX < 1) and moveX or 1)
+        player.floatyMovement.y = mathWorker.lerp(player.floatyMovement.y, player.floatyMovement.maxY, (moveY < 1) and moveY or 1)
+        local itemName = i[#i][inventory.hotBar.selectedItem].item
+
+        local spr = spw.sprites[itemName].sprs
+        love.graphics.draw(spr,
+            (game.width / 2) + ((player.size.width * 0.75 + (map.tileSize * itemIndex[itemName].width / 5)) * player.cursor.screenSide) + player.floatyMovement.x,
+            yT + player.size.height / 3 + player.floatyMovement.y,
+            inventory.hotBar.moveVal * player.cursor.screenSide,
+            (map.tileSize * itemIndex[itemName].width) / spr:getWidth() * player.cursor.screenSide,
+            (map.tileSize * itemIndex[itemName].height) / spr:getHeight(),
+            spr:getWidth() / 2,
+            spr:getHeight() / 2)
+        if itemIndex[itemName].buildable then
+
+            cursorHeight, cursorWidth = itemIndex[itemName].height, itemIndex[itemName].width
+
+            sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+
+            if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
+                building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
+            else
+                building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
+            end
+        end
+        
+        --local itemName = i[#i][inventory.hotBar.selectedItem].item
+        --local enData = entitiesIndex[itemName]
+        --building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName)
+        
+        --love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
+    end
+
+    local cursorWorldPosX, cursorWorldPosY = renderer.getWorldPos(player.cursor.tileX + (math.ceil(cursorWidth / 2) - 1), player.cursor.tileY + (math.ceil(cursorWidth / 2) - 1))
     if (renderer.checkCollsion(cursorWorldPosX, cursorWorldPosY)) then
         local cursor = spw.sprites.cursor
         local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
         love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
-            0, (map.tileSize * player.cursor.width) / cursor.sprs[cursor.index]:getWidth(),
-            (map.tileSize * player.cursor.height) / cursor.sprs[cursor.index]:getHeight())
+            0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(),
+            (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
     elseif not renderer.getChunkData(cursorWorldPosX, cursorWorldPosY, "owned") then
         local xTile = math.floor(cursorWorldPosX / map.tileSize) + 1
         local yTile = math.floor(cursorWorldPosY / map.tileSize) + 1
@@ -69,59 +127,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
             --map.f.buyIsland(chunkX, chunkY)
         end
-    end
-
-    --love.graphics.print(player.vals.state, 10, 10)
-
-    x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    if player.vals.walking and player.vals.state == "walking" then
-        dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
-    elseif player.vals.state == "sitting" then
-        dudeSpr = spw.sprites.dude_sitting.sprs
-    else
-        dudeSpr = spw.sprites.dude.sprs[1]
-    end
-
-    love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
-    --love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
-    --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
-    --    map.tileSize, map.tileSize)
-
-    local xT, yT = renderer.getAbsolutePos(player.position.x, player.position.y)
-    local i = inventory.inventoryBar.inventory
-
-    if i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
-        local moveX = player.floatyMovement.timeX / player.floatyMovement.maxTimeX
-        local moveY = player.floatyMovement.timeY / player.floatyMovement.maxTimeY
-
-        player.floatyMovement.x = mathWorker.lerp(player.floatyMovement.x, player.floatyMovement.maxX, (moveX < 1) and moveX or 1)
-        player.floatyMovement.y = mathWorker.lerp(player.floatyMovement.y, player.floatyMovement.maxY, (moveY < 1) and moveY or 1)
-        local itemName = i[#i][inventory.hotBar.selectedItem].item
-
-        local spr = spw.sprites[itemName].sprs
-        love.graphics.draw(spr,
-            (game.width / 2) + ((player.size.width * 0.75 + (map.tileSize * itemIndex[itemName].width / 5)) * player.cursor.screenSide) + player.floatyMovement.x,
-            yT + player.size.height / 3 + player.floatyMovement.y,
-            inventory.hotBar.moveVal * player.cursor.screenSide,
-            (map.tileSize * itemIndex[itemName].width) / spr:getWidth() * player.cursor.screenSide,
-            (map.tileSize * itemIndex[itemName].height) / spr:getHeight(),
-            spr:getWidth() / 2,
-            spr:getHeight() / 2)
-        if itemIndex[itemName].buildable then
-            sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-
-            if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
-                building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
-            else
-                building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName)
-            end
-        end
-        
-        --local itemName = i[#i][inventory.hotBar.selectedItem].item
-        --local enData = entitiesIndex[itemName]
-        --building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName)
-        
-        --love.graphics.print(inventory.hotBar.moveVal * player.cursor.screenSide, 10, 75)
     end
 
     inventory.functions.renderHotbar()
