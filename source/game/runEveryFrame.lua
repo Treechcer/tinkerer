@@ -57,6 +57,7 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
     player.cursor.updatePos(dt)
     spw.changeFrames(dt)
     player.move(dt)
+    inventory.functions.changeItemByNumber()
     inventory.functions.update(dt)
     inventory.functions.itemMove(dt)
 

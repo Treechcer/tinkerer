@@ -7,7 +7,7 @@ inventory = {
         itemPad = 3,
         selectedItem = 1,
         lastTime = 0,
-        coolDown = 0.2,
+        coolDown = 0.1,
         numberPad = 2,
         moveVal = 0,
         moveItem = false,
@@ -441,6 +441,20 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, 2, 1)
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0)
     inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
+end
+
+function inventory.functions.changeItemByNumber()
+    for i = 1, inventory.hotBar.maxItems do
+        local key = i
+        if i == 10 then
+            key = 0
+        end
+
+        if love.keyboard.isDown(key) then
+            inventory.hotBar.selectedItem = i
+            break
+        end
+    end
 end
 
 return inventory
