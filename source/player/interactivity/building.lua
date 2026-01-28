@@ -48,7 +48,11 @@ function building.f.canBuild(itemName)
     return isItemOnGround
 end
 
-function building.f.furnaceInteractivity()
+function building.f.furnaceInteractivity(self)
+
+    self.fuel = self.fuel or 0
+    self.items = self.items or {item = "", count = 0}
+
     local i = inventory.inventoryBar.inventory
     local item = itemIndex[i[#i][inventory.hotBar.selectedItem].item]
 
@@ -57,7 +61,20 @@ function building.f.furnaceInteractivity()
     end
 
     if item.burnable then
-        love.event.quit()
+        self.fuel = self.fuel + item.burnStrength
+        i[#i][inventory.hotBar.selectedItem] = {}
+    elseif self.items.item == "" or self.items.item == nil then
+        self.items.item = item.item
+        i[#i][inventory.hotBar.selectedItem] = {}
+    elseif self.items.item == i[#i][inventory.hotBar.selectedItem].item then
+        self.items.item = self.items.item + i[#i][inventory.hotBar.selectedItem].item
+        i[#i][inventory.hotBar.selectedItem] = {}
+    end
+
+    if self.fuel > 0 and self.items.item ~= "" then
+        self.state = "burn"
+    else
+        self.state = ""
     end
 end
 

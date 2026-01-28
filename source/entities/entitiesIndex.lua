@@ -46,7 +46,7 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, spwName)
+function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, state, spwName)
 
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
@@ -54,6 +54,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
     height = height or 1
     xp = xp or {}
     interactivityKeys = interactivityKeys or {}
+    state = state or ""
 
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
@@ -84,7 +85,8 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         height = height,
         width = width,
         luck = luck,
-        interactivityKeys = interactivityKeys
+        interactivityKeys = interactivityKeys,
+        state = state
     }
 end
 
@@ -97,10 +99,10 @@ function entitiesIndex.f.init()
 
     --pickaxeble tree and wooden stuff  (incorrect)!!!
     entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
-    entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function () player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
+    entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
-    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function () building.f.furnaceInteractivity() end})
+    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self) building.f.furnaceInteractivity(self) end})
 end
 
 return entitiesIndex
