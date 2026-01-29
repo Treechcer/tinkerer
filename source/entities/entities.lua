@@ -26,7 +26,8 @@ function entities.render()
             local posX, posY = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
             if value.index ~= nil then
                 love.graphics.setColor(defaultColor)
-                local spr = spriteWorker.sprites[entitiesIndex[value.index].spwName].sprs
+                --tables.writeTable(entitiesIndex[value.index])
+                local spr = entitiesIndex[value.index].getSprite(value)
                 love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * value.width, map.tileSize / spr:getHeight() * value.height)
             else
                 love.graphics.setColor(value.col or defaultColor)

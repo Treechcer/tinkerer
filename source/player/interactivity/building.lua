@@ -72,7 +72,7 @@ function building.f.furnaceInteractivity(self)
     end
 
     if self.fuel > 0 and self.items.item ~= "" then
-        self.state = "burn"
+        self.state = "burning"
     else
         self.state = ""
     end

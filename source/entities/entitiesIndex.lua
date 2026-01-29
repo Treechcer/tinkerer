@@ -46,7 +46,7 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, state, spwName)
+function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, state, spwName)
 
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
@@ -55,6 +55,9 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
     xp = xp or {}
     interactivityKeys = interactivityKeys or {}
     state = state or ""
+    getSprite = getSprite or function (self)
+        return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
+    end
 
     --this function adds a new thing into entitiesIndex
     if spwName == nil then
@@ -86,7 +89,8 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         width = width,
         luck = luck,
         interactivityKeys = interactivityKeys,
-        state = state
+        state = state,
+        getSprite = getSprite
     }
 end
 
@@ -102,7 +106,15 @@ function entitiesIndex.f.init()
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
-    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self) building.f.furnaceInteractivity(self) end})
+    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self) building.f.furnaceInteractivity(self) end}, function (self)
+        print(self.state)
+        if self.state == "burning" then
+            return spw.sprites.burning_furnace.sprs
+        else
+            return spw.sprites.furnace.sprs
+        end
+        
+    end)
 end
 
 return entitiesIndex
