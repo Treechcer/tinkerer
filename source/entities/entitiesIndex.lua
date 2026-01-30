@@ -132,7 +132,7 @@ function entitiesIndex.f.init()
 
         if self.fuel > 0 and self.items ~= nil then
             self.progress = self.progress + dt
-            print(self.progress)
+            --print(self.progress)
             if self.progress > 1 then
                 --print(self.items.item, self.items.count)
                 local itemFromIdex = itemIndex[self.items.item]
