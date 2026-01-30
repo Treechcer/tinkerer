@@ -73,8 +73,8 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             (game.width / 2) + ((player.size.width * 0.75 + (map.tileSize * itemIndex[itemName].width / 5)) * player.cursor.screenSide) + player.floatyMovement.x,
             yT + player.size.height / 3 + player.floatyMovement.y,
             inventory.hotBar.moveVal * player.cursor.screenSide,
-            (map.tileSize * itemIndex[itemName].width) / spr:getWidth() * player.cursor.screenSide,
-            (map.tileSize * itemIndex[itemName].height) / spr:getHeight(),
+            (map.tileSize * itemIndex[itemName].width) / spr:getWidth() * player.cursor.screenSide * 0.9,
+            (map.tileSize * itemIndex[itemName].height) / spr:getHeight() * 0.9,
             spr:getWidth() / 2,
             spr:getHeight() / 2)
         if itemIndex[itemName].buildable then
