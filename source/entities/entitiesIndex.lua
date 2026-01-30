@@ -127,9 +127,15 @@ function entitiesIndex.f.init()
             self.progress = self.progress + dt
             print(self.progress)
             if self.progress > 1 then
-                print(self.items.item, self.items.count)
-                inventory.functions.addItem(self.items.item, self.items.count)
+                --print(self.items.item, self.items.count)
+                local itemFromIdex = itemIndex[self.items.item]
+                inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
+                self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
                 self.progress = 0
+
+                if self.items.count < itemFromIdex.smeltsTo.needs then
+                    self.state = nil
+                end
             end
         end
     end)

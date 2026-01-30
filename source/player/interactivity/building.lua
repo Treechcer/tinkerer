@@ -76,13 +76,24 @@ function building.f.furnaceInteractivity(self)
         i[#i][inventory.hotBar.selectedItem] = {}
     end
 
-    tables.writeTable(self.items)
-
-    if self.fuel > 0 and self.items.item ~= "" then
+    --tables.writeTable(self.items)
+    local itemFromIdex = itemIndex[self.items.item]
+    if self.fuel > 0 and self.items.item ~= "" and not (self.items.count < itemFromIdex.smeltsTo.needs) then
         self.state = "burning"
     else
         self.state = ""
     end
 end
+
+--[[
+    local itemFromIdex = itemIndex[self.items.item]
+    inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
+    self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
+    self.progress = 0
+
+    if self.items.count < itemFromIdex.smeltsTo.needs then
+        self.state = nil
+    end
+]]
 
 return building

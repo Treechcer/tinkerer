@@ -17,6 +17,7 @@ items = {
         height = 1,
         burnable = false,
         burnStrength = 0,
+        smeltsTo = {item = "hammer", count = 1, needs = 1},
     },
     hammer = {
         maxStackSize = 1,
@@ -32,6 +33,7 @@ items = {
         height = 1,
         burnable = false,
         burnStrength = 0,
+        smeltsTo = nil
     }
 }
 
