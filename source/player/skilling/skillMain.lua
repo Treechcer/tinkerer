@@ -32,6 +32,7 @@ skills = {
 function skills.f.addXP(skillsInput)
     --skills is just table with name of skill (as key) and as value the XP value, it can have more skills
     for key, value in pairs(skillsInput) do
+        --print(value, key)
         player.skills[key].xp = player.skills[key].xp + value
         skills.f.levelUp({key})
     end

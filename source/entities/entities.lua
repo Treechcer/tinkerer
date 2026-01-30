@@ -93,6 +93,7 @@ end
 
 function entities.canWeDamage(indexEnt, attackWeakness, attackStrength)
     local enIndex = entitiesIndex[entities.ents[indexEnt].index]
+    --tables.writeTable(enIndex)
     if enIndex.strengthMin <= attackStrength and bit.timesBit({attackWeakness, enIndex.weakness}) > 0 then
         return true
     end
@@ -131,7 +132,9 @@ function entities.updateAll(dt)
     for index, value in ipairs(entities.ents) do
         if entitiesIndex[value.index] ~= nil then
             --tables.writeTable(entitiesIndex[value.index])
-            entitiesIndex[value.index].update(value, dt)
+            if entitiesIndex[value.index].update ~= nil then
+                entitiesIndex[value.index].update(value, dt)
+            end
         end
     end
 end

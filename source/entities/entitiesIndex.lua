@@ -20,7 +20,13 @@ entitiesIndex = {
         width = 1,
         height = 1,
         luck = "miningLuck",
-        xp = {mining = 20}
+        xp = {mining = 20},
+        interactivityKeys = {},
+        state = nil,
+        getSprite = function (self)
+            return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
+        end,
+        update = nil
     }
 }
 
@@ -88,10 +94,11 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         height = height,
         width = width,
         luck = luck,
+        xp = xp,
         interactivityKeys = interactivityKeys,
         state = state,
         getSprite = getSprite,
-        update = update
+        update = update,
     }
 end
 
@@ -103,7 +110,7 @@ function entitiesIndex.f.init()
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
     --pickaxeble tree and wooden stuff  (incorrect)!!!
-    entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {"foragingLuck"})
+    entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {foraging = 5})
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
