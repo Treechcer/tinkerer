@@ -1,6 +1,5 @@
 building = {
     f = {},
-
 }
 
 function building.f.build(tileX, tileY, width, height, enName)
@@ -29,8 +28,12 @@ function building.f.renderIncorrect(sprite, x, y, width, height, itemName)
 end
 
 function building.f.canBuild(itemName)
+    if itemName == nil then
+        return
+    end
+
     local isItemOnGround = true
-    
+
     for buildHeight = 0, itemIndex[itemName].height - 1 do
         for buildWidth = 0, itemIndex[itemName].width - 1 do
             isItemOnGround = map.f.accesibleTile(player.cursor.tileX + buildWidth, player.cursor.tileY + buildHeight)
@@ -64,12 +67,16 @@ function building.f.furnaceInteractivity(self)
         self.fuel = self.fuel + item.burnStrength
         i[#i][inventory.hotBar.selectedItem] = {}
     elseif self.items.item == "" or self.items.item == nil then
-        self.items.item = item.item
+        self.items.item = i[#i][inventory.hotBar.selectedItem].item
+        self.items.count = i[#i][inventory.hotBar.selectedItem].count
         i[#i][inventory.hotBar.selectedItem] = {}
     elseif self.items.item == i[#i][inventory.hotBar.selectedItem].item then
-        self.items.item = self.items.item + i[#i][inventory.hotBar.selectedItem].item
+        self.items.item = i[#i][inventory.hotBar.selectedItem].item
+        self.items.count = self.items.count + i[#i][inventory.hotBar.selectedItem].count
         i[#i][inventory.hotBar.selectedItem] = {}
     end
+
+    tables.writeTable(self.items)
 
     if self.fuel > 0 and self.items.item ~= "" then
         self.state = "burning"

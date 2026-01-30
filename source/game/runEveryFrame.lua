@@ -54,6 +54,7 @@ run = {}
 --end
 
 function run.everyFrameStart(dt) -- used to run on every frame when it starts
+    entities.updateAll(dt)
     player.cursor.updatePos(dt)
     spw.changeFrames(dt)
     player.move(dt)

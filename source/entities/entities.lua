@@ -127,4 +127,13 @@ function entities.damageEntity(entityIndex, damageNumber)
     end
 end
 
+function entities.updateAll(dt)
+    for index, value in ipairs(entities.ents) do
+        if entitiesIndex[value.index] ~= nil then
+            --tables.writeTable(entitiesIndex[value.index])
+            entitiesIndex[value.index].update(value, dt)
+        end
+    end
+end
+
 return entities

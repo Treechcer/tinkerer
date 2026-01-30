@@ -46,7 +46,7 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, state, spwName)
+function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, update, state, spwName)
 
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
@@ -90,7 +90,8 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         luck = luck,
         interactivityKeys = interactivityKeys,
         state = state,
-        getSprite = getSprite
+        getSprite = getSprite,
+        update = update
     }
 end
 
@@ -107,13 +108,30 @@ function entitiesIndex.f.init()
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
     entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self) building.f.furnaceInteractivity(self) end}, function (self)
-        print(self.state)
+        --print(self.state)
         if self.state == "burning" then
             return spw.sprites.burning_furnace.sprs
         else
             return spw.sprites.furnace.sprs
         end
         
+    end,
+    function (self, dt)
+        if self.state ~= "burning" then
+            return
+        end
+
+        self.progress = self.progress or 0
+
+        if self.fuel > 0 and self.items ~= nil then
+            self.progress = self.progress + dt
+            print(self.progress)
+            if self.progress > 1 then
+                print(self.items.item, self.items.count)
+                inventory.functions.addItem(self.items.item, self.items.count)
+                self.progress = 0
+            end
+        end
     end)
 end
 
