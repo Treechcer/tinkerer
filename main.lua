@@ -33,6 +33,7 @@ function love.load()
     entitySpawner = require("source.entities.entitySpawner")
     tables = require("source.workers.libs.tableWorker")
     UI = require("source.graphics.UI")
+    entityCleaner = require("source.entities.entityCleaner")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()

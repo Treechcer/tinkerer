@@ -26,7 +26,10 @@ entitiesIndex = {
         getSprite = function (self)
             return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
         end,
-        update = nil
+        update = nil,
+        isCleanUp = function (self, dt)
+            return false
+        end
     }
 }
 
@@ -52,7 +55,7 @@ end
 ----@param spawnable boolean?
 ---@param width integer?
 ---@param height integer?
-function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, update, state, spwName)
+function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, update, isCleanUp, state, spwName)
 
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
@@ -63,6 +66,9 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
     state = state or ""
     getSprite = getSprite or function (self)
         return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
+    end
+    isCleanUp = isCleanUp or function (self, dt)
+        return false
     end
 
     --this function adds a new thing into entitiesIndex
@@ -99,6 +105,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         state = state,
         getSprite = getSprite,
         update = update,
+        isCleanUp = isCleanUp
     }
 end
 
@@ -146,6 +153,18 @@ function entitiesIndex.f.init()
             end
         end
     end)
+    entitiesIndex.f.addIndex("smallRock", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self)
+        inventory.functions.addItem("rock", 1)
+    end}, nil, nil, function (self, dt)
+        self.time = (self.time or 0) + dt
+        print(self.time)
+        if self.time > 5 then
+            self.time = 0
+            return true
+        end
+
+        return false
+    end, nil, "rock")
 end
 
 return entitiesIndex
