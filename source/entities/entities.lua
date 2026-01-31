@@ -139,4 +139,8 @@ function entities.updateAll(dt)
     end
 end
 
+function entities.kill(index)
+    table.remove(entities.ents, index)
+end
+
 return entities

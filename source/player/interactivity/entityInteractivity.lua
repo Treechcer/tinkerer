@@ -14,7 +14,7 @@ function entityInteractivity.f.interact(keys)
             local f = entitiesIndex[entities.ents[index].index].interactivityKeys[key]
 
             if f ~= nil then
-                f(entities.ents[index])
+                f(entities.ents[index], index)
             end
         end
     end
