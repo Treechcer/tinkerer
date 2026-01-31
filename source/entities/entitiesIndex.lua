@@ -105,7 +105,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         state = state,
         getSprite = getSprite,
         update = update,
-        isCleanUp = isCleanUp
+        isCleanUp = isCleanUp,
     }
 end
 
@@ -153,18 +153,20 @@ function entitiesIndex.f.init()
             end
         end
     end)
-    entitiesIndex.f.addIndex("smallRock", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self)
-        inventory.functions.addItem("rock", 1)
-    end}, nil, nil, function (self, dt)
-        self.time = (self.time or 0) + dt
-        print(self.time)
-        if self.time > 5 then
-            self.time = 0
-            return true
-        end
-
-        return false
-    end, nil, "rock")
+    entitiesIndex.f.addIndex("smallRock", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self) inventory.functions.addItem("rock", 1) end}, 
+        nil, nil, function(self, dt)
+            if self.time == nil then
+                self["time"] = 0
+            end
+            self.time = self.time + dt
+            print(self.time)
+            if self.time > 5 then
+                self.time = 0
+                return true
+            end
+            return false
+        end,
+        nil, "rock")
 end
 
 return entitiesIndex

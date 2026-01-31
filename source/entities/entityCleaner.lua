@@ -11,7 +11,7 @@ function entityCleaner.f.update(dt)
     if entityCleaner.lastClean >= entityCleaner.cdToClean then
         for index, value in ipairs(entities.ents) do
             --tables.writeTable(entitiesIndex[value.index])
-            if entitiesIndex[value.index].isCleanUp(value, dt) then
+            if entitiesIndex[value.index].isCleanUp(value, entityCleaner.lastClean) then
                 table.insert(entityCleaner.indexesToDelete, index)
             end
         end
