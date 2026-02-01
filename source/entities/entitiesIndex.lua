@@ -121,52 +121,8 @@ function entitiesIndex.f.init()
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
-    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) building.f.furnaceInteractivity(self) end}, function (self)
-        --print(self.state)
-        if self.state == "burning" then
-            return spw.sprites.burning_furnace.sprs
-        else
-            return spw.sprites.furnace.sprs
-        end
-        
-    end,
-    function (self, dt)
-        if self.state ~= "burning" then
-            return
-        end
-
-        self.progress = self.progress or 0
-
-        if self.fuel > 0 and self.items ~= nil then
-            self.progress = self.progress + dt
-            --print(self.progress)
-            if self.progress > 1 then
-                --print(self.items.item, self.items.count)
-                local itemFromIdex = itemIndex[self.items.item]
-                inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
-                self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
-                self.progress = 0
-
-                if self.items.count < itemFromIdex.smeltsTo.needs then
-                    self.state = nil
-                end
-            end
-        end
-    end)
-    entitiesIndex.f.addIndex("smallRock", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("rock", 1) entities.kill(index) end}, 
-        nil, nil, function(self, dt)
-            if self.time == nil then
-                self["time"] = 0
-            end
-            self.time = self.time + dt
-            --print(self.time)
-            if self.time > 5 then
-                self.time = 0
-                return true
-            end
-            return false
-        end,
-        nil, "rock")
+    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) building.f.furnaceInteractivity(self) end}, building.f.furnaceState,building.f.furnaceWork)
+    entitiesIndex.f.addIndex("smallRock", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("rock", 1) entities.kill(index) end}, nil, nil, building.f.fiveSecondKillSwitch, nil, "rock")
 end
 
 return entitiesIndex

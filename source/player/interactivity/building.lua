@@ -96,4 +96,51 @@ end
     end
 ]]
 
+function building.f.furnaceState(self)
+    --print(self.state)
+    if self.state == "burning" then
+        return spw.sprites.burning_furnace.sprs
+    else
+        return spw.sprites.furnace.sprs
+    end    
+end
+
+function building.f.furnaceWork (self, dt)
+    if self.state ~= "burning" then
+        return
+    end
+
+    self.progress = self.progress or 0
+
+    if self.fuel > 0 and self.items ~= nil then
+        self.progress = self.progress + dt
+        --print(self.progress)
+        if self.progress > 1 then
+            --print(self.items.item, self.items.count)
+            local itemFromIdex = itemIndex[self.items.item]
+            inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
+            self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
+            self.progress = 0
+
+            if self.items.count < itemFromIdex.smeltsTo.needs then
+                self.state = nil
+            end
+        end
+    end
+end
+
+function building.f.fiveSecondKillSwitch(self, dt)
+    if self.time == nil then
+        self["time"] = 0
+    end
+    self.time = self.time + dt
+    --print(self.time)
+    if self.time > 5 then
+        self.time = 0
+        return true
+    end
+    
+    return false
+end
+
 return building
