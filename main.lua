@@ -11,6 +11,8 @@ function love.load()
     end
     math.randomseed(os.time())
 
+    tables = require("source.workers.libs.tableWorker")
+
     mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
@@ -31,7 +33,6 @@ function love.load()
     itemInteraction = require("source.player.items.itemInteraction")
     itemIndex = require("source.player.items.itemIndex")
     entitySpawner = require("source.entities.entitySpawner")
-    tables = require("source.workers.libs.tableWorker")
     UI = require("source.graphics.UI")
     entityCleaner = require("source.entities.entityCleaner")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
