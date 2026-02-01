@@ -7,8 +7,8 @@ map = { -- this will be the things to see the whole map, generate it etc.
     tileSize = 48,
     chunkWidth = #chunks[1][1],
     chunkHeight = #chunks[1],
-    chunkWidthNum = 9,
-    chunkHeightNum = 9,
+    chunkWidthNum = 7,
+    chunkHeightNum = 7,
     map = {
         chunks = {
             --{ chunkGenerate.f.makeChunk(), chunkGenerate.f.makeChunk(),     chunkGenerate.f.makeChunk() },
@@ -27,7 +27,7 @@ function map.f.init()
         map.map.chunks[y] = {}
         for x = 1, map.chunkWidthNum do
             local isMiddle = (x == math.ceil(map.chunkWidthNum / 2)) and (y == math.ceil(map.chunkHeightNum / 2))
-            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(isMiddle))
+            table.insert(map.map.chunks[y], chunkGenerate.f.makeChunk(isMiddle, x, y))
             --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
         end
     end
