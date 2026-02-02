@@ -51,6 +51,8 @@ function chunkGenerate.f.makeChunk(middle, x, y)
     t.chunkData = chunks[math.random(1, chunkGenerate.data.chunkNums)]
     --t.biome = chunkGenerate.data.chunkNames[math.random(1, #chunkGenerate.data.chunkNames)]
     
+    --TODO: fix the 4th being incorrect (bottom corners)
+
     if (x >= 3 and x <= 5) and (y >= 3 and y <= 5) then
         t.biome = chunkGenerate.data.chunkNames[1]
     elseif (x >= 1 and x <= 2) and (y >= 0 and y <= 7) and not (y == 7 and x == 2) and not (y == 1 and x == 2) then
