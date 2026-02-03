@@ -129,13 +129,18 @@ function building.f.furnaceWork (self, dt)
     end
 end
 
-function building.f.fiveSecondKillSwitch(self, dt)
+function building.f.XSecondKillSwitch(self, dt)
+    if self.killTime == nil then
+        return
+    end
+    
     if self.time == nil then
         self["time"] = 0
     end
+
     self.time = self.time + dt
     --print(self.time)
-    if self.time > 5 then
+    if self.time > self.killTime then
         self.time = 0
         return true
     end
