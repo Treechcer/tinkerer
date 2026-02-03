@@ -19,7 +19,7 @@ inventory = {
             {{},{},{},{},{}},
             {{},{},{},{},{}},
             {
-                { item = "hammer", count = 1 },
+                { --[[item = "hammer", count = 1]] },
                 {},
                 {},
                 {},
