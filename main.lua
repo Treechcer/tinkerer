@@ -35,6 +35,7 @@ function love.load()
     entitySpawner = require("source.entities.entitySpawner")
     UI = require("source.graphics.UI")
     entityCleaner = require("source.entities.entityCleaner")
+    descption = require("source.player.items.description")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()

@@ -90,7 +90,7 @@ function inventory.functions.click(button)
 
     local x, y = love.mouse.getPosition()
     local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
-
+    
     local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
     local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
 
@@ -255,6 +255,23 @@ function inventory.functions.renderWholeInventory()
             end
         end
     end
+
+    local x, y = love.mouse.getPosition()
+    local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
+    local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
+
+    if (itemCol < 1 or itemRow < 1) or (itemCol > #i[1] or itemRow > #i) then
+        return
+    end
+
+    local item = inventory.inventoryBar.inventory[itemRow][itemCol]
+
+    if next(item) == nil then
+        return
+    end
+
+    --tables.writeTable(item)
+    UI.renderder.descriptions.f.render(x, y, descption.f.gen(item.item))
 end
 
 function inventory.functions.renderHotbar()
@@ -408,11 +425,13 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, smeltsTo, width, height)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, width, height)
     width = width or 1
     height = height or 1
     burnStrength = burnStrength or 0
+    typeI = typeI or "Resource"
     itemIndex[item] = {
+        type = typeI,
         maxStackSize = maxStackSize,
         attack = attack,
         weakness = weakness,
@@ -438,11 +457,11 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
     inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 5)
     inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
-    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10)
-    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1)
-    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0)
+    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
+    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
+    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
     inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
-    inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
+    inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Tool")
 end
 
 function inventory.functions.changeItemByNumber()

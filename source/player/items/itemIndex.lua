@@ -4,6 +4,7 @@
 
 items = {
     rock = {
+        typeI = "Resource",
         maxStackSize = 64,
         attack = 1,
         weakness = bit.addBit({ bit.BIT4 }),
@@ -20,6 +21,7 @@ items = {
         smeltsTo = {item = "hammer", count = 1, needs = 1},
     },
     hammer = {
+        typeI = "Tool",
         maxStackSize = 1,
         attack = 1,
         weakness = bit.addBit({ bit.BIT1, bit.BIT4 }),
