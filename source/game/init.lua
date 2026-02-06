@@ -16,6 +16,8 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     map.f.init()
 
     inventory.functions.init()
+
+    crafting.f.init()
 end
 
 return init
