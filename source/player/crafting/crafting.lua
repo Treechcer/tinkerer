@@ -2,12 +2,22 @@ crafting = {
     f = {},
     b1 = {
         press = function ()
-            crafting.selectedRecipe = crafting.selectedRecipe + 1
+            --print(crafting.selectedRecipe)
+            if crafting.selectedRecipe < #recipes.recipesInOrder then
+                crafting.selectedRecipe = crafting.selectedRecipe + 1
+            else
+                crafting.selectedRecipe = 1
+            end
         end
     },
     b2 = {
         press = function ()
-            crafting.selectedRecipe = crafting.selectedRecipe - 1
+            --print(crafting.selectedRecipe)
+            if crafting.selectedRecipe > 1 then
+                crafting.selectedRecipe = crafting.selectedRecipe - 1
+            else
+                crafting.selectedRecipe = #recipes.recipesInOrder
+            end
         end
     },
     b3 = {
@@ -31,7 +41,7 @@ function crafting.f.init()
 
     crafting.b2.startX = crafting.x + (spr:getWidth() * (crafting.blockSize / spr:getWidth()) / 2)
     crafting.b2.startY = crafting.y + crafting.blockSize * 1.3
-    crafting.b1.pixelHeight = spr:getWidth() * (crafting.blockSize / spr:getWidth())
+    crafting.b2.pixelHeight = spr:getWidth() * (crafting.blockSize / spr:getWidth())
 
     crafting.b3.startX = crafting.x
     crafting.b3.startY = crafting.y
@@ -41,6 +51,10 @@ end
 function crafting.f.render()
     love.graphics.setColor(1,1,1)
     love.graphics.rectangle("fill", crafting.x, crafting.y, crafting.blockSize, crafting.blockSize)
+
+    local recSpr = spw.sprites[recipes.recipesInOrder[crafting.selectedRecipe]].sprs
+    love.graphics.draw(recSpr, crafting.x, crafting.y, 0, crafting.blockSize / recSpr:getWidth(), crafting.blockSize / recSpr:getWidth())
+    
     local spr = spw.sprites.arrow.sprs
     love.graphics.draw(spr, crafting.b1.startX, crafting.b1.startY, 0, crafting.blockSize / spr:getWidth())
     love.graphics.draw(spr, crafting.b2.startX, crafting.b2.startY, math.pi, crafting.blockSize / spr:getWidth(), crafting.blockSize / spr:getWidth(), spr:getWidth() / 2, spr:getHeight() / 2)

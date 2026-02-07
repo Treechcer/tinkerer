@@ -36,6 +36,7 @@ function love.load()
     UI = require("source.graphics.UI")
     entityCleaner = require("source.entities.entityCleaner")
     descption = require("source.player.items.description")
+    recipes = require("source.player.crafting.recipes")
     crafting = require("source.player.crafting.crafting")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
