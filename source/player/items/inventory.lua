@@ -506,6 +506,8 @@ function inventory.functions.removeSpecificAmmountOfItem(item, count)
         return false
     end
 
+    --I LÖVE (haha) using _ and _0 as variables, so good code this CAN'T end up backfiring
+
     local i = inventory.inventoryBar.inventory
     for _, bar in ipairs(i) do
         for _0, slot in ipairs(bar) do
