@@ -44,8 +44,6 @@ function love.load()
     require("source/workers/changeFunctionsByOS")
     REF = require("source.game.runEveryFrame")
 
-    _G.frame = 0
-
     --tables.writeTable(map.map.chunks)
 end
 
@@ -66,16 +64,12 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
-    if _G.frame > 0 then
-       crafting.f.render()
-    end
 end
 
 function love.update(dt)
     REF.everyFrameStart(dt)
 
     REF.everyFrameEnd(dt)
-    _G.frame = _G.frame + 1
 end
 
 function love.wheelmoved(x, y)

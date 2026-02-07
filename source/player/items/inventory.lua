@@ -221,6 +221,8 @@ function inventory.functions.renderWholeInventory()
         return
     end
 
+    crafting.f.render()
+    
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
@@ -266,12 +268,11 @@ function inventory.functions.renderWholeInventory()
 
     local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
-    if next(item) == nil then
-        return
+    if next(item) ~= nil then
+        UI.renderder.descriptions.f.render(x, y, descption.f.gen(item.item))
     end
 
     --tables.writeTable(item)
-    UI.renderder.descriptions.f.render(x, y, descption.f.gen(item.item))
 end
 
 function inventory.functions.renderHotbar()
