@@ -20,8 +20,8 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { --[[item = "hammer", count = 1]] },
-                {},
-                {},
+                { item = "pebble", count = 5 },
+                { item = "stick", count = 5 },
                 {},
                 {}
             },
@@ -484,6 +484,47 @@ function inventory.functions.changeItemByNumber()
             break
         end
     end
+end
+
+function inventory.functions.howManyItemInInventory(item)
+    local i = inventory.inventoryBar.inventory
+    local count = 0
+    for _, bar in ipairs(i) do
+        for _0, slot in ipairs(bar) do
+            if slot.item == item then
+                count = slot.count
+            end
+        end
+    end
+
+    return count
+end
+
+function inventory.functions.removeSpecificAmmountOfItem(item, count)
+
+    if inventory.functions.howManyItemInInventory(item) < count then
+        return false
+    end
+
+    local i = inventory.inventoryBar.inventory
+    for _, bar in ipairs(i) do
+        for _0, slot in ipairs(bar) do
+            if slot.item == item then
+                if slot.count > count then
+                    slot.count = slot.count - count
+                    return
+                elseif slot.count == count then
+                    inventory.inventoryBar.inventory[_][_0] = {}
+                    return
+                else
+                    count = count - slot.count
+                    inventory.inventoryBar.inventory[_][_0] = {}
+                end
+            end
+        end
+    end
+
+    return true
 end
 
 return inventory
