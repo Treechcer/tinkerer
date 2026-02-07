@@ -9,7 +9,11 @@ function crafting.f.init()
 end
 
 function crafting.f.render()
+    love.graphics.setColor(1,1,1)
     love.graphics.rectangle("fill", crafting.x, crafting.y, crafting.blockSize, crafting.blockSize)
+    local spr = spw.sprites.arrow.sprs
+    love.graphics.draw(spr, crafting.x, crafting.y - (crafting.blockSize / 2.5), 0, crafting.blockSize / spr:getWidth())
+    love.graphics.draw(spr, crafting.x + (spr:getWidth() * (crafting.blockSize / spr:getWidth()) / 2), crafting.y + crafting.blockSize * 1.3, math.pi, crafting.blockSize / spr:getWidth(), crafting.blockSize / spr:getWidth(), spr:getWidth() / 2, spr:getHeight() / 2)
 end
 
 return crafting
