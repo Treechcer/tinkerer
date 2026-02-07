@@ -138,6 +138,13 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     --end
 
     if posHit and next(inventory.inventoryBar.itemOnCursor) == nil then
+
+        --THIS MIGHT'VE FIXED THE UNEXPECTED CRAFSHES!!! I'LL WATCH IT CLSOE THO!!
+
+        if itemCol > #inventory.inventoryBar.inventory or itemRow < 1 or itemCol < 1 then
+            return
+        end
+
         local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
         if item ~= nil and next(item) ~= nil then
@@ -222,7 +229,7 @@ function inventory.functions.renderWholeInventory()
     end
 
     crafting.f.render()
-    
+
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
