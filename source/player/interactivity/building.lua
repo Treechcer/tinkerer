@@ -150,6 +150,8 @@ end
 
 function building.f.furnaceUI()
     --TODO tomorrow?
+
+    love.graphics.setColor(1,1,1)
 end
 
 return building

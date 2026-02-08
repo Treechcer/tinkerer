@@ -4,7 +4,10 @@ UI = {
     },
     renderder = {
         furnaceUI = {
-
+            buttons = {
+                b1 = {},
+                b2 = {}
+            }
         },
         craftingUI = {
 
@@ -18,8 +21,45 @@ UI = {
 
             }
         }
-    }
+    },
+    f = {}
 }
+
+
+function UI.f.init()
+    --local spr = spw.sprites.arrow.sprs
+
+    UI.renderder.furnaceUI.blockSize = 75
+    UI.renderder.furnaceUI.x = inventory.hitboxTable.endPos.x + 25
+    UI.renderder.furnaceUI.y = inventory.hitboxTable.endPos.y + 25 - (inventory.inventoryBar.blockSize * 2.5) - (crafting.blockSize / 3)
+
+    UI.renderder.furnaceUI.buttons.b1.startX = crafting.x
+    UI.renderder.furnaceUI.buttons.b1.startY = crafting.y
+    UI.renderder.furnaceUI.buttons.b1.rotation = 0
+    UI.renderder.furnaceUI.buttons.b1.scaleWidth = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b1.scaleHeight = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b1.pixelWidth = 16 * crafting.buttons.b3.scaleWidth
+    UI.renderder.furnaceUI.buttons.b1.pixelHeight = 16 * crafting.buttons.b3.scaleHeight
+    UI.renderder.furnaceUI.buttons.b1.orginPointX = 0
+    UI.renderder.furnaceUI.buttons.b1.orginPointY = 0
+
+    UI.renderder.furnaceUI.buttons.b2.startX = crafting.x
+    UI.renderder.furnaceUI.buttons.b2.startY = crafting.y + (UI.renderder.furnaceUI.blockSize * 1.25)
+    UI.renderder.furnaceUI.buttons.b2.rotation = 0
+    UI.renderder.furnaceUI.buttons.b2.scaleWidth = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b2.scaleHeight = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b2.pixelWidth = 16 * crafting.buttons.b3.scaleWidth
+    UI.renderder.furnaceUI.buttons.b2.pixelHeight = 16 * crafting.buttons.b3.scaleHeight
+    UI.renderder.furnaceUI.buttons.b2.orginPointX = 0
+    UI.renderder.furnaceUI.buttons.b2.orginPointY = 0
+end
+
+function UI.renderder.furnaceUI.render()
+    for key, value in pairs(UI.renderder.furnaceUI.buttons) do
+        print(key)
+        love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
+    end
+end
 
 function UI.renderder.descriptions.f.render(x,y,description)
     love.graphics.setColor(1,1,1)

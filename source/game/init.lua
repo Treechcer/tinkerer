@@ -18,6 +18,8 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     inventory.functions.init()
 
     crafting.f.init()
+
+    UI.f.init()
 end
 
 return init

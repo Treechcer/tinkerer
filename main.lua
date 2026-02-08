@@ -65,6 +65,8 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
+
+    --UI.renderder.furnaceUI.render()
 end
 
 function love.update(dt)
