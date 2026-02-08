@@ -63,15 +63,34 @@ function crafting.f.init()
 
     crafting.b1.startX = crafting.x
     crafting.b1.startY = crafting.y - (crafting.blockSize / 2.5)
-    crafting.b1.pixelHeight = spr:getHeight() * (crafting.blockSize / spr:getWidth())
+    crafting.b1.rotation = 0
+    crafting.b1.scaleWidth  = crafting.blockSize / spr:getWidth()
+    crafting.b1.scaleHeight = crafting.b1.scaleWidth
+    crafting.b1.pixelHeight = spr:getHeight() * crafting.b1.scaleHeight
+    crafting.b1.pixelWidth = crafting.blockSize
+    crafting.b1.orginPointX = 0
+    crafting.b1.orginPointY = 0
 
-    crafting.b2.startX = crafting.x + (spr:getWidth() * (crafting.blockSize / spr:getWidth()) / 2)
+
+    crafting.b2.startX = crafting.x + crafting.blockSize / 2
     crafting.b2.startY = crafting.y + crafting.blockSize * 1.3
-    crafting.b2.pixelHeight = spr:getHeight() * ((crafting.blockSize / 4) / spr:getHeight())
+    crafting.b2.rotation = math.pi
+    crafting.b2.scaleWidth  = crafting.blockSize / spr:getWidth()
+    crafting.b2.scaleHeight = (crafting.blockSize / 4) / spr:getHeight()
+    crafting.b2.pixelHeight = spr:getHeight() * crafting.b2.scaleHeight
+    crafting.b2.pixelWidth = crafting.blockSize
+    crafting.b2.orginPointX = spr:getWidth() / 2
+    crafting.b2.orginPointY = spr:getHeight() / 2
 
     crafting.b3.startX = crafting.x
     crafting.b3.startY = crafting.y
+    crafting.b3.rotation = 0
+    crafting.b3.scaleWidth  = crafting.blockSize / spr:getWidth()
+    crafting.b3.scaleHeight = crafting.blockSize / spr:getHeight()
     crafting.b3.pixelHeight = crafting.blockSize
+    crafting.b3.pixelWidth = crafting.blockSize
+    crafting.b3.orginPointX = 0
+    crafting.b3.orginPointY = 0
 end
 
 function crafting.f.render()
@@ -82,8 +101,8 @@ function crafting.f.render()
     love.graphics.draw(recSpr, crafting.x, crafting.y, 0, crafting.blockSize / recSpr:getWidth(), crafting.blockSize / recSpr:getHeight())
     
     local spr = spw.sprites.arrow.sprs
-    love.graphics.draw(spr, crafting.b1.startX, crafting.b1.startY, 0, crafting.blockSize / spr:getWidth())
-    love.graphics.draw(spr, crafting.b2.startX, crafting.b2.startY, math.pi, crafting.blockSize / spr:getWidth(), (crafting.blockSize / 4) / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
+    love.graphics.draw(spr, crafting.b1.startX, crafting.b1.startY, crafting.b1.rotation, crafting.b1.scaleWidth, crafting.b1.scaleHeight, crafting.b1.orginPointX, crafting.b1.orginPointY)
+    love.graphics.draw(spr, crafting.b2.startX, crafting.b2.startY, crafting.b2.rotation, crafting.b2.scaleWidth, crafting.b2.scaleHeight, crafting.b2.orginPointX, crafting.b2.orginPointY)
 end
 
 function crafting.f.checkIfOnButton(x, y)
@@ -94,8 +113,9 @@ function crafting.f.checkIfOnButton(x, y)
 
     local obj = {"b1", "b2", "b3"}
     for i, v in ipairs(obj) do
-        if renderer.AABB(x, y, 1, 1, crafting[v].startX, crafting[v].startY, crafting.blockSize, crafting[v].pixelHeight) then
-            crafting[v].press()
+        local button = crafting[v]
+        if renderer.AABB(x, y, 1, 1, button.startX, button.startY, button.pixelWidth, button.pixelHeight) then
+            button.press()
 
             return true
         end
