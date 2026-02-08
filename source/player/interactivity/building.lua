@@ -148,4 +148,8 @@ function building.f.XSecondKillSwitch(self, dt)
     return false
 end
 
+function building.f.furnaceUI()
+    --TODO tomorrow?
+end
+
 return building
