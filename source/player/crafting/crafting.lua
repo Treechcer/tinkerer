@@ -22,14 +22,14 @@ crafting = {
     },
     b3 = {
         press = function ()
-            print("----")
+            --print("----")
             --inventory.functions.howManyItemInInventory(item)
             local craftable = true
             local rec = recipes.recipes[recipes.recipesInOrder[crafting.selectedRecipe]].recipe
             for key, value in pairs(rec) do
                 --temp write out
-                print(value.item)
-                print(inventory.functions.howManyItemInInventory(value.item))
+                --print(value.item)
+                --print(inventory.functions.howManyItemInInventory(value.item))
 
                 --actual function work or whatever
 
