@@ -65,8 +65,6 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
-
-    --UI.renderder.furnaceUI.render()
 end
 
 function love.update(dt)
@@ -88,7 +86,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        if crafting.f.checkIfOnButton(crafting.buttons, love.mouse.getPosition()) then
+        if crafting.f.checkIfOnButton(game.activeUIButtons, love.mouse.getPosition()) then
             return
         end
 

@@ -149,9 +149,8 @@ function building.f.XSecondKillSwitch(self, dt)
 end
 
 function building.f.furnaceUI()
-    --TODO tomorrow?
-
     love.graphics.setColor(1,1,1)
+    UI.renderder.furnaceUI.render()
 end
 
 return building

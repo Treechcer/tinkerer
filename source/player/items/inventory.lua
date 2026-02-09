@@ -1,3 +1,5 @@
+local crafting = require("source.player.crafting.crafting")
+
 inventory = {
     hotBar = {
         maxItems = 5,
@@ -22,7 +24,7 @@ inventory = {
                 { --[[item = "hammer", count = 1]] },
                 { item = "pebble", count = 5 },
                 { item = "stick", count = 5 },
-                {},
+                { item = "furnace", count = 5 },
                 {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
@@ -43,7 +45,9 @@ inventory = {
                 cd = 0.1,
                 last = 0
             }
-        }
+        },
+        UI = nil,
+        UIFunc = {crafting = crafting.f.render, furnace = building.f.furnaceUI}
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,
@@ -228,7 +232,10 @@ function inventory.functions.renderWholeInventory()
         return
     end
 
-    crafting.f.render()
+    --crafting.f.render()
+    print(inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"])
+    print(inventory.inventoryBar.UI or "crafting")
+    inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"]()
 
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar

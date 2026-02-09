@@ -19,6 +19,7 @@ game = {
     --height = 272,
     --width = 480, --this will be possible to change of course, but I have to have some basic info for beginning
     state = "game", -- this is to know what to render and what behaviour it neeeds to do, if menu, game etc...
+    activeUIButtons = {},
 }
 
 game.os = love.system.getOS()

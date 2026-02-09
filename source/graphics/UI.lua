@@ -6,7 +6,8 @@ UI = {
         furnaceUI = {
             buttons = {
                 b1 = {},
-                b2 = {}
+                b2 = {},
+                b3 = {}
             }
         },
         craftingUI = {
@@ -52,11 +53,22 @@ function UI.f.init()
     UI.renderder.furnaceUI.buttons.b2.pixelHeight = 16 * crafting.buttons.b3.scaleHeight
     UI.renderder.furnaceUI.buttons.b2.orginPointX = 0
     UI.renderder.furnaceUI.buttons.b2.orginPointY = 0
+
+    UI.renderder.furnaceUI.buttons.b3.startX = crafting.x
+    UI.renderder.furnaceUI.buttons.b3.startY = crafting.y - (UI.renderder.furnaceUI.blockSize * 1.25)
+    UI.renderder.furnaceUI.buttons.b3.rotation = 0
+    UI.renderder.furnaceUI.buttons.b3.scaleWidth = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b3.scaleHeight = crafting.blockSize / 16
+    UI.renderder.furnaceUI.buttons.b3.pixelWidth = 16 * crafting.buttons.b3.scaleWidth
+    UI.renderder.furnaceUI.buttons.b3.pixelHeight = 16 * crafting.buttons.b3.scaleHeight
+    UI.renderder.furnaceUI.buttons.b3.orginPointX = 0
+    UI.renderder.furnaceUI.buttons.b3.orginPointY = 0
 end
 
 function UI.renderder.furnaceUI.render()
+    game.activeUIButtons = UI.renderder.furnaceUI.buttons
     for key, value in pairs(UI.renderder.furnaceUI.buttons) do
-        print(key)
+        --print(key)
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
     end
 end

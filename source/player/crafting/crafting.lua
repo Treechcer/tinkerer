@@ -96,6 +96,9 @@ function crafting.f.init()
 end
 
 function crafting.f.render()
+    game.activeUIButtons = crafting.buttons
+    inventory.inventoryBar.UI = "crafting"
+
     love.graphics.setColor(1,1,1)
     love.graphics.rectangle("fill", crafting.buttons.b3.startX, crafting.buttons.b3.startY, crafting.buttons.b3.pixelWidth, crafting.buttons.b3.pixelHeight)
 

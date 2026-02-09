@@ -127,7 +127,7 @@ function entitiesIndex.f.init()
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
-    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) building.f.furnaceInteractivity(self) end}, building.f.furnaceState,building.f.furnaceWork)
+    entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) --[[building.f.furnaceInteractivity(self)]] inventory.inventoryBar.UI = "furnace" building.f.furnaceUI() game.activeUIButtons = UI.renderder.furnaceUI.buttons inventory.inventoryBar.render = true end}, building.f.furnaceState,building.f.furnaceWork)
     entitiesIndex.f.addIndex("pebble", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("pebble", 1) entities.kill(index) end}, nil, nil, building.f.XSecondKillSwitch, nil, {killTime = 5})
 end
 
