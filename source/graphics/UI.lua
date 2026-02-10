@@ -6,29 +6,33 @@ UI = {
         furnaceUI = {
             buttons = {
                 b1 = {
-                    press = function (self)
+                    press = function ()
                         print(1)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
                         --end
 
-
+                        UI.f.checkItemSlot("item1")
                     end
                 },
                 b2 = {
-                    press = function (self)
+                    press = function ()
                         print(2)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
                         --end
+
+                        UI.f.checkItemSlot("item2")
                     end
                 },
                 b3 = {
-                    press = function (self)
+                    press = function ()
                         print(3)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
                         --end
+
+                        UI.f.checkItemSlot("item3")
                     end
                 }
             }
@@ -49,6 +53,24 @@ UI = {
     f = {}
 }
 
+function UI.f.addItemIndexes()
+    local a = {"item1", "item2", "item3"}
+
+    for index, value in ipairs(a) do
+        if player.openedEntity[value] == nil or next(player.openedEntity[value]) == nil then
+            player.openedEntity[value] = {}
+        end
+    end
+end
+
+function UI.f.checkItemSlot(itemSlot)
+    UI.f.addItemIndexes()
+
+    if inventory.inventoryBar.itemOnCursor ~= nil and next(inventory.inventoryBar.itemOnCursor) ~= nil then
+        player.openedEntity[itemSlot] = inventory.inventoryBar.itemOnCursor
+        inventory.inventoryBar.itemOnCursor = {}
+    end
+end
 
 function UI.f.init()
     --local spr = spw.sprites.arrow.sprs
@@ -91,9 +113,27 @@ end
 
 function UI.renderder.furnaceUI.render()
     game.activeUIButtons = UI.renderder.furnaceUI.buttons
+    local c = 1
     for key, value in pairs(UI.renderder.furnaceUI.buttons) do
         --print(key)
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
+
+        if player.openedEntity ~= nil then
+
+            if player.openedEntity["item" .. c] == nil then
+                UI.f.addItemIndexes()
+            end
+
+            if player.openedEntity["item" .. c] ~= nil or next(player.openedEntity["item" .. c]) ~= nil then
+                if player.openedEntity["item" .. c].item ~= nil then
+                    --print(player.openedEntity["item" .. c].item)
+                    local spr = spw.sprites[player.openedEntity["item" .. c].item].sprs
+                    love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
+                end
+            end
+        end
+
+        c = c + 1
     end
 end
 

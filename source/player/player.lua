@@ -122,7 +122,8 @@ player = {
         "fighting",
         "defense",
         "merchanting"
-    }
+    },
+    openedEntity = nil
 }
 
 function player.init() -- initialises the position of player
