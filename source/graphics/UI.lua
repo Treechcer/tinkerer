@@ -5,9 +5,32 @@ UI = {
     renderder = {
         furnaceUI = {
             buttons = {
-                b1 = {},
-                b2 = {},
-                b3 = {}
+                b1 = {
+                    press = function (self)
+                        print(1)
+                        --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
+                        --    love.event.quit()
+                        --end
+
+
+                    end
+                },
+                b2 = {
+                    press = function (self)
+                        print(2)
+                        --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
+                        --    love.event.quit()
+                        --end
+                    end
+                },
+                b3 = {
+                    press = function (self)
+                        print(3)
+                        --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
+                        --    love.event.quit()
+                        --end
+                    end
+                }
             }
         },
         craftingUI = {
@@ -34,18 +57,19 @@ function UI.f.init()
     UI.renderder.furnaceUI.x = inventory.hitboxTable.endPos.x + 25
     UI.renderder.furnaceUI.y = inventory.hitboxTable.endPos.y + 25 - (inventory.inventoryBar.blockSize * 2.5) - (crafting.blockSize / 3)
 
+
     UI.renderder.furnaceUI.buttons.b1.startX = crafting.x
-    UI.renderder.furnaceUI.buttons.b1.startY = crafting.y
+    UI.renderder.furnaceUI.buttons.b1.startY = crafting.y - (UI.renderder.furnaceUI.blockSize * 1.25)
     UI.renderder.furnaceUI.buttons.b1.rotation = 0
     UI.renderder.furnaceUI.buttons.b1.scaleWidth = crafting.blockSize / 16
     UI.renderder.furnaceUI.buttons.b1.scaleHeight = crafting.blockSize / 16
-    UI.renderder.furnaceUI.buttons.b1.pixelWidth = 16 * crafting.buttons.b3.scaleWidth
-    UI.renderder.furnaceUI.buttons.b1.pixelHeight = 16 * crafting.buttons.b3.scaleHeight
+    UI.renderder.furnaceUI.buttons.b1.pixelWidth = 16 * crafting.buttons.b1.scaleWidth
+    UI.renderder.furnaceUI.buttons.b1.pixelHeight = 16 * crafting.buttons.b1.scaleHeight
     UI.renderder.furnaceUI.buttons.b1.orginPointX = 0
     UI.renderder.furnaceUI.buttons.b1.orginPointY = 0
 
     UI.renderder.furnaceUI.buttons.b2.startX = crafting.x
-    UI.renderder.furnaceUI.buttons.b2.startY = crafting.y + (UI.renderder.furnaceUI.blockSize * 1.25)
+    UI.renderder.furnaceUI.buttons.b2.startY = crafting.y
     UI.renderder.furnaceUI.buttons.b2.rotation = 0
     UI.renderder.furnaceUI.buttons.b2.scaleWidth = crafting.blockSize / 16
     UI.renderder.furnaceUI.buttons.b2.scaleHeight = crafting.blockSize / 16
@@ -55,7 +79,7 @@ function UI.f.init()
     UI.renderder.furnaceUI.buttons.b2.orginPointY = 0
 
     UI.renderder.furnaceUI.buttons.b3.startX = crafting.x
-    UI.renderder.furnaceUI.buttons.b3.startY = crafting.y - (UI.renderder.furnaceUI.blockSize * 1.25)
+    UI.renderder.furnaceUI.buttons.b3.startY = crafting.y + (UI.renderder.furnaceUI.blockSize * 1.25)
     UI.renderder.furnaceUI.buttons.b3.rotation = 0
     UI.renderder.furnaceUI.buttons.b3.scaleWidth = crafting.blockSize / 16
     UI.renderder.furnaceUI.buttons.b3.scaleHeight = crafting.blockSize / 16

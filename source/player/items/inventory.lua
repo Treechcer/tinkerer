@@ -233,8 +233,8 @@ function inventory.functions.renderWholeInventory()
     end
 
     --crafting.f.render()
-    print(inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"])
-    print(inventory.inventoryBar.UI or "crafting")
+    --print(inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"])
+    --print(inventory.inventoryBar.UI or "crafting")
     inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"]()
 
     local i = inventory.inventoryBar.inventory

@@ -102,7 +102,7 @@ function building.f.furnaceState(self)
         return spw.sprites.burning_furnace.sprs
     else
         return spw.sprites.furnace.sprs
-    end    
+    end
 end
 
 function building.f.furnaceWork (self, dt)
@@ -133,7 +133,7 @@ function building.f.XSecondKillSwitch(self, dt)
     if self.killTime == nil then
         return
     end
-    
+
     if self.time == nil then
         self["time"] = 0
     end
@@ -144,7 +144,7 @@ function building.f.XSecondKillSwitch(self, dt)
         self.time = 0
         return true
     end
-    
+
     return false
 end
 
