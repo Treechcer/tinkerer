@@ -35,7 +35,7 @@ inventory = {
         render = false,
         openCooldown = 0.25,
         lastOpened = 0,
-        itemOnCursor = {item = "pebble", count = 5},
+        itemOnCursor = {},
         controller = {
             pos = {
                 x = 1,
