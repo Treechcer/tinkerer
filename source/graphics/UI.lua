@@ -32,7 +32,7 @@ UI = {
                         --    love.event.quit()
                         --end
 
-                        UI.f.checkItemSlot("item3")
+                        --UI.f.checkItemSlot("item3")
                     end
                 }
             }

@@ -86,7 +86,11 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        if crafting.f.checkIfOnButton(game.activeUIButtons, love.mouse.getPosition()) then
+        tables.writeTable(game.activeUIButtons)
+
+        --TODO FIX BUTTONS, FOR SOME REASON ONLY 2/3 WORKS!!
+
+        if crafting.f.checkIfOnButton(game.activeUIButtons, x, y) then
             return
         end
 
