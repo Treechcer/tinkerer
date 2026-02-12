@@ -86,7 +86,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        tables.writeTable(game.activeUIButtons)
+        --tables.writeTable(game.activeUIButtons)
 
         --TODO FIX BUTTONS, FOR SOME REASON ONLY 2/3 WORKS!!
 
