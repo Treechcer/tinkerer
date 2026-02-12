@@ -2,7 +2,7 @@ crafting = {
     f = {},
     buttons = {
         b1 = {
-            press = function (self)
+            press = function ()
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe < #recipes.recipesInOrder then
                     crafting.selectedRecipe = crafting.selectedRecipe + 1
@@ -12,7 +12,7 @@ crafting = {
             end
         },
         b2 = {
-            press = function (self)
+            press = function ()
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe > 1 then
                     crafting.selectedRecipe = crafting.selectedRecipe - 1
@@ -22,7 +22,7 @@ crafting = {
             end
         },
         b3 = {
-            press = function (self)
+            press = function ()
                 --print("----")
                 --inventory.functions.howManyItemInInventory(item)
                 local craftable = true
@@ -73,7 +73,6 @@ function crafting.f.init()
     crafting.buttons.b1.orginPointX = 0
     crafting.buttons.b1.orginPointY = 0
 
-
     crafting.buttons.b2.startX = crafting.x + crafting.blockSize / 2
     crafting.buttons.b2.startY = crafting.y + crafting.blockSize * 1.3
     crafting.buttons.b2.rotation = math.pi
@@ -115,12 +114,10 @@ function crafting.f.checkIfOnButton(buttonObjects, x, y)
     if not inventory.inventoryBar.render then
         return false
     end
-    --local obj = {"b1", "b2", "b3"}
+
     for k, v in pairs(buttonObjects) do
         local button = buttonObjects[k]
-        --print(v)
         if renderer.AABB(x, y, 1, 1, button.startX, button.startY, button.pixelWidth, button.pixelHeight) then
-            --print(k)
             button.press()
 
             return true
