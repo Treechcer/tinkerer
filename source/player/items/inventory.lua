@@ -141,7 +141,7 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     --    return false
     --end
 
-    if itemCol > #inventory.inventoryBar.inventory or itemRow > #inventory.inventoryBar.inventory[1] or itemRow < 1 or itemCol < 1 then
+    if itemCol > #inventory.inventoryBar.inventory + 1 or itemRow > #inventory.inventoryBar.inventory[1] or itemRow < 1 or itemCol < 1 then
         return false
     end
 

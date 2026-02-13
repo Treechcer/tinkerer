@@ -12,7 +12,7 @@ UI = {
                         --    love.event.quit()
                         --end
 
-                        UI.f.checkItemSlot("item1")
+                        UI.f.checkItemSlot(1, 3)
                     end
                 },
                 b2 = {
@@ -22,7 +22,7 @@ UI = {
                         --    love.event.quit()
                         --end
 
-                        UI.f.checkItemSlot("item2")
+                        UI.f.checkItemSlot(2, 3)
                     end
                 },
                 b3 = {
@@ -32,7 +32,7 @@ UI = {
                         --    love.event.quit()
                         --end
 
-                        --UI.f.checkItemSlot("item3")
+                        UI.f.checkItemSlot(3, 3)
                     end
                 }
             }
@@ -53,18 +53,17 @@ UI = {
     f = {}
 }
 
-function UI.f.addItemIndexes()
-    local a = {"item1", "item2", "item3"}
-
-    for index, value in ipairs(a) do
-        if player.openedEntity[value] == nil or next(player.openedEntity[value]) == nil then
-            player.openedEntity[value] = {}
+function UI.f.addItemIndexes(c)
+    print(c)
+    for i = 1, c do
+        if player.openedEntity[i] == nil or next(player.openedEntity[i]) == nil then
+            player.openedEntity[i] = {}
         end
     end
 end
 
-function UI.f.checkItemSlot(itemSlot)
-    UI.f.addItemIndexes()
+function UI.f.checkItemSlot(itemSlot, max)
+    UI.f.addItemIndexes(max)
 
     if inventory.inventoryBar.itemOnCursor ~= nil and next(inventory.inventoryBar.itemOnCursor) ~= nil then
         player.openedEntity[itemSlot] = inventory.inventoryBar.itemOnCursor
@@ -120,14 +119,14 @@ function UI.renderder.furnaceUI.render()
 
         if player.openedEntity ~= nil then
 
-            if player.openedEntity["item" .. c] == nil then
-                UI.f.addItemIndexes()
+            if player.openedEntity[c] == nil then
+                UI.f.addItemIndexes(c)
             end
 
-            if player.openedEntity["item" .. c] ~= nil or next(player.openedEntity["item" .. c]) ~= nil then
-                if player.openedEntity["item" .. c].item ~= nil then
+            if player.openedEntity[c] ~= nil or next(player.openedEntity[c]) ~= nil then
+                if player.openedEntity[c].item ~= nil then
                     --print(player.openedEntity["item" .. c].item)
-                    local spr = spw.sprites[player.openedEntity["item" .. c].item].sprs
+                    local spr = spw.sprites[player.openedEntity[c].item].sprs
                     love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
                 end
             end
