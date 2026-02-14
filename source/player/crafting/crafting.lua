@@ -2,7 +2,7 @@ crafting = {
     f = {},
     buttons = {
         b1 = {
-            press = function ()
+            press = function (self)
                 print(1)
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe < #recipes.recipesInOrder then
@@ -13,7 +13,7 @@ crafting = {
             end
         },
         b2 = {
-            press = function ()
+            press = function (self)
                 print(2)
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe > 1 then
@@ -24,7 +24,7 @@ crafting = {
             end
         },
         b3 = {
-            press = function ()
+            press = function (self)
                 print(3)
                 --print("----")
                 --inventory.functions.howManyItemInInventory(item)
@@ -118,10 +118,12 @@ function crafting.f.checkIfOnButton(buttonObjects, x, y)
         return false
     end
 
+    --tables.writeTable(buttonObjects)
+
     for k, v in pairs(buttonObjects) do
         local button = buttonObjects[k]
         if renderer.AABB(x, y, 1, 1, button.startX, button.startY, button.pixelWidth, button.pixelHeight) then
-            button.press()
+            button.press(button)
 
             return true
         end

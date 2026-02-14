@@ -6,7 +6,8 @@ UI = {
         furnaceUI = {
             buttons = {
                 b1 = {
-                    press = function ()
+                    press = function (self)
+                        self.color = {0,1,0}
                         print(1)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
@@ -16,7 +17,8 @@ UI = {
                     end
                 },
                 b2 = {
-                    press = function ()
+                    press = function (self)
+                        self.color = {0,1,0}
                         print(2)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
@@ -26,7 +28,8 @@ UI = {
                     end
                 },
                 b3 = {
-                    press = function ()
+                    press = function (self)
+                        self.color = {0,1,0}
                         print(3)
                         --if next(inventory.inventoryBar.itemOnCursor) ~= nil then
                         --    love.event.quit()
@@ -114,7 +117,11 @@ function UI.renderder.furnaceUI.render()
     game.activeUIButtons = UI.renderder.furnaceUI.buttons
     local c = 1
     for key, value in pairs(UI.renderder.furnaceUI.buttons) do
+    --for i = 1, #UI.renderder.furnaceUI.buttons do
         --print(key)
+        --local value = UI.renderder.furnaceUI.buttons[i]
+        value.color = value.color or {1,1,1}
+        love.graphics.setColor(value.color)
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
 
         if player.openedEntity ~= nil then
@@ -123,7 +130,7 @@ function UI.renderder.furnaceUI.render()
                 UI.f.addItemIndexes(c)
             end
 
-            if player.openedEntity[c] ~= nil or next(player.openedEntity[c]) ~= nil then
+            if player.openedEntity ~= nil or next(player.openedEntity) ~= nil then
                 if player.openedEntity[c].item ~= nil then
                     --print(player.openedEntity["item" .. c].item)
                     local spr = spw.sprites[player.openedEntity[c].item].sprs
