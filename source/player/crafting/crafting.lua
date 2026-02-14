@@ -1,9 +1,9 @@
 crafting = {
     f = {},
     buttons = {
-        b1 = {
+        {
             press = function (self)
-                print(1)
+                --print(1)
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe < #recipes.recipesInOrder then
                     crafting.selectedRecipe = crafting.selectedRecipe + 1
@@ -12,9 +12,9 @@ crafting = {
                 end
             end
         },
-        b2 = {
+        {
             press = function (self)
-                print(2)
+                --print(2)
                 --print(crafting.selectedRecipe)
                 if crafting.selectedRecipe > 1 then
                     crafting.selectedRecipe = crafting.selectedRecipe - 1
@@ -23,9 +23,9 @@ crafting = {
                 end
             end
         },
-        b3 = {
+        {
             press = function (self)
-                print(3)
+                --print(3)
                 --print("----")
                 --inventory.functions.howManyItemInInventory(item)
                 local craftable = true
@@ -66,35 +66,35 @@ function crafting.f.init()
 
     local spr = spw.sprites.arrow.sprs
 
-    crafting.buttons.b1.startX = crafting.x
-    crafting.buttons.b1.startY = crafting.y - (crafting.blockSize / 2.5)
-    crafting.buttons.b1.rotation = 0
-    crafting.buttons.b1.scaleWidth = crafting.blockSize / spr:getWidth()
-    crafting.buttons.b1.scaleHeight = crafting.buttons.b1.scaleWidth
-    crafting.buttons.b1.pixelWidth = spr:getWidth() * crafting.buttons.b1.scaleWidth
-    crafting.buttons.b1.pixelHeight = spr:getHeight() * crafting.buttons.b1.scaleHeight
-    crafting.buttons.b1.orginPointX = 0
-    crafting.buttons.b1.orginPointY = 0
+    crafting.buttons[1].startX = crafting.x
+    crafting.buttons[1].startY = crafting.y - (crafting.blockSize / 2.5)
+    crafting.buttons[1].rotation = 0
+    crafting.buttons[1].scaleWidth = crafting.blockSize / spr:getWidth()
+    crafting.buttons[1].scaleHeight = crafting.buttons[1].scaleWidth
+    crafting.buttons[1].pixelWidth = spr:getWidth() * crafting.buttons[1].scaleWidth
+    crafting.buttons[1].pixelHeight = spr:getHeight() * crafting.buttons[1].scaleHeight
+    crafting.buttons[1].orginPointX = 0
+    crafting.buttons[1].orginPointY = 0
 
-    crafting.buttons.b2.startX = crafting.x
-    crafting.buttons.b2.startY = crafting.y + (crafting.blockSize * 1.15)
-    crafting.buttons.b2.rotation = 0
-    crafting.buttons.b2.scaleWidth = crafting.blockSize / spr:getWidth()
-    crafting.buttons.b2.scaleHeight = crafting.buttons.b1.scaleWidth
-    crafting.buttons.b2.pixelWidth = spr:getWidth() * crafting.buttons.b1.scaleWidth
-    crafting.buttons.b2.pixelHeight = spr:getHeight() * crafting.buttons.b1.scaleHeight
-    crafting.buttons.b2.orginPointX = 0
-    crafting.buttons.b2.orginPointY = 0
+    crafting.buttons[2].startX = crafting.x
+    crafting.buttons[2].startY = crafting.y + (crafting.blockSize * 1.15)
+    crafting.buttons[2].rotation = 0
+    crafting.buttons[2].scaleWidth = crafting.blockSize / spr:getWidth()
+    crafting.buttons[2].scaleHeight = crafting.buttons[1].scaleWidth
+    crafting.buttons[2].pixelWidth = spr:getWidth() * crafting.buttons[1].scaleWidth
+    crafting.buttons[2].pixelHeight = spr:getHeight() * crafting.buttons[1].scaleHeight
+    crafting.buttons[2].orginPointX = 0
+    crafting.buttons[2].orginPointY = 0
 
-    crafting.buttons.b3.startX = crafting.x
-    crafting.buttons.b3.startY = crafting.y
-    crafting.buttons.b3.rotation = 0
-    crafting.buttons.b3.scaleWidth = crafting.blockSize / spr:getWidth()
-    crafting.buttons.b3.scaleHeight = crafting.blockSize / spr:getHeight()
-    crafting.buttons.b3.pixelWidth = spr:getWidth() * crafting.buttons.b3.scaleWidth
-    crafting.buttons.b3.pixelHeight = spr:getHeight() * crafting.buttons.b3.scaleHeight
-    crafting.buttons.b3.orginPointX = 0
-    crafting.buttons.b3.orginPointY = 0
+    crafting.buttons[3].startX = crafting.x
+    crafting.buttons[3].startY = crafting.y
+    crafting.buttons[3].rotation = 0
+    crafting.buttons[3].scaleWidth = crafting.blockSize / spr:getWidth()
+    crafting.buttons[3].scaleHeight = crafting.blockSize / spr:getHeight()
+    crafting.buttons[3].pixelWidth = spr:getWidth() * crafting.buttons[3].scaleWidth
+    crafting.buttons[3].pixelHeight = spr:getHeight() * crafting.buttons[3].scaleHeight
+    crafting.buttons[3].orginPointX = 0
+    crafting.buttons[3].orginPointY = 0
 end
 
 function crafting.f.render()
@@ -102,14 +102,14 @@ function crafting.f.render()
     inventory.inventoryBar.UI = "crafting"
 
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle("fill", crafting.buttons.b3.startX, crafting.buttons.b3.startY, crafting.buttons.b3.pixelWidth, crafting.buttons.b3.pixelHeight)
+    love.graphics.rectangle("fill", crafting.buttons[3].startX, crafting.buttons[3].startY, crafting.buttons[3].pixelWidth, crafting.buttons[3].pixelHeight)
 
     local recSpr = spw.sprites[recipes.recipesInOrder[crafting.selectedRecipe]].sprs
     love.graphics.draw(recSpr, crafting.x, crafting.y, 0, crafting.blockSize / recSpr:getWidth(), crafting.blockSize / recSpr:getHeight())
 
     local spr = spw.sprites.arrow.sprs
-    love.graphics.draw(spr, crafting.buttons.b1.startX, crafting.buttons.b1.startY, crafting.buttons.b1.rotation, crafting.buttons.b1.scaleWidth, crafting.buttons.b1.scaleHeight, crafting.buttons.b1.orginPointX, crafting.buttons.b1.orginPointY)
-    love.graphics.draw(spr, crafting.buttons.b2.startX, crafting.buttons.b2.startY + crafting.buttons.b2.pixelHeight, crafting.buttons.b2.rotation, crafting.buttons.b2.scaleWidth, -crafting.buttons.b2.scaleHeight, crafting.buttons.b2.orginPointX, crafting.buttons.b2.orginPointY)
+    love.graphics.draw(spr, crafting.buttons[1].startX, crafting.buttons[1].startY, crafting.buttons[1].rotation, crafting.buttons[1].scaleWidth, crafting.buttons[1].scaleHeight, crafting.buttons[1].orginPointX, crafting.buttons[1].orginPointY)
+    love.graphics.draw(spr, crafting.buttons[2].startX, crafting.buttons[2].startY + crafting.buttons[2].pixelHeight, crafting.buttons[2].rotation, crafting.buttons[2].scaleWidth, -crafting.buttons[2].scaleHeight, crafting.buttons[2].orginPointX, crafting.buttons[2].orginPointY)
 end
 
 function crafting.f.checkIfOnButton(buttonObjects, x, y)
@@ -118,13 +118,9 @@ function crafting.f.checkIfOnButton(buttonObjects, x, y)
         return false
     end
 
-    --tables.writeTable(buttonObjects)
-
-    for k, v in pairs(buttonObjects) do
-        local button = buttonObjects[k]
+    for i, button in ipairs(buttonObjects) do
         if renderer.AABB(x, y, 1, 1, button.startX, button.startY, button.pixelWidth, button.pixelHeight) then
             button.press(button)
-
             return true
         end
     end
