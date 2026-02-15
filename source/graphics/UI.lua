@@ -45,7 +45,7 @@ UI = {
 }
 
 function UI.f.addItemIndexes(c)
-    print(c .. "c")
+    --print(c .. "c")
     for i = 1, c do
         if player.openedEntity[i] == nil or next(player.openedEntity[i]) == nil then
             player.openedEntity[i] = {}
@@ -56,9 +56,12 @@ end
 function UI.f.checkItemSlot(itemSlot, max)
     UI.f.addItemIndexes(max)
 
-    if inventory.inventoryBar.itemOnCursor ~= nil and next(inventory.inventoryBar.itemOnCursor) ~= nil then
+    if next(inventory.inventoryBar.itemOnCursor) ~= nil and next(inventory.inventoryBar.itemOnCursor) ~= nil then
         player.openedEntity[itemSlot] = inventory.inventoryBar.itemOnCursor
         inventory.inventoryBar.itemOnCursor = {}
+    elseif next(inventory.inventoryBar.itemOnCursor) == nil then
+        inventory.inventoryBar.itemOnCursor = player.openedEntity[itemSlot]
+        player.openedEntity[itemSlot] = {}
     --else
     --    --TODO REMOVE THIS TESTING CODE !!!
     --    player.openedEntity[itemSlot] = {item = "rock", count = 5}
