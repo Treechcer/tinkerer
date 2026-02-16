@@ -1,6 +1,7 @@
 love = require("love")
 
 function love.load()
+    video = ""
     game = require("source.game.game")
 
     if game.os ~= "PSP" then
@@ -89,6 +90,10 @@ function love.mousepressed(x, y, button, istouch, presses)
         --tables.writeTable(game.activeUIButtons)
 
         --TODO FIX BUTTONS, FOR SOME REASON ONLY 2/3 WORKS!!
+
+        if true then
+            return
+        end
 
         if crafting.f.checkIfOnButton(game.activeUIButtons, x, y) then
             return

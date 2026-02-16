@@ -39,6 +39,7 @@ function spw.init()
     spw.generateNewSprite("fueled_furnace", love.graphics.newImage("assets/sprites/fueled_furnace.png"))
     spw.generateNewSprite("pebble", love.graphics.newImage("assets/sprites/pebble.png"))
     spw.generateNewSprite("arrow", love.graphics.newImage("assets/sprites/arrow.png"))
+    spw.generateNewSprite("chicken", love.graphics.newImage("assets/sprites/chicken.png"))
 end
 
 ---@param timer number?

@@ -68,6 +68,7 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
     inventory.functions.coolDown(dt)
     entityInteractivity.f.interact(settings.keys.entityInteract)
 
+    entities.special()
     entityCleaner.f.update(dt)
     --inventory.functions.click()
 end

@@ -143,4 +143,12 @@ function entities.kill(index)
     table.remove(entities.ents, index)
 end
 
+function entities.special()
+    for key, value in pairs(entities.ents) do
+        if entitiesIndex[value.index].run ~= nil then
+            entitiesIndex[value.index].run(value)
+        end
+    end
+end
+
 return entities
