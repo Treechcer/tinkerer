@@ -53,6 +53,14 @@ function UI.f.addItemIndexes(c)
     end
 end
 
+function UI.f.isSLotEmpty(index)
+    if pcall(function () if player.openedEntity[index].item ~= nil then  end end) then
+        return player.openedEntity[index].item ~= ""
+    end
+
+    return false
+end
+
 function UI.f.checkItemSlot(itemSlot, max)
     UI.f.addItemIndexes(max)
 
@@ -113,6 +121,15 @@ function UI.renderder.furnaceUI.render()
                     love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
                 end
             end
+        end
+
+        if value.index == 2 and UI.f.isSLotEmpty(2) then
+            love.graphics.setColor(0,0,0)
+
+            local spr = spw.sprites["fire"].sprs
+            love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
+
+            love.graphics.setColor(1,1,1)
         end
     end
 end

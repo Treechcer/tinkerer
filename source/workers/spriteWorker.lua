@@ -40,10 +40,16 @@ function spw.init()
     spw.generateNewSprite("pebble", love.graphics.newImage("assets/sprites/pebble.png"))
     spw.generateNewSprite("arrow", love.graphics.newImage("assets/sprites/arrow.png"))
     spw.generateNewSprite("chicken", love.graphics.newImage("assets/sprites/chicken.png"))
+    spw.generateNewSprite("fire")
 end
 
 ---@param timer number?
 function spw.generateNewSprite(name, sprs, timer, canMove)
+    if sprs == nil then
+        sprs = love.graphics.newImage("assets/sprites/" .. name .. ".png")
+    end
+
+
     if timer == nil then
         spw.sprites[name] = { sprs = sprs }
     else
