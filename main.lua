@@ -91,9 +91,10 @@ function love.mousepressed(x, y, button, istouch, presses)
 
         --TODO FIX BUTTONS, FOR SOME REASON ONLY 2/3 WORKS!!
 
-        if true then
-            return
-        end
+        --smh this brok my inventory...
+        --if true then
+        --    return
+        --end
 
         if crafting.f.checkIfOnButton(game.activeUIButtons, x, y) then
             return
