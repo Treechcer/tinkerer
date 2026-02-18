@@ -46,16 +46,23 @@ UI = {
 
 function UI.f.addItemIndexes(c)
     --print(c .. "c")
+    if player.openedEntity == nil then
+        player.openedEntity = {}
+    end
+
     for i = 1, c do
-        if player.openedEntity[i] == nil or next(player.openedEntity[i]) == nil then
+        if type(player.openedEntity[i]) ~= "table" then
             player.openedEntity[i] = {}
         end
     end
 end
 
 function UI.f.isSLotEmpty(index)
-    if pcall(function () if player.openedEntity[index].item ~= nil then  end end) then
-        return player.openedEntity[index].item ~= ""
+    --tables.writeTable(player)
+
+    if pcall(function () a = player.openedEntity[index].item ~= nil end) then
+        print(player.openedEntity[index].item ~= "" and player.openedEntity[index].item ~= nil)
+        return player.openedEntity[index].item ~= "" and player.openedEntity[index].item ~= nil
     end
 
     return false
@@ -102,6 +109,11 @@ end
 
 function UI.renderder.furnaceUI.render()
     game.activeUIButtons = UI.renderder.furnaceUI.buttons
+
+    if player.openedEntity == nil then
+        UI.f.addItemIndexes(#UI.renderder.furnaceUI.buttons)
+    end
+
     for c = 1, #UI.renderder.furnaceUI.buttons do
         local value = UI.renderder.furnaceUI.buttons[c]
         value.color = value.color or {1,1,1}
@@ -109,27 +121,20 @@ function UI.renderder.furnaceUI.render()
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
 
         if player.openedEntity ~= nil then
-
-            if player.openedEntity[c] == nil then
-                UI.f.addItemIndexes(c)
-            end
-
             if player.openedEntity ~= nil or next(player.openedEntity) ~= nil then
-                if player.openedEntity[c].item ~= nil then
-                    --print(player.openedEntity["item" .. c].item)
-                    local spr = spw.sprites[player.openedEntity[c].item].sprs
-                    love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
-                end
+                pcall(function ()
+                    if player.openedEntity[c].item ~= nil then
+                        --print(player.openedEntity["item" .. c].item)
+                        local spr = spw.sprites[player.openedEntity[c].item].sprs
+                        love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
+                    end
+                end)
             end
         end
 
-        if value.index == 2 and UI.f.isSLotEmpty(2) then
-            love.graphics.setColor(0,0,0)
-
+        if value.index == 2 and not UI.f.isSLotEmpty(2) then
             local spr = spw.sprites["fire"].sprs
             love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
-
-            love.graphics.setColor(1,1,1)
         end
     end
 end

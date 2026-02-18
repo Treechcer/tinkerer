@@ -125,8 +125,8 @@ function inventory.functions.renderItemOnCursor(x, y)
         local realWidth = w * (blockSize / w)
         local realHeight = h * (blockSize / h)
 
-        love.graphics.draw(spr, x, y, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
         love.graphics.setColor(1,1,1)
+        love.graphics.draw(spr, x, y, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
         love.graphics.print(inventory.inventoryBar.itemOnCursor.count, x + (realWidth / 3), y + (realHeight / 4)) -- 3 and 4 are random values, they work well ngl
     end
 end
@@ -260,8 +260,8 @@ function inventory.functions.renderWholeInventory()
 
                 local scaleX = bl / itemW
                 local scaleY = bl / itemH
-                love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
                 love.graphics.setColor(1,1,1)
+                love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
                 local w = font:getWidth(indexItem.count)
                 local h = font:getHeight()
                 love.graphics.print(indexItem.count, xP + bl - w - barI.padText, yP + bl - h - barI.padText)
