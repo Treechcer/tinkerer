@@ -10,6 +10,10 @@ UI = {
                     press = function (self)
                         --self.color = {0,1,0}
                         UI.f.checkItemSlot(self.index, 3)
+
+                        --tables.writeTable(player.openedEntity)
+
+                        UI.f.checkStateFurnace(self)
                     end
                 },
                 {
@@ -31,19 +35,20 @@ UI = {
                         --self.color = {0,1,0}
                         UI.f.checkItemSlot(self.index, 3)
 
-                        self.burnTime = self.burnTime or 0
+                        player.openedEntity.burnTime = player.openedEntity.burnTime or 0
 
                         local currentItem = player.openedEntity[self.index]
 
-                        if currentItem.count > 0 and self.burnTime == 0 then
+                        if currentItem.count > 0 and player.openedEntity.burnTime == 0 then
+                            player.openedEntity.burnTime = itemIndex[currentItem.item].burnStrength
                             currentItem.count = currentItem.count - 1
                             
                             if currentItem.count < 0 then
                                 player.openedEntity = {}
                             end
-
-                            self.burnTime = itemIndex[currentItem.item].burnStrength
                         end
+
+                        UI.f.checkStateFurnace(self)
                     end
                 },
                 {
@@ -78,6 +83,27 @@ UI = {
     },
     f = {}
 }
+
+function UI.f.checkStateFurnace(self)
+    if next(player.openedEntity[1]) == nil then
+        return
+    end
+
+    player.openedEntity.burnTime = player.openedEntity.burnTime or 0
+    if pcall(function () local smeltsTo = itemIndex[player.openedEntity[1].item].smeltsTo.item end) then
+        smeltsTo = itemIndex[player.openedEntity[1].item].smeltsTo.item
+    else
+        return
+    end
+
+    --tables.writeTable(itemIndex[player.openedEntity[1].item])
+
+    print(smeltsTo .. player.openedEntity.burnTime)
+
+    if smeltsTo ~= nil and player.openedEntity.burnTime > 0 then
+        player.openedEntity.state = "burning"
+    end
+end
 
 function UI.f.addItemIndexes(c)
     --print(c .. "c")

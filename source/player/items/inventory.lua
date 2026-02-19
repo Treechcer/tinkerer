@@ -22,7 +22,7 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { --[[item = "hammer", count = 1]] },
-                { item = "pebble", count = 5 },
+                { item = "rock", count = 5 },
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 5 },
                 {}

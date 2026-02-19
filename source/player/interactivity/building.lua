@@ -51,6 +51,8 @@ function building.f.canBuild(itemName)
     return isItemOnGround
 end
 
+--TODO actually just remake part of the functions to suite it better, because this kinda blows ngl
+
 function building.f.furnaceInteractivity(self)
 
     self.fuel = self.fuel or 0
@@ -96,7 +98,6 @@ end
     end
 ]]
 
---TODO REDO THIS FURNACE ITERACTION! THIS SUCKS ACTUALLY and add only UI support? That might (actually) be better?
 
 function building.f.furnaceState(self)
     --print(self.state)
@@ -114,7 +115,7 @@ function building.f.furnaceWork (self, dt)
 
     self.progress = self.progress or 0
 
-    if self.fuel > 0 and self.items ~= nil then
+    if self.burnTime > 0 and self.items ~= nil then
         self.progress = self.progress + dt
         --print(self.progress)
         if self.progress > 1 then
@@ -123,6 +124,7 @@ function building.f.furnaceWork (self, dt)
             inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
             self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
             self.progress = 0
+            self.burnTime = self.burnTime - 1
 
             if self.items.count < itemFromIdex.smeltsTo.needs then
                 self.state = nil
