@@ -96,6 +96,8 @@ end
     end
 ]]
 
+--TODO REDO THIS FURNACE ITERACTION! THIS SUCKS ACTUALLY and add only UI support? That might (actually) be better?
+
 function building.f.furnaceState(self)
     --print(self.state)
     if self.state == "burning" then

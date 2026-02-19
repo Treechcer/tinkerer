@@ -15,8 +15,35 @@ UI = {
                 {
                     index = 2,
                     press = function (self)
+                        local cursorItem = itemIndex[inventory.inventoryBar.itemOnCursor.item]
+
+                        if cursorItem == nil and not UI.f.isSLotEmpty(self.index) then
+                            return
+                        elseif cursorItem == nil and UI.f.isSLotEmpty(self.index) then
+                            UI.f.checkItemSlot(self.index, 3)
+                            return
+                        end
+
+                        if cursorItem.burnStrength == 0 then
+                            return
+                        end
+
                         --self.color = {0,1,0}
                         UI.f.checkItemSlot(self.index, 3)
+
+                        self.burnTime = self.burnTime or 0
+
+                        local currentItem = player.openedEntity[self.index]
+
+                        if currentItem.count > 0 and self.burnTime == 0 then
+                            currentItem.count = currentItem.count - 1
+                            
+                            if currentItem.count < 0 then
+                                player.openedEntity = {}
+                            end
+
+                            self.burnTime = itemIndex[currentItem.item].burnStrength
+                        end
                     end
                 },
                 {
@@ -69,7 +96,7 @@ function UI.f.isSLotEmpty(index)
     --tables.writeTable(player)
 
     if pcall(function () a = player.openedEntity[index].item ~= nil end) then
-        print(player.openedEntity[index].item ~= "" and player.openedEntity[index].item ~= nil)
+        --print(player.openedEntity[index].item ~= "" and player.openedEntity[index].item ~= nil)
         return player.openedEntity[index].item ~= "" and player.openedEntity[index].item ~= nil
     end
 
