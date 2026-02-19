@@ -54,8 +54,7 @@ end
 --TODO actually just remake part of the functions to suite it better, because this kinda blows ngl
 
 function building.f.furnaceInteractivity(self)
-
-    self.fuel = self.fuel or 0
+    self.burnTime = self.burnTime or 0
     self.items = self.items or {item = "", count = 0}
 
     local i = inventory.inventoryBar.inventory
@@ -66,7 +65,7 @@ function building.f.furnaceInteractivity(self)
     end
 
     if item.burnable then
-        self.fuel = self.fuel + item.burnStrength
+        self.burnTime = self.burnTime + item.burnStrength
         i[#i][inventory.hotBar.selectedItem] = {}
     elseif self.items.item == "" or self.items.item == nil then
         self.items.item = i[#i][inventory.hotBar.selectedItem].item
@@ -80,7 +79,7 @@ function building.f.furnaceInteractivity(self)
 
     --tables.writeTable(self.items)
     local itemFromIdex = itemIndex[self.items.item]
-    if self.fuel > 0 and self.items.item ~= "" and not (self.items.count < itemFromIdex.smeltsTo.needs) then
+    if self.burnTime > 0 and self.items.item ~= "" and not (self.items.count < itemFromIdex.smeltsTo.needs) then
         self.state = "burning"
     else
         self.state = ""
@@ -114,6 +113,9 @@ function building.f.furnaceWork (self, dt)
     end
 
     self.progress = self.progress or 0
+    --tables.writeTable(self)
+
+    self.items = {item = self[1].item, count = self[1].count} --this is kinda... hacky work around but ot works lol
 
     if self.burnTime > 0 and self.items ~= nil then
         self.progress = self.progress + dt
