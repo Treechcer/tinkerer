@@ -19,6 +19,7 @@ items = {
         burnable = false,
         burnStrength = 0,
         smeltsTo = {item = "hammer", count = 1, needs = 1},
+        type = "tastes nice"
     },
     hammer = {
         typeI = "Tool",
@@ -35,7 +36,8 @@ items = {
         height = 1,
         burnable = false,
         burnStrength = 0,
-        smeltsTo = nil
+        smeltsTo = nil,
+        type = "hurts when you hit yourself with it"
     }
 }
 

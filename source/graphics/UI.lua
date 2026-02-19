@@ -23,7 +23,15 @@ UI = {
                     index = 3,
                     press = function (self)
                         --self.color = {0,1,0}
-                        UI.f.checkItemSlot(self.index, 3)
+                        --UI.f.checkItemSlot(self.index, 3)
+                        
+
+                        if next(inventory.inventoryBar.itemOnCursor) == nil and next(player.openedEntity[self.index] or {}) ~= nil then
+                            inventory.inventoryBar.itemOnCursor = player.openedEntity[self.index]
+                            player.openedEntity[self.index] = {}
+                        --else
+                        --    player.openedEntity[self.index] = {item = "rock", count = 5}
+                        end
                     end
                 }
             }

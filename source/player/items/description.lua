@@ -7,7 +7,7 @@ descption = {
 function descption.f.gen(item)
     local str = ""
 
-    --tables.writeTable(itemIndex)
+    --tables.writeTable(itemIndex[item])
     --print(item)
 
     str = str .. "Item: " .. item .. "\n"
