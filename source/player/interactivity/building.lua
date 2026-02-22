@@ -123,7 +123,24 @@ function building.f.furnaceWork (self, dt)
         if self.progress > 1 then
             --print(self.items.item, self.items.count)
             local itemFromIdex = itemIndex[self.items.item]
-            inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
+            --inventory.functions.addItem(itemFromIdex.smeltsTo.item, itemFromIdex.smeltsTo.count)
+            --tables.writeTable(self)
+            if (self[3].item ~= nil) then
+                if itemFromIdex.smeltsTo.item ~= self[3].item then
+                    return
+                end
+            else
+                self[3].item = ""
+                self[3].count = 0
+            end
+
+            if self[3].count + itemFromIdex.smeltsTo.count > itemIndex[itemFromIdex.smeltsTo.item].maxStackSize then
+                return
+            end
+
+            --self[3] = {item = itemFromIdex.smeltsTo.item, count = itemFromIdex.smeltsTo.count}
+            self[3].item = itemFromIdex.smeltsTo.item
+            self[3].count = self[3].count + itemFromIdex.smeltsTo.count
             self.items.count = self.items.count - itemFromIdex.smeltsTo.needs
             self.progress = 0
             self.burnTime = self.burnTime - 1
