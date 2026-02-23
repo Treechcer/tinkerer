@@ -132,12 +132,20 @@ end
 function UI.f.checkItemSlot(itemSlot, max)
     UI.f.addItemIndexes(max)
 
-    if next(inventory.inventoryBar.itemOnCursor) ~= nil and next(inventory.inventoryBar.itemOnCursor) ~= nil then
+    if next(inventory.inventoryBar.itemOnCursor) ~= nil then
+        if inventory.inventoryBar.itemOnCursor.item ~= player.openedEntity[itemSlot].item and not (player.openedEntity[itemSlot].item == nil or player.openedEntity[itemSlot].item == "") then
+            player.openedEntity[itemSlot], inventory.inventoryBar.itemOnCursor = inventory.inventoryBar.itemOnCursor, player.openedEntity[itemSlot]
+            return
+        end
+
         player.openedEntity[itemSlot] = inventory.inventoryBar.itemOnCursor
         inventory.inventoryBar.itemOnCursor = {}
+        return
     elseif next(inventory.inventoryBar.itemOnCursor) == nil then
+        print("?????")
         inventory.inventoryBar.itemOnCursor = player.openedEntity[itemSlot]
         player.openedEntity[itemSlot] = {}
+        return
     --else
     --    --TODO REMOVE THIS TESTING CODE !!!
     --    player.openedEntity[itemSlot] = {item = "rock", count = 5}
