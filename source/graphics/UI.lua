@@ -35,9 +35,9 @@ UI = {
                         --self.color = {0,1,0}
                         UI.f.checkItemSlot(self.index, 3)
 
-                        player.openedEntity.burnTime = player.openedEntity.burnTime or 0
-
                         local currentItem = player.openedEntity[self.index]
+
+                        player.openedEntity.burnTime = player.openedEntity.burnTime or 0
 
                         if currentItem.count > 0 and player.openedEntity.burnTime == 0 then
                             player.openedEntity.burnTime = itemIndex[currentItem.item].burnStrength
@@ -185,13 +185,25 @@ function UI.renderder.furnaceUI.render()
             if player.openedEntity ~= nil or next(player.openedEntity) ~= nil then
                 pcall(function ()
                     if player.openedEntity[c].item ~= nil then
+                        love.graphics.setColor(1,1,1)
                         --print(player.openedEntity["item" .. c].item)
                         local spr = spw.sprites[player.openedEntity[c].item].sprs
                         love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
+
+                        local f = love.graphics.newFont(14)
+
+                        local fontW = f:getWidth(player.openedEntity[c].count)
+                        local fontH = f:getHeight(player.openedEntity[c].count)
+
+                        --print(fontH, fontW)
+                        love.graphics.setColor(0,0,0)
+                        love.graphics.print(player.openedEntity[c].count, value.startX + UI.renderder.furnaceUI.blockSize - fontW, value.startY + UI.renderder.furnaceUI.blockSize - fontH)
                     end
                 end)
             end
         end
+
+        love.graphics.setColor(1,1,1)
 
         if value.index == 2 and not UI.f.isSLotEmpty(2) then
             local spr = spw.sprites["fire"].sprs

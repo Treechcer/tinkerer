@@ -112,6 +112,7 @@ function inventory.functions.click(button)
 end
 
 function inventory.functions.renderItemOnCursor(x, y)
+    love.graphics.setColor(1,1,1)
     if inventory.inventoryBar.render and inventory.inventoryBar.itemOnCursor.item ~= nil then
         local spr = spriteWorker.sprites[inventory.inventoryBar.itemOnCursor.item].sprs
         local blockSize = inventory.inventoryBar.blockSize
@@ -125,10 +126,11 @@ function inventory.functions.renderItemOnCursor(x, y)
         local realWidth = w * (blockSize / w)
         local realHeight = h * (blockSize / h)
 
-        love.graphics.setColor(1,1,1)
         love.graphics.draw(spr, x, y, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
+        love.graphics.setColor(0,0,0)
         love.graphics.print(inventory.inventoryBar.itemOnCursor.count, x + (realWidth / 3), y + (realHeight / 4)) -- 3 and 4 are random values, they work well ngl
     end
+    love.graphics.setColor(1,1,1)
 end
 
 ---@param posHit boolean?
@@ -264,7 +266,9 @@ function inventory.functions.renderWholeInventory()
                 love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
                 local w = font:getWidth(indexItem.count)
                 local h = font:getHeight()
+                love.graphics.setColor(0,0,0)
                 love.graphics.print(indexItem.count, xP + bl - w - barI.padText, yP + bl - h - barI.padText)
+                love.graphics.setColor(1,1,1)
             end
         end
     end
@@ -337,8 +341,9 @@ function inventory.functions.renderHotbar()
             local h = font:getHeight()
             local textX = blockX + hotbar.boxSize - w - hotbar.numberPad
             local textY = y + hotbar.boxSize - h - hotbar.numberPad
-
+            love.graphics.setColor(0,0,0)
             love.graphics.print(inventoryHB[i].count, textX, textY)
+            love.graphics.setColor(1,1,1)
         end
     end
 
