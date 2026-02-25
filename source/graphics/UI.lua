@@ -41,6 +41,7 @@ UI = {
 
                         if currentItem.count > 0 and player.openedEntity.burnTime == 0 then
                             player.openedEntity.burnTime = itemIndex[currentItem.item].burnStrength
+                            player.openedEntity.maxBurnSTR = itemIndex[currentItem.item].burnStrength
                             currentItem.count = currentItem.count - 1
                             
                             if currentItem.count < 0 then
@@ -142,7 +143,7 @@ function UI.f.checkItemSlot(itemSlot, max)
         inventory.inventoryBar.itemOnCursor = {}
         return
     elseif next(inventory.inventoryBar.itemOnCursor) == nil then
-        print("?????")
+        --print("?????")
         inventory.inventoryBar.itemOnCursor = player.openedEntity[itemSlot]
         player.openedEntity[itemSlot] = {}
         return
@@ -187,7 +188,18 @@ function UI.renderder.furnaceUI.render()
         local value = UI.renderder.furnaceUI.buttons[c]
         value.color = value.color or {1,1,1}
         love.graphics.setColor(value.color)
+
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
+
+        if value.index == 2 then
+            love.graphics.setColor(1, 0.647, 0)
+            player.openedEntity.burnTime = player.openedEntity.burnTime or 0
+            player.openedEntity.maxBurnSTR = player.openedEntity.maxBurnSTR or 0
+            if player.openedEntity.maxBurnSTR > 0 then
+                local percent = 1 - (player.openedEntity.burnTime / player.openedEntity.maxBurnSTR)
+                love.graphics.rectangle("fill", value.startX, value.startY + (percent * UI.renderder.furnaceUI.blockSize), UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize - (percent * UI.renderder.furnaceUI.blockSize))
+            end
+        end
 
         if player.openedEntity ~= nil then
             if player.openedEntity ~= nil or next(player.openedEntity) ~= nil then
