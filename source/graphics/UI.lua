@@ -190,6 +190,8 @@ function UI.renderder.furnaceUI.render()
         love.graphics.setColor(value.color)
 
         love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
+        
+        --self.progress
 
         if value.index == 2 then
             love.graphics.setColor(1, 0.647, 0)
@@ -199,6 +201,11 @@ function UI.renderder.furnaceUI.render()
                 local percent = 1 - (player.openedEntity.burnTime / player.openedEntity.maxBurnSTR)
                 love.graphics.rectangle("fill", value.startX, value.startY + (percent * UI.renderder.furnaceUI.blockSize), UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize - (percent * UI.renderder.furnaceUI.blockSize))
             end
+        elseif value.index == 3 then
+            local percent = player.openedEntity.progress or 0
+            percent = percent - 1 > 0 and 0 or percent - 1
+            love.graphics.setColor(0.5, 0.5, 0.5)
+            love.graphics.rectangle("fill", value.startX, value.startY - (percent * UI.renderder.furnaceUI.blockSize), UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize + (percent * UI.renderder.furnaceUI.blockSize))
         end
 
         if player.openedEntity ~= nil then
