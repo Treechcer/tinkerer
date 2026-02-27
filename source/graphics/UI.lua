@@ -204,7 +204,7 @@ function UI.renderder.furnaceUI.render()
         elseif value.index == 3 then
             local percent = player.openedEntity.progress or 0
             percent = percent - 1 > 0 and 0 or percent - 1
-            love.graphics.setColor(0.5, 0.5, 0.5)
+            love.graphics.setColor(0.8, 0.8, 0.8)
             love.graphics.rectangle("fill", value.startX, value.startY - (percent * UI.renderder.furnaceUI.blockSize), UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize + (percent * UI.renderder.furnaceUI.blockSize))
         end
 
