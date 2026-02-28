@@ -288,7 +288,7 @@ function inventory.functions.renderWholeInventory()
     end
 
     if next(item) ~= nil then
-        UI.renderder.descriptions.f.render(x, y, descption.f.gen(item.item))
+        UI.renderder.descriptions.f.render(x, y, description.f.gen(item.item))
     end
 
     --tables.writeTable(item)
@@ -446,13 +446,15 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, width, height)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height)
     width = width or 1
     height = height or 1
     burnStrength = burnStrength or 0
     typeI = typeI or "Resource"
+    descriptor = descriptor or ""
     itemIndex[item] = {
-        type = typeI,
+        typeI = typeI,
+        descriptor = descriptor,
         maxStackSize = maxStackSize,
         attack = attack,
         weakness = weakness,
@@ -466,14 +468,19 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         height = height,
         burnable = burnable,
         burnStrength = burnStrength,
-        smeltsTo = smeltsTo
+        smeltsTo = smeltsTo,
     }
+
+    itemIndex[item].type = description.f.gen(item) or ""
 end
 
 function inventory.functions.init()
     inventory.functions.fillHitBoxTable()
 
     --initialising ALL items that you can carry
+
+    inventory.functions.AddNewItemIndex("rock", 64, 1, bit.addBit({ bit.BIT4 }), 1, 5, { item = "rock", count = 5 }, 7, 1, false, false, 0, "Resource", {item = "hammer", count = 1, needs = 1}, "tastes nice", 1, 1)
+    inventory.functions.AddNewItemIndex("hammer", 1, 1, bit.addBit({ bit.BIT1, bit.BIT4 }), 1, nil, nil, 5, 1.5, false, false, 0, "Tool", nil, "hurts when you hit yourself with it", 1, 1)
 
     inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
     inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 5)
@@ -482,7 +489,8 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
     inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
-    inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Tool")
+    inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
+    inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
 end
 
 function inventory.functions.changeItemByNumber()

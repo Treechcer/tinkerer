@@ -2,35 +2,36 @@ entitiesIndex = {
     f = {
         --for functions needed for this "LUASON"
     },
-    rock = {
-        entityName = "rock", --this has to be same the name of the Index, it'll be used as "relations" from databases to save RAM (lookupTable)
-        spwName = "rock",
-        HP = 5,
-        --weakness will work similarly to Linux permissions,
-        --it's three bits for now, (pickaxe, axe, nothing)
-        --if bit for something is set to 1, you can damage
-        --it if the item in use has mask with one on the same place
-        weakness = bit.addBit({bit.BIT4}),
-        --every tool with every material will have strenght, the lowest
-        --variant will have 1, after that it will be 2...
-        strengthMin = 1,
-        --you have to :
-        --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
-        drop = { {item = "rock", baseCount = 3} },
-        width = 1,
-        height = 1,
-        luck = "miningLuck",
-        xp = {mining = 20},
-        interactivityKeys = {},
-        state = nil,
-        getSprite = function (self)
-            return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
-        end,
-        update = nil,
-        isCleanUp = function (self, dt)
-            return false
-        end
-    }
+    --This is to show how items looks in this, and some comments about how and what is what yk
+    --rock = {
+    --    entityName = "rock", --this has to be same the name of the Index, it'll be used as "relations" from databases to save RAM (lookupTable)
+    --    spwName = "rock",
+    --    HP = 5,
+    --    --weakness will work similarly to Linux permissions,
+    --    --it's three bits for now, (pickaxe, axe, nothing)
+    --    --if bit for something is set to 1, you can damage
+    --    --it if the item in use has mask with one on the same place
+    --    weakness = bit.addBit({bit.BIT4}),
+    --    --every tool with every material will have strenght, the lowest
+    --    --variant will have 1, after that it will be 2...
+    --    strengthMin = 1,
+    --    --you have to :
+    --    --tool.strength >= entity.strengthMin and (tool.weakness && entity.weakness ~= 0)
+    --    drop = { {item = "rock", baseCount = 3} },
+    --    width = 1,
+    --    height = 1,
+    --    luck = "miningLuck",
+    --    xp = {mining = 20},
+    --    interactivityKeys = {},
+    --    state = nil,
+    --    getSprite = function (self)
+    --        return spriteWorker.sprites[entitiesIndex[self.index].spwName].sprs
+    --    end,
+    --    update = nil,
+    --    isCleanUp = function (self, dt)
+    --        return false
+    --    end
+    --}
 }
 
 function entitiesIndex.f.getCount (luck, baseCount) -- luck => 1 - 10 (base skill lvl, maybe there can be added more?)
@@ -94,8 +95,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
         spwName = spwName,
         HP = HP,
         weakness = weakness,
-        strengthMin =
-        strenght,
+        strengthMin = strenght,
         drop = drop,
         height = height,
         width = width,
@@ -123,13 +123,17 @@ function entitiesIndex.f.init()
     --correct tree, now there's not any axe
     --entitiesIndex.f.addIndex("tree", 5, bit.addBit({bit.BIT2}), 1, {item = "leaf", baseCount = 2}, 1, 2, "foragingLuck", {"foragingLuck"})
 
+    --stoney / rockey hingies
+    entitiesIndex.f.addIndex("rock", false, 5, bit.addBit({bit.BIT4}), 1, { {item = "rock", baseCount = 3} }, 1, 1, "miningLuck", {mining = 20}, {}, nil, nil, false, nil)
+    entitiesIndex.f.addIndex("iron_ore", false, 5, bit.addBit({bit.BIT4}), 1, { {item = "iron_ore", baseCount = 3} }, 1, 1, "miningLuck", {mining = 20}, {}, nil, nil, false, nil)
+
     --pickaxeble tree and wooden stuff  (incorrect)!!!
     entitiesIndex.f.addIndex("tree", false, 5, bit.addBit({bit.BIT4, bit.BIT2}), 1, {{item = "leaf", baseCount = 2}, {item = "log", baseCount = 3}, {item = "stick", baseCount = 2}}, 1, 2, "foragingLuck", {foraging = 5})
     entitiesIndex.f.addIndex("small_chair", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "small_chair", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) player.moveToTile(player.cursor.tileX, player.cursor.tileY - 0.65) player.vals.state = "sitting" end})
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
     entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) --[[building.f.furnaceInteractivity(self)]] inventory.inventoryBar.UI = "furnace" building.f.furnaceUI() game.activeUIButtons = UI.renderder.furnaceUI.buttons inventory.inventoryBar.render = true player.openedEntity = self end}, building.f.furnaceState,building.f.furnaceWork, nil, nil, nil, {items = {}})
-    entitiesIndex.f.addIndex("pebble", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("pebble", 1) entities.kill(index) end}, nil, nil, building.f.XSecondKillSwitch, nil, nil ,{killTime = 5})
+    entitiesIndex.f.addIndex("pebble", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("pebble", 1) entities.kill(index) end}, nil, nil, building.f.XSecondKillSwitch, nil, nil, {killTime = 64})
 
     --tables.writeTable(entitiesIndex.furnace)
 

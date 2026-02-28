@@ -5,7 +5,7 @@ biomeData = {
 
 function biomeData.f.init()
     biomeData.grass = {
-        spawns = { "rock", "tree", "pebble", },
+        spawns = { "rock", "tree", "pebble", "iron_ore" },
         sprite = spriteWorker.sprites.grass.sprs
     }
 

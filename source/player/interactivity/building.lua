@@ -158,11 +158,12 @@ function building.f.XSecondKillSwitch(self, dt)
     end
 
     if self.time == nil then
-        self["time"] = 0
+        self.time = 0
     end
 
     self.time = self.time + dt
     --print(self.time)
+
     if self.time > self.killTime then
         self.time = 0
         return true
