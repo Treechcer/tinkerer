@@ -2,7 +2,7 @@ local crafting = require("source.player.crafting.crafting")
 
 inventory = {
     hotBar = {
-        maxItems = 10,
+        maxItems = 12,
         --items = {},
         boxSize = 50, --pixels
         paddingBottom = 15,
@@ -28,7 +28,7 @@ inventory = {
                 {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
-        maxItemsPerInventory = 10, --this is except hotbar btw
+        maxItemsPerInventory = 12, --this is except hotbar btw
         inventoryRows = 7,
         blockSize = game.width / 10,
         pad = game.width / 200,
@@ -264,21 +264,42 @@ function inventory.functions.renderWholeInventory()
             local yP = (game.height / 2) + ((inventroyIndex - 1) * barI.blockSize) - (totalH / 2) + (barI.pad / 2)
             love.graphics.rectangle("fill", xP, yP, bl, bl)
             local indexItem = i[inventroyIndex][itemIndexNum]
-            if indexItem ~= nil and next(indexItem) ~= nil then
+
+            local crossBool = inventroyIndex == rows and itemIndexNum > 10
+
+            if indexItem ~= nil and next(indexItem) ~= nil or crossBool then
                 local item = indexItem.item
+                
+                --print(item)
+
+                local width = 1
+                local height = 1
+
+                if crossBool then
+                    item = "cross"
+                else
+                    width = itemIndex[item].width
+                    height = itemIndex[item].height
+                end
+                --print(item)
+                --print("----")
                 local spr = spw.sprites[item].sprs
-                local itemW = spr:getWidth()  * itemIndex[item].height
-                local itemH = spr:getHeight() * itemIndex[item].width
+                --print(spr)
+                --print("---")
+                local itemW = spr:getWidth()  * width
+                local itemH = spr:getHeight() * height
 
                 local scaleX = bl / itemW
                 local scaleY = bl / itemH
                 love.graphics.setColor(1,1,1)
                 love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
-                local w = font:getWidth(indexItem.count)
-                local h = font:getHeight()
-                love.graphics.setColor(0,0,0)
-                love.graphics.print(indexItem.count, xP + bl - w - barI.padText, yP + bl - h - barI.padText)
-                love.graphics.setColor(1,1,1)
+                if indexItem.count ~= nil then
+                    local w = font:getWidth(indexItem.count)
+                    local h = font:getHeight()
+                    love.graphics.setColor(0,0,0)
+                    love.graphics.print(indexItem.count, xP + bl - w - barI.padText, yP + bl - h - barI.padText)
+                    love.graphics.setColor(1,1,1)
+                end
             end
         end
     end
@@ -326,7 +347,11 @@ function inventory.functions.renderHotbar()
         love.graphics.rectangle("fill", blockX, y, hotbar.boxSize, hotbar.boxSize)
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("line", blockX, y, hotbar.boxSize, hotbar.boxSize)
-        if inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
+        if i > 10 then
+            love.graphics.setColor(1,1,1)
+            local cross = spw.sprites.cross.sprs
+            love.graphics.draw(cross, blockX, y, 0, hotbar.boxSize / cross:getWidth(), hotbar.boxSize / cross:getHeight())
+        elseif inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
             love.graphics.setColor(1, 1, 1)
             local spr = spw.sprites[inventoryHB[i].item].sprs
             local item = itemIndex[inventoryHB[i].item]
