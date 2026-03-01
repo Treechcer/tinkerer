@@ -228,6 +228,7 @@ end
 function inventory.functions.renderWholeInventory()
     --inventory.functions.clean()
     if not inventory.inventoryBar.render then
+        inventory.inventoryBar.UI = "crafting"
         return
     end
 
