@@ -2,7 +2,7 @@ local crafting = require("source.player.crafting.crafting")
 
 inventory = {
     hotBar = {
-        maxItems = 5,
+        maxItems = 10,
         --items = {},
         boxSize = 50, --pixels
         paddingBottom = 15,
@@ -28,7 +28,8 @@ inventory = {
                 {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
-        maxItemsPerInventory = 5, --this is except hotbar btw
+        maxItemsPerInventory = 10, --this is except hotbar btw
+        inventoryRows = 7,
         blockSize = game.width / 10,
         pad = game.width / 200,
         padText = 5,
@@ -47,7 +48,7 @@ inventory = {
             }
         },
         UI = nil,
-        UIFunc = {crafting = crafting.f.render, furnace = building.f.furnaceUI}
+        UIFunc = {crafting = crafting.f.render, furnace = building.f.furnaceUI},
     },
     itemsOutsideOfInventory = {
         coins = 999999999999,
@@ -58,11 +59,15 @@ inventory = {
 
 function inventory.functions.fillHitBoxTable()
     --I'm lazy writing the vars so I made this fuction lmao
+
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
     local rows = #i
     local cols = barI.maxItemsPerInventory
+
+    local availableW = math.min(550, game.width * 0.9)
+    barI.blockSize = availableW / cols
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
 
@@ -143,7 +148,11 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     --    return false
     --end
 
-    if itemCol > #inventory.inventoryBar.inventory + 1 or itemRow > #inventory.inventoryBar.inventory[1] or itemRow < 1 or itemCol < 1 then
+    local i = inventory.inventoryBar.inventory
+    local rows = #i
+    local cols = #i[1] or inventory.inventoryBar.maxItemsPerInventory
+
+    if itemCol > cols or itemRow > rows or itemRow < 1 or itemCol < 1 then
         return false
     end
 
@@ -475,8 +484,30 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
     itemIndex[item].type = description.f.gen(item) or ""
 end
 
+function inventory.functions.expandInventory()
+    for y = 1, inventory.inventoryBar.inventoryRows do
+        for x = 1, inventory.inventoryBar.maxItemsPerInventory do
+            if inventory.inventoryBar.inventory[y] ~= nil then
+                if inventory.inventoryBar.inventory[y][x] ~= nil then
+                    if not (inventory.inventoryBar.inventory[y][x].item ~= nil) then
+                        inventory.inventoryBar.inventory[y][x] = {}
+                    end
+                else
+                    inventory.inventoryBar.inventory[y][x] = {}
+                end
+            else
+                table.insert(inventory.inventoryBar.inventory, y, {})
+                inventory.inventoryBar.inventory[y][x] = {}
+            end
+        end
+    end
+end
+
 function inventory.functions.init()
+    inventory.functions.expandInventory()
     inventory.functions.fillHitBoxTable()
+
+    --tables.writeTable(inventory.inventoryBar.inventory)
 
     --initialising ALL items that you can carry
 
@@ -493,10 +524,16 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
     inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Material", {item = "iron_ingot", count = 1, needs = 1})
     inventory.functions.AddNewItemIndex("iron_ingot", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Material")
+
+    --inventory.functions.fillHitBoxTable()
 end
 
 function inventory.functions.changeItemByNumber()
     for i = 1, inventory.hotBar.maxItems do
+        if i > 10 then
+            break
+        end
+
         local key = i
         if i == 10 then
             key = 0
