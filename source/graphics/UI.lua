@@ -44,8 +44,8 @@ UI = {
                             player.openedEntity.maxBurnSTR = itemIndex[currentItem.item].burnStrength
                             currentItem.count = currentItem.count - 1
                             
-                            if currentItem.count < 0 then
-                                player.openedEntity = {}
+                            if currentItem.count <= 0 then
+                                player.openedEntity[2] = {}
                             end
                         end
 
