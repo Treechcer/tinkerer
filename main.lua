@@ -75,7 +75,7 @@ function love.update(dt)
 end
 
 function love.wheelmoved(x, y)
-    if y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) then
+    if y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) and not (inventory.hotBar.selectedItem > 9) then
         inventory.hotBar.selectedItem = inventory.hotBar.selectedItem + 1
         inventory.hotBar.lastTime = 0
     end

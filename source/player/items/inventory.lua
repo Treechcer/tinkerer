@@ -103,6 +103,10 @@ function inventory.functions.click(button)
     local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
     local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
 
+    if itemRow == #inventory.inventoryBar.inventory and itemCol > 10 then
+        return false
+    end
+
     if button == 1 then
         --if (itemCol == inventory.inventoryBar.indexOnCursor.col) and (itemRow == inventory.inventoryBar.indexOnCursor.row) then
         --    return
