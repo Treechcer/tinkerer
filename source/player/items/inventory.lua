@@ -486,6 +486,10 @@ function inventory.functions.coolDown(dt)
 end
 
 function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height)
+    if spriteWorker.sprites[item] == nil then
+        spriteWorker.generateNewSprite(item)
+    end
+    
     width = width or 1
     height = height or 1
     burnStrength = burnStrength or 0

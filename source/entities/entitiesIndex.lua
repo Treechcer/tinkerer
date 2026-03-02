@@ -58,6 +58,10 @@ end
 ---@param height integer?
 function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, --[[spawnable,]] drop, width, height, luck, xp, interactivityKeys, getSprite, update, isCleanUp, state, run, special, spwName)
 
+    if spriteWorker.sprites[entityName] == nil then
+        spriteWorker.generateNewSprite(entityName)
+    end
+
     --interactivyKeys => {key = function ...........} returns true / false, if it did something
 
     width = width or 1
@@ -137,7 +141,7 @@ function entitiesIndex.f.init()
 
     --tables.writeTable(entitiesIndex.furnace)
 
-    entitiesIndex.f.addIndex("chicken", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {}, nil, nil, nil, nil 
+    --entitiesIndex.f.addIndex("chicken", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {}, nil, nil, nil, nil 
     --,function (self)
     --    self.time = self.time or -5
     --    self.time = self.time + love.timer.getDelta()
@@ -147,7 +151,7 @@ function entitiesIndex.f.init()
     --        self.time = 0
     --    end
     --end
-    )
+    --)
 end
 
 return entitiesIndex
