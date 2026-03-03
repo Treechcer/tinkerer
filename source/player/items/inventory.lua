@@ -240,11 +240,14 @@ end
 
 function inventory.functions.renderWholeInventory()
     --inventory.functions.clean()
+
     if not inventory.inventoryBar.render then
         inventory.inventoryBar.UI = "crafting"
         return
     end
 
+    equipment.f.render()
+    
     --crafting.f.render()
     --print(inventory.inventoryBar.UIFunc[inventory.inventoryBar.UI or "crafting"])
     --print(inventory.inventoryBar.UI or "crafting")
