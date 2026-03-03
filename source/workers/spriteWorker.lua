@@ -44,6 +44,8 @@ function spw.init()
     --spw.generateNewSprite("iron_ore")
     --spw.generateNewSprite("iron_ingot")
     spw.generateNewSprite("cross")
+    spw.generateNewSprite("ring")
+    spw.generateNewSprite("head")
 end
 
 ---@param timer number?
