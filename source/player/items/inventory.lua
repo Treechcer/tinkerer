@@ -2,7 +2,7 @@ local crafting = require("source.player.crafting.crafting")
 
 inventory = {
     hotBar = {
-        maxItems = 12,
+        maxItems = 5,
         --items = {},
         boxSize = 50, --pixels
         paddingBottom = 15,
@@ -28,8 +28,8 @@ inventory = {
                 {}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
-        maxItemsPerInventory = 12, --this is except hotbar btw
-        inventoryRows = 7,
+        maxItemsPerInventory = 5, --this is except hotbar btw
+        inventoryRows = 4,
         blockSize = game.width / 10,
         pad = game.width / 200,
         padText = 5,
@@ -66,7 +66,7 @@ function inventory.functions.fillHitBoxTable()
     local rows = #i
     local cols = barI.maxItemsPerInventory
 
-    local availableW = math.min(550, game.width * 0.9)
+    local availableW = math.min(450, game.width * 0.9)
     barI.blockSize = availableW / cols
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
