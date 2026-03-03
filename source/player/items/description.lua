@@ -11,7 +11,7 @@ function description.f.gen(item, bonus)
     --tables.writeTable(itemIndex[item])
     --print(item)
     --print(itemIndex[item])
-    str = str .. "Item: " .. item
+    str = str .. "Item: " .. item:gsub("_"," ")
 
     if itemIndex[item].typeI ~= nil then
        str = str .. "\n" .. "Type: " .. itemIndex[item].typeI

@@ -25,7 +25,7 @@ inventory = {
                 { item = "rock", count = 5 },
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 5 },
-                {}
+                { item = "iron_ore", count = 2}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
         maxItemsPerInventory = 5, --this is except hotbar btw
