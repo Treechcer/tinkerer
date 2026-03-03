@@ -99,7 +99,7 @@ function UI.f.checkStateFurnace(self)
 
     --tables.writeTable(itemIndex[player.openedEntity[1].item])
 
-    print(smeltsTo .. player.openedEntity.burnTime)
+    --print(smeltsTo .. player.openedEntity.burnTime)
 
     if smeltsTo ~= nil and player.openedEntity.burnTime > 0 then
         player.openedEntity.state = "burning"

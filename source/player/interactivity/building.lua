@@ -112,6 +112,9 @@ function building.f.furnaceWork (self, dt)
         return
     end
 
+    self[2].count = self[2].count or 0
+    self.burnTime = self.burnTime or 0
+
     if self[2].count > 0 and self.burnTime == 0 then
         self.burnTime = itemIndex[self[2].item].burnStrength
         self.maxBurnSTR = itemIndex[self[2].item].burnStrength
