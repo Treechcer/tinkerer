@@ -60,21 +60,15 @@ end
 function equipment.f.checkClick(x,y,button)
     local item = inventory.inventoryBar.itemOnCursor
 
-    if item == nil then
-        return false
+    local type = itemIndex[item.item]
+
+    if type ~= nil then
+        type = type.typeI
+
+        if not (type == "head" or type == "chestplate" or type == "backpack" or type == "ring") then
+            return false
+        end
     end
-
-
-    --TODO: THIS IS TEMPORARY COMMENTED OUT BECAUSE I NEED TO TEST IT!!
-
-    --[[
-    local type = itemIndex[item.item].typeI
-
-    if not (type == "head" or type == "chestplate" or type == "backpack" or type == "ring") then
-        return false
-    end
-    ]]
-
 
     --renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
     --print("?")
@@ -82,6 +76,12 @@ function equipment.f.checkClick(x,y,button)
         --print("!")
         --tables.writeTable(value)
         if renderer.AABB(x, y, 1, 1, value.startX, value.startY, value.pixelWidth, value.pixelHeight) then
+            if type ~= nil then
+                if key ~= type then
+                    return false
+                end
+            end
+            
             local r = false
             if value.equipment == "" and item.item ~= nil then
                 value.equipment = item.item
