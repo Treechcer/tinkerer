@@ -101,7 +101,8 @@ function equipment.f.checkClick(x,y,button)
             end
 
             equipment.f.addStats()
-            
+            inventory.functions.expandInventory()
+
             return r
         end
     end
@@ -132,6 +133,7 @@ function equipment.f.makeDefaultStats()
     inventory.hotBar.maxItems = player.startingStats.maxItems
 
     inventory.functions.fillHitBoxTable()
+    inventory.functions.expandInventory()
 end
 
 function equipment.f.maxItemsPerInventory(a)

@@ -68,6 +68,7 @@ function inventory.functions.fillHitBoxTable()
 
     local availableW = math.min(450, game.width * 0.9)
     barI.blockSize = availableW / cols
+    barI.pad = 350 / barI.blockSize
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
 
@@ -266,7 +267,7 @@ function inventory.functions.renderWholeInventory()
     local i = inventory.inventoryBar.inventory
     local barI = inventory.inventoryBar
 
-    local rows = #i
+    local rows = inventory.inventoryBar.inventoryRows
     local cols = barI.maxItemsPerInventory
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
@@ -419,7 +420,7 @@ function inventory.functions.addNewItem(item, count)
 end
 
 function inventory.functions.addItem(item, count)
-    --print(item, count)
+    print(item, count)
 
     if count <= 0 then
         return
@@ -428,7 +429,7 @@ function inventory.functions.addItem(item, count)
     local found = false
     local i = inventory.inventoryBar.inventory
 
-    for inventroyIndex = #i, 1, -1 do
+    for inventroyIndex = inventory.inventoryBar.inventoryRows - 1, 1, -1 do
         for index, value in ipairs(i[inventroyIndex]) do
             if value.item == item and value.count < itemIndex[item].maxStackSize then
                 if itemIndex[item].maxStackSize < value.count + count then
@@ -547,9 +548,30 @@ function inventory.functions.expandInventory()
             else
                 table.insert(inventory.inventoryBar.inventory, y, {})
                 inventory.inventoryBar.inventory[y][x] = {}
+                if y == inventory.inventoryBar.inventoryRows then
+                    inventory.inventoryBar.inventory[y-1], inventory.inventoryBar.inventory[y] = inventory.inventoryBar.inventory[y], inventory.inventoryBar.inventory[y-1]
+                end
             end
         end
     end
+
+    if inventory.inventoryBar.inventoryRows < #inventory.inventoryBar.inventory then
+        for i =  #inventory.inventoryBar.inventory, inventory.inventoryBar.inventoryRows, -1 do
+            for key, value in pairs(inventory.inventoryBar.inventory[i]) do
+                if value ~= nil then
+                    if value.item ~= nil and value.item ~= "" then
+                        --tables.writeTable(value)
+                        inventory.functions.addItem(value.item, value.count)
+                    end
+                end
+            end
+
+            table.remove(inventory.inventoryBar.inventory, i)
+        end
+    end
+
+    inventory.functions.fillHitBoxTable()
+    --tables.writeTable(inventory.inventoryBar.inventory)
 end
 
 function inventory.functions.init()
