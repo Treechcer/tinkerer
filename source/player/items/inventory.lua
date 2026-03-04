@@ -99,7 +99,17 @@ function inventory.functions.click(button)
 
     local x, y = love.mouse.getPosition()
     local posHit = renderer.AABB(x, y, 1, 1, inventory.hitboxTable.start.x, inventory.hitboxTable.start.y, inventory.hitboxTable.length.x, inventory.hitboxTable.length.y)
-    
+
+    if not posHit then
+        if equipment.f.checkClick(x,y,button) then
+            return
+        end
+
+        --there might be more functions later? We'll see
+
+        return
+    end
+
     local itemCol = math.floor((x - inventory.hitboxTable.start.x) / (inventory.inventoryBar.blockSize)) + 1
     local itemRow = math.floor((y - inventory.hitboxTable.start.y) / (inventory.inventoryBar.blockSize)) + 1
 
