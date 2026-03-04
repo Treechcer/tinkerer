@@ -25,7 +25,7 @@ inventory = {
                 { item = "rock", count = 5 },
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 5 },
-                { item = "iron_ore", count = 2}
+                { item = "basic_backpack", count = 1}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
         maxItemsPerInventory = 5, --this is except hotbar btw
@@ -498,7 +498,7 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats)
     if spriteWorker.sprites[item] == nil then
         spriteWorker.generateNewSprite(item)
     end
@@ -508,6 +508,8 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
     burnStrength = burnStrength or 0
     typeI = typeI or "Resource"
     descriptor = descriptor or ""
+    equipmentStats = equipmentStats or {}
+
     itemIndex[item] = {
         typeI = typeI,
         descriptor = descriptor,
@@ -525,6 +527,7 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         burnable = burnable,
         burnStrength = burnStrength,
         smeltsTo = smeltsTo,
+        equipmentStats = equipmentStats
     }
 
     itemIndex[item].type = description.f.gen(item) or ""
@@ -557,19 +560,33 @@ function inventory.functions.init()
 
     --initialising ALL items that you can carry
 
-    inventory.functions.AddNewItemIndex("rock", 64, 1, bit.addBit({ bit.BIT4 }), 1, 5, { item = "rock", count = 5 }, 7, 1, false, false, 0, "Resource", {item = "hammer", count = 1, needs = 1}, "tastes nice", 1, 1)
+    --tools
+
     inventory.functions.AddNewItemIndex("hammer", 1, 1, bit.addBit({ bit.BIT1, bit.BIT4 }), 1, nil, nil, 5, 1.5, false, false, 0, "Tool", nil, "hurts when you hit yourself with it", 1, 1)
 
+    -- materials / resources
+
+    inventory.functions.AddNewItemIndex("rock", 64, 1, bit.addBit({ bit.BIT4 }), 1, 5, { item = "rock", count = 5 }, 7, 1, false, false, 0, "Resource", {item = "hammer", count = 1, needs = 1}, "tastes nice", 1, 1)
     inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
     inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 5)
     inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
-    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
-    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
-    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
     inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
     inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
-    inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Material", {item = "iron_ingot", count = 1, needs = 1})
-    inventory.functions.AddNewItemIndex("iron_ingot", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Material")
+    inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Resource", {item = "iron_ingot", count = 1, needs = 1})
+    inventory.functions.AddNewItemIndex("iron_ingot", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Resource")
+
+    --crafting stations
+
+    inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
+
+    -- equipment
+
+    inventory.functions.AddNewItemIndex("basic_backpack", 1, 0, 0, 0, 0, {}, 7, 0.85, false, false, 0, "backpack", nil, "you can wear this to gain bigger inventory", nil, nil, {inventoryRows = 1, maxItemsPerInventory = 1, maxItems = 1})
+
+    --decorations
+
+    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
+    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
 
     --inventory.functions.fillHitBoxTable()
 end

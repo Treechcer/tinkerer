@@ -123,7 +123,12 @@ player = {
         "defense",
         "merchanting"
     },
-    openedEntity = nil
+    openedEntity = nil,
+    startingStats = {
+        inventoryRows = 4,
+        maxItemsPerInventory = 5,
+        maxItems = 5
+    }
 }
 
 function player.init() -- initialises the position of player
@@ -147,6 +152,7 @@ function player.init() -- initialises the position of player
 
     player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
+    equipment.f.makeDefaultStats()
 end
 
 function player.moveToTile(xTile, yTile)

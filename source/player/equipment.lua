@@ -82,25 +82,69 @@ function equipment.f.checkClick(x,y,button)
         --print("!")
         --tables.writeTable(value)
         if renderer.AABB(x, y, 1, 1, value.startX, value.startY, value.pixelWidth, value.pixelHeight) then
+            local r = false
             if value.equipment == "" and item.item ~= nil then
                 value.equipment = item.item
                 value.equipmentCount = item.count
                 inventory.inventoryBar.itemOnCursor = {}
+                r = true
             elseif value.equipment ~= "" and item.item == nil then
                 inventory.inventoryBar.itemOnCursor = {item = value.equipment, count = value.equipmentCount}
                 value.equipment = ""
+                r = true
             elseif value.equipment ~= "" and item.item ~= nil then
                 local itemOBJ = {item = value.equipment, count = value.equipmentCount or 1}
                 value.equipment = item.item
                 value.equipmentCount = item.count
                 inventory.inventoryBar.itemOnCursor = itemOBJ
+                r = true
             end
 
-            return false
+            equipment.f.addStats()
+            
+            return r
         end
     end
 
     return false
 end
+
+function equipment.f.addStats()
+    equipment.f.makeDefaultStats()
+
+    for key, value in pairs(equipment.slots) do
+        --tables.writeTable(value)
+        if value.equipment ~= "" then
+            --print(value.equipment)
+            for key0, value0 in pairs(itemIndex[value.equipment].equipmentStats) do
+                --print("equipment.f[",key0,"]")
+                equipment.f[key0](value0)
+            end
+        end
+    end
+
+    inventory.functions.fillHitBoxTable()
+end
+
+function equipment.f.makeDefaultStats()
+    inventory.inventoryBar.maxItemsPerInventory = player.startingStats.maxItemsPerInventory
+    inventory.inventoryBar.inventoryRows = player.startingStats.inventoryRows
+    inventory.hotBar.maxItems = player.startingStats.maxItems
+
+    inventory.functions.fillHitBoxTable()
+end
+
+function equipment.f.maxItemsPerInventory(a)
+    inventory.inventoryBar.maxItemsPerInventory = inventory.inventoryBar.maxItemsPerInventory + a
+end
+
+function equipment.f.maxItems(a)
+    inventory.hotBar.maxItems = inventory.hotBar.maxItems + a
+end
+
+function equipment.f.inventoryRows(a)
+    inventory.inventoryBar.inventoryRows = inventory.inventoryBar.inventoryRows + a
+end
+
 
 return equipment
