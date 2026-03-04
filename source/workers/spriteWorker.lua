@@ -47,6 +47,7 @@ function spw.init()
     spw.generateNewSprite("ring")
     spw.generateNewSprite("head")
     spw.generateNewSprite("chestplate")
+    spw.generateNewSprite("backpack")
 end
 
 ---@param timer number?
