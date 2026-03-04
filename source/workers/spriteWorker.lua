@@ -52,6 +52,10 @@ end
 
 ---@param timer number?
 function spw.generateNewSprite(name, sprs, timer, canMove)
+    if spw.sprites[name] ~= nil then
+        return
+    end
+
     if sprs == nil then
         sprs = love.graphics.newImage("assets/sprites/" .. name .. ".png")
     end
