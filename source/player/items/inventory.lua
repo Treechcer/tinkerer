@@ -556,7 +556,10 @@ function inventory.functions.expandInventory()
     end
 
     if inventory.inventoryBar.inventoryRows < #inventory.inventoryBar.inventory then
+        --print("---")
+        --print(inventory.inventoryBar.inventoryRows, " .. ", #inventory.inventoryBar.inventory)
         for i =  #inventory.inventoryBar.inventory, inventory.inventoryBar.inventoryRows, -1 do
+            --print(i)
             for key, value in pairs(inventory.inventoryBar.inventory[i]) do
                 if value ~= nil then
                     if value.item ~= nil and value.item ~= "" then

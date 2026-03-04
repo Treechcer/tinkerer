@@ -127,7 +127,14 @@ player = {
     startingStats = {
         inventoryRows = 4,
         maxItemsPerInventory = 5,
-        maxItems = 5
+        maxItems = 5,
+        health = 6,
+        strength = 1,
+        defense = 1,
+        speed = 250,
+        miningLuck = 0,
+        foragingLuck = 0,
+        moneyMultiplier = 1,
     }
 }
 
