@@ -68,7 +68,9 @@ function console.f.runCommand(command)
         end
         local cmd = "console.commands." .. subCommands[1] .. "(" .. input .. ")"
         local a = load(cmd)
-        a()
+        if a ~= nil then
+           a() 
+        end
     end
 end
 
