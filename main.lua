@@ -149,7 +149,7 @@ function love.keypressed(key, scancode, isrepeat)
             if console.currentType == "" then
                 return
             end
-            table.insert(console.messages, console.currentType)
+            console.f.addMessage(console.currentType)
             if string.sub(console.currentType, 1, 1) == "/" then
                 console.f.runCommand(console.currentType)
             end

@@ -3,16 +3,15 @@
 console = {
     render = true,
     messages = {},
-    maxMessages = 20,
+    maxMessages = 5,
     height = 400, --(px)
     f = {},
     cooldownToOpen = 0.2,
     lastOpen = 0.2,
     currentType = "",
     commands = {
-        greet = function (...)
-            print(...)
-            table.insert(console.messages, "Hello " .. ...)
+        print = function (...)
+            console.f.addMessage("-> " .. ...)
         end
     }
 }
@@ -26,12 +25,14 @@ function console.f.render()
         for index, value in ipairs(console.messages) do
             messages = messages .. value .. "\n"
         end
-        
+
         local fHeight = UI.fonts.normal:getHeight(messages) * select(2, messages:gsub('\n', '\n'))
         local devider = #console.messages > 0 and #console.messages or 1
         local height = game.height - fHeight - 34 + (fHeight / devider)
 
-        print(height)
+        print(game.height - height)
+
+        height = ((game.height - height) == 34) and height + 8 or height
 
         love.graphics.rectangle("fill", 0, height, game.width, game.height)
         love.graphics.setColor(1,1,1,1)
@@ -69,8 +70,17 @@ function console.f.runCommand(command)
         local cmd = "console.commands." .. subCommands[1] .. "(" .. input .. ")"
         local a = load(cmd)
         if a ~= nil then
-           a() 
+           a()
         end
+    end
+end
+
+function console.f.addMessage(message)
+    if #console.messages < console.maxMessages then
+        table.insert(console.messages, message)
+    else
+        table.remove(console.messages, 1)
+        table.insert(console.messages, message)
     end
 end
 
