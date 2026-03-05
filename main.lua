@@ -150,10 +150,15 @@ function love.keypressed(key, scancode, isrepeat)
                 return
             end
             table.insert(console.messages, console.currentType)
+            if string.sub(console.currentType, 1, 1) == "/" then
+                console.f.runCommand(console.currentType)
+            end
             console.currentType = ""
         else
             if key == "space" then
                 console.currentType = console.currentType .. " "
+            elseif key == "kp/" then
+                console.currentType = console.currentType .. "/"
             elseif key == "backspace" then
                 console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
             elseif string.len(key) > 1 then
