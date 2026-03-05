@@ -175,6 +175,16 @@ end
 
 ---@diagnostic disable: duplicate-set-field
 function player.move(dt)
+
+    if love.keyboard.isDown(settings.keys.openConsole) and (console.lastOpen > console.cooldownToOpen) then
+        console.render = not console.render
+        console.lastOpen = 0
+    end
+
+    if console.render then
+        return
+    end
+
     local mvXp = 0
     local mvYp = 0
     local mvXc = 0

@@ -491,6 +491,10 @@ function inventory.functions.itemMove(dt)
 end
 
 function inventory.functions.coolDown(dt)
+    if console.render then
+        return
+    end
+
     if inventory.inventoryBar.lastOpened >= inventory.inventoryBar.openCooldown and love.keyboard.isDown(settings.keys.openInventory) then
         inventory.inventoryBar.render = not inventory.inventoryBar.render
         inventory.inventoryBar.lastOpened = 0
@@ -617,6 +621,10 @@ function inventory.functions.init()
 end
 
 function inventory.functions.changeItemByNumber()
+    if console.render then
+        return
+    end
+
     for i = 1, inventory.hotBar.maxItems do
         if i > 10 then
             break

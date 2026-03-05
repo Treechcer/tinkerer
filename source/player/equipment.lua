@@ -148,5 +148,4 @@ function equipment.f.inventoryRows(a)
     inventory.inventoryBar.inventoryRows = inventory.inventoryBar.inventoryRows + a
 end
 
-
 return equipment

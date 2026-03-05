@@ -3,6 +3,10 @@ entityInteractivity = {
 }
 
 function entityInteractivity.f.interact(keys)
+    if console.render then
+        return
+    end
+
     local index = entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, player.cursor.width, player.cursor.width)
 
     if index == -1 then

@@ -40,6 +40,7 @@ function love.load()
     recipes = require("source.player.crafting.recipes")
     crafting = require("source.player.crafting.crafting")
     equipment = require("source.player.equipment")
+    console = require("source.game.console.console")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -67,6 +68,8 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
+
+    console.f.render()
 end
 
 function love.update(dt)
@@ -135,6 +138,28 @@ function love.mousepressed(x, y, button, istouch, presses)
                         return
                     end
                 end
+            end
+        end
+    end
+end
+
+function love.keypressed(key, scancode, isrepeat)
+    if console.render then
+        if key == "return" then
+            if console.currentType == "" then
+                return
+            end
+            table.insert(console.messages, console.currentType)
+            console.currentType = ""
+        else
+            if key == "space" then
+                console.currentType = console.currentType .. " "
+            elseif key == "backspace" then
+                console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
+            elseif string.len(key) > 1 then
+                return
+            else
+                console.currentType = console.currentType .. key
             end
         end
     end

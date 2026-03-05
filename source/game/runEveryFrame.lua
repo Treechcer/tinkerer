@@ -70,7 +70,8 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
 
     entities.special()
     entityCleaner.f.update(dt)
-    --inventory.functions.click()
+
+    console.lastOpen = console.lastOpen + dt
 end
 
 function run.everyFrameEnd(dt) -- used to run on every frame when it ends

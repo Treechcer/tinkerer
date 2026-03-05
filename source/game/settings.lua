@@ -11,6 +11,7 @@ if game.os ~= "PSP" then
     settings.keys.left = "a"
     settings.keys.right = "d"
     settings.keys.openInventory = "e"
+    settings.keys.openConsole = "t"
 
     settings.keys.entityInteract = {"f"}
 elseif game.os == "PSP" then
