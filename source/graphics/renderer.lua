@@ -138,6 +138,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     inventory.functions.renderItemOnCursor(renderer.getAbsolutePos(player.cursor.x, player.cursor.y))
     skillUI.f.render()
+    console.f.render()
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time

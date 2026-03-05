@@ -12,6 +12,16 @@ console = {
     commands = {
         print = function (...)
             console.f.addMessage("-> " .. ...)
+        end,
+        spawn = function (...)
+            local args = {...}
+
+            if select("#", ...) > 3 then
+                console.commands.print("Too many arguments.")
+                return
+            end
+
+            entities.makeNewOne(...)
         end
     }
 }
@@ -30,7 +40,7 @@ function console.f.render()
         local devider = #console.messages > 0 and #console.messages or 1
         local height = game.height - fHeight - 34 + (fHeight / devider)
 
-        print(game.height - height)
+        --print(game.height - height)
 
         height = ((game.height - height) == 34) and height + 8 or height
 

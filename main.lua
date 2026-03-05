@@ -68,8 +68,8 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
-
-    console.f.render()
+    love.graphics.print(player.position.tileX, 0,0)
+    love.graphics.print(player.position.tileY, 0,20)
 end
 
 function love.update(dt)
