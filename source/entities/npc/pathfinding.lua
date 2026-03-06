@@ -1,11 +1,11 @@
 pathfinding = {}
 
-function pathfinding.getTileValues(self)
+function pathfinding.getTileValues(self, whereToGo) --whereToGo -> aboslute position of the end of the "yourney"
     self.tileX, self.tileY = renderer.calculateTile(self.x, self.y)
     self.chunkX, self.chunkY = renderer.calculateChunk(self.tileX, self.tileY)
     
     local relevantTiles = {
-        --{x = n, y = m, , absTileX = o, absTileY = p, distance = q}
+        --{x = n, y = m, , absTileX = o, absTileY = p, distance = q, distanceToEnd = r}
         --tiles that are neighboring the tile the origin is standing on
     }
 
@@ -25,7 +25,7 @@ function pathfinding.getTileValues(self)
                     
                 end
             end, chunkXpos + x, chunkYpos + y) then
-                table.insert(relevantTiles, {x = chunkXpos + x, y = chunkYpos + y, distance = ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100), absTileX = self.chunkX * map.chunkWidth - (chunkXpos + x), absTileY = self.chunkY * map.chunkHeight - (chunkYpos + y)})
+                table.insert(relevantTiles, {x = chunkXpos + x, y = chunkYpos + y, distance = ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100), absTileX = self.chunkX * map.chunkWidth - (chunkXpos + x), absTileY = self.chunkY * map.chunkHeight - (chunkYpos + y), distanceToEnd = ((self.tileX - whereToGo.tileX) + self.tileY - whereToGo.tileY) ^ (1/2)})
                 --print(chunkXpos + x, chunkYpos + y, ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100))
             else
                 --TODO LATER BECAUSE IT WON'T WORK ON BORDERS OF CHUNKS!!!
@@ -52,6 +52,10 @@ function pathfinding.renderValues(self)
     end
 
     love.graphics.setColor(1,1,1)
+end
+
+function pathfinding.move()
+    
 end
 
 return pathfinding

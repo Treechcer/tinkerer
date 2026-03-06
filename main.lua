@@ -83,7 +83,7 @@ function love.update(dt)
 
     REF.everyFrameEnd(dt)
 
-    pathfinding.getTileValues(TEMPSELF)
+    pathfinding.getTileValues(TEMPSELF, {x = math.floor((player.position.x - 2) / map.tileSize) * map.tileSize, y = math.floor((player.position.y - 1) / map.tileSize) * map.tileSize})
 end
 
 function love.wheelmoved(x, y)
