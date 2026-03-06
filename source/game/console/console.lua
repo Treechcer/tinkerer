@@ -42,7 +42,7 @@ function console.f.render()
 
         --print(game.height - height)
 
-        height = ((game.height - height) == 34) and height + 8 or height
+        height = (#console.messages < 1) and height + 18 or height
 
         love.graphics.rectangle("fill", 0, height, game.width, game.height)
         love.graphics.setColor(1,1,1,1)

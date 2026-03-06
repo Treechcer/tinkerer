@@ -146,6 +146,7 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if console.render then
         if key == "return" then
+            console.render = false
             if console.currentType == "" then
                 return
             end

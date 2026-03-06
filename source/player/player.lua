@@ -177,7 +177,7 @@ end
 function player.move(dt)
 
     if love.keyboard.isDown(settings.keys.openConsole) and (console.lastOpen > console.cooldownToOpen) then
-        console.render = not console.render
+        console.render = true
         console.lastOpen = 0
     end
 
