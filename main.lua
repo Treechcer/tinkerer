@@ -50,9 +50,8 @@ function love.load()
     REF = require("source.game.runEveryFrame")
 
     --tables.writeTable(map.map.chunks)
-
+    --TODO THIS IS TEMP DELETE LATER
     TEMPSELF = {x = math.floor(player.position.x / map.tileSize) * map.tileSize, y = math.floor(player.position.y / map.tileSize) * map.tileSize}
-
 end
 
 function love.draw()
@@ -72,18 +71,32 @@ function love.draw()
     --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
     --love.graphics.print(player.skills.walking.lvl, 10, 40)
     --love.graphics.print(player.atributes.speed, 10, 65)
-    love.graphics.print(player.position.tileX, 0,0)
-    love.graphics.print(player.position.tileY, 0,20)
+    --love.graphics.print(player.position.tileX, 0,0)
+    --love.graphics.print(player.position.tileY, 0,20)
 
     pathfinding.renderValues(TEMPSELF)
+    if randomTEMP >= 2 then
+        love.graphics.print("RAAh",0,0)
+    end
 end
 
 function love.update(dt)
+    randomTEMP = randomTEMP or 0
     REF.everyFrameStart(dt)
 
     REF.everyFrameEnd(dt)
 
-    pathfinding.getTileValues(TEMPSELF, {x = math.floor((player.position.x - 2) / map.tileSize) * map.tileSize, y = math.floor((player.position.y - 1) / map.tileSize) * map.tileSize})
+    --TODO REMORE THIS AFTER TESTING!!
+    --TEMP testing of my A* implementation (it's not really A*)
+
+    pathfinding.getTileValues(TEMPSELF, {tileX = math.floor((player.position.x - 2) / map.tileSize) * map.tileSize, tileY = math.floor((player.position.y - 1) / map.tileSize) * map.tileSize})
+
+    if randomTEMP >= 2 then
+        pathfinding.move(TEMPSELF, TEMPSELF.relevantTiles[1].absTileX, TEMPSELF.relevantTiles[1].absTileY)
+        randomTEMP = 0
+    end
+
+    randomTEMP = randomTEMP + dt
 end
 
 function love.wheelmoved(x, y)

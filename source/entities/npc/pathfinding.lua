@@ -25,7 +25,7 @@ function pathfinding.getTileValues(self, whereToGo) --whereToGo -> aboslute posi
                     
                 end
             end, chunkXpos + x, chunkYpos + y) then
-                table.insert(relevantTiles, {x = chunkXpos + x, y = chunkYpos + y, distance = ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100), absTileX = self.chunkX * map.chunkWidth - (chunkXpos + x), absTileY = self.chunkY * map.chunkHeight - (chunkYpos + y), distanceToEnd = ((self.tileX - whereToGo.tileX) + self.tileY - whereToGo.tileY) ^ (1/2)})
+                table.insert(relevantTiles, {x = chunkXpos + x, y = chunkYpos + y, distance = ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100), absTileX = self.chunkX * map.chunkWidth - (chunkXpos + x), absTileY = self.chunkY * map.chunkHeight - (chunkYpos + y), distanceToEnd = (((self.chunkX * map.chunkWidth - (chunkXpos + x)) - whereToGo.tileX)^2 + ((self.chunkY * map.chunkHeight - (chunkYpos + y)) - whereToGo.tileY)^2) ^ 0.5})
                 --print(chunkXpos + x, chunkYpos + y, ((x == 0 or y == 0) and 1 or math.floor((2 ^ (1/2)) * 100) / 100))
             else
                 --TODO LATER BECAUSE IT WON'T WORK ON BORDERS OF CHUNKS!!!
@@ -35,7 +35,29 @@ function pathfinding.getTileValues(self, whereToGo) --whereToGo -> aboslute posi
         end
     end
 
-    self.relevantTiles = relevantTiles
+    self.relevantTiles = self.relevantTiles or {}
+
+    for key, value in pairs(relevantTiles) do
+        value.hash = tostring(value.x) .. "#" .. tostring(value.y) .. "#" .. tostring(value.distance) .. "#" .. tostring(value.absTileX) .. "#" .. tostring(value.absTileY) .. "#" .. tostring(value.distanceToEnd)
+    end
+
+    for key, value in pairs(relevantTiles) do
+        local inserting = true
+        for key_, value_ in pairs(self.relevantTiles) do
+            if value.hash == value_.hash then
+                inserting = false
+            end
+        end
+        if inserting then
+            table.insert(self.relevantTiles, value) 
+        end
+    end
+
+    table.sort(self.relevantTiles, function (a, b)
+        return a.distanceToEnd < b.distanceToEnd
+    end)
+
+    --tables.writeTable(self.relevantTiles)
 
     --tables.writeTable(map.map.chunks[self.chunkY][self.chunkX].chunkData[self.tileY % map.chunkHeight + 1][self.tileX % map.chunkWidth + 1])
 end
@@ -54,8 +76,12 @@ function pathfinding.renderValues(self)
     love.graphics.setColor(1,1,1)
 end
 
-function pathfinding.move()
-    
+function pathfinding.move(self, x, y)
+    self.tileX = x
+    self.tileY = y
+    self.x = self.tileX * map.tileSize
+    self.y = self.tileY * map.tileSize
+    self.relevantTiles = {}
 end
 
 return pathfinding
