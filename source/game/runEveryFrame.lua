@@ -72,6 +72,11 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
     entityCleaner.f.update(dt)
 
     console.lastOpen = console.lastOpen + dt
+
+    if love.keyboard.isDown(settings.keys.openConsole) and (console.lastOpen > console.cooldownToOpen) then
+        console.render = true
+        console.lastOpen = 0
+    end
 end
 
 function run.everyFrameEnd(dt) -- used to run on every frame when it ends

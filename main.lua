@@ -144,6 +144,7 @@ function love.mousepressed(x, y, button, istouch, presses)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+    print(key)
     if console.render then
         if key == "return" then
             console.render = false
@@ -155,6 +156,9 @@ function love.keypressed(key, scancode, isrepeat)
                 console.f.runCommand(console.currentType)
             end
             console.currentType = ""
+        elseif key == "escape" then
+            console.currentType = ""
+            console.render = false
         else
             if key == "space" then
                 console.currentType = console.currentType .. " "
@@ -162,6 +166,8 @@ function love.keypressed(key, scancode, isrepeat)
                 console.currentType = console.currentType .. "/"
             elseif key == "backspace" then
                 console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
+            elseif key:gmatch("kp") then --peak lua programming lol
+                console.currentType = console.currentType .. key:gsub("kp", "")
             elseif string.len(key) > 1 then
                 return
             else
