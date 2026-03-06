@@ -426,10 +426,17 @@ function inventory.functions.addItem(item, count)
         return
     end
 
+    if count > itemIndex[item].maxStackSize then
+        while count > itemIndex[item].maxStackSize do
+            inventory.functions.addItem(item, itemIndex[item].maxStackSize)
+            count = count - itemIndex[item].maxStackSize
+        end
+    end
+
     local found = false
     local i = inventory.inventoryBar.inventory
 
-    for inventroyIndex = inventory.inventoryBar.inventoryRows - 1, 1, -1 do
+    for inventroyIndex = inventory.inventoryBar.inventoryRows, 1, -1 do
         for index, value in ipairs(i[inventroyIndex]) do
             if value.item == item and value.count < itemIndex[item].maxStackSize then
                 if itemIndex[item].maxStackSize < value.count + count then
@@ -438,7 +445,7 @@ function inventory.functions.addItem(item, count)
                     --print(itemIndex[item].maxStackSize)
                     --print(value.count)
                     --print(count)
-                    inventory.functions.addNewItem(item, overflow)
+                    inventory.functions.addItem(item, overflow)
                 else
                     value.count = value.count + count
                 end

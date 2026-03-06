@@ -30,23 +30,24 @@ console = {
             end
 
             local args = {...}
-            if itemIndex[args[1]] ~= nil and tonumber(args[2]) > 0 then
-                if tonumber(args[2]) > itemIndex[args[1]].maxStackSize then
-                    --I thought addItem was making something like this? I'll have to look into it later
-                    local c = tonumber(args[2])
-                    while c > 0 do
-                        inventory.functions.addItem(args[1], c)
-                        c = c - itemIndex[args[1]].maxStackSize
-                        if c < 0 then
-                            c = 0
-                        end
-                    end
-                else
-                    inventory.functions.addItem(args[1], tonumber(args[2]))
-                end
-            else
-                console.commands.print("\"" .. args[1] .. "\"" .. " doesn't exist.")
-            end
+            inventory.functions.addItem(args[1], tonumber(args[2]))
+            --if itemIndex[args[1]] ~= nil and tonumber(args[2]) > 0 then
+            --    if tonumber(args[2]) > itemIndex[args[1]].maxStackSize then
+            --        --I thought addItem was making something like this? I'll have to look into it later
+            --        local c = tonumber(args[2])
+            --        while c > 0 do
+            --            inventory.functions.addItem(args[1], math.min(itemIndex[args[1]].maxStackSize, c))
+            --            c = c - itemIndex[args[1]].maxStackSize
+            --            if c < 0 then
+            --                c = 0
+            --            end
+            --        end
+            --    else
+            --        inventory.functions.addItem(args[1], tonumber(args[2]))
+            --    end
+            --else
+            --    console.commands.print("\"" .. args[1] .. "\"" .. " doesn't exist.")
+            --end
         end
     }
 }
