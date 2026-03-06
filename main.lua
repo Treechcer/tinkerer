@@ -41,6 +41,7 @@ function love.load()
     crafting = require("source.player.crafting.crafting")
     equipment = require("source.player.equipment")
     console = require("source.game.console.console")
+    pathfinding = require("source.entities.npc.pathfinding")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -49,6 +50,9 @@ function love.load()
     REF = require("source.game.runEveryFrame")
 
     --tables.writeTable(map.map.chunks)
+
+    TEMPSELF = {x = math.floor(player.position.x / map.tileSize) * map.tileSize, y = math.floor(player.position.y / map.tileSize) * map.tileSize}
+
 end
 
 function love.draw()
@@ -70,12 +74,16 @@ function love.draw()
     --love.graphics.print(player.atributes.speed, 10, 65)
     love.graphics.print(player.position.tileX, 0,0)
     love.graphics.print(player.position.tileY, 0,20)
+
+    pathfinding.renderValues(TEMPSELF)
 end
 
 function love.update(dt)
     REF.everyFrameStart(dt)
 
     REF.everyFrameEnd(dt)
+
+    pathfinding.getTileValues(TEMPSELF)
 end
 
 function love.wheelmoved(x, y)
@@ -144,9 +152,8 @@ function love.mousepressed(x, y, button, istouch, presses)
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    print(key)
     if console.render then
-        if key == "return" then
+        if key == "return" or key == "kpenter" then
             console.render = false
             if console.currentType == "" then
                 return
@@ -162,11 +169,9 @@ function love.keypressed(key, scancode, isrepeat)
         else
             if key == "space" then
                 console.currentType = console.currentType .. " "
-            elseif key == "kp/" then
-                console.currentType = console.currentType .. "/"
             elseif key == "backspace" then
                 console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
-            elseif key:gmatch("kp") then --peak lua programming lol
+            elseif key:match("kp") then --peak lua programming lol -- awful difference between gmatch and match
                 console.currentType = console.currentType .. key:gsub("kp", "")
             elseif string.len(key) > 1 then
                 return

@@ -224,6 +224,13 @@ function renderer.getChunkData(worldXpos, worldYpos, atr) --uses worldPos
     return chunk[atr]
 end
 
+function renderer.calculateChunk(tileX, tileY)
+    local chunkX = math.floor((tileX - 1) / map.chunkWidth) + 1
+    local chunkY = math.floor((tileY - 1) / map.chunkHeight) + 1
+
+    return chunkX, chunkY
+end
+
 function renderer.AABB(aX, aY, aW, aH, bX, bY, bW, bH)
     if aX < bX + bW and aX + aW > bX and aY < bY + bH and aY + aH > bY then
         return true
