@@ -15,7 +15,7 @@ spw = {
 }
 
 function spw.init()
-    spw.generateNewSprite("cursor",{love.graphics.newImage("assets/sprites/cursor00.png"), love.graphics.newImage("assets/sprites/cursor01.png"), love.graphics.newImage("assets/sprites/cursor02.png"), love.graphics.newImage("assets/sprites/cursor03.png")}, 0.25)
+    spw.generateNewSprite("cursor", {love.graphics.newImage("assets/sprites/cursor00.png"), love.graphics.newImage("assets/sprites/cursor01.png"), love.graphics.newImage("assets/sprites/cursor02.png"), love.graphics.newImage("assets/sprites/cursor03.png")}, 0.25)
     --spw.generateNewSprite("rock")
     --spw.generateNewSprite("hammer")
     spw.generateNewSprite("snow")
@@ -49,6 +49,7 @@ function spw.init()
     spw.generateNewSprite("chestplate")
     spw.generateNewSprite("backpack")
     spw.generateNewSprite("basic_backpack")
+    spw.generateNewSprite("button")
 end
 
 ---@param timer number?
@@ -60,7 +61,6 @@ function spw.generateNewSprite(name, sprs, timer, canMove)
     if sprs == nil then
         sprs = love.graphics.newImage("assets/sprites/" .. name .. ".png")
     end
-
 
     if timer == nil then
         spw.sprites[name] = { sprs = sprs }

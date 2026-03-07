@@ -3,7 +3,7 @@ entities = {
 }
 
 function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp)
-    print(tileX, tileY, index)
+    --print(tileX, tileY, index)
     width = width or 1
     height = height or 1
     killTime = entitiesIndex[index].killTime

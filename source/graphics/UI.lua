@@ -1,6 +1,7 @@
 UI = {
     fonts = {
-        normal = love.graphics.newFont(13)
+        normal = love.graphics.newFont(13),
+        big = love.graphics.newFont(25)
     },
     renderder = {
         furnaceUI = {
