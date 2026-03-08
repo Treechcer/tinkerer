@@ -14,47 +14,56 @@ spw = {
     }
 }
 
+local metatable = {
+    __index = function (self, key)
+        spw.generateNewSprite(key)
+        return rawget(self, key)
+    end
+}
+
+setmetatable(spw.sprites, metatable)
+
 function spw.init()
     spw.generateNewSprite("cursor", {love.graphics.newImage("assets/sprites/cursor00.png"), love.graphics.newImage("assets/sprites/cursor01.png"), love.graphics.newImage("assets/sprites/cursor02.png"), love.graphics.newImage("assets/sprites/cursor03.png")}, 0.25)
     --spw.generateNewSprite("rock")
     --spw.generateNewSprite("hammer")
-    spw.generateNewSprite("snow")
-    spw.generateNewSprite("grass")
-    spw.generateNewSprite("void")
-    spw.generateNewSprite("hill")
-    spw.generateNewSprite("sand")
+    --spw.generateNewSprite("snow")
+    --spw.generateNewSprite("grass")
+    --spw.generateNewSprite("void")
+    --spw.generateNewSprite("hill")
+    --spw.generateNewSprite("sand")
     spw.generateNewSprite("cursorBuy",{ love.graphics.newImage("assets/sprites/cursor00.png"), love.graphics.newImage("assets/sprites/cursor01.png"), love.graphics.newImage("assets/sprites/cursor02.png"), love.graphics.newImage("assets/sprites/cursor03.png") }, 0.25)
     spw.generateNewSprite("dude", { love.graphics.newImage("assets/sprites/dude.png")})
     spw.generateNewSprite("dudeWalking", { love.graphics.newImage("assets/sprites/dude.png"), love.graphics.newImage("assets/sprites/dudeW1.png")}, 0.15, function () return player.vals.walking end)
     --spw.generateNewSprite("leaf")
     --spw.generateNewSprite("log")
     --spw.generateNewSprite("stick")
-    spw.generateNewSprite("tree")
+    --spw.generateNewSprite("tree")
     --spw.generateNewSprite("small_chair")
-    spw.generateNewSprite("dude_sitting")
+    --spw.generateNewSprite("dude_sitting")
     --spw.generateNewSprite("table")
     --spw.generateNewSprite("flowers")
     --spw.generateNewSprite("furnace")
-    spw.generateNewSprite("burning_furnace")
-    spw.generateNewSprite("fueled_furnace")
+    --spw.generateNewSprite("burning_furnace")
+    --spw.generateNewSprite("fueled_furnace")
     --spw.generateNewSprite("pebble")
-    spw.generateNewSprite("arrow")
-    spw.generateNewSprite("chicken")
-    spw.generateNewSprite("fire")
+    --spw.generateNewSprite("arrow")
+    --spw.generateNewSprite("chicken")
+    --spw.generateNewSprite("fire")
     --spw.generateNewSprite("iron_ore")
     --spw.generateNewSprite("iron_ingot")
-    spw.generateNewSprite("cross")
-    spw.generateNewSprite("ring")
-    spw.generateNewSprite("head")
-    spw.generateNewSprite("chestplate")
-    spw.generateNewSprite("backpack")
-    spw.generateNewSprite("basic_backpack")
-    spw.generateNewSprite("button")
+    --spw.generateNewSprite("cross")
+    --spw.generateNewSprite("ring")
+    --spw.generateNewSprite("head")
+    --spw.generateNewSprite("chestplate")
+    --spw.generateNewSprite("backpack")
+    --spw.generateNewSprite("basic_backpack")
+    --spw.generateNewSprite("button")
 end
 
 ---@param timer number?
 function spw.generateNewSprite(name, sprs, timer, canMove)
-    if spw.sprites[name] ~= nil then
+    if rawget(spw.sprites, name) ~= nil then
         return
     end
 
@@ -63,12 +72,12 @@ function spw.generateNewSprite(name, sprs, timer, canMove)
     end
 
     if timer == nil then
-        spw.sprites[name] = { sprs = sprs }
+        rawset(spw.sprites, name, { sprs = sprs })
     else
         local lastChange = 0;
         local index = 1
         canMove = canMove or function() return true end
-        spw.sprites[name] = { sprs = sprs, timer = timer, lastChange = lastChange, index = index, canMove = canMove }
+        rawset(spw.sprites, name, { sprs = sprs, timer = timer, lastChange = lastChange, index = index, canMove = canMove })
     end
 end
 
