@@ -16,6 +16,8 @@ function tables.writeTable(t, index)
         if type(value) == "table" then
             print(indent .. key .. " : ")
             tables.writeTable(value, index + 1)
+        elseif type(value) == "userdata" then
+            print(indent .. tostring(key) .. tostring(value))
         elseif type(value) == "function" then
             print(indent .. tostring(key) .. " : " .. tostring(value) .. "()")
         else
