@@ -566,22 +566,16 @@ function inventory.functions.expandInventory()
         end
     end
 
-    if inventory.inventoryBar.inventoryRows < #inventory.inventoryBar.inventory then
-        --print("---")
-        --print(inventory.inventoryBar.inventoryRows, " .. ", #inventory.inventoryBar.inventory)
-        for i =  #inventory.inventoryBar.inventory, inventory.inventoryBar.inventoryRows, -1 do
-            --print(i)
-            for key, value in pairs(inventory.inventoryBar.inventory[i]) do
-                if value ~= nil then
-                    if value.item ~= nil and value.item ~= "" then
-                        --tables.writeTable(value)
-                        inventory.functions.addItem(value.item, value.count)
-                    end
-                end
-            end
+    local endEl = #inventory.inventoryBar.inventory
 
-            table.remove(inventory.inventoryBar.inventory, i)
+    if inventory.inventoryBar.inventoryRows < endEl then
+        for key, value in pairs(inventory.inventoryBar.inventory[endEl]) do
+            if value.item ~= nil then
+                inventory.functions.addItem(value.item, value.count)
+            end
         end
+
+        table.remove(inventory.inventoryBar.inventory, endEl)
     end
 
     inventory.functions.fillHitBoxTable()

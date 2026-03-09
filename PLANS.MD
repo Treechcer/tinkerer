@@ -10,4 +10,4 @@
 
 ## future FIXES / bugs rn
 
-- Hot bar being deleted when un-equipping backpack - I thought I fixed that?
+- There seems to be no major bugs I know about
