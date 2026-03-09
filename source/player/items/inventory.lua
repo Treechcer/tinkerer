@@ -569,9 +569,25 @@ function inventory.functions.expandInventory()
     local endEl = #inventory.inventoryBar.inventory
 
     if inventory.inventoryBar.inventoryRows < endEl then
-        for key, value in pairs(inventory.inventoryBar.inventory[endEl]) do
-            if value.item ~= nil then
-                inventory.functions.addItem(value.item, value.count)
+
+        local switch = true
+
+        for key, value in pairs(inventory.inventoryBar.inventory[endEl-1]) do
+            if not ((value.item == nil or value.item == "") and (value.count == nil or value.item == 0)) then
+                switch = false
+            end
+        end
+
+
+        if not switch then
+            for key, value in pairs(inventory.inventoryBar.inventory[endEl]) do
+                if value.item ~= nil then
+                    inventory.functions.addItem(value.item, value.count)
+                end
+            end
+        else
+            for i = 1, #inventory.inventoryBar.inventory[endEl] do
+                inventory.inventoryBar.inventory[endEl-1][i] = inventory.inventoryBar.inventory[endEl][i]
             end
         end
 
