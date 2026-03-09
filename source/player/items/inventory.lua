@@ -568,8 +568,24 @@ function inventory.functions.expandInventory()
 
     local endEl = #inventory.inventoryBar.inventory
 
-    if inventory.inventoryBar.inventoryRows < endEl then
+    if inventory.inventoryBar.maxItemsPerInventory < #inventory.inventoryBar.inventory[1] then
+        for i = 1, #inventory.inventoryBar.inventory do
+            local inv = inventory.inventoryBar.inventory[i]
+            local value = inv[#inv]
+            --tables.writeTable(inv)
+            if value ~= nil and value.item ~= nil and value.item ~= "" and value.count ~= nil then
+                local value2 = inv[#inv - 1]
+                if not (value2 ~= nil and value2.item ~= nil and value2.item ~= "" and value2.count ~= nil and next(value2) ~= nil) then
+                    inv[#inv - 1] = inv[#inv]
+                else
+                    inventory.functions.addItem(value.item, value.count)
+                end
+            end
+            table.remove(inventory.inventoryBar.inventory[i], #inv)
+        end
+    end
 
+    if inventory.inventoryBar.inventoryRows < endEl then
         local switch = true
 
         for key, value in pairs(inventory.inventoryBar.inventory[endEl-1]) do
