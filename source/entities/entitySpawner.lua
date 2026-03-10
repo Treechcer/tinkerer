@@ -46,7 +46,10 @@ function entitySpawner.func.spawn(dt)
         --if not renderer.checkCollsion(renderer.getWorldPos(tileX, tileY)) then
         --    return
         --end
-        if entities.isEntityOnTile(tileX, tileY, item.width, item.height) == -1 and renderer.checkCollsionWidthHeight(tileX, tileY, item.width, item.height) then
+
+        if entities.isEntityOnTile(tileX, tileY, item.width, item.height) == -1 and renderer.checkCollsionWidthHeight(tileX, tileY, item.width, item.height)
+            and not renderer.AABB(tileX, tileY, item.width, item.height, player.position.tileX, player.position.tileY, player.size.width, player.size.height) then
+
             entities.makeNewOne(tileX, tileY, item.entityName, item.HP, item.drop, item.width, item.height, item.xp)
         end
         --tables.writeTable(entitiesIndex)
