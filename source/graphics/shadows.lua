@@ -1,6 +1,6 @@
 shadows = {
-    angle = 0,
-    offset = {x = 0, y = 0},
+    angle = -0.5,
+    offset = {x = -5, y = -2},
     strenght = 0.35,
     functions = {},
     shadows = {
@@ -8,9 +8,11 @@ shadows = {
     }
 }
 
-function shadows.functions.newShadow(x, y, spriteName)
-    spriteName = "circle"
-    table.insert(shadows.shadows, {pos = {x = x, y = y}, sprite = spriteName})
+function shadows.functions.newShadow(x, y, spriteName, width, height)
+    spriteName = spriteName or "circle"
+    width = width or 1
+    height = height or 1
+    table.insert(shadows.shadows, {pos = {x = x, y = y}, sprite = spriteName, width = width, height = height})
 end
 
 function shadows.functions.render()
@@ -19,7 +21,7 @@ function shadows.functions.render()
         local x,y = value.pos.x - shadows.offset.x, value.pos.y - shadows.offset.y
         x, y = renderer.getAbsolutePos(x, y)
         local spr = spw.sprites[value.sprite].sprs
-        love.graphics.draw(spr, x, y, shadows.angle, (map.tileSize * 0.9) / spr:getWidth(), (map.tileSize * 0.9) / spr:getHeight())
+        love.graphics.draw(spr, x, y, shadows.angle, (map.tileSize * 0.9) / spr:getWidth() * value.width, (map.tileSize * 0.9) / spr:getHeight() * value.height, spr:getWidth() / 2, spr:getHeight() / 2)
     end
     love.graphics.setColor(1,1,1)
 end
