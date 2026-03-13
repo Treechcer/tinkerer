@@ -42,6 +42,7 @@ function love.load()
     equipment = require("source.player.equipment")
     console = require("source.game.console.console")
     pathfinding = require("source.entities.npc.pathfinding")
+    shadows = require("source.graphics.shadows")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()

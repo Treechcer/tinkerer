@@ -37,6 +37,7 @@ end
 function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     --love.graphics.rectangle("fill", player.cursor.tileX * map.tileSize, player.cursor.tileY * map.tileSize, map.tileSize, map.tileSize)
     renderer.mapRender()
+    shadows.functions.render()
     entities.render()
 
     --love.graphics.print(player.vals.state, 10, 10)

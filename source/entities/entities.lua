@@ -15,6 +15,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     tileY = tonumber(tileY)
 
     table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime })
+    shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, index, width, height)
 end
 
 function entities.render()
