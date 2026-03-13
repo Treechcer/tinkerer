@@ -118,6 +118,10 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
             entitiesIndex[entityName][key] = value
         end
     end
+
+    if entitiesIndex[entityName].shadows == nil then
+        entitiesIndex[entityName].shadows = true
+    end
 end
 
 function entitiesIndex.f.init()
@@ -137,7 +141,7 @@ function entitiesIndex.f.init()
     entitiesIndex.f.addIndex("table", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "table", baseCount = 1}}, 2, 1, "", {}, {})
     entitiesIndex.f.addIndex("flowers", true, 2, bit.addBit({bit.BIT4}), 1, {{item = "flowers", baseCount = 1}}, 1, 1, "", {}, {})
     entitiesIndex.f.addIndex("furnace", false, 4, bit.addBit({bit.BIT4}), 1, {{item = "furnace", baseCount = 1}}, 1, 1, "", {}, {f = function (self, index) --[[building.f.furnaceInteractivity(self)]] inventory.inventoryBar.UI = "furnace" building.f.furnaceUI() game.activeUIButtons = UI.renderder.furnaceUI.buttons inventory.inventoryBar.render = true player.openedEntity = self end}, building.f.furnaceState,building.f.furnaceWork, nil, nil, nil, {items = {}})
-    entitiesIndex.f.addIndex("pebble", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("pebble", 1) entities.kill(index) end}, nil, nil, building.f.XSecondKillSwitch, nil, nil, {killTime = 64})
+    entitiesIndex.f.addIndex("pebble", true, 1, 0, 1, {}, 1, 1, "", {mining = 1}, {f = function (self, index) inventory.functions.addItem("pebble", 1) entities.kill(index) end}, nil, nil, building.f.XSecondKillSwitch, nil, nil, {killTime = 64, shadows = false})
 
     --tables.writeTable(entitiesIndex.furnace)
 
