@@ -5,8 +5,8 @@ math.randomseed(os.time())
 
 map = { -- this will be the things to see the whole map, generate it etc.
     tileSize = 48,
-    chunkWidth = #chunks[1][1],
-    chunkHeight = #chunks[1],
+    chunkWidth = #chunks[1].data[1],
+    chunkHeight = #chunks[1].data,
     chunkWidthNum = 7,
     chunkHeightNum = 7,
     map = {
@@ -31,6 +31,8 @@ function map.f.init()
             --map.map.chunks[y][x] = chunkGenerate.f.makeChunk(true)
         end
     end
+
+    --tables.writeTable(map.map.chunks)
 end
 
 function map.f.buyIsland(chX, chY)

@@ -18,7 +18,7 @@ end
 function shadows.functions.render()
     love.graphics.setColor(0, 0, 0, shadows.strenght)
     for key, value in pairs(shadows.shadows) do
-        local x,y = value.pos.x - shadows.offset.x, value.pos.y - shadows.offset.y
+        local x,y = (value.sprite == "circle") and value.pos.x or value.pos.x - shadows.offset.x, (value.sprite == "circle") and value.pos.y or value.pos.y - shadows.offset.y
         x, y = renderer.getAbsolutePos(x, y)
         local spr = spw.sprites[value.sprite].sprs
         local rotate = (value.sprite == "circle") and 0 or shadows.angle
