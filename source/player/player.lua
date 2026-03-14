@@ -160,6 +160,8 @@ function player.init() -- initialises the position of player
     player.cursor.tileX, player.cursor.tileY = renderer.calculateTile(player.cursor.x, player.cursor.y)
 
     equipment.f.makeDefaultStats()
+
+    shadows.functions.newShadow(player.position.x + (player.size.width / 2) + shadows.offset.x, player.position.y + player.size.height + shadows.offset.y - 4, "circle", 1, 1)
 end
 
 function player.moveToTile(xTile, yTile)
@@ -238,6 +240,8 @@ function player.move(dt)
 
         player.position.chunkX = math.ceil((player.position.x + (player.size.width / 2)) / map.chunkWidth / map.tileSize)
         player.position.chunkY = math.ceil((player.position.y + (player.size.height / 2)) / map.chunkHeight / map.tileSize)
+
+        shadows.functions.updateShadow(1, player.position.x + (player.size.width / 2) + shadows.offset.x, player.position.y + player.size.height + shadows.offset.y - 4)
 
         player.vals.walking = true
 

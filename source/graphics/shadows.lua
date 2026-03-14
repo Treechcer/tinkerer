@@ -26,4 +26,11 @@ function shadows.functions.render()
     love.graphics.setColor(1,1,1)
 end
 
+function shadows.functions.updateShadow(index, x, y)
+    shadows.shadows[index].pos.x = x
+    shadows.shadows[index].pos.y = y
+end
+
+--shadows.functions.newShadow(player.position.x, player.position.y, "circle", 1, 1)
+
 return shadows

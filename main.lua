@@ -13,8 +13,9 @@ function love.load()
     math.randomseed(os.time())
 
     tables = require("source.workers.libs.tableWorker")
-
+    
     spriteWorker = require("source.workers.spriteWorker")
+    shadows = require("source.graphics.shadows")
     mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
@@ -42,7 +43,6 @@ function love.load()
     equipment = require("source.player.equipment")
     console = require("source.game.console.console")
     pathfinding = require("source.entities.npc.pathfinding")
-    shadows = require("source.graphics.shadows")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
