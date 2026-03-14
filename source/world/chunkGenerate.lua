@@ -61,7 +61,9 @@ chunkGenerate.data.chunkNames = swaperoo()
 function chunkGenerate.f.makeChunk(middle, x, y)
     middle = middle or false
     local t = {}
-    t.chunkData = chunks[math.random(1, chunkGenerate.data.chunkNums)].data
+    local index = math.random(1, chunkGenerate.data.chunkNums)
+    t.chunkData = chunks[index].data
+    t.chunkIndex = index
     --t.biome = chunkGenerate.data.chunkNames[math.random(1, #chunkGenerate.data.chunkNames)]
 
     if (x >= 3 and x <= 5) and (y >= 3 and y <= 5) then
@@ -79,6 +81,7 @@ function chunkGenerate.f.makeChunk(middle, x, y)
     t.owned = middle
     --t.colorScheme = {1,1,1}
     t.price = 10
+
 
     return t
 end
