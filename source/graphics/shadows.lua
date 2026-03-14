@@ -21,7 +21,8 @@ function shadows.functions.render()
         local x,y = value.pos.x - shadows.offset.x, value.pos.y - shadows.offset.y
         x, y = renderer.getAbsolutePos(x, y)
         local spr = spw.sprites[value.sprite].sprs
-        love.graphics.draw(spr, x, y, shadows.angle, (map.tileSize * 0.9) / spr:getWidth() * value.width, (map.tileSize * 0.9) / spr:getHeight() * value.height, spr:getWidth() / 2, spr:getHeight() / 2)
+        local rotate = (value.sprite == "circle") and 0 or shadows.angle
+        love.graphics.draw(spr, x, y, rotate, (map.tileSize * 0.9) / spr:getWidth() * value.width, (map.tileSize * 0.9) / spr:getHeight() * value.height, spr:getWidth() / 2, spr:getHeight() / 2)
     end
     love.graphics.setColor(1,1,1)
 end
