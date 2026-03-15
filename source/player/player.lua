@@ -10,6 +10,11 @@ player = {
 
         chunkX = 0,
         chunkY = 0,
+
+        jumpySpace = 0,
+        moveDown = false,
+        moveLeft = true,
+        rotateM = 0
     },
     floatyMovement = {
         x = 0,

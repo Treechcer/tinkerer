@@ -42,16 +42,19 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
     --love.graphics.print(player.vals.state, 10, 10)
 
-    x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    if player.vals.walking and player.vals.state == "walking" then
-        dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
-    elseif player.vals.state == "sitting" then
-        dudeSpr = spw.sprites.dude_sitting.sprs
-    else
-        dudeSpr = spw.sprites.dude.sprs[1]
-    end
+    specialAnimations.functions.jumpyMovement()
 
-    love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
+    --x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
+    --if player.vals.walking and player.vals.state == "walking" then
+    --    dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
+    --elseif player.vals.state == "sitting" then
+    --    dudeSpr = spw.sprites.dude_sitting.sprs
+    --else
+    --    dudeSpr = spw.sprites.dude.sprs[1]
+    --end
+
+    --love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
+    
     --love.graphics.rectangle("fill", x, y, player.size.width, player.size.height)
     --love.graphics.rectangle("fill", player.position.absX * map.tileSize, player.position.absY * map.tileSize,
     --    map.tileSize, map.tileSize)
