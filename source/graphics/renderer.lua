@@ -106,21 +106,20 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(),
             (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
         local enIndex = entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, player.cursor.width, player.cursor.height)
-        if enIndex == -1 then
-            goto skip
-        end
-        local iKeys = entitiesIndex[entities.ents[enIndex].index].interactivityKeys
-        if iKeys ~= {} and next(iKeys) ~= nil then
-            local bSpr = spw.sprites.button.sprs
-            love.graphics.setColor(1,1,1,0.85)
-            love.graphics.draw(bSpr, sx + (map.tileSize * 0.2), sy + (map.tileSize * 0.2), 0, (map.tileSize / bSpr:getWidth()) * 0.6, (map.tileSize / bSpr:getHeight()) * 0.6)
-            love.graphics.setColor(0,0,0,1)
-            for key, value in pairs(iKeys) do
-                local font = UI.fonts.big
-                love.graphics.setFont(font)
-                local txt = key:upper()
-                love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
-                break
+        if enIndex ~= -1 then
+            local iKeys = entitiesIndex[entities.ents[enIndex].index].interactivityKeys
+            if iKeys ~= {} and next(iKeys) ~= nil then
+                local bSpr = spw.sprites.button.sprs
+                love.graphics.setColor(1,1,1,0.85)
+                love.graphics.draw(bSpr, sx + (map.tileSize * 0.2), sy + (map.tileSize * 0.2), 0, (map.tileSize / bSpr:getWidth()) * 0.6, (map.tileSize / bSpr:getHeight()) * 0.6)
+                love.graphics.setColor(0,0,0,1)
+                for key, value in pairs(iKeys) do
+                    local font = UI.fonts.big
+                    love.graphics.setFont(font)
+                    local txt = key:upper()
+                    love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
+                    break
+                end
             end
         end
     elseif not renderer.getChunkData(cursorWorldPosX, cursorWorldPosY, "owned") then
@@ -147,8 +146,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             --map.f.buyIsland(chunkX, chunkY)
         end
     end
-
-    ::skip::
 
     inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()

@@ -13,6 +13,8 @@ function shadows.functions.newShadow(x, y, spriteName, width, height)
     width = width or 1
     height = height or 1
     table.insert(shadows.shadows, {pos = {x = x, y = y}, sprite = spriteName, width = width, height = height})
+
+    return #shadows.shadows
 end
 
 function shadows.functions.render()
