@@ -36,80 +36,45 @@ function pathfinding.functions.startMoving(entityID, startPoint, endPoint)
             for x = -1, 1 do
                 if x ~= 0 or y ~= 0 then
                     local pos = {x = q.pos.x + x, y = q.pos.y + y}
-                    local node = pathfinding.functions.generateNode(mathWorker.positionDistance({x = 0, y = 0}, {x = x, y = y}),  mathWorker.positionDistance(pos, endPoint), pos, q)
-                    table.insert(openList, node)
+                    if q.pos.x + x == endPoint.x and q.pos.y + y == endPoint.y then
+                        local path = {}
+                        local node = q
+                        table.insert(path, 1, endPoint)
+                        while node ~= nil do
+                            table.insert(path, 1, node.pos)
+                            node = node.parentNode
+                        end
+
+                        return path
+                    end
+
+                    isSkip = false
+                    for _, v in ipairs(openList) do
+                        if v.pos.x == pos.x and v.pos.y == pos.y then
+                            isSkip = true
+                            break
+                        end
+                    end
+
+                    for _, v in ipairs(closedList) do
+                        if v.pos.x == pos.x and v.pos.y == pos.y then
+                            isSkip = true
+                            break
+                        end
+                    end
+
+                    if not map.f.accesibleTile(pos.x, pos.y) then
+                        isSkip = true
+                    end
+
+                    if not isSkip then
+                        local node = pathfinding.functions.generateNode(q.g + mathWorker.positionDistance({x = 0, y = 0}, {x = x, y = y}), mathWorker.positionDistance(pos, endPoint), pos, q)
+                        table.insert(openList, node)
+                    end
                 end
             end
         end
     end
 end
-
-function pathfinding.functions.copyTable(t)
-    local TABLE = {}
-
-    for key, value in pairs(t) do
-        if type(value) ~= "table" then
-            TABLE[key] = value
-        elseif type(value) == "table" then
-            TABLE[key] = pathfinding.functions.copyTable(value)
-        end
-    end
-
-    return TABLE
-end
-
---TODO: REVISIT THIS LATER and make it work :(
-
---function pathfinding.nodeCreate(position, distance, priority, possibleDirections, self)
---    if self == nil then
---        self = {}
---    end
---    self.position = position
---    self.distance = distance
---    self.priority = priority
---    self.possibleDirections = possibleDirections
---
---    self.updatePriority = function (self, x, y)
---        self.priority = self.distance + mathWorker.tileDistance(self.position.tileX - x, self.position.tileY - y)
---    end
---
---    self.move = function (self, d)
---        if self.possibleDirections == 8 and d % 2 ~= 0 then
---            self.distance = self.distance + 14
---        else
---            self.distance = self.distance + 10
---        end
---    end
---
---    local metatable = {
---        __lt = function (a, b)
---            return a.priority < b.priority
---        end
---    }
---
---    setmetatable(self, metatable)
---
---    return self
---end
---
---function pathfinding.functions.chooseDirection(x, possibleDirections)
---    return (math.floor(x + possibleDirections / 2)) % possibleDirections
---end
---
---function pathfinding.functions.genPath(dirMap, xA, yA, x, y, dx, dy, possibleDirections)
---    dx = dx or {1,1,0,-1,-1,-1,0,1}
---    dy = dy or {0,1,1,1,0,-1,-1,-1}
---    possibleDirections = possibleDirections or 8
---    path = {}
---    while not (x == xA and y == yA) do
---        local j = dirMap[y][x]
---        local c = tostring(pathfinding.functions.chooseDirection(j, possibleDirections))
---        table.insert(path, c)
---        x = x + dx[j]
---        y = y + dy[j]
---    end
---
---    return path
---end
 
 return pathfinding

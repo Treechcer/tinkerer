@@ -73,6 +73,10 @@ function map.f.accesibleTile(tileX, tileY)
     local chX = math.floor((tileX - 1) / map.chunkWidth) + 1
     local chY = math.floor((tileY - 1) / map.chunkHeight) + 1
 
+    if chX < 1 or chX > map.chunkWidthNum or chY < 1 or chY > map.chunkHeightNum then
+        return false
+    end
+
     local mapData = map.map.chunks[chY][chX]
 
     if mapData == nil then
