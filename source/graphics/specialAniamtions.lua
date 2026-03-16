@@ -5,57 +5,71 @@ specialAnimations = {
     objects = {}
 }
 
-function specialAnimations.functions.jumpyMovement()
-    --for now onlxy for player, later I'll add like movement for anything yk but for testiong of how it'll look and whatnot
+function specialAnimations.functions.jumpyMovement(obj, originalObject)
     local dt = love.timer.getDelta()
-    local x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    if player.vals.walking and player.vals.state == "walking" then
-        dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
-        specialAnimations.functions.jumpMove(dt)
-    elseif player.vals.state == "sitting" then
-        dudeSpr = spw.sprites.dude_sitting.sprs
-    else
-        dudeSpr = spw.sprites.dude.sprs[1]
+    local x, y = renderer.getAbsolutePos(obj.xP, obj.yP)
+    if obj.walking then
+        specialAnimations.functions.jumpMove(dt, obj)
     end
 
-    local yMV = dudeSpr:getHeight() * 1.2
+    local yMV = obj.spr:getHeight() * 1.2
 
-    love.graphics.draw(dudeSpr,
-        x + player.size.width / 2, --X
-        y + player.size.height / 2 + yMV + 25 - player.position.jumpySpace, --Y
-        player.position.rotateM, --angle
-        (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), --scaleX
-        player.size.height / dudeSpr:getHeight(), --scaleY
-        dudeSpr:getWidth() / 2, --origin point X
+    love.graphics.draw(obj.spr,
+        x + obj.width / 2, --X
+        y + obj.height / 2 + yMV + 25 - obj.jumpySpace, --Y
+        obj.rotateM, --angle
+        (obj.width / obj.spr:getWidth()) * (obj.screenSide), --scaleX
+        obj.height / obj.spr:getHeight(), --scaleY
+        obj.spr:getWidth() / 2, --origin point X
         yMV --origin point Y
     )
 
-    if not (player.position.jumpySpace >= 0 and player.position.jumpySpace <= 3) and not (player.vals.walking and player.vals.state == "walking") then
-        specialAnimations.functions.jumpMove(dt)
+    if not (obj.jumpySpace >= 0 and obj.jumpySpace <= 3) and not (obj.walking and obj.state == "walking") then
+        specialAnimations.functions.jumpMove(dt, obj)
     end
 
+    if obj.update ~= nil then
+        obj.update(obj, originalObject)
+    else
+        specialAnimations.functions.updateObj(obj, originalObject)
+    end
+    
     --print(player.position.jumpySpace)
 end
 
-function specialAnimations.functions.jumpMove(dt)
-    if player.position.jumpySpace <= 24 and not player.position.moveDown then
-        player.position.jumpySpace = player.position.jumpySpace + (100 * dt)
-    elseif player.position.jumpySpace >= 0 and player.position.moveDown then
-        player.position.jumpySpace = player.position.jumpySpace - (100 * dt)
+function specialAnimations.functions.jumpMove(dt, obj)
+    if obj.jumpySpace <= 24 and not obj.moveDown then
+        obj.jumpySpace = obj.jumpySpace + (100 * dt)
+    elseif obj.jumpySpace >= 0 and obj.moveDown then
+        obj.jumpySpace = obj.jumpySpace - (100 * dt)
     end
 
-    if player.position.jumpySpace >= 24 then
-        player.position.moveDown = true
-        player.position.moveLeft = not player.position.moveLeft
-    elseif player.position.jumpySpace <= 1 then
-        player.position.moveDown = false
+    if obj.jumpySpace >= 24 then
+        obj.moveDown = true
+        obj.moveLeft = not obj.moveLeft
+    elseif obj.jumpySpace <= 1 then
+        obj.moveDown = false
     end
 
-    if player.position.moveLeft then
-        player.position.rotateM = player.position.rotateM + (0.5 * dt)
+    if obj.moveLeft then
+        obj.rotateM = obj.rotateM + (0.5 * dt)
     else
-        player.position.rotateM = player.position.rotateM - (0.5 * dt)
+        obj.rotateM = obj.rotateM - (0.5 * dt)
     end
+end
+
+function specialAnimations.functions.updateObj(obj, originalObject)
+    originalObject.rotateM = obj.rotateM
+    originalObject.x = obj.xP
+    originalObject.y = obj.yP
+    originalObject.state = obj.state
+    originalObject.width = obj.width
+    originalObject.height = obj.height
+    originalObject.jumpySpace = obj.jumpySpace
+    originalObject.walking = obj.walking
+    originalObject.screenSide = obj.screenSide
+    originalObject.moveDown = obj.moveDown
+    originalObject.moveLeft = obj.moveLeft
 end
 
 return specialAnimations

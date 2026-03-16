@@ -41,17 +41,33 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     entities.render()
 
     --love.graphics.print(player.vals.state, 10, 10)
+    local dudeSpr
+    if player.vals.walking and player.vals.state == "walking" then
+        dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
+    elseif player.vals.state == "sitting" then
+        dudeSpr = spw.sprites.dude_sitting.sprs
+    else
+        dudeSpr = spw.sprites.dude.sprs[1]
+    end
 
-    specialAnimations.functions.jumpyMovement()
+    specialAnimations.functions.jumpyMovement({rotateM = player.position.rotateM, xP = player.position.x, yP = player.position.y, spr = dudeSpr, state = player.vals.state, width = player.size.width, height = player.size.height, jumpySpace = player.position.jumpySpace, walking = player.vals.walking, screenSide = player.cursor.screenSide, moveLeft = player.position.moveLeft, moveDown = player.position.moveDown,
+    update = function (obj, originalObject)
+        player.position.rotateM = obj.rotateM
+        player.position.x = obj.xP
+        player.position.y = obj.yP
+        dudeSpr = obj.spr
+        player.vals.state = obj.state
+        player.size.width = obj.width
+        player.size.height = obj.height
+        player.position.jumpySpace = obj.jumpySpace
+        player.vals.walking = obj.walking
+        player.cursor.screenSide = obj.screenSide
+        player.position.moveDown = obj.moveDown
+        player.position.moveLeft = obj.moveLeft
+    end
+}, player)
 
     --x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
-    --if player.vals.walking and player.vals.state == "walking" then
-    --    dudeSpr = spw.sprites.dudeWalking.sprs[spw.sprites.dudeWalking.index]
-    --elseif player.vals.state == "sitting" then
-    --    dudeSpr = spw.sprites.dude_sitting.sprs
-    --else
-    --    dudeSpr = spw.sprites.dude.sprs[1]
-    --end
 
     --love.graphics.draw(dudeSpr, x + player.size.width / 2, y + player.size.height / 2, 0, (player.size.width / dudeSpr:getWidth()) * (player.cursor.screenSide), player.size.height / dudeSpr:getHeight(), dudeSpr:getWidth() / 2, dudeSpr:getHeight() / 2)
     
