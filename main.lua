@@ -44,6 +44,8 @@ function love.load()
     console = require("source.game.console.console")
     pathfinding = require("source.entities.npc.pathfinding")
     specialAnimations = require("source.graphics.specialAniamtions")
+    npcs = require("source.entities.npc.npcs")
+    npcIndex = require("source.entities.npc.npcIndex")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()

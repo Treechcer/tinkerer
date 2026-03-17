@@ -10,6 +10,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     health = health or entitiesIndex[index].HP
     drop = drop or entitiesIndex[index].drop
     xp = xp or entitiesIndex[index].xp
+    typeE = entitiesIndex[index].typeE or "entity"
 
     tileX = tonumber(tileX)
     tileY = tonumber(tileY)
@@ -18,7 +19,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
         shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, index, width, height) 
     end
 
-    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex })
+    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE })
 end
 
 function entities.render()
@@ -138,6 +139,7 @@ function entities.damageEntity(entityIndex, damageNumber)
 
         table.remove(shadows.shadows, en.shadowIndex)
         table.remove(entities.ents, entityIndex)
+        npcs.functions.changeIndexByOne()
     end
 end
 
@@ -154,6 +156,7 @@ end
 
 function entities.kill(index)
     table.remove(entities.ents, index)
+    npcs.functions.changeIndexByOne(index)
 end
 
 function entities.special()

@@ -18,6 +18,7 @@ function entityCleaner.f.update(dt)
 
         for i = #entityCleaner.indexesToDelete, 1, -1 do
             table.remove(entities.ents, entityCleaner.indexesToDelete[i])
+            npcs.functions.changeIndexByOne()
         end
 
         entityCleaner.lastClean = 0

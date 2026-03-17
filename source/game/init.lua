@@ -22,6 +22,8 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     UI.f.init()
 
     equipment.f.init()
+
+    npcs.functions.init()
 end
 
 return init
