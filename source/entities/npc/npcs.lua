@@ -17,12 +17,16 @@ end
 
 function npcs.functions.makeNewOne()
     --I have to think about how to implement them into the entities, idk if this is the best way
-    --entitiesIndex.f.addIndex("chicken", true, 5, 0, )
+    entitiesIndex.f.addIndex("chicken", true, 2, 4, 0, {}, 1, 1, nil, {}, {})
     table.insert(npcs.npcIndexes, #entities.ents)
 end
 
+function npcs.functions.spawn()
+    entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken")
+end
+
 function npcs.functions.init()
-    --npcs.functions.makeNewOne()
+    npcs.functions.makeNewOne()
 end
 
 return npcs
