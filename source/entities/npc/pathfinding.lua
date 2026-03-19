@@ -14,7 +14,7 @@ function pathfinding.functions.generateNode(g, h, pos, parentNode)
     return t
 end
 
-function pathfinding.functions.startMoving(entityID, startPoint, endPoint)
+function pathfinding.functions.startMoving(startPoint, endPoint)
     local openList = {pathfinding.functions.generateNode(0,  mathWorker.positionDistance(startPoint, endPoint), startPoint, nil)}
     local closedList = {}
 
@@ -75,6 +75,16 @@ function pathfinding.functions.startMoving(entityID, startPoint, endPoint)
             end
         end
     end
+end
+
+function pathfinding.functions.visualisePath(path)
+    love.graphics.setColor(0.5,0,0,0.75)
+    --tables.writeTable(path)
+    for key, value in pairs(path) do
+        local x, y = renderer.getAbsolutePos(value.x * map.tileSize, value.y * map.tileSize)
+        love.graphics.rectangle("fill", x, y, map.tileSize, map.tileSize)
+    end
+    love.graphics.setColor(1,1,1,1)
 end
 
 return pathfinding

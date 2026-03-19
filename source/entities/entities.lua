@@ -139,7 +139,7 @@ function entities.damageEntity(entityIndex, damageNumber)
 
         table.remove(shadows.shadows, en.shadowIndex)
         table.remove(entities.ents, entityIndex)
-        npcs.functions.changeIndexByOne()
+        npcs.functions.changeIndexByOne(entityIndex)
     end
 end
 

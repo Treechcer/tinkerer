@@ -75,6 +75,13 @@ function love.draw()
     --love.graphics.print(player.atributes.speed, 10, 65)
     --love.graphics.print(player.position.tileX, 0,0)
     --love.graphics.print(player.position.tileY, 0,20)
+
+    for key, value in pairs(npcs.npcIndexes) do
+        local path = entities.ents[value.index].path
+        if path ~= nil and path ~= {} then
+            pathfinding.functions.visualisePath(path)
+        end
+    end
 end
 
 function love.update(dt)

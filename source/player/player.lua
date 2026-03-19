@@ -167,6 +167,8 @@ function player.init() -- initialises the position of player
     equipment.f.makeDefaultStats()
 
     shadows.functions.newShadow(player.position.x + (player.size.width / 2), player.position.y + player.size.height - 4, "circle", 1, 1)
+
+    player.position.tileX, player.position.tileY = renderer.calculateTile(player.position.x, player.position.y)
 end
 
 function player.moveToTile(xTile, yTile)

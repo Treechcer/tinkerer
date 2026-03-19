@@ -73,6 +73,8 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
 
     console.lastOpen = console.lastOpen + dt
 
+    npcs.functions.loop()
+
     if love.keyboard.isDown(settings.keys.openConsole) and (console.lastOpen > console.cooldownToOpen) then
         console.render = true
         console.lastOpen = 0
