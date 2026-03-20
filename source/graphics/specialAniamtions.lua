@@ -6,7 +6,20 @@ specialAnimations = {
 }
 
 function specialAnimations.functions.jumpyMovement(obj, originalObject)
+    obj.rotateM = obj.rotateM or 0
+    obj.width = obj.width or 1
+    obj.height = obj.height or 1
+    obj.jumpySpace = obj.jumpySpace or 0
+    obj.walking = obj.walking or true
+    obj.screenSide = obj.screenSide or 1
+    obj.moveDown = obj.moveDown or false
+    obj.moveLeft = obj.moveLeft or true
+    obj.xP = obj.xP or obj.x or obj.tileX
+    obj.yP = obj.yP or obj.y or obj.tileY
+    obj.spr = obj.spr or spw.sprites[obj.index].sprs
+
     local dt = love.timer.getDelta()
+    --tables.writeTable(obj)
     local x, y = renderer.getAbsolutePos(obj.xP, obj.yP)
     if obj.walking then
         specialAnimations.functions.jumpMove(dt, obj)
@@ -35,6 +48,8 @@ function specialAnimations.functions.jumpyMovement(obj, originalObject)
     end
     
     --print(player.position.jumpySpace)
+
+    return originalObject
 end
 
 function specialAnimations.functions.jumpMove(dt, obj)

@@ -52,11 +52,23 @@ function npcs.functions.loop()
         local path = entities.ents[value.index].path
         if path == nil or path == {} then
             entities.ents[value.index] = npcs.functions[value.ai](entities.ents[value.index])
-            tables.writeTable(entities.ents[value.index])
+            --tables.writeTable(entities.ents[value.index])
             path = entities.ents[value.index].path
         end
+
+        npcs.functions.move(value)
         --pathfinding.functions.visualisePath(path)
     end
+end
+
+function npcs.functions.move(npc)
+    local en = entities.ents[npc.index]
+    local path = en.path
+    if path[1] == nil or path[2] == nil then
+        return
+    end
+
+    specialAnimations.functions.jumpyMovement({rotateM = npc.rotateM or 0, xP = en.tileX, yP = en.tileY, spr = spw.sprites[en.index].sprs, state = npc.state or "walking", width = entitiesIndex[en.index].with, height = entitiesIndex[en.index].height, jumpySpace = npc.jumpySpace or 0, walking = npc.walking or false, screenSide = 1, moveLeft = npc.moveLeft or true, moveDown = npc.moveDown or false}, npc)
 end
 
 return npcs
