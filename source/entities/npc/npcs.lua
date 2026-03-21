@@ -102,11 +102,11 @@ function npcs.functions.move(npc)
 
     if entities.ents[npc.index].moveX >= 1 then
         entities.ents[npc.index].moveX = 0
-        en.tileY = en.tileX + 1
+        en.tileX = en.tileX + 1
         table.remove(path, 1)
     elseif entities.ents[npc.index].moveX <= -1 then
         entities.ents[npc.index].moveX = 0
-        en.tileY = en.tileX - 1
+        en.tileX = en.tileX - 1
         table.remove(path, 1)
     end
 
