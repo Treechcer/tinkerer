@@ -40,13 +40,13 @@ function entities.render()
                 if value.isNPC then
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
                     local yMV = spr:getHeight() * 1.2
-                    --print(value.jumpySpace)
+                    print(value.jumpySpace, value.rotateM)
                     love.graphics.draw(spr,
                         posX + value.width / 2,
                         posY + value.height / 2 + yMV + 25 - (value.jumpySpace),
                         (value.rotateM or 0),
-                        ((value.width * map.tileSize) / spr:getWidth()) * (value.screenSide),
-                        (value.height * map.tileSize) / spr:getHeight(),
+                        (value.width / spr:getWidth()) * (value.screenSide),
+                        value.height / spr:getHeight(),
                         spr:getWidth() / 2,
                         yMV
                     )

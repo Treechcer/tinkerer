@@ -69,7 +69,7 @@ function npcs.functions.move(npc)
         return
     end
 
-    en = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM or 0, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = en.state or "walking", width = entitiesIndex[en.index].width, height = entitiesIndex[en.index].height, jumpySpace = 0, walking = true, screenSide = 1, moveLeft = npc.moveLeft or true, moveDown = npc.moveDown or true}, en)
+    en = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = "walking", width = entitiesIndex[en.index].width * map.tileSize, height = entitiesIndex[en.index].height * map.tileSize, jumpySpace = en.jumpySpace, walking = true, screenSide = 1, moveLeft = en.moveLeft, moveDown = en.moveDown}, en)
 end
 
 return npcs
