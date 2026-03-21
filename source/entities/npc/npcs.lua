@@ -38,6 +38,7 @@ end
 function npcs.functions.spawn()
     --print(player.position.tileX, player.position.tileY)
     entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken", 5, {}, 1, 1, {})
+    entities.ents[#entities.ents].isNPC = true
     table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI"})
 end
 
@@ -68,7 +69,7 @@ function npcs.functions.move(npc)
         return
     end
 
-    specialAnimations.functions.jumpyMovement({rotateM = npc.rotateM or 0, xP = en.tileX, yP = en.tileY, spr = spw.sprites[en.index].sprs, state = npc.state or "walking", width = entitiesIndex[en.index].with, height = entitiesIndex[en.index].height, jumpySpace = npc.jumpySpace or 0, walking = npc.walking or false, screenSide = 1, moveLeft = npc.moveLeft or true, moveDown = npc.moveDown or false}, npc)
+    en = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM or 0, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = en.state or "walking", width = entitiesIndex[en.index].width, height = entitiesIndex[en.index].height, jumpySpace = 0, walking = true, screenSide = 1, moveLeft = npc.moveLeft or true, moveDown = npc.moveDown or true}, en)
 end
 
 return npcs

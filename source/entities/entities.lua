@@ -37,7 +37,23 @@ function entities.render()
                 love.graphics.setColor(defaultColor)
                 --tables.writeTable(entitiesIndex[value.index])
                 local spr = entitiesIndex[value.index].getSprite(value)
-                love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * value.width, map.tileSize / spr:getHeight() * value.height)
+                if value.isNPC then
+                    --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
+                    local yMV = spr:getHeight() * 1.2
+                    --print(value.jumpySpace)
+                    love.graphics.draw(spr,
+                        posX + value.width / 2,
+                        posY + value.height / 2 + yMV + 25 - (value.jumpySpace),
+                        (value.rotateM or 0),
+                        ((value.width * map.tileSize) / spr:getWidth()) * (value.screenSide),
+                        (value.height * map.tileSize) / spr:getHeight(),
+                        spr:getWidth() / 2,
+                        yMV
+                    )
+                else
+                    love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
+                end
+            
             else
                 love.graphics.setColor(value.col or defaultColor)
                 love.graphics.rectangle("fill", posX, posY, map.tileSize, map.tileSize)

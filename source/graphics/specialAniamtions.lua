@@ -10,12 +10,12 @@ function specialAnimations.functions.jumpyMovement(obj, originalObject)
     obj.width = obj.width or 1
     obj.height = obj.height or 1
     obj.jumpySpace = obj.jumpySpace or 0
-    obj.walking = obj.walking or true
+    obj.walking = (obj.walking == nil) and false or obj.walking
     obj.screenSide = obj.screenSide or 1
-    obj.moveDown = obj.moveDown or false
-    obj.moveLeft = obj.moveLeft or true
-    obj.xP = obj.xP or obj.x or obj.tileX
-    obj.yP = obj.yP or obj.y or obj.tileY
+    obj.moveDown = (obj.moveDown == nil) and false or obj.moveDown
+    obj.moveLeft = (obj.moveLeft == nil) and false or obj.moveLeft
+    obj.xP = obj.xP or obj.x or (obj.tileX * map.tileSize)
+    obj.yP = obj.yP or obj.y or (obj.tileY * map.tileSize)
     obj.spr = obj.spr or spw.sprites[obj.index].sprs
 
     local dt = love.timer.getDelta()
@@ -47,9 +47,9 @@ function specialAnimations.functions.jumpyMovement(obj, originalObject)
         specialAnimations.functions.updateObj(obj, originalObject)
     end
     
-    --print(player.position.jumpySpace)
+    --print(player.position.jumpySpace)a
 
-    return originalObject
+    return obj
 end
 
 function specialAnimations.functions.jumpMove(dt, obj)
@@ -64,6 +64,7 @@ function specialAnimations.functions.jumpMove(dt, obj)
         obj.moveLeft = not obj.moveLeft
     elseif obj.jumpySpace <= 1 then
         obj.moveDown = false
+        obj.rotateM = 0
     end
 
     if obj.moveLeft then
