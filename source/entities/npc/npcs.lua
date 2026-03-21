@@ -69,7 +69,52 @@ function npcs.functions.move(npc)
         return
     end
 
-    en = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = "walking", width = entitiesIndex[en.index].width * map.tileSize, height = entitiesIndex[en.index].height * map.tileSize, jumpySpace = en.jumpySpace, walking = true, screenSide = 1, moveLeft = en.moveLeft, moveDown = en.moveDown}, en)
+    local dt = love.timer.getDelta()
+
+    --tables.writeTable(en)
+
+    local add = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = "walking", width = entitiesIndex[en.index].width * map.tileSize, height = entitiesIndex[en.index].height * map.tileSize, jumpySpace = en.jumpySpace, walking = true, screenSide = 1, moveLeft = en.moveLeft, moveDown = en.moveDown}, en)
+
+    --tables.writeTable(en)
+
+    for key, value in pairs(add) do
+        en[key] = value
+    end
+
+    --tables.writeTable(path)
+
+    entities.ents[npc.index].moveX = entities.ents[npc.index].moveX or 0
+    entities.ents[npc.index].moveY = entities.ents[npc.index].moveY or 0
+
+    local dx, dy = (path[1].x - path[2].x) * (-1), (path[1].y - path[2].y) * (-1)
+    
+    entities.ents[npc.index].moveX, entities.ents[npc.index].moveY = entities.ents[npc.index].moveX + (dt * dx), entities.ents[npc.index].moveY + (dt * dy)
+
+    if entities.ents[npc.index].moveY >= 1 then
+        entities.ents[npc.index].moveY = 0
+        en.tileY = en.tileY + 1
+        table.remove(path, 1)
+    elseif entities.ents[npc.index].moveY <= -1 then
+        entities.ents[npc.index].moveY = 0
+        en.tileY = en.tileY - 1
+        table.remove(path, 1)
+    end
+
+    if entities.ents[npc.index].moveX >= 1 then
+        entities.ents[npc.index].moveX = 0
+        en.tileY = en.tileX + 1
+        table.remove(path, 1)
+    elseif entities.ents[npc.index].moveX <= -1 then
+        entities.ents[npc.index].moveX = 0
+        en.tileY = en.tileX - 1
+        table.remove(path, 1)
+    end
+
+    --print(en.tileX, en.tileY)
+
+    --love.event.quit()
+
+    --print(en.moveX, en.moveY)
 end
 
 return npcs
