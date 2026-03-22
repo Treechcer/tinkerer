@@ -32,7 +32,7 @@ end
 
 function npcs.functions.makeNewIndex()
     --I have to think about how to implement them into the entities, idk if this is the best way
-    entitiesIndex.f.addIndex("chicken", true, 2, 5, 0, {}, 1, 1, nil, {}, {})
+    entitiesIndex.f.addIndex("chicken", true, 2, 5, 0, {}, 1, 1, nil, {}, {}, nil, nil, nil, nil, nil, {shadowIndexSprite = "circle"})
 end
 
 function npcs.functions.spawn()

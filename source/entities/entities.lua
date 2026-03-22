@@ -11,12 +11,13 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     drop = drop or entitiesIndex[index].drop
     xp = xp or entitiesIndex[index].xp
     typeE = entitiesIndex[index].typeE or "entity"
+    local shadowIndexSprite = entitiesIndex[index].shadowIndex
 
     tileX = tonumber(tileX)
     tileY = tonumber(tileY)
     local shadowIndex = nil
     if entitiesIndex[index].shadows then
-        shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, index, width, height) 
+        shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, shadowIndexSprite, width, height)
     end
 
     table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE })
