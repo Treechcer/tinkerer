@@ -15,6 +15,10 @@ function pathfinding.functions.generateNode(g, h, pos, parentNode)
 end
 
 function pathfinding.functions.startMoving(startPoint, endPoint)
+    --tables.writeTable(endPoint)
+    if not map.f.accesibleTile(endPoint.x, endPoint.y) then
+        return nil
+    end
     local openList = {pathfinding.functions.generateNode(0,  mathWorker.positionDistance(startPoint, endPoint), startPoint, nil)}
     local closedList = {}
 

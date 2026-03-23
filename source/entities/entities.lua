@@ -17,7 +17,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     tileY = tonumber(tileY)
     local shadowIndex = nil
     if entitiesIndex[index].shadows then
-        print(shadowIndexSprite)
+        --print(shadowIndexSprite)
         shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, shadowIndexSprite, width, height)
     end
 

@@ -9,7 +9,7 @@ npcs = {
 
 function npcs.functions.passiveAI(npc)
     if npc.path == nil or npc.path == {} then
-        npc.path = pathfinding.functions.startMoving({x = npc.tileX, y = npc.tileY}, {x = npc.tileX + 1, y = npc.tileY - 2})
+        npc.path = pathfinding.functions.startMoving({x = npc.tileX, y = npc.tileY}, {x = npc.tileX + math.random(-3, 3), y = npc.tileY + math.random(-3, 3)})
     end
 
     return npc
@@ -42,10 +42,12 @@ function npcs.functions.spawn()
     table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI"})
 
     local npc = npcs.npcIndexes[#entities.ents]
-
     local shadowPos = shadows.shadows[entities.ents[npc.index].shadowIndex].pos
-
     shadowPos.x, shadowPos.y = shadowPos.x + (0.5 * map.tileSize), shadowPos.y + (0.65 * map.tileSize)
+
+    local en = entities.ents[#entities.ents]
+    en.jumpySpace = 0
+    en.screenSide = 0
 end
 
 function npcs.functions.init()
@@ -71,7 +73,9 @@ end
 function npcs.functions.move(npc)
     local en = entities.ents[npc.index]
     local path = en.path
-    if path[1] == nil or path[2] == nil then
+    if path == nil or path[1] == nil or path[2] == nil then
+        en.path = nil
+        npcs.functions.passiveAI(en)
         return
     end
 
@@ -102,23 +106,32 @@ function npcs.functions.move(npc)
 
     shadowPos.x, shadowPos.y = shadowPos.x + (mvx * map.tileSize), shadowPos.y + (mvy * map.tileSize)
 
+    local rm = false
     if entities.ents[npc.index].moveY >= 1 then
         entities.ents[npc.index].moveY = 0
         en.tileY = en.tileY + 1
-        table.remove(path, 1)
+        --table.remove(path, 1)
+        rm = true
     elseif entities.ents[npc.index].moveY <= -1 then
         entities.ents[npc.index].moveY = 0
         en.tileY = en.tileY - 1
-        table.remove(path, 1)
+        rm = true
+        --table.remove(path, 1)
     end
 
     if entities.ents[npc.index].moveX >= 1 then
         entities.ents[npc.index].moveX = 0
+        rm = true
         en.tileX = en.tileX + 1
-        table.remove(path, 1)
+        --table.remove(path, 1)
     elseif entities.ents[npc.index].moveX <= -1 then
         entities.ents[npc.index].moveX = 0
         en.tileX = en.tileX - 1
+        rm = true
+        --table.remove(path, 1)
+    end
+
+    if rm then
         table.remove(path, 1)
     end
 

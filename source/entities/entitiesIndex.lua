@@ -126,7 +126,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
 
     if entitiesIndex[entityName].shadowIndexSprite == nil then
         entitiesIndex[entityName].shadowIndexSprite = entityName
-        print(entityName)
+        --print(entityName)
     end
 end
 

@@ -64,33 +64,31 @@ function map.f.buyIsland(chX, chY)
 end
 
 function map.f.accesibleTile(tileX, tileY)
-    --local chX = math.floor(tileX / map.chunkWidth)
-    --local chY = math.floor(tileY / map.chunkHeight)
+    tileX = math.floor(tileX)
+    tileY = math.floor(tileY)
 
-    tileX = tileX + 1
-    tileY = tileY + 1
-
-    local chX = math.floor((tileX - 1) / map.chunkWidth) + 1
-    local chY = math.floor((tileY - 1) / map.chunkHeight) + 1
+    local chX = math.floor((tileX) / map.chunkWidth) + 1
+    local chY = math.floor((tileY) / map.chunkHeight) + 1
 
     if chX < 1 or chX > map.chunkWidthNum or chY < 1 or chY > map.chunkHeightNum then
         return false
     end
 
-    local mapData = map.map.chunks[chY][chX]
-
-    if mapData == nil then
+    local chunk = map.map.chunks[chY][chX]
+    if not chunk then
         return false
     end
 
-    if not mapData.owned then
+    if not chunk.owned then
         return false
     end
 
-    local specificTileX = tileX - ((chX - 1) * map.chunkWidth)
-    local specificTileY = tileY - ((chY - 1) * map.chunkHeight)
-    if map.map.chunks[chY][chX].chunkData[specificTileY][specificTileX] == 1 then
-        return true
+    local localX = (tileX % map.chunkWidth) + 1
+    local localY = (tileY % map.chunkHeight) + 1
+
+    local chunkData = chunk.chunkData
+    if chunkData and chunkData[localY] and chunkData[localY][localX] then
+        return chunkData[localY][localX] == 1
     end
 
     return false
