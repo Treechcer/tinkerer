@@ -16,9 +16,10 @@ end
 
 function pathfinding.functions.startMoving(startPoint, endPoint)
     --tables.writeTable(endPoint)
-    if not map.f.accesibleTile(endPoint.x, endPoint.y) then
+    if not map.f.accesibleTile(endPoint.x, endPoint.y) or entities.isNonWalkableEntityOnTile(endPoint.x, endPoint.y, 1, 1) ~= -1 then
         return nil
     end
+
     local openList = {pathfinding.functions.generateNode(0,  mathWorker.positionDistance(startPoint, endPoint), startPoint, nil)}
     local closedList = {}
 
@@ -40,40 +41,42 @@ function pathfinding.functions.startMoving(startPoint, endPoint)
             for x = -1, 1 do
                 if x ~= 0 or y ~= 0 then
                     local pos = {x = q.pos.x + x, y = q.pos.y + y}
-                    if q.pos.x + x == endPoint.x and q.pos.y + y == endPoint.y then
-                        local path = {}
-                        local node = q
-                        table.insert(path, 1, endPoint)
-                        while node ~= nil do
-                            table.insert(path, 1, node.pos)
-                            node = node.parentNode
-                        end
-
-                        return path
-                    end
-
-                    isSkip = false
-                    for _, v in ipairs(openList) do
-                        if v.pos.x == pos.x and v.pos.y == pos.y then
-                            isSkip = true
-                            break
-                        end
-                    end
-
-                    for _, v in ipairs(closedList) do
-                        if v.pos.x == pos.x and v.pos.y == pos.y then
-                            isSkip = true
-                            break
-                        end
-                    end
-
-                    if not map.f.accesibleTile(pos.x, pos.y) then
-                        isSkip = true
-                    end
-
+                    isSkip = not map.f.accesibleTile(pos.x, pos.y) or entities.isNonWalkableEntityOnTile(pos.x, pos.y, 1, 1) ~= -1
                     if not isSkip then
+                        if q.pos.x + x == endPoint.x and q.pos.y + y == endPoint.y then
+                            local path = {}
+                            local node = q
+                            table.insert(path, 1, endPoint)
+                            while node ~= nil do
+                                table.insert(path, 1, node.pos)
+                                node = node.parentNode
+                            end
+
+                            return path
+                        end
+
+                        for _, v in ipairs(openList) do
+                            if v.pos.x == pos.x and v.pos.y == pos.y then
+                                isSkip = true
+                                break
+                            end
+                        end
+
+                        for _, v in ipairs(closedList) do
+                            if v.pos.x == pos.x and v.pos.y == pos.y then
+                                isSkip = true
+                                break
+                            end
+                        end
+
+                        --if not map.f.accesibleTile(pos.x, pos.y) then
+                        --    isSkip = true
+                        --end
+
+                        --if not isSkip then
                         local node = pathfinding.functions.generateNode(q.g + mathWorker.positionDistance({x = 0, y = 0}, {x = x, y = y}), mathWorker.positionDistance(pos, endPoint), pos, q)
                         table.insert(openList, node)
+                        --end
                     end
                 end
             end

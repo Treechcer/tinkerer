@@ -82,6 +82,8 @@ function love.draw()
             pathfinding.functions.visualisePath(path)
         end
     end
+
+    map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
 end
 
 function love.update(dt)
@@ -94,9 +96,15 @@ function love.wheelmoved(x, y)
     if y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) and not (inventory.hotBar.selectedItem > 9) then
         inventory.hotBar.selectedItem = inventory.hotBar.selectedItem + 1
         inventory.hotBar.lastTime = 0
+    elseif y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) then
+        inventory.hotBar.selectedItem = 1
+        inventory.hotBar.lastTime = 0
     end
     if y <= -1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem <= 1) then
         inventory.hotBar.selectedItem = inventory.hotBar.selectedItem - 1
+        inventory.hotBar.lastTime = 0
+    elseif y <= -1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) then
+        inventory.hotBar.selectedItem = inventory.hotBar.maxItems
         inventory.hotBar.lastTime = 0
     end
 end

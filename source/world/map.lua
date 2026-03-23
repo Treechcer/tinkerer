@@ -67,8 +67,10 @@ function map.f.accesibleTile(tileX, tileY)
     tileX = math.floor(tileX)
     tileY = math.floor(tileY)
 
-    local chX = math.floor((tileX) / map.chunkWidth) + 1
-    local chY = math.floor((tileY) / map.chunkHeight) + 1
+    local chX = math.floor(tileX / map.chunkWidth) + 1
+    local chY = math.floor(tileY / map.chunkHeight) + 1
+
+    love.graphics.print(tostring(chX) .. " " .. tostring(chY), 10, 10)
 
     if chX < 1 or chX > map.chunkWidthNum or chY < 1 or chY > map.chunkHeightNum then
         return false
