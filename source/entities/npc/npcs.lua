@@ -19,7 +19,11 @@ function npcs.functions.changeIndexByOne(index)
     local rm = false
     for key, value in pairs(npcs.npcIndexes) do
         if index <= value.index then
-           entities.ents[value.index] = value.index - 1
+           value.index = value.index - 1
+
+            if value.index <= 0 then
+                rm = true
+            end
         elseif index == value.index then
             rm = true
         end
@@ -58,6 +62,7 @@ end
 
 function npcs.functions.loop()
     for key, value in pairs(npcs.npcIndexes) do
+        --tables.writeTable(value)
         local path = entities.ents[value.index].path
         if path == nil or path == {} then
             entities.ents[value.index] = npcs.functions[value.ai](entities.ents[value.index])
