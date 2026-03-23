@@ -116,7 +116,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
     if special ~= nil then
         for key, value in pairs(special) do
             entitiesIndex[entityName][key] = value
-            print(key)
+            --print(key, value)
         end
     end
 
@@ -126,6 +126,7 @@ function entitiesIndex.f.addIndex(entityName, walkable, HP, weakness, strenght, 
 
     if entitiesIndex[entityName].shadowIndexSprite == nil then
         entitiesIndex[entityName].shadowIndexSprite = entityName
+        print(entityName)
     end
 end
 

@@ -11,12 +11,13 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     drop = drop or entitiesIndex[index].drop
     xp = xp or entitiesIndex[index].xp
     typeE = entitiesIndex[index].typeE or "entity"
-    local shadowIndexSprite = entitiesIndex[index].shadowIndex
+    local shadowIndexSprite = entitiesIndex[index].shadowIndexSprite
 
     tileX = tonumber(tileX)
     tileY = tonumber(tileY)
     local shadowIndex = nil
     if entitiesIndex[index].shadows then
+        print(shadowIndexSprite)
         shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, shadowIndexSprite, width, height)
     end
 
@@ -41,7 +42,7 @@ function entities.render()
                 if value.isNPC then
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
                     local yMV = spr:getHeight() * 1.2
-                    print(value.moveX, value.moveY)
+                    --print(value.moveX, value.moveY)
                     love.graphics.draw(spr,
                         posX + value.width / 2 + ((value.moveX or 0) * map.tileSize),
                         posY + value.height / 2 + yMV + 25 - (value.jumpySpace) + ((value.moveY or 0) * map.tileSize),

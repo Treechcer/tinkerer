@@ -40,6 +40,12 @@ function npcs.functions.spawn()
     entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken", 5, {}, 1, 1, {})
     entities.ents[#entities.ents].isNPC = true
     table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI"})
+
+    local npc = npcs.npcIndexes[#entities.ents]
+
+    local shadowPos = shadows.shadows[entities.ents[npc.index].shadowIndex].pos
+
+    shadowPos.x, shadowPos.y = shadowPos.x + (0.5 * map.tileSize), shadowPos.y + (0.65 * map.tileSize)
 end
 
 function npcs.functions.init()
@@ -88,7 +94,13 @@ function npcs.functions.move(npc)
 
     local dx, dy = (path[1].x - path[2].x) * (-1), (path[1].y - path[2].y) * (-1)
     
-    entities.ents[npc.index].moveX, entities.ents[npc.index].moveY = entities.ents[npc.index].moveX + (dt * dx), entities.ents[npc.index].moveY + (dt * dy)
+    local mvx, mvy = (dt * dx), (dt * dy)
+
+    entities.ents[npc.index].moveX, entities.ents[npc.index].moveY = entities.ents[npc.index].moveX + mvx, entities.ents[npc.index].moveY + mvy
+
+    local shadowPos = shadows.shadows[entities.ents[npc.index].shadowIndex].pos
+
+    shadowPos.x, shadowPos.y = shadowPos.x + (mvx * map.tileSize), shadowPos.y + (mvy * map.tileSize)
 
     if entities.ents[npc.index].moveY >= 1 then
         entities.ents[npc.index].moveY = 0
