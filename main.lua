@@ -83,7 +83,7 @@ function love.draw()
         end
     end
 
-    map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
+    --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
 end
 
 function love.update(dt)

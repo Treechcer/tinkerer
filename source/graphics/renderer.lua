@@ -120,10 +120,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     local cursorWorldPosX, cursorWorldPosY = renderer.getWorldPos(player.cursor.tileX + (math.ceil(cursorWidth / 2) - 1), player.cursor.tileY + (math.ceil(cursorWidth / 2) - 1))
     if (renderer.checkCollsion(cursorWorldPosX, cursorWorldPosY)) then
         local cursor = spw.sprites.cursor
-        local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-        love.graphics.draw(cursor.sprs[cursor.index], sx, sy,
-            0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(),
-            (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
         local enIndex = entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, player.cursor.width, player.cursor.height)
         if enIndex ~= -1 then
             local iKeys = entitiesIndex[entities.ents[enIndex].index].interactivityKeys
@@ -139,7 +135,14 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
                     love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
                     break
                 end
+            else
+                local en = entities.ents[enIndex]
+                local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
+                love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
             end
+        else
+            local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+            love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
         end
     elseif not renderer.getChunkData(cursorWorldPosX, cursorWorldPosY, "owned") then
         local xTile = math.floor(cursorWorldPosX / map.tileSize) + 1

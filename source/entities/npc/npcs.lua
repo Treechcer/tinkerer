@@ -106,6 +106,7 @@ function npcs.functions.move(npc)
     local mvx, mvy = (dt * dx), (dt * dy)
 
     entities.ents[npc.index].moveX, entities.ents[npc.index].moveY = entities.ents[npc.index].moveX + mvx, entities.ents[npc.index].moveY + mvy
+    entities.ents[npc.index].tileX, entities.ents[npc.index].tileY = entities.ents[npc.index].tileX + mvx, entities.ents[npc.index].tileY + mvy
 
     local shadowPos = shadows.shadows[entities.ents[npc.index].shadowIndex].pos
 
@@ -114,24 +115,24 @@ function npcs.functions.move(npc)
     local rm = false
     if entities.ents[npc.index].moveY >= 1 then
         entities.ents[npc.index].moveY = 0
-        en.tileY = en.tileY + 1
+        --en.tileY = en.tileY + 1
         --table.remove(path, 1)
         rm = true
     elseif entities.ents[npc.index].moveY <= -1 then
         entities.ents[npc.index].moveY = 0
-        en.tileY = en.tileY - 1
+        --en.tileY = en.tileY - 1
         rm = true
         --table.remove(path, 1)
     end
 
     if entities.ents[npc.index].moveX >= 1 then
         entities.ents[npc.index].moveX = 0
+        --en.tileX = en.tileX + 1
         rm = true
-        en.tileX = en.tileX + 1
         --table.remove(path, 1)
     elseif entities.ents[npc.index].moveX <= -1 then
         entities.ents[npc.index].moveX = 0
-        en.tileX = en.tileX - 1
+        --en.tileX = en.tileX - 1
         rm = true
         --table.remove(path, 1)
     end
