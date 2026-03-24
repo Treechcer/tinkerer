@@ -43,12 +43,13 @@ function entities.render()
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
                     local yMV = spr:getHeight() * 1.2
                     --print(value.moveX, value.moveY)
+                    local h, w = value.height * map.tileSize, value.width * map.tileSize
                     love.graphics.draw(spr,
-                        posX + value.width / 2 --[[+ ((value.moveX or 0) * map.tileSize)]],
-                        posY + value.height / 2 + yMV + 25 - (value.jumpySpace) --[[+ ((value.moveY or 0) * map.tileSize)]],
+                        posX + w / 2 --[[+ ((value.moveX or 0) * map.tileSize)]],
+                        posY + h / 2 + yMV + 25 - (value.jumpySpace) --[[+ ((value.moveY or 0) * map.tileSize)]],
                         (value.rotateM or 0),
-                        (value.width / spr:getWidth()) * (value.screenSide),
-                        value.height / spr:getHeight(),
+                        (w / spr:getWidth()) * (value.screenSide),
+                        h / spr:getHeight(),
                         spr:getWidth() / 2,
                         yMV
                     )
@@ -69,6 +70,7 @@ function entities.isEntityOnTile(tileX, tileY, width, height)
     height = height or 1
 
     for index, value in ipairs(entities.ents) do
+        print(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height)
         if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) then
             return index
         end

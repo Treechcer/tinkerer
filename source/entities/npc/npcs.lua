@@ -43,7 +43,7 @@ function npcs.functions.spawn()
     --print(player.position.tileX, player.position.tileY)
     entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken", 5, {}, 1, 1, {})
     entities.ents[#entities.ents].isNPC = true
-    table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI"})
+    table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI", timeToMove = 0.2})
 
     local npc = npcs.npcIndexes[#entities.ents]
     local shadowPos = shadows.shadows[entities.ents[npc.index].shadowIndex].pos
@@ -81,6 +81,8 @@ function npcs.functions.move(npc)
     if path == nil or path[1] == nil or path[2] == nil then
         en.path = nil
         npcs.functions.passiveAI(en)
+        en.state = "standing"
+        npc.lastmove = 0
         return
     end
 
@@ -88,7 +90,18 @@ function npcs.functions.move(npc)
 
     --tables.writeTable(en)
 
-    local add = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = "walking", width = entitiesIndex[en.index].width * map.tileSize, height = entitiesIndex[en.index].height * map.tileSize, jumpySpace = en.jumpySpace, walking = true, screenSide = 1, moveLeft = en.moveLeft, moveDown = en.moveDown}, en)
+    local add = specialAnimations.functions.jumpyMovement({rotateM = en.rotateM, xP = en.tileX * map.tileSize, yP = en.tileY * map.tileSize, spr = spw.sprites[en.index].sprs, state = "walking", width = entitiesIndex[en.index].width, height = entitiesIndex[en.index].height, jumpySpace = en.jumpySpace, walking = true, screenSide = 1, moveLeft = en.moveLeft, moveDown = en.moveDown}, en)
+
+    entities.ents[npc.index].height = entitiesIndex[en.index].height
+    entities.ents[npc.index].width = entitiesIndex[en.index].width
+
+    --print("SA" .. entities.ents[npc.index].width)
+
+    npc.lastmove = npc.lastmove or 0
+    npc.lastmove = npc.lastmove + dt
+    if npc.lastmove < npc.timeToMove then
+        return
+    end
 
     --tables.writeTable(en)
 
