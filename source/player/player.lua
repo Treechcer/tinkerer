@@ -348,4 +348,11 @@ end
 --    end
 --end
 
+function player.cursor.renderCursor()
+    local cursor = spw.sprites.cursor
+    local cursorHeight, cursorWidth = player.cursor.height, player.cursor.width
+    local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
+    love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+end
+
 return player

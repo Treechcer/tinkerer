@@ -70,7 +70,7 @@ function entities.isEntityOnTile(tileX, tileY, width, height)
     height = height or 1
 
     for index, value in ipairs(entities.ents) do
-        print(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height)
+        --print(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height)
         if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) then
             return index
         end

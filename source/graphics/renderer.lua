@@ -135,14 +135,18 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
                     love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
                     break
                 end
-            elseif entities.ents[enIndex].isNPC then
-                local en = entities.ents[enIndex]
-                local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
-                love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+            else
+                enIndex = entities.isEntityOnTile(player.cursor.x / map.tileSize, player.cursor.y / map.tileSize, 1 / map.tileSize, 1 / map.tileSize)
+                if enIndex ~= -1 then
+                    local en = entities.ents[enIndex]
+                    local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
+                    love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+                else
+                    player.cursor.renderCursor()
+                end
             end
         else
-            local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
-            love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+            player.cursor.renderCursor()
         end
     elseif not renderer.getChunkData(cursorWorldPosX, cursorWorldPosY, "owned") then
         local xTile = math.floor(cursorWorldPosX / map.tileSize) + 1
