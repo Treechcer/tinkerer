@@ -353,18 +353,20 @@ function inventory.functions.renderHotbar()
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
     local font = UI.fonts.normal
     love.graphics.setFont(UI.fonts.normal)
-
     for i = 1, hotbar.maxItems do
+        love.graphics.setColor(1,1,1)
         if (i == inventory.hotBar.selectedItem) then
-            love.graphics.setColor(0.7, 0.5, 1)
+            sprite = spw.sprites["hotbar_selected"].sprs
+            --love.graphics.setColor(0.7, 0.5, 1)
         else
-            love.graphics.setColor(0.8, 0.8, 0.8)
+            sprite = spw.sprites["hotbar_nonselected"].sprs
+            --love.graphics.setColor(0.8, 0.8, 0.8)
         end
 
         local blockX = startX + (i - 1) * hotbar.boxSize
-        love.graphics.rectangle("fill", blockX, y, hotbar.boxSize, hotbar.boxSize)
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle("line", blockX, y, hotbar.boxSize, hotbar.boxSize)
+        --love.graphics.rectangle("fill", blockX, y, hotbar.boxSize, hotbar.boxSize)
+        --love.graphics.setColor(0, 0, 0)
+        --love.graphics.rectangle("line", blockX, y, hotbar.boxSize, hotbar.boxSize)
         if i > 10 then
             love.graphics.setColor(1,1,1)
             local cross = spw.sprites.cross.sprs
@@ -394,6 +396,7 @@ function inventory.functions.renderHotbar()
             local h = font:getHeight()
             local textX = blockX + hotbar.boxSize - w - hotbar.numberPad
             local textY = y + hotbar.boxSize - h - hotbar.numberPad
+            love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
             love.graphics.setColor(0,0,0)
             love.graphics.print(inventoryHB[i].count, textX, textY)
             love.graphics.setColor(1,1,1)
