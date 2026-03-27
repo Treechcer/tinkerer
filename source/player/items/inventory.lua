@@ -24,7 +24,7 @@ inventory = {
                 { --[[item = "hammer", count = 1]] },
                 { item = "rock", count = 5 },
                 { item = "stick", count = 5 },
-                { item = "furnace", count = 5 },
+                { item = "furnace", count = 128 },
                 { item = "basic_backpack", count = 1}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk

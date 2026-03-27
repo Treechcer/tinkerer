@@ -10,6 +10,12 @@ npcs = {
 function npcs.functions.passiveAI(npc)
     if npc.path == nil or npc.path == {} then
         npc.path = pathfinding.functions.startMoving({x = npc.tileX, y = npc.tileY}, {x = npc.tileX + math.random(-3, 3), y = npc.tileY + math.random(-3, 3)})
+        if npc.path == nil then
+            npc.tileX, npc.tileY = math.floor(npc.tileX), math.floor(npc.tileY)
+            local sh = shadows.shadows[npc.shadowIndex]
+            --somehow still gets off?
+            sh.pos.x, sh.pos.y = npc.tileX * map.tileSize, (npc.tileY + 0.25) * map.tileSize
+        end
     end
 
     return npc

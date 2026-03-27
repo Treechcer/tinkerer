@@ -15,6 +15,8 @@ function pathfinding.functions.generateNode(g, h, pos, parentNode)
 end
 
 function pathfinding.functions.startMoving(startPoint, endPoint)
+    local maxSteps = 1000
+    local steps = 0
     --tables.writeTable(endPoint)
     if not map.f.accesibleTile(endPoint.x, endPoint.y) or entities.isNonWalkableEntityOnTile(endPoint.x, endPoint.y, 1, 1) ~= -1 then
         return nil
@@ -24,6 +26,9 @@ function pathfinding.functions.startMoving(startPoint, endPoint)
     local closedList = {}
 
     while #openList > 0 do
+        if steps > maxSteps then
+            return nil
+        end
         local min = openList[1].f
         local index = 1
         for index0, value in ipairs(openList) do
@@ -81,6 +86,7 @@ function pathfinding.functions.startMoving(startPoint, endPoint)
                 end
             end
         end
+        steps = steps + 1
     end
 end
 
