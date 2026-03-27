@@ -17,8 +17,13 @@ end
 function pathfinding.functions.startMoving(startPoint, endPoint)
     local maxSteps = 1000
     local steps = 0
+    if startPoint.x == endPoint.x and startPoint.y == endPoint.y then
+        --print("END == START")
+        return nil
+    end
     --tables.writeTable(endPoint)
     if not map.f.accesibleTile(endPoint.x, endPoint.y) or entities.isNonWalkableEntityOnTile(endPoint.x, endPoint.y, 1, 1) ~= -1 then
+        --print("END NOT ACESSIBLE")
         return nil
     end
 
@@ -27,6 +32,7 @@ function pathfinding.functions.startMoving(startPoint, endPoint)
 
     while #openList > 0 do
         if steps > maxSteps then
+            --print("TOO MUCH STEPS")
             return nil
         end
         local min = openList[1].f
@@ -86,6 +92,7 @@ function pathfinding.functions.startMoving(startPoint, endPoint)
                 end
             end
         end
+
         steps = steps + 1
     end
 end

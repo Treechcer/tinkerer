@@ -10,12 +10,6 @@ npcs = {
 function npcs.functions.passiveAI(npc)
     if npc.path == nil or npc.path == {} then
         npc.path = pathfinding.functions.startMoving({x = npc.tileX, y = npc.tileY}, {x = npc.tileX + math.random(-3, 3), y = npc.tileY + math.random(-3, 3)})
-        if npc.path == nil then
-            npc.tileX, npc.tileY = math.floor(npc.tileX), math.floor(npc.tileY)
-            local sh = shadows.shadows[npc.shadowIndex]
-            --somehow still gets off?
-            sh.pos.x, sh.pos.y = npc.tileX * map.tileSize, (npc.tileY + 0.25) * map.tileSize
-        end
     end
 
     return npc
@@ -86,9 +80,16 @@ function npcs.functions.move(npc)
     local path = en.path
     if path == nil or path[1] == nil or path[2] == nil then
         en.path = nil
-        npcs.functions.passiveAI(en)
+        entities.ents[npc.index] = npcs.functions[npc.ai](entities.ents[npc.index])
+        path = entities.ents[npc.index].path
         en.state = "standing"
         npc.lastmove = 0
+        return
+    end
+
+    if not map.f.accesibleTile(path[2].x, path[2].y) or entities.isNonWalkableEntityOnTile(path[2].x, path[2].y, 1, 1) ~= -1 then
+        en.path = nil
+        entities.ents[npc.index] = npcs.functions[npc.ai](entities.ents[npc.index])
         return
     end
 
@@ -157,7 +158,9 @@ function npcs.functions.move(npc)
     end
 
     if rm then
-        table.remove(path, 1)
+        shadowPos.x, shadowPos.y = (en.path[2].x + 0.5) * map.tileSize, (en.path[2].y + 0.85) * map.tileSize -- idk why 0.85 works, it should be 0.65 because that's how it's created?
+        en.tileX, en.tileY = en.path[2].x, en.path[2].y
+        table.remove(en.path, 1)
     end
 
     --print(en.tileX, en.tileY)
