@@ -254,6 +254,7 @@ function inventory.functions.renderWholeInventory()
 
     if not inventory.inventoryBar.render then
         inventory.inventoryBar.UI = "crafting"
+        inventory.functions.renderHotbar()
         return
     end
 
@@ -276,7 +277,7 @@ function inventory.functions.renderWholeInventory()
     love.graphics.setFont(font)
     for inventroyIndex = 1, rows, 1 do
         for itemIndexNum = 1, cols, 1 do
-            love.graphics.setColor(0.8, 0.8, 0.8)
+            --love.graphics.setColor(0.8, 0.8, 0.8)
             local bl = barI.blockSize -- barI.pad
             local xP = (game.width / 2) + ((itemIndexNum - 1) * barI.blockSize) - (totalW / 2) --+ (barI.pad / 2)
             local yP = (game.height / 2) + ((inventroyIndex - 1) * barI.blockSize) - (totalH / 2) --+ (barI.pad / 2)
@@ -334,7 +335,7 @@ function inventory.functions.renderWholeInventory()
 
                 local scaleX = bl / itemW
                 local scaleY = bl / itemH
-                love.graphics.setColor(1,1,1)
+                --love.graphics.setColor(1,1,1)
                 love.graphics.draw(spr,xP + bl / 2, yP + bl / 2, 0, scaleX, scaleY, spr:getWidth() / 2, spr:getHeight() / 2)
                 if indexItem.count ~= nil then
                     local w = font:getWidth(indexItem.count)

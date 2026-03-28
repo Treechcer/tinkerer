@@ -175,7 +175,6 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         end
     end
 
-    inventory.functions.renderHotbar()
     inventory.functions.renderWholeInventory()
     --ENABLE THIS FOR PSP RELEASE!!! IF THERE EVER BE ONE!
     --if game.os == "PSP" then -- not rewriting the while functions just because PSP
