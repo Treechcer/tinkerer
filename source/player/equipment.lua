@@ -46,9 +46,11 @@ function equipment.f.render()
     for key, value in pairs(equipment.vals.order) do
         --print(value.startY)
         local slot = equipment.slots[value]
-        love.graphics.rectangle("fill", slot.startX, slot.startY, slot.pixelWidth, slot.pixelHeight)
+        --love.graphics.rectangle("fill", slot.startX, slot.startY, slot.pixelWidth, slot.pixelHeight)
+        local spr = spw.sprites["hotbar_all"].sprs
+        love.graphics.draw(spr, slot.startX, slot.startY, 0, slot.pixelWidth / spr:getWidth(), slot.pixelHeight / spr:getHeight())
         if slot.equipment == "" then
-            local spr = spw.sprites[value]
+            spr = spw.sprites[value]
             love.graphics.draw(spr.sprs, slot.startX, slot.startY, 0, slot.scaleWidth, slot.scaleHeight)
         else
             local spr = spw.sprites[slot.equipment]
