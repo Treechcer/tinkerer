@@ -271,16 +271,41 @@ function inventory.functions.renderWholeInventory()
     local cols = barI.maxItemsPerInventory
     local totalW = cols * barI.blockSize
     local totalH = rows * barI.blockSize
-    local font = UI.fonts.normal
+    local font = UI.fonts.UIfontBig
 
     love.graphics.setFont(font)
     for inventroyIndex = 1, rows, 1 do
         for itemIndexNum = 1, cols, 1 do
             love.graphics.setColor(0.8, 0.8, 0.8)
-            local bl = barI.blockSize - barI.pad
-            local xP = (game.width / 2) + ((itemIndexNum - 1) * barI.blockSize) - (totalW / 2) + (barI.pad / 2)
-            local yP = (game.height / 2) + ((inventroyIndex - 1) * barI.blockSize) - (totalH / 2) + (barI.pad / 2)
-            love.graphics.rectangle("fill", xP, yP, bl, bl)
+            local bl = barI.blockSize -- barI.pad
+            local xP = (game.width / 2) + ((itemIndexNum - 1) * barI.blockSize) - (totalW / 2) --+ (barI.pad / 2)
+            local yP = (game.height / 2) + ((inventroyIndex - 1) * barI.blockSize) - (totalH / 2) --+ (barI.pad / 2)
+
+            if inventroyIndex == rows then
+                yP = yP + (barI.pad)
+            end
+
+            local sprite
+
+            if itemIndexNum == 1 and inventroyIndex == rows then
+                sprite = spw.sprites["hotbar_left"].sprs
+            elseif itemIndexNum == cols and inventroyIndex == rows then
+                sprite = spw.sprites["hotbar_right"].sprs
+            elseif itemIndexNum == 1 and inventroyIndex == rows - 1 then
+                sprite = spw.sprites["hotbar_down_left"].sprs
+            elseif itemIndexNum == cols and inventroyIndex == rows - 1 then
+                sprite = spw.sprites["hotbar_down_right"].sprs
+            elseif itemIndexNum == 1 and inventroyIndex == 1 then
+                sprite = spw.sprites["hotbar_up_left"].sprs
+            elseif itemIndexNum == cols and inventroyIndex == 1 then
+                sprite = spw.sprites["hotbar_up_right"].sprs
+            else
+                sprite = spw.sprites["hotbar_middle"].sprs
+            end
+
+            love.graphics.draw(sprite, xP, yP, 0, bl / sprite:getWidth(), bl / sprite:getHeight())
+
+            --love.graphics.rectangle("fill", xP, yP, bl, bl)
             local indexItem = i[inventroyIndex][itemIndexNum]
 
             local crossBool = inventroyIndex == rows and itemIndexNum > 10
@@ -314,9 +339,7 @@ function inventory.functions.renderWholeInventory()
                 if indexItem.count ~= nil then
                     local w = font:getWidth(indexItem.count)
                     local h = font:getHeight()
-                    love.graphics.setColor(0,0,0)
                     love.graphics.print(indexItem.count, xP + bl - w - barI.padText, yP + bl - h - barI.padText)
-                    love.graphics.setColor(1,1,1)
                 end
             end
         end
