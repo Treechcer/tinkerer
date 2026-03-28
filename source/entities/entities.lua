@@ -18,7 +18,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     local shadowIndex = nil
     if entitiesIndex[index].shadows then
         --print(shadowIndexSprite)
-        shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize, shadowIndexSprite, width, height)
+        shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize + ((height - 1) * map.tileSize), shadowIndexSprite, width, height)
     end
 
     table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE })
