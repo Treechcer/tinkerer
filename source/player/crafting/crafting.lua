@@ -102,12 +102,14 @@ function crafting.f.render()
     inventory.inventoryBar.UI = "crafting"
 
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle("fill", crafting.buttons[3].startX, crafting.buttons[3].startY, crafting.buttons[3].pixelWidth, crafting.buttons[3].pixelHeight)
+    --love.graphics.rectangle("fill", crafting.buttons[3].startX, crafting.buttons[3].startY, crafting.buttons[3].pixelWidth, crafting.buttons[3].pixelHeight)
+    local spr = spw.sprites["hotbar_middle"].sprs
+    love.graphics.draw(spr, crafting.buttons[3].startX, crafting.buttons[3].startY, 0, crafting.buttons[3].pixelWidth / spr:getWidth(), crafting.buttons[3].pixelHeight / spr:getHeight())
 
     local recSpr = spw.sprites[recipes.recipesInOrder[crafting.selectedRecipe]].sprs
     love.graphics.draw(recSpr, crafting.x, crafting.y, 0, crafting.blockSize / recSpr:getWidth(), crafting.blockSize / recSpr:getHeight())
 
-    local spr = spw.sprites.arrow.sprs
+    spr = spw.sprites.arrow.sprs
     love.graphics.draw(spr, crafting.buttons[1].startX, crafting.buttons[1].startY, crafting.buttons[1].rotation, crafting.buttons[1].scaleWidth, crafting.buttons[1].scaleHeight, crafting.buttons[1].orginPointX, crafting.buttons[1].orginPointY)
     love.graphics.draw(spr, crafting.buttons[2].startX, crafting.buttons[2].startY + crafting.buttons[2].pixelHeight, crafting.buttons[2].rotation, crafting.buttons[2].scaleWidth, -crafting.buttons[2].scaleHeight, crafting.buttons[2].orginPointX, crafting.buttons[2].orginPointY)
 end
