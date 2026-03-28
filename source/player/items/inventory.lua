@@ -351,8 +351,8 @@ function inventory.functions.renderHotbar()
     local totalWidth = hotbar.maxItems * hotbar.boxSize
     local startX = (game.width - totalWidth) / 2
     local y = game.height - hotbar.boxSize - hotbar.paddingBottom
-    local font = UI.fonts.normal
-    love.graphics.setFont(UI.fonts.normal)
+    local font = UI.fonts.UIfontBig
+    love.graphics.setFont(font)
     for i = 1, hotbar.maxItems do
         love.graphics.setColor(1,1,1)
         if (i == inventory.hotBar.selectedItem) then
@@ -397,9 +397,9 @@ function inventory.functions.renderHotbar()
             local textX = blockX + hotbar.boxSize - w - hotbar.numberPad
             local textY = y + hotbar.boxSize - h - hotbar.numberPad
             love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
-            love.graphics.setColor(0,0,0)
             love.graphics.print(inventoryHB[i].count, textX, textY)
-            love.graphics.setColor(1,1,1)
+        else
+            love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
         end
     end
 

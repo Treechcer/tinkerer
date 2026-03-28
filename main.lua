@@ -84,6 +84,9 @@ function love.draw()
     end
 
     --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
+
+    love.graphics.setFont(UI.fonts.UIfontBig)
+    love.graphics.print("0123456789", 10, 10)
 end
 
 function love.update(dt)
