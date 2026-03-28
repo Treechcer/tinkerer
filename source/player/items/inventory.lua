@@ -344,7 +344,6 @@ function inventory.functions.renderWholeInventory()
 end
 
 function inventory.functions.renderHotbar()
-    --TODO fix the number color and stuff not important rn
     local hotbar = inventory.hotBar
     local inv = inventory.inventoryBar.inventory
     local inventoryHB = inv[#inv]
@@ -355,11 +354,13 @@ function inventory.functions.renderHotbar()
     love.graphics.setFont(font)
     for i = 1, hotbar.maxItems do
         love.graphics.setColor(1,1,1)
-        if (i == inventory.hotBar.selectedItem) then
-            sprite = spw.sprites["hotbar_selected"].sprs
+        if i == 1 then
+            sprite = spw.sprites["hotbar_left"].sprs
             --love.graphics.setColor(0.7, 0.5, 1)
+        elseif i == hotbar.maxItems then
+            sprite = spw.sprites["hotbar_right"].sprs
         else
-            sprite = spw.sprites["hotbar_nonselected"].sprs
+            sprite = spw.sprites["hotbar_middle"].sprs
             --love.graphics.setColor(0.8, 0.8, 0.8)
         end
 
@@ -387,8 +388,8 @@ function inventory.functions.renderHotbar()
 
             local centerX = blockX + hotbar.boxSize / 2
             local centerY = y + hotbar.boxSize / 2
-
-            love.graphics.draw( spr, centerX - sprW / 2, centerY - sprH / 2, 0, scaleX, scaleY)
+            love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
+            love.graphics.draw(spr, centerX - sprW / 2 + (sprW / sprite:getWidth()), centerY - sprH / 2 + (sprH / sprite:getHeight()), 0, scaleX - (scaleX / sprite:getWidth()), scaleY - (scaleY / sprite:getHeight()))
 
             love.graphics.setColor(1,1,1)
 
@@ -396,7 +397,6 @@ function inventory.functions.renderHotbar()
             local h = font:getHeight()
             local textX = blockX + hotbar.boxSize - w - hotbar.numberPad
             local textY = y + hotbar.boxSize - h - hotbar.numberPad
-            love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
             love.graphics.print(inventoryHB[i].count, textX, textY)
         else
             love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
