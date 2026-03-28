@@ -156,10 +156,19 @@ function entities.damageEntity(entityIndex, damageNumber)
         end
 
         --print(en.xp)
-
         table.remove(shadows.shadows, en.shadowIndex)
         table.remove(entities.ents, entityIndex)
         npcs.functions.changeIndexByOne(entityIndex)
+        entities.shiftShadowOne(entityIndex)
+    end
+end
+
+function entities.shiftShadowOne(index)
+    for i = index, #entities.ents do
+        local en = entities.ents[i]
+        if en.shadowIndex ~= nil then
+           en.shadowIndex = en.shadowIndex - 1
+        end
     end
 end
 
