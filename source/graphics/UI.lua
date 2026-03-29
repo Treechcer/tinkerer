@@ -186,13 +186,21 @@ function UI.renderder.furnaceUI.render()
         UI.f.addItemIndexes(#UI.renderder.furnaceUI.buttons)
     end
 
+    local sprs = {
+        "furnace_up_all",
+        "furnace_middle",
+        "furnace_down_all",
+    }
+
     for c = 1, #UI.renderder.furnaceUI.buttons do
         local value = UI.renderder.furnaceUI.buttons[c]
         value.color = value.color or {1,1,1}
         love.graphics.setColor(value.color)
 
-        love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
-        
+        --love.graphics.rectangle("fill", value.startX, value.startY, UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize)
+
+        local backspr = spw.sprites[sprs[(c - 1) % 3 + 1]].sprs
+        love.graphics.draw(backspr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / backspr:getWidth(), UI.renderder.furnaceUI.blockSize / backspr:getHeight())
         --self.progress
 
         if value.index == 2 then

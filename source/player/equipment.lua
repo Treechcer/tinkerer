@@ -43,6 +43,7 @@ function equipment.f.init()
 end
 
 function equipment.f.render()
+    love.graphics.setColor(1,1,1)
     for key, value in pairs(equipment.vals.order) do
         --print(value.startY)
         local slot = equipment.slots[value]
