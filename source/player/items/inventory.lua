@@ -378,15 +378,25 @@ function inventory.functions.renderHotbar()
     love.graphics.setFont(font)
     for i = 1, hotbar.maxItems do
         love.graphics.setColor(1,1,1)
+        local hbName = ""
         if i == 1 then
-            sprite = spw.sprites["hotbar_left"].sprs
+            --sprite = spw.sprites["hotbar_left"].sprs
             --love.graphics.setColor(0.7, 0.5, 1)
+            hbName = "hotbar_left"
         elseif i == hotbar.maxItems then
-            sprite = spw.sprites["hotbar_right"].sprs
+            --sprite = spw.sprites["hotbar_right"].sprs
+            hbName = "hotbar_right"
         else
-            sprite = spw.sprites["hotbar_middle"].sprs
+            --sprite = spw.sprites["hotbar_middle"].sprs
             --love.graphics.setColor(0.8, 0.8, 0.8)
+            hbName = "hotbar_middle"
         end
+
+        if i == hotbar.selectedItem then
+            hbName = hbName .. "_selected"
+        end
+
+        local sprite = spw.sprites[hbName].sprs
 
         local blockX = startX + (i - 1) * hotbar.boxSize
         --love.graphics.rectangle("fill", blockX, y, hotbar.boxSize, hotbar.boxSize)
