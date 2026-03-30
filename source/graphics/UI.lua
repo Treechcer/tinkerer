@@ -204,7 +204,7 @@ function UI.renderder.furnaceUI.render()
         --self.progress
 
         if value.index == 2 then
-            love.graphics.setColor(1, 0.647, 0)
+            love.graphics.setColor(1, 0.647, 0, 0.55)
             player.openedEntity.burnTime = player.openedEntity.burnTime or 0
             player.openedEntity.maxBurnSTR = player.openedEntity.maxBurnSTR or 0
             if player.openedEntity.maxBurnSTR > 0 then
@@ -214,7 +214,7 @@ function UI.renderder.furnaceUI.render()
         elseif value.index == 3 then
             local percent = player.openedEntity.progress or 0
             percent = percent - 1 > 0 and 0 or percent - 1
-            love.graphics.setColor(0.8, 0.8, 0.8)
+            love.graphics.setColor(0.8, 0.8, 0.8, 0.55)
             love.graphics.rectangle("fill", value.startX, value.startY - (percent * UI.renderder.furnaceUI.blockSize), UI.renderder.furnaceUI.blockSize, UI.renderder.furnaceUI.blockSize + (percent * UI.renderder.furnaceUI.blockSize))
         end
 
@@ -227,13 +227,13 @@ function UI.renderder.furnaceUI.render()
                         local spr = spw.sprites[player.openedEntity[c].item].sprs
                         love.graphics.draw(spr, value.startX, value.startY, 0, UI.renderder.furnaceUI.blockSize / spr:getWidth(), UI.renderder.furnaceUI.blockSize / spr:getHeight())
 
-                        local f = love.graphics.newFont(14)
+                        local f = UI.fonts.UIfontBig
 
                         local fontW = f:getWidth(player.openedEntity[c].count)
                         local fontH = f:getHeight(player.openedEntity[c].count)
 
                         --print(fontH, fontW)
-                        love.graphics.setColor(0,0,0)
+                        --love.graphics.setColor(0,0,0)
                         love.graphics.print(player.openedEntity[c].count, value.startX + UI.renderder.furnaceUI.blockSize - fontW, value.startY + UI.renderder.furnaceUI.blockSize - fontH)
                     end
                 end)
@@ -250,13 +250,15 @@ function UI.renderder.furnaceUI.render()
 end
 
 function UI.renderder.descriptions.f.render(x,y,description)
-    love.graphics.setColor(1,1,1)
+    love.graphics.setColor(1,1,1,1)
     local objDesc = UI.renderder.descriptions
 
     local width, height = objDesc.data.defaultX, objDesc.data.defaultY
 
-    local font = UI.fonts.normal
+    --font has to be updated to support a-Z
 
+    local font = UI.fonts.UIfontBig
+    love.graphics.setFont(font)
     local w = font:getWidth(tostring(description))
     local _, count = string.gsub(description, "\n", "")
     local h = font:getHeight() * (count + 1)
@@ -268,9 +270,8 @@ function UI.renderder.descriptions.f.render(x,y,description)
     height = (h > height) and h or height
 
     love.graphics.rectangle("fill", x - padX, y - padY, width + (padX * 2), height + (padY * 2))
-    love.graphics.setColor(0,0,0)
-    love.graphics.print(description, x,y)
-    love.graphics.setColor(1,1,1)
+    love.graphics.print(description, x, y)
+    --love.graphics.setColor(1,1,1)
 end
 
 return UI
