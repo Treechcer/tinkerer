@@ -361,7 +361,7 @@ function inventory.functions.renderWholeInventory()
     end
 
     if next(item) ~= nil then
-        UI.renderder.descriptions.f.render(x, y, description.f.gen(item.item))
+        UI.renderder.descriptions.f.render(x + 15, y + 15, description.f.gen(item.item))
     end
 
     --tables.writeTable(item)

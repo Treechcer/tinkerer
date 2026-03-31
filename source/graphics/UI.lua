@@ -3,6 +3,11 @@ UI = {
         normal = love.graphics.newFont(13),
         big = love.graphics.newFont(25),
         UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", "0123456789 :abcdefghijklmnopqrstuvwxyz")
+        --I have to make this font actually good someday
+    },
+    colors = {
+        lightBrown = {255/255, 160/255, 112/255, 0.6},
+        darkBrown = {197/255,105/255,76/255,1}
     },
     renderder = {
         furnaceUI = {
@@ -269,7 +274,14 @@ function UI.renderder.descriptions.f.render(x,y,description)
     width = (w > width) and w or width
     height = (h > height) and h or height
 
+    --local spr = spw.sprites["description"].sprs
+    --love.graphics.draw(spr, x - padX, y - padY, 0, (width + (padX * 2)) / spr:getWidth(), (height + (padY * 2)) / spr:getHeight())
+    love.graphics.setColor(UI.colors.lightBrown)
     love.graphics.rectangle("fill", x - padX, y - padY, width + (padX * 2), height + (padY * 2))
+    love.graphics.setColor(UI.colors.darkBrown)
+    love.graphics.setLineWidth(4)
+    love.graphics.rectangle("line", x - padX, y - padY, width + (padX * 2), height + (padY * 2))
+    love.graphics.setColor(1,1,1,1)
     love.graphics.print(description, x, y)
     --love.graphics.setColor(1,1,1)
 end
