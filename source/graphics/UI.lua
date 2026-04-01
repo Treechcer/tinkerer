@@ -274,6 +274,13 @@ function UI.renderder.descriptions.f.render(x,y,description)
     width = (w > width) and w or width
     height = (h > height) and h or height
 
+    --width = (width > game.width) and game.width - width or width
+    x = (width > game.width) and x - width or x
+    x = (width < 0) and 0 or x
+
+    y = (height > game.height) and y - height or y
+    y = (height < 0) and 0 or y
+
     --local spr = spw.sprites["description"].sprs
     --love.graphics.draw(spr, x - padX, y - padY, 0, (width + (padX * 2)) / spr:getWidth(), (height + (padY * 2)) / spr:getHeight())
     love.graphics.setColor(UI.colors.lightBrown)
