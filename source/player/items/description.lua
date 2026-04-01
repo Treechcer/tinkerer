@@ -32,7 +32,7 @@ function description.f.splitBy(str, num)
     if str:len() > num then
         for i = -5, 5, 1 do
             local res = str:sub(num + i, num + i)
-            print(res)
+            --print(res)
             if res == " " then
                 num = num + i
                 break
