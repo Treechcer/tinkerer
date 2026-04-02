@@ -85,6 +85,7 @@ function love.draw()
 
     --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
     love.graphics.print("the quick brown fox jumps over the lazy dog", 10, 10)
+    love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
 end
 
 function love.update(dt)
