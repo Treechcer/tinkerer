@@ -275,10 +275,10 @@ function UI.renderder.descriptions.f.render(x,y,description)
     height = (h > height) and h or height
 
     --width = (width > game.width) and game.width - width or width
-    x = (width > game.width) and x - width or x
+    x = (x + width + 15 > game.width) and x - width or x
     x = (width < 0) and 0 or x
 
-    y = (height > game.height) and y - height or y
+    y = (y + height + 15 > game.height) and y - height or y
     y = (height < 0) and 0 or y
 
     --local spr = spw.sprites["description"].sprs
