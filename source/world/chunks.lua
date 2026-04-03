@@ -56,9 +56,23 @@ chunks = { -- this will store all needed things with chunks, like all possible o
             { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
         },
         execute = function ()
-            --executes this when you BUY the land, this will be used spawn NPCs, structures, puzzles...  
         end
-    }
+    },
+        {
+        data = {
+            { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+            { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
+            { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 0, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+            { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
+            { 0, 0, 0, 1, 1, 1, 0, 0, 0 }
+        },
+        execute = function ()
+        end
+    },
 }
 
 return chunks
