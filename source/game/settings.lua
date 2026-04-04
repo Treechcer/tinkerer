@@ -2,6 +2,13 @@ settings = {
     graphic = {
         renderDistance = 11.5 --this lowers how far you can see
     },
+    sound = {
+        music = 10,
+        sfx = 10,
+        dialogue = 10,
+        etc = 10
+    },
+    difficulty = 1, -- this is number that can range from 1 to 5 and makes the game harder the bigger it is
     keys = {}
 }
 

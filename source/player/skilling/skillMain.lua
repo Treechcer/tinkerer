@@ -48,7 +48,7 @@ function skills.f.xpCountNext(lvl)
     ]]
     base = 25
     factor = 4
-    diff = game.settings.difficulty
+    diff = settings.difficulty
     exp = 3
 
     return diff * (lvl^2 + factor * lvl + base) * (1 + (lvl / exp))

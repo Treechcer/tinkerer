@@ -3,6 +3,7 @@ love = require("love")
 function love.load()
     video = ""
     game = require("source.game.game")
+    settings = require("source.game.settings")
 
     if game.os ~= "PSP" then
         love.graphics.setDefaultFilter("nearest", "nearest")
@@ -15,6 +16,7 @@ function love.load()
     tables = require("source.workers.libs.tableWorker")
     
     spriteWorker = require("source.workers.spriteWorker")
+    sound = require("source.workers.soundWorker")
     shadows = require("source.graphics.shadows")
     mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
@@ -30,7 +32,6 @@ function love.load()
     bit = require("source.workers.libs.bit")
     entities = require("source.entities.entities")
     entitiesIndex = require("source.entities.entitiesIndex")
-    settings = require("source.game.settings")
     itemIndex = require("source.player.items.itemIndex")
     description = require("source.player.items.description")
     inventory = require("source.player.items.inventory")

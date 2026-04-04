@@ -7,15 +7,6 @@ game = {
                             ]]
         release = "NON", -- just string for release, like pre-alpha etc. this will be used when released
     },
-    settings = {
-        sound = {
-            music = 1,
-            sfx = 1,
-            dialogue = 1,
-            etc = 1
-        },
-        difficulty = 1, -- this is number that can range from 1 to 5 and makes the game harder the bigger it is
-    },
     --height = 272,
     --width = 480, --this will be possible to change of course, but I have to have some basic info for beginning
     state = "game", -- this is to know what to render and what behaviour it neeeds to do, if menu, game etc...
