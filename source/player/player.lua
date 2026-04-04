@@ -30,7 +30,7 @@ player = {
         maxTimeY = 1,
     },
     size = {
-        width = math.floor(map.tileSize),
+        width = math.floor(map.tileSize) - math.floor(map.tileSize * 0.1),
         height = math.floor(map.tileSize * 2 - (map.tileSize / 1.5))
     },
     cursor = {
@@ -214,29 +214,31 @@ function player.move(dt)
     local nextX = player.position.x + mvXp * player.atributes.speed * dt
     local nextY = player.position.y + mvYp * player.atributes.speed * dt
 
-    --this sctrict movemt is temporary until I need to redo it, when I'll need to redo it it'll be redone
-    --TODO make good movement that doesn't suck balls
-    --if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY))) and
-    --    renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + player.size.height))) and
-    --    renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY))) and
-    --    renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height))) and
-    --    renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + (player.size.height / 2)))) and
-    --    renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, nextY + (player.size.height / 2)))) and 
-    --    entities.isEntityOnTile(renderer.calculateTile(nextX + (map.tileSize / 2), nextY)) < 0 and
-    --    entities.isEntityOnTile(renderer.calculateTile(nextX + (map.tileSize / 2), nextY + map.tileSize)) < 0 and
-    --    entities.isEntityOnTile(renderer.calculateTile(nextX + (map.tileSize / 2), nextY + (2 * map.tileSize))) < 0 then
+    local mv = false
 
-    if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY)))
-            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, nextY + (player.size.height))))
-            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY)))
-            and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + (player.size.width), nextY + (player.size.height))))
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY)) < 0
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY)) < 0
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY + player.size.height)) < 0
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + player.size.width, nextY + player.size.height)) < 0
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX + (player.size.width / 2), nextY + (player.size.height / 2))) < 0
-            and entities.isNonWalkableEntityOnTile(renderer.calculateTile(nextX, nextY + (player.size.height / 2))) < 0 then
+    if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, player.position.y)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, player.position.y + player.size.height)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, player.position.y)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, player.position.y + player.size.height)))
+    then
+        mv = true
+    else
+        nextX = player.position.x
+        mvXc = 0
+    end
 
+    if renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x, nextY)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x + player.size.width, nextY)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x, nextY + player.size.height)))
+        and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x + player.size.width, nextY + player.size.height)))
+    then
+        mv = true
+    else
+        nextY = player.position.y
+        mvYc = 0
+    end
+
+    if mv then
         player.position.x = nextX
         player.position.y = nextY
 

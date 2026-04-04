@@ -60,7 +60,7 @@ chunks = { -- this will store all needed things with chunks, like all possible o
     },
         {
         data = {
-            { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0 },
             { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
             { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
             { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
