@@ -76,7 +76,7 @@ function console.f.render()
         love.graphics.setColor(1,1,1,1)
         love.graphics.print(messages, 0, game.height - fHeight - 17)
         love.graphics.print(console.currentType, 0, game.height - UI.fonts.normal:getHeight(console.currentType))
-    else
+    elseif console.numberOfRender ~= 0 then
         for i = #console.messages - console.numberOfRender + 1, #console.messages do
             if i == 0 then
                 break
