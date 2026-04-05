@@ -2,8 +2,6 @@ UI = {
     fonts = {
         normal = love.graphics.newFont(13),
         big = love.graphics.newFont(25),
-        UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>")
-        --I have to make this font actually good someday
     },
     colors = {
         lightBrown = {255/255, 160/255, 112/255, 0.6},
@@ -91,6 +89,10 @@ UI = {
     },
     f = {}
 }
+
+UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢"
+UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
+
 
 function UI.f.checkStateFurnace(self)
     if next(player.openedEntity[1]) == nil then
@@ -291,6 +293,28 @@ function UI.renderder.descriptions.f.render(x,y,description)
     love.graphics.setColor(1,1,1,1)
     love.graphics.print(description, x, y)
     --love.graphics.setColor(1,1,1)
+end
+
+function UI.f.textTify(text)
+    local posibleChars = UI.fonts.possibleChars
+    local tab = {}
+    for i = 1, text:len() do
+        tab[text:sub(i, i)] = 1
+    end
+
+    for i = 1, posibleChars:len() do
+        tab[posibleChars:sub(i, i)] = 0
+    end
+
+    tab["\n"] = 0
+
+    for key, value in pairs(tab) do
+        if value == 1 then
+            text = text:gsub(key, "▢")
+        end
+    end
+    
+    return text
 end
 
 return UI

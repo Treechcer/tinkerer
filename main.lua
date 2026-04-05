@@ -54,6 +54,7 @@ function love.load()
     REF = require("source.game.runEveryFrame")
 
     --tables.writeTable(map.map.chunks)
+    require("source.workers.override")
 end
 
 function love.draw()
@@ -75,7 +76,7 @@ function love.draw()
 
     --FONT TEST
 
-    --love.graphics.print("the quick brown fox jumps over the lazy dog", 10, 10)
+    --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
     --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
 end
 
