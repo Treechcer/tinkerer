@@ -92,7 +92,7 @@ function console.f.render()
 
         height = (console.numberOfRender < 1) and height + 18 or height
 
-        love.graphics.rectangle("fill", 0, height, game.width, game.height)
+        love.graphics.rectangle("fill", 0, height, game.width, game.height - height - 13)
         love.graphics.setColor(1,1,1,1)
         love.graphics.print(messages, 0, game.height - fHeight - 17)
     end
@@ -162,8 +162,6 @@ function console.f.addMessage(message)
     if console.numberOfRender >= 5 then
         console.numberOfRender = 5
     end
-
-    print(message)
 end
 
 function console.f.callConsoleFunction(name, ...)
