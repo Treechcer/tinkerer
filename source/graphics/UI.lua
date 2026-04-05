@@ -2,7 +2,7 @@ UI = {
     fonts = {
         normal = love.graphics.newFont(13),
         big = love.graphics.newFont(25),
-        UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", "0123456789 :-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>")
         --I have to make this font actually good someday
     },
     colors = {
