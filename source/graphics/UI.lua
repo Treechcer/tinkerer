@@ -310,10 +310,13 @@ function UI.f.textTify(text)
 
     for key, value in pairs(tab) do
         if value == 1 then
+            if key == "." or key == "(" or key == ")" or key == "%" or key == "+" or key == "-" or key == "*" or key == "?" or key == "[" or key == "^" or key == "$" then
+                key = "%" .. key
+            end
             text = text:gsub(key, "▢")
         end
     end
-    
+
     return text
 end
 
