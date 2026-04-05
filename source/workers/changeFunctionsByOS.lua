@@ -26,7 +26,7 @@ if game.os == "PSP" then
             mvXc = 1
         end
 
-        mvXp, mvYp = vectors.normalise(mvXp, mvYp)
+        mvXp, mvYp = mathWorker.normalise(mvXp, mvYp)
         mvXc, mvYc = mvXp, mvYp
 
         local nextX = player.position.x + mvXp * player.atributes.speed * dt

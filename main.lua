@@ -17,7 +17,7 @@ function love.load()
     
     spriteWorker = require("source.workers.spriteWorker")
     sound = require("source.workers.soundWorker")
-    shadows = require("source.graphics.shadows")
+    shadows = require("source.graphics.effects.shadows")
     mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
     map = require("source.world.map")
@@ -28,7 +28,6 @@ function love.load()
     building = require("source.player.interactivity.building")
     renderer = require("source.graphics.renderer")
     init = require("source.game.init")
-    vectors = require("source.graphics.vectors")
     bit = require("source.workers.libs.bit")
     entities = require("source.entities.entities")
     entitiesIndex = require("source.entities.entitiesIndex")
@@ -44,7 +43,7 @@ function love.load()
     equipment = require("source.player.equipment")
     console = require("source.game.console.console")
     pathfinding = require("source.entities.npc.pathfinding")
-    specialAnimations = require("source.graphics.specialAniamtions")
+    specialAnimations = require("source.graphics.effects.specialAniamtions")
     npcs = require("source.entities.npc.npcs")
     npcIndex = require("source.entities.npc.npcIndex")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
@@ -64,18 +63,6 @@ function love.draw()
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
-    --love.graphics.print(player.position.chunkX, 10, 10)
-    --love.graphics.print(player.position.chunkY, 10, 25)
-    --love.graphics.print(#entities.ents, 10, 40)
-    --love.graphics.print(love.timer.getFPS(), 50, 50)
-    --love.graphics.print(player.cursor.screenSide, 10, 65)
-
-    --love.graphics.print(player.skills.walking.xp, 10, 10)
-    --love.graphics.print(player.skills.walking.xpForNextLvl, 10, 25)
-    --love.graphics.print(player.skills.walking.lvl, 10, 40)
-    --love.graphics.print(player.atributes.speed, 10, 65)
-    --love.graphics.print(player.position.tileX, 0,0)
-    --love.graphics.print(player.position.tileY, 0,20)
 
     for key, value in pairs(npcs.npcIndexes) do
         local path = entities.ents[value.index].path
@@ -85,8 +72,11 @@ function love.draw()
     end
 
     --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
-    love.graphics.print("the quick brown fox jumps over the lazy dog", 10, 10)
-    love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
+
+    --FONT TEST
+
+    --love.graphics.print("the quick brown fox jumps over the lazy dog", 10, 10)
+    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
 end
 
 function love.update(dt)
@@ -114,15 +104,6 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        --tables.writeTable(game.activeUIButtons)
-
-        --TODO FIX BUTTONS, FOR SOME REASON ONLY 2/3 WORKS!!
-
-        --smh this brok my inventory...
-        --if true then
-        --    return
-        --end
-
         if crafting.f.checkIfOnButton(game.activeUIButtons, x, y) then
             return
         end
@@ -167,6 +148,7 @@ function love.mousepressed(x, y, button, istouch, presses)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+    --print(key)
     if console.render then
         if key == "return" or key == "kpenter" then
             console.render = false
@@ -187,10 +169,14 @@ function love.keypressed(key, scancode, isrepeat)
             elseif key == "backspace" then
                 console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
             elseif key:match("kp") then --peak lua programming lol -- awful difference between gmatch and match
+                --no way of telling if numlock is on / off in love 11.5., when 12.0. releases I'll instantly change it smh (it's the same with capslock)
                 console.currentType = console.currentType .. key:gsub("kp", "")
             elseif string.len(key) > 1 then
                 return
             else
+                if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+                    key = key:upper()
+                end
                 console.currentType = console.currentType .. key
             end
         end

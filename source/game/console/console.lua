@@ -3,12 +3,15 @@
 console = {
     render = false,
     messages = {},
-    maxMessages = 5,
+    maxMessages = 10,
     height = 400, --(px)
     f = {},
     cooldownToOpen = 0.2,
     lastOpen = 0.2,
     currentType = "",
+    numberOfRender = 0,
+    rmCooldown = 2.5,
+    lastRM = 0,
     commands = {
         print = function (...)
             console.f.addMessage("-> " .. ...)
@@ -53,11 +56,10 @@ console = {
 }
 
 function console.f.render()
+    love.graphics.setColor(0.7,0.7,0.7,0.85)
+
+    local messages = ""
     if console.render then
-        love.graphics.setColor(0.7,0.7,0.7,0.85)
-
-        local messages = ""
-
         for index, value in ipairs(console.messages) do
             messages = messages .. value .. "\n"
         end
@@ -69,6 +71,26 @@ function console.f.render()
         --print(game.height - height)
 
         height = (#console.messages < 1) and height + 18 or height
+
+        love.graphics.rectangle("fill", 0, height, game.width, game.height)
+        love.graphics.setColor(1,1,1,1)
+        love.graphics.print(messages, 0, game.height - fHeight - 17)
+        love.graphics.print(console.currentType, 0, game.height - UI.fonts.normal:getHeight(console.currentType))
+    else
+        for i = #console.messages - console.numberOfRender + 1, #console.messages do
+            if i == 0 then
+                break
+            end
+            messages = messages .. console.messages[i] .. "\n"
+        end
+
+        local fHeight = UI.fonts.normal:getHeight(messages) * select(2, messages:gsub('\n', '\n'))
+        local devider = console.numberOfRender > 0 and console.numberOfRender or 1
+        local height = game.height - fHeight - 34 + (fHeight / devider)
+
+        --print(game.height - height)
+
+        height = (console.numberOfRender < 1) and height + 18 or height
 
         love.graphics.rectangle("fill", 0, height, game.width, game.height)
         love.graphics.setColor(1,1,1,1)
@@ -111,6 +133,23 @@ function console.f.runCommand(command)
     end
 end
 
+function console.f.run(dt)
+    console.lastOpen = console.lastOpen + dt
+
+    if console.numberOfRender >= 1 then
+        console.lastRM = console.lastRM + dt
+        if console.lastRM >= console.rmCooldown then
+            console.lastRM = 0
+            console.numberOfRender = console.numberOfRender - 1
+        end
+    end
+
+    if love.keyboard.isDown(settings.keys.openConsole) and (console.lastOpen > console.cooldownToOpen) then
+        console.render = true
+        console.lastOpen = 0
+    end
+end
+
 function console.f.addMessage(message)
     if #console.messages < console.maxMessages then
         table.insert(console.messages, message)
@@ -118,6 +157,16 @@ function console.f.addMessage(message)
         table.remove(console.messages, 1)
         table.insert(console.messages, message)
     end
+
+    console.numberOfRender = console.numberOfRender + 1
+
+    if console.numberOfRender >= 5 then
+        console.numberOfRender = 5
+    end
+end
+
+function console.f.callConsoleFunction(name, ...)
+    console.commands[name](...)
 end
 
 return console
