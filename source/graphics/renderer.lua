@@ -140,9 +140,14 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             else
                 enIndex = entities.isEntityOnTile(player.cursor.x / map.tileSize, player.cursor.y / map.tileSize, 1 / map.tileSize, 1 / map.tileSize)
                 if enIndex ~= -1 then
-                    local en = entities.ents[enIndex]
-                    local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
-                    love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+                    if entities.ents[enIndex].isNPC then
+                        --console.f.callConsoleFunction("print", "aiming")
+                        local en = entities.ents[enIndex]
+                        local sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
+                        love.graphics.draw(cursor.sprs[cursor.index], sx, sy, 0, (map.tileSize * cursorWidth) / cursor.sprs[cursor.index]:getWidth(), (map.tileSize * cursorHeight) / cursor.sprs[cursor.index]:getHeight())
+                    else
+                        player.cursor.renderCursor()
+                    end
                 else
                     player.cursor.renderCursor()
                 end
