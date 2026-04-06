@@ -36,7 +36,7 @@ function itemInteraction.hit(entIndex)
 
     if entIndex >= 1 and entities.canWeDamage(entIndex, itemIndex[item].weakness, itemIndex[item].strength) then
         entities.damageEntity(entIndex, itemIndex[item].attack)
-        sound.f.playAudio("hit")
+        sounds.f.playAudio("hit")
         return true
     end
 

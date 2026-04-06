@@ -29,8 +29,9 @@ function sounds.f.addSound(name, type, soundType)
 end
 
 function sounds.f.playAudio(name) -- this automatically does everything needed, changes pitch etc.
-    love.audio.play(sound.sounds[name].sound)
-    sound.sounds[name].sound:setPitch(math.random(0.5, 1.5))
+    sounds.sounds[name].sound:setVolume(settings.sound[sounds.sounds[name].type] / 100) --this makes dynamic volume change (from settings) possible
+    love.audio.play(sounds.sounds[name].sound)
+    sounds.sounds[name].sound:setPitch(math.random(0.5, 1.5))
 end
 
 return sounds

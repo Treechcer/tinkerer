@@ -16,7 +16,7 @@ function love.load()
     tables = require("source.workers.libs.tableWorker")
     
     spriteWorker = require("source.workers.spriteWorker")
-    sound = require("source.workers.soundWorker")
+    sounds = require("source.workers.soundWorker")
     shadows = require("source.graphics.effects.shadows")
     mathWorker = require("source.workers.libs.mathWorker")
     biomeData = require("source.world.biomeData")
