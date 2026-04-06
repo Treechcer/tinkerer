@@ -46,6 +46,7 @@ function love.load()
     specialAnimations = require("source.graphics.effects.specialAniamtions")
     npcs = require("source.entities.npc.npcs")
     npcIndex = require("source.entities.npc.npcIndex")
+    specialDraws = require("source.graphics.effects.specialDraws")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -77,7 +78,7 @@ function love.draw()
     --FONT TEST
 
     --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
-    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
+    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)¨
 end
 
 function love.update(dt)
