@@ -170,7 +170,6 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
     if itemCol > cols or itemRow > rows or itemRow < 1 or itemCol < 1 then
         return false
     end
-
     if posHit and next(inventory.inventoryBar.itemOnCursor) == nil then
         local item = inventory.inventoryBar.inventory[itemRow][itemCol]
 
@@ -189,7 +188,6 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
         return true
     elseif posHit and next(inventory.inventoryBar.itemOnCursor) ~= nil then
         local item = inventory.inventoryBar.inventory[itemRow][itemCol]
-
         local ind = inventory.inventoryBar.itemOnCursor
 
         if item == nil or next(item) == nil then
@@ -213,6 +211,9 @@ function inventory.functions.moveItems(itemRow, itemCol, button, posHit)
                     item.count = itemStackMax
                 end
             end
+        else
+            --console.f.callConsoleFunction("print", "switcheroo")
+            inventory.inventoryBar.itemOnCursor, inventory.inventoryBar.inventory[itemRow][itemCol] = inventory.inventoryBar.inventory[itemRow][itemCol], inventory.inventoryBar.itemOnCursor
         end
 
         return true

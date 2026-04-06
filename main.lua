@@ -66,12 +66,12 @@ function love.draw()
         renderer.gameStateRenderer()
     end
 
-    for key, value in pairs(npcs.npcIndexes) do
-        local path = entities.ents[value.index].path
-        if path ~= nil and path ~= {} then
-            pathfinding.functions.visualisePath(path)
-        end
-    end
+    --for key, value in pairs(npcs.npcIndexes) do
+    --    local path = entities.ents[value.index].path
+    --    if path ~= nil and path ~= {} then
+    --        pathfinding.functions.visualisePath(path)
+    --    end
+    --end
 
     --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
 
