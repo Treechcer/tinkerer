@@ -54,7 +54,11 @@ function entities.render()
                         yMV
                     )
                 else
-                    love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
+                    if value.isDroppedItem then
+                        specialDraws.f.outline(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
+                    else
+                        love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
+                    end
                 end
             
             else

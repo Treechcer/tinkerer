@@ -58,7 +58,7 @@ function love.load()
     --tables.writeTable(map.map.chunks)
     require("source.workers.override")
 
-    --droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
+    droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
 end
 
 function love.draw()
@@ -88,6 +88,10 @@ function love.update(dt)
     REF.everyFrameStart(dt)
 
     REF.everyFrameEnd(dt)
+
+    --temporary
+
+    droppedItems.f.collect()
 end
 
 function love.wheelmoved(x, y)
