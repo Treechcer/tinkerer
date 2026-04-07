@@ -33,7 +33,7 @@ end
 function droppedItems.f.collect()
     --console.f.callConsoleFunction("print", #droppedItems.items)
     for i = #droppedItems.items, 1, -1 do
-        console.f.callConsoleFunction("print", i)
+        --console.f.callConsoleFunction("print", i)
         local value = droppedItems.items[i]
         local en = entities.ents[value.id]
         local cu = player.cursor

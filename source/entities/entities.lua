@@ -147,6 +147,10 @@ function entities.damageEntity(entityIndex, damageNumber)
             for __, val in ipairs(en.drop) do
                 --tables.writeTable(val)
                 inventory.functions.addItem(val.item, val.baseCount)
+
+                --this crashes game?
+
+                --droppedItems.f.create(en.tileX, en.tileY, val.item, val.baseCount)
             end
         end
 
