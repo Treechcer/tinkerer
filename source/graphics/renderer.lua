@@ -137,6 +137,10 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
                     love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
                     break
                 end
+            elseif entities.ents[enIndex].isDroppedItem then
+                local en = entities.ents[enIndex]
+                local x,y = renderer.getAbsolutePos(renderer.getWorldPos(en.tileX, en.tileY))
+                specialDraws.f.outline(en.sprite, x, y)
             else
                 enIndex = entities.isEntityOnTile(player.cursor.x / map.tileSize, player.cursor.y / map.tileSize, 1 / map.tileSize, 1 / map.tileSize)
                 if enIndex ~= -1 then

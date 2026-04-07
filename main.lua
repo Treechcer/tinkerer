@@ -47,6 +47,7 @@ function love.load()
     npcs = require("source.entities.npc.npcs")
     npcIndex = require("source.entities.npc.npcIndex")
     specialDraws = require("source.graphics.effects.specialDraws")
+    dropppedItems = require("source.entities.dropppedItems.droppedItems")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -56,6 +57,8 @@ function love.load()
 
     --tables.writeTable(map.map.chunks)
     require("source.workers.override")
+
+    --droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
 end
 
 function love.draw()
@@ -78,7 +81,7 @@ function love.draw()
     --FONT TEST
 
     --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
-    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)¨
+    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
 end
 
 function love.update(dt)

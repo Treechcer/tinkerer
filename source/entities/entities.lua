@@ -158,9 +158,14 @@ function entities.damageEntity(entityIndex, damageNumber)
         --print(en.xp)
         table.remove(shadows.shadows, en.shadowIndex)
         table.remove(entities.ents, entityIndex)
-        npcs.functions.changeIndexByOne(entityIndex)
-        entities.shiftShadowOne(entityIndex)
+        entities.moveByOneIndexAllSubClasses(entityIndex)
     end
+end
+
+function entities.moveByOneIndexAllSubClasses(index)
+    npcs.functions.changeIndexByOne(index)
+    entities.shiftShadowOne(index)
+    droppedItems.f.changeIndexByOne(index)
 end
 
 function entities.shiftShadowOne(index)
@@ -185,7 +190,7 @@ end
 
 function entities.kill(index)
     table.remove(entities.ents, index)
-    npcs.functions.changeIndexByOne(index)
+    entities.moveByOneIndexAllSubClasses(index)
 end
 
 function entities.special()
