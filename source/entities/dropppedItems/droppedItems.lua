@@ -37,6 +37,7 @@ function droppedItems.f.collect()
         local value = droppedItems.items[i]
         local en = entities.ents[value.id]
         local cu = player.cursor
+        print(value.id, #entities.ents)
         if renderer.AABB(cu.tileX, cu.tileY, cu.width, cu.height, en.tileX, en.tileY, en.width, en.height) then
             droppedItems.f.delete(i)
         end
