@@ -15,7 +15,7 @@ end
 
 function droppedItems.f.create(tileX, tileY, item, count)
     --local itemIndexItem = itemIndex[item]
-    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil)
+    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil, true)
     table.insert(droppedItems.items, {id = #entities.ents, item = {item = item, count = count}})
     entities.ents[#entities.ents].isDroppedItem = true
     entities.ents[#entities.ents].shadowIndex = nil
@@ -37,7 +37,7 @@ function droppedItems.f.collect()
         local value = droppedItems.items[i]
         local en = entities.ents[value.id]
         local cu = player.cursor
-        print(value.id, #entities.ents)
+        --print(value.id, #entities.ents)
         if renderer.AABB(cu.tileX, cu.tileY, cu.width, cu.height, en.tileX, en.tileY, en.width, en.height) then
             droppedItems.f.delete(i)
         end
