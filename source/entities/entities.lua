@@ -154,7 +154,11 @@ function entities.damageEntity(entityIndex, damageNumber)
     en.health = en.health - damageNumber
     if en.health <= 0 then
         if en.drop ~= nil then
-            --not yet implemented kianfiao
+            table.remove(shadows.shadows, en.shadowIndex)
+            table.remove(entities.ents, entityIndex)
+            entities.moveByOneIndexAllSubClasses(entityIndex)
+            
+            --not yet implemented
             --local bonus = player.atributes[en.luck]
             for __, val in ipairs(en.drop) do
                 --tables.writeTable(val)
@@ -162,7 +166,7 @@ function entities.damageEntity(entityIndex, damageNumber)
                 --this crashes game?
 
                 droppedItems.f.create(en.tileX, en.tileY, val.item, val.baseCount)
-                droppedItems.items[#droppedItems.items].id = droppedItems.items[#droppedItems.items].id - 1
+                --droppedItems.items[#droppedItems.items].id = droppedItems.items[#droppedItems.items].id - 1
             end
         end
 
@@ -176,9 +180,6 @@ function entities.damageEntity(entityIndex, damageNumber)
         end
 
         --print(en.xp)
-        table.remove(shadows.shadows, en.shadowIndex)
-        table.remove(entities.ents, entityIndex)
-        entities.moveByOneIndexAllSubClasses(entityIndex)
     end
 end
 
@@ -215,7 +216,7 @@ end
 
 function entities.special()
     for key, value in pairs(entities.ents) do
-        if entitiesIndex[value.index].run ~= nil then
+        if entitiesIndex[value.index] ~= nil and entitiesIndex[value.index].run ~= nil then
             entitiesIndex[value.index].run(value)
         end
     end
