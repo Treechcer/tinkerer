@@ -15,7 +15,7 @@ end
 
 function droppedItems.f.create(tileX, tileY, item, count)
     --local itemIndexItem = itemIndex[item]
-    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil, true)
+    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil)
     table.insert(droppedItems.items, {id = #entities.ents, item = {item = item, count = count}})
     entities.ents[#entities.ents].isDroppedItem = true
     entities.ents[#entities.ents].shadowIndex = nil

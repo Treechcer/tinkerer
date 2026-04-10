@@ -2,20 +2,20 @@ entities = {
     ents = { }, --all entity data stored here!
 }
 
-function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp, isDrop)
+function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp)
     isDrop = isDrop or false
     local shadowIndex = nil
     tileX = tonumber(tileX)
     tileY = tonumber(tileY)
-    --if isDrop then --this is the easiest way to "signal" that it's drop even tough xp isn't even the slightest related to drops
-    --    width = width or 1
-    --    height = height or 1
-    --    killTime = 0
-    --    health = 0
-    --    drop = drop
-    --    xp = nil
-    --    typeE = "droppedItem"
-    --else
+    if entitiesIndex[index] == nil then
+        width = width or 1
+        height = height or 1
+        killTime = 0
+        health = 0
+        drop = drop
+        xp = nil
+        typeE = "droppedItem"
+    else
         width = width or 1
         height = height or 1
         killTime = entitiesIndex[index].killTime
@@ -28,7 +28,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
             --print(shadowIndexSprite)
             shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize + ((height - 1) * map.tileSize), shadowIndexSprite, width, height)
         end
-    --end
+    end
     --print(tileX, tileY, index)
 
     table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE })
