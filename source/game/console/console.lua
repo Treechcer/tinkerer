@@ -12,6 +12,7 @@ console = {
     numberOfRender = 0,
     rmCooldown = 2.5,
     lastRM = 0,
+    lastMsgNum = 1,
     commands = {
         print = function (...)
             local msg = ""
@@ -22,6 +23,7 @@ console = {
             else
                 msg = ...
             end
+
             console.f.addMessage("-> " .. msg)
         end,
         spawn = function (...)
@@ -158,6 +160,16 @@ function console.f.run(dt)
 end
 
 function console.f.addMessage(message)
+    local msg = console.messages[#console.messages] or ""
+    msg = (msg:gsub(" %d+x", ""))
+    if message == msg then
+        console.messages[#console.messages] = msg .. " " .. console.lastMsgNum .. "x"
+        console.lastMsgNum = console.lastMsgNum + 1
+        return
+    else
+        console.lastMsgNum = 1
+    end
+
     if #console.messages < console.maxMessages then
         table.insert(console.messages, message)
     else

@@ -62,6 +62,8 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
     inventory.functions.update(dt)
     inventory.functions.itemMove(dt)
 
+    droppedItems.f.collect()
+
     entitySpawner.func.spawn(dt)
 
     player.checkIfColided(dt)

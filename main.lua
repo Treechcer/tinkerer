@@ -14,7 +14,7 @@ function love.load()
     math.randomseed(os.time())
 
     tables = require("source.workers.libs.tableWorker")
-    
+
     console = require("source.game.console.console")
     debug = require("source.game.console.debug")
     spriteWorker = require("source.workers.spriteWorker")
@@ -89,10 +89,6 @@ function love.update(dt)
     REF.everyFrameStart(dt)
 
     REF.everyFrameEnd(dt)
-
-    --temporary
-
-    droppedItems.f.collect()
 end
 
 function love.wheelmoved(x, y)
