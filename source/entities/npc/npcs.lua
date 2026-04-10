@@ -41,7 +41,7 @@ end
 
 function npcs.functions.spawn()
     --print(player.position.tileX, player.position.tileY)
-    entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken", 5, {}, 1, 1, {})
+    entities.makeNewOne(player.position.tileX, player.position.tileY, "chicken", 5, {}, 1, 1, {}, false)
     entities.ents[#entities.ents].isNPC = true
     table.insert(npcs.npcIndexes, {index = #entities.ents, npc = "chicken", ai = "passiveAI", timeToMove = 0.2})
 

@@ -15,6 +15,8 @@ function love.load()
 
     tables = require("source.workers.libs.tableWorker")
     
+    console = require("source.game.console.console")
+    debug = require("source.game.console.debug")
     spriteWorker = require("source.workers.spriteWorker")
     sounds = require("source.workers.soundWorker")
     shadows = require("source.graphics.effects.shadows")
@@ -41,7 +43,6 @@ function love.load()
     recipes = require("source.player.crafting.recipes")
     crafting = require("source.player.crafting.crafting")
     equipment = require("source.player.equipment")
-    console = require("source.game.console.console")
     pathfinding = require("source.entities.npc.pathfinding")
     specialAnimations = require("source.graphics.effects.specialAniamtions")
     npcs = require("source.entities.npc.npcs")
@@ -81,7 +82,7 @@ function love.draw()
     --FONT TEST
 
     --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
-    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
+    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG ✓⨻⨺", 10, 30)
 end
 
 function love.update(dt)

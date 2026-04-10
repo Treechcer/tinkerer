@@ -8,18 +8,17 @@ droppedItems = {
 function droppedItems.f.changeIndexByOne(index)
     for i = 1, #droppedItems.items do
         if i > index then
-            droppedItems.droppedItems[i].id = droppedItems.droppedItems[i].id- 1
+            droppedItems.items[i].id = droppedItems.items[i].id - 1
         end
     end
 end
 
 function droppedItems.f.create(tileX, tileY, item, count)
     --local itemIndexItem = itemIndex[item]
-    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil)
+    entities.makeNewOne(tileX, tileY, item, 1, {}, 0.5, 0.5, nil, true)
     table.insert(droppedItems.items, {id = #entities.ents, item = {item = item, count = count}})
     entities.ents[#entities.ents].isDroppedItem = true
     entities.ents[#entities.ents].shadowIndex = nil
-    shadows.shadows[#shadows.shadows] = nil
 end
 
 function droppedItems.f.delete(index)

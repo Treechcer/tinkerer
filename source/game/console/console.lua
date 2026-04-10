@@ -14,7 +14,15 @@ console = {
     lastRM = 0,
     commands = {
         print = function (...)
-            console.f.addMessage("-> " .. ...)
+            local msg = ""
+            if type(...) == "table" then
+                for index, value in ipairs(...) do
+                    msg = msg .. tostring(value)
+                end
+            else
+                msg = ...
+            end
+            console.f.addMessage("-> " .. msg)
         end,
         spawn = function (...)
             local args = {...}
@@ -166,6 +174,10 @@ end
 
 function console.f.callConsoleFunction(name, ...)
     console.commands[name](...)
+end
+
+function console.f.addCommand(name, cmdFunc)
+    console.commands[name] = cmdFunc
 end
 
 return console

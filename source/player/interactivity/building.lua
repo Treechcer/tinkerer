@@ -11,7 +11,7 @@ function building.f.build(tileX, tileY, width, height, enName)
 
     --tables.writeTable(en)
 
-    entities.makeNewOne(tileX, tileY, enName, en.HP, en.drop, en.width, en.height, en.xp)
+    entities.makeNewOne(tileX, tileY, enName, en.HP, en.drop, en.width, en.height, en.xp, false)
     return true
 end
 

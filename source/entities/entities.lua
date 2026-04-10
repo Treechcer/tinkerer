@@ -2,12 +2,12 @@ entities = {
     ents = { }, --all entity data stored here!
 }
 
-function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp)
+function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp, isDrop)
     isDrop = isDrop or false
     local shadowIndex = nil
     tileX = tonumber(tileX)
     tileY = tonumber(tileY)
-    if entitiesIndex[index] == nil then
+    if isDrop then
         width = width or 1
         height = height or 1
         killTime = 0
@@ -15,6 +15,8 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
         drop = drop
         xp = nil
         typeE = "droppedItem"
+
+        console.commands.debugPrint("mild", "This is created as droppedItem: " .. index)
     else
         width = width or 1
         height = height or 1
