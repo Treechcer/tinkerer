@@ -1,8 +1,9 @@
 droppedItems = {
     mvSpeed = 2,
     reach = 6,
+    minPickupTime = 0.25,
     items = {
-        --{id, item = {item, count}, ???}
+        --{id, item = {item, count}, hovertime,???}
     },
     f = {}
 }
@@ -40,10 +41,16 @@ function droppedItems.f.collect()
         local cu = player.cursor
         --print(value.id, #entities.ents)
         if renderer.AABB(cu.tileX, cu.tileY, cu.width, cu.height, en.tileX, en.tileY, en.width, en.height) then
-            droppedItems.f.delete(i)
+            value.hovertime = value.hovertime or 0
+            value.hovertime = value.hovertime + love.timer.getDelta()
+            if value.hovertime > droppedItems.minPickupTime then
+                droppedItems.f.delete(i)
+            end
         elseif renderer.AABB(cu.tileX - ((droppedItems.reach - cu.width) / 2), cu.tileY - ((droppedItems.reach - cu.height) / 2), cu.width * droppedItems.reach, cu.height * droppedItems.reach, en.tileX, en.tileY, en.width, en.height) then
-            console.commands.print("CLOSE")
+            --console.commands.print("CLOSE")
             droppedItems.f.move(i)
+        else
+            value.hovertime = 0
         end
         --print(((droppedItems.reach - cu.width) / 2))
     end

@@ -50,7 +50,12 @@ function entities.render()
             if value.index ~= nil then
                 love.graphics.setColor(defaultColor)
                 --tables.writeTable(entitiesIndex[value.index])
-                local spr = entitiesIndex[value.index].getSprite(value)
+                local spr
+                if entitiesIndex[value.index] then
+                    spr = entitiesIndex[value.index].getSprite(value)
+                else
+                    spr = spw.sprites[value.index].sprs
+                end
                 if value.isNPC then
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
                     local yMV = spr:getHeight() * 1.2
