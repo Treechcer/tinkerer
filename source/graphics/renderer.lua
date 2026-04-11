@@ -137,6 +137,7 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
                     love.graphics.print(txt, sx + (map.tileSize * 0.5) - (font:getWidth(txt) / 2), sy + (map.tileSize * 0.5) - (font:getHeight() / 2))
                     break
                 end
+                love.graphics.setColor(1,1,1)
             else
                 --enIndex = entities.isEntityOnTile(player.cursor.x / map.tileSize, player.cursor.y / map.tileSize, 1 / map.tileSize, 1 / map.tileSize)
                 --if enIndex ~= -1 then

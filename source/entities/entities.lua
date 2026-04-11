@@ -72,10 +72,11 @@ function entities.render()
                         love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
                     end
                 end
-            
+                love.graphics.setColor(1,1,1)
             else
                 love.graphics.setColor(value.col or defaultColor)
                 love.graphics.rectangle("fill", posX, posY, map.tileSize, map.tileSize)
+                love.graphics.setColor(1,1,1)
             end
         end
     end

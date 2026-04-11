@@ -83,6 +83,8 @@ function love.draw()
 
     --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
     --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG ✓⨻⨺", 10, 30)
+    print(mathWorker.getAngle(game.width / 2, game.height / 2, love.mouse.getPosition()))
+    love.graphics.print(mathWorker.getAngle(game.width / 2, game.height / 2, love.mouse.getPosition()), 10, 10)
 end
 
 function love.update(dt)

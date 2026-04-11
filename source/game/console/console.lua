@@ -106,6 +106,8 @@ function console.f.render()
         love.graphics.setColor(1,1,1,1)
         love.graphics.print(messages, 0, game.height - fHeight - 17)
     end
+
+    love.graphics.setColor(1,1,1,1)
 end
 
 function console.f.runCommand(command)

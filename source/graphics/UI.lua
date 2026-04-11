@@ -90,7 +90,7 @@ UI = {
     f = {}
 }
 
-UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺"
+UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺."
 UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
 
 
