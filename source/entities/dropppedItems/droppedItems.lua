@@ -1,4 +1,6 @@
 droppedItems = {
+    mvSpeed = 2,
+    reach = 6,
     items = {
         --{id, item = {item, count}, ???}
     },
@@ -39,8 +41,29 @@ function droppedItems.f.collect()
         --print(value.id, #entities.ents)
         if renderer.AABB(cu.tileX, cu.tileY, cu.width, cu.height, en.tileX, en.tileY, en.width, en.height) then
             droppedItems.f.delete(i)
+        elseif renderer.AABB(cu.tileX - ((droppedItems.reach - cu.width) / 2), cu.tileY - ((droppedItems.reach - cu.height) / 2), cu.width * droppedItems.reach, cu.height * droppedItems.reach, en.tileX, en.tileY, en.width, en.height) then
+            console.commands.print("CLOSE")
+            droppedItems.f.move(i)
         end
+        print(((droppedItems.reach - cu.width) / 2))
     end
+end
+
+function droppedItems.f.move(index)
+    local DI = droppedItems.items[index]
+    local cu = player.cursor
+    local mx, my = cu.tileX, cu.tileY
+    local en = entities.ents[DI.id]
+    local dt = love.timer.getDelta()
+
+    local pixelPX = en.tileX
+    local pixelPY = en.tileY
+
+    --print(mx, " ", my, " ", pixelPX, " ", pixelPY)
+    --console.commands.print(mathWorker.getAngle(mx, my, pixelPX, pixelPY))
+
+    en.tileX = en.tileX - (math.cos(mathWorker.getAngle(mx, my, pixelPX, pixelPY)) * droppedItems.mvSpeed * dt)
+    en.tileY = en.tileY - (math.sin(mathWorker.getAngle(mx, my, pixelPX, pixelPY)) * droppedItems.mvSpeed * dt)
 end
 
 return false

@@ -215,6 +215,13 @@ function renderer.calculateTile(x, y)
     return xT,yT
 end
 
+function renderer.calculateTileDec(x, y)
+    local xT = x / map.tileSize
+    local yT = y / map.tileSize
+
+    return xT,yT
+end
+
 function renderer.checkCollsionWidthHeight(tileX, tileY, width, height)
     for x=0, width - 1 do
         for y=0, height - 1 do
