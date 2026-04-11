@@ -45,7 +45,7 @@ function droppedItems.f.collect()
             console.commands.print("CLOSE")
             droppedItems.f.move(i)
         end
-        print(((droppedItems.reach - cu.width) / 2))
+        --print(((droppedItems.reach - cu.width) / 2))
     end
 end
 
@@ -64,6 +64,10 @@ function droppedItems.f.move(index)
 
     en.tileX = en.tileX - (math.cos(mathWorker.getAngle(mx, my, pixelPX, pixelPY)) * droppedItems.mvSpeed * dt)
     en.tileY = en.tileY - (math.sin(mathWorker.getAngle(mx, my, pixelPX, pixelPY)) * droppedItems.mvSpeed * dt)
+
+    en.mvt = en.mvt or 0
+    en.mvt = en.mvt + (dt * 10)
+    en.offsetY = math.sin(en.mvt) * 10
 end
 
 return false
