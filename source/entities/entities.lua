@@ -194,6 +194,7 @@ function entities.moveByOneIndexAllSubClasses(index)
     npcs.functions.changeIndexByOne(index)
     entities.shiftShadowOne(index)
     droppedItems.f.changeIndexByOne(index)
+    entityCleaner.f.removeIndex(index)
 end
 
 function entities.shiftShadowOne(index)

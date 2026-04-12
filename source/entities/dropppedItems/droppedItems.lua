@@ -9,10 +9,8 @@ droppedItems = {
 }
 
 function droppedItems.f.changeIndexByOne(index)
-    for i = 1, #droppedItems.items do
-        if i > index then
-            droppedItems.items[i].id = droppedItems.items[i].id - 1
-        end
+    for i = index, #droppedItems.items do
+        droppedItems.items[i].id = droppedItems.items[i].id - 1
     end
 end
 

@@ -25,4 +25,13 @@ function entityCleaner.f.update(dt)
     end
 end
 
+function entityCleaner.f.removeIndex(index)
+    for index_, value in ipairs(entityCleaner.indexesToDelete) do
+        if value == index then
+            table.remove(entitiesIndex.indexesToDelete, index)
+            break
+        end
+    end
+end
+
 return entityCleaner
