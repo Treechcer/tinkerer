@@ -220,6 +220,8 @@ function player.move(dt)
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX, player.position.y + player.size.height)))
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, player.position.y)))
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(nextX + player.size.width, player.position.y + player.size.height)))
+        and entities.isNonWalkableEntityOnTile(player.position.tileX, player.position.tileY, player.size.width / map.tileSize, player.size.width / map.tileSize) == -1
+        and entities.isNonWalkableEntityOnTile(nextX / map.tileSize, player.position.tileY, player.size.width / map.tileSize, player.size.width / map.tileSize) == -1
     then
         mv = true
     else
@@ -231,6 +233,8 @@ function player.move(dt)
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x + player.size.width, nextY)))
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x, nextY + player.size.height)))
         and renderer.checkCollsion(renderer.getWorldPos(renderer.calculateTile(player.position.x + player.size.width, nextY + player.size.height)))
+        and entities.isNonWalkableEntityOnTile(player.position.tileX, player.position.tileY, player.size.width / map.tileSize, player.size.width / map.tileSize) == -1
+        and entities.isNonWalkableEntityOnTile(player.position.tileX, nextY / map.tileSize, player.size.width / map.tileSize, player.size.width / map.tileSize) == -1
     then
         mv = true
     else

@@ -13,3 +13,4 @@
 - game crashes whn you break stuff (why?)
 - you can walk through entities???
 - when you walk and then stop you can be angled incorrectly
+- `local en = entities.ents[value.id]` on line 38 in droppedItems.lua can be nil which crashes the game

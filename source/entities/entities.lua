@@ -109,6 +109,9 @@ function entities.isNonWalkableEntityOnTile(tileX, tileY, width, height)
     for index, value in ipairs(entities.ents) do
         if renderer.AABB(tileX, tileY, width, height, value.tileX, value.tileY, value.width, value.height) then
             if not entitiesIndex[value.index].walkable then
+                if value.isDroppedItem then
+                    return -1
+                end
                 return index
             else
                 return -1
