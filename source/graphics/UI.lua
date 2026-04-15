@@ -90,9 +90,16 @@ UI = {
     f = {}
 }
 
-UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.ěšččřž"
+UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.ěščřžý"
 UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
-
+UI.fonts.emojis = {
+    [";neutraley;"] = "ě",
+    [";smiley;"] = "š",
+    [";frowney;"] = "č",
+    [";neutral;"] = "ř",
+    [";smile;"] = "ž",
+    [";frown;"] = "ý"
+}
 
 function UI.f.checkStateFurnace(self)
     if next(player.openedEntity[1]) == nil then
@@ -296,6 +303,8 @@ function UI.renderder.descriptions.f.render(x,y,description)
 end
 
 function UI.f.textTify(text)
+    text = UI.f.format(text)
+
     local posibleChars = UI.fonts.possibleChars
     local tab = {}
     for i = 1, text:len() do
@@ -316,6 +325,16 @@ function UI.f.textTify(text)
             text = text:gsub(key, "▢")
         end
     end
+
+    return text
+end
+
+function UI.f.format(text)
+    for key, value in pairs(UI.fonts.emojis) do
+        text = text:gsub(key, value)
+    end
+
+    print(text)
 
     return text
 end
