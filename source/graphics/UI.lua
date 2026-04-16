@@ -90,15 +90,17 @@ UI = {
     f = {}
 }
 
-UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.ěščřžý"
+--emojis use random ASCII escape characters noted in decimal, from it's look I can go from 1 - 31 (maybe even 0? but I haven't tested)
+
+UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6"
 UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
 UI.fonts.emojis = {
-    [";neutraley;"] = "ě",
-    [";smiley;"] = "š",
-    [";frowney;"] = "č",
-    [";neutral;"] = "ř",
-    [";smile;"] = "ž",
-    [";frown;"] = "ý"
+    [";neutraley;"] = "\1",
+    [";smiley;"] = "\2",
+    [";frowney;"] = "\3",
+    [";neutral;"] = "\4",
+    [";smile;"] = "\5",
+    [";frown;"] = "\6"
 }
 
 function UI.f.checkStateFurnace(self)
@@ -330,11 +332,15 @@ function UI.f.textTify(text)
 end
 
 function UI.f.format(text)
+    if text == "" or text  == nil then
+        return ""
+    end
+
     for key, value in pairs(UI.fonts.emojis) do
         text = text:gsub(key, value)
     end
 
-    print(text)
+    --print(text)
 
     return text
 end

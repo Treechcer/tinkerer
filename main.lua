@@ -187,5 +187,8 @@ function love.keypressed(key, scancode, isrepeat)
                 console.currentType = console.currentType .. key
             end
         end
+
+        console.currentType = UI.f.format(console.currentType)
+        print(console.currentType)
     end
 end
