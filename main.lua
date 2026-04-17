@@ -49,6 +49,7 @@ function love.load()
     npcIndex = require("source.entities.npc.npcIndex")
     specialDraws = require("source.graphics.effects.specialDraws")
     dropppedItems = require("source.entities.dropppedItems.droppedItems")
+    shaderWorker = require("source.workers.shaderWorker")
     --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
 
     init.initAll()
@@ -63,6 +64,9 @@ function love.load()
 end
 
 function love.draw()
+    --shaderWorker.shaders.whiteOutVisible:send("outline", {0.5, 0.5, 0.5, 1})
+    --love.graphics.setShader(shaderWorker.shaders.whiteOutVisible)
+
     love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
 
     love.graphics.setColor(1,1,1)
@@ -189,6 +193,6 @@ function love.keypressed(key, scancode, isrepeat)
         end
 
         console.currentType = UI.f.format(console.currentType)
-        print(console.currentType)
+        --print(console.currentType)
     end
 end
