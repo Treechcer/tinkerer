@@ -14,6 +14,7 @@ function love.load()
     math.randomseed(os.time())
 
     tables = require("source.workers.libs.tableWorker")
+    timer = require("source.workers.timer")
 
     console = require("source.game.console.console")
     debug = require("source.game.console.debug")
@@ -60,12 +61,17 @@ function love.load()
     require("source.workers.override")
 
     droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
+
+    ABFIAI = timer.f.addTimer(5, function (self)
+        return self.progress
+    end, "linear")
 end
 
 function love.draw()
-    --shaderWorker.shaders.whiteOutVisible:send("outline", {0.5, 0.5, 0.5, 1})
-    --love.graphics.setShader(shaderWorker.shaders.whiteOutVisible)
-
+    shaderWorker.shaders.lerpShader:send("b", 0.2)
+    shaderWorker.shaders.lerpShader:send("t", timer.timers[ABFIAI].progress)
+    love.graphics.setShader(shaderWorker.shaders.lerpShader)
+    print(timer.timers[ABFIAI].progress)
     love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
 
     love.graphics.setColor(1,1,1)
