@@ -2,7 +2,7 @@ specialMoves = {
     moves = {
         dash = {
             last = 2.5,
-            next = 2.5,
+            next = 1,
             dashing = false,
             unlocked = true, -- idk if this will really be in the game later...
             keyBind = settings.keys.dash,
@@ -16,7 +16,7 @@ specialMoves = {
                     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
                     love.graphics.draw(spr, x + player.size.width / 2, y + player.size.height / 2, dash.rotateValue, (player.size.width / spr:getWidth()) * (player.cursor.screenSide), player.size.height / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
                     dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt)
-                    console.f.callConsoleFunction("print", tostring(dash.rotateValue) .. " " .. tostring(dash.last / dash.next))
+                    --console.f.callConsoleFunction("print", tostring(dash.rotateValue) .. " " .. tostring(dash.last / dash.next))
 
                     if dash.last >= dash.next then
                         dash.rotateValue = 0
@@ -27,13 +27,13 @@ specialMoves = {
                         dash.running = false
                         player.vals.specialRenderFunc = nil
 
-                        console.f.callConsoleFunction("print", "end")
+                        --console.f.callConsoleFunction("print", "end")
                     end
                 end
             end,
             running = false,
             rotateValue = 0,
-            rotIncrease = 6.28318531
+            rotIncrease = 15
         }
     },
     f = {}
