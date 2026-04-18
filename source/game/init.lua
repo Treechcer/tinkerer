@@ -26,6 +26,8 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     equipment.f.init()
 
     npcs.functions.init()
+
+    specialMoves.f.init()
 end
 
 return init

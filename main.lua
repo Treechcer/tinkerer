@@ -50,14 +50,13 @@ function love.load()
     specialDraws = require("source.graphics.effects.specialDraws")
     dropppedItems = require("source.entities.dropppedItems.droppedItems")
     shaderWorker = require("source.workers.shaderWorker")
-    --bit.addBit({bit.BIT1, bit.BIT16, bit.BIT32})
+    specialMoves = require("source.player.interactivity.specialMoves")
 
     init.initAll()
 
     require("source/workers/changeFunctionsByOS")
     REF = require("source.game.runEveryFrame")
 
-    --tables.writeTable(map.map.chunks)
     require("source.workers.override")
 
     droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)

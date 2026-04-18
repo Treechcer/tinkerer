@@ -50,22 +50,28 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         dudeSpr = spw.sprites.dude.sprs[1]
     end
 
-    specialAnimations.functions.jumpyMovement({rotateM = player.position.rotateM, xP = player.position.x, yP = player.position.y, spr = dudeSpr, state = player.vals.state, width = player.size.width, height = player.size.height, jumpySpace = player.position.jumpySpace, walking = player.vals.walking, screenSide = player.cursor.screenSide, moveLeft = player.position.moveLeft, moveDown = player.position.moveDown,
-    update = function (obj, originalObject)
-        player.position.rotateM = obj.rotateM
-        player.position.x = obj.xP
-        player.position.y = obj.yP
-        dudeSpr = obj.spr
-        player.vals.state = obj.state
-        player.size.width = obj.width
-        player.size.height = obj.height
-        player.position.jumpySpace = obj.jumpySpace
-        player.vals.walking = obj.walking
-        player.cursor.screenSide = obj.screenSide
-        player.position.moveDown = obj.moveDown
-        player.position.moveLeft = obj.moveLeft
+    --print(player.vals.specialRender, not player.vals.specialRenderFunc == nil, not type(player.vals.specialRenderFunc) ~= "function")
+
+    if not player.vals.specialRender or (player.vals.specialRenderFunc == nil or type(player.vals.specialRenderFunc) ~= "function") then
+        specialAnimations.functions.jumpyMovement({rotateM = player.position.rotateM, xP = player.position.x, yP = player.position.y, spr = dudeSpr, state = player.vals.state, width = player.size.width, height = player.size.height, jumpySpace = player.position.jumpySpace, walking = player.vals.walking, screenSide = player.cursor.screenSide, moveLeft = player.position.moveLeft, moveDown = player.position.moveDown,
+        update = function (obj, originalObject)
+            player.position.rotateM = obj.rotateM
+            player.position.x = obj.xP
+            player.position.y = obj.yP
+            dudeSpr = obj.spr
+            player.vals.state = obj.state
+            player.size.width = obj.width
+            player.size.height = obj.height
+            player.position.jumpySpace = obj.jumpySpace
+            player.vals.walking = obj.walking
+            player.cursor.screenSide = obj.screenSide
+            player.position.moveDown = obj.moveDown
+            player.position.moveLeft = obj.moveLeft
+        end
+        }, player)
+    else
+       player.vals.specialRenderFunc(dudeSpr)
     end
-}, player)
 
     --x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
 

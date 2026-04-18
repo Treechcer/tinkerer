@@ -66,7 +66,11 @@ player = {
     },
     vals = {
         walking = false,
-        state = "walking"
+        state = "walking",
+        invincible = false,
+        cantMove = false,
+        specialRender = false,
+        specialRenderFunc = nil
     },
     skills = {
         foraging    = {
@@ -185,6 +189,10 @@ end
 ---@diagnostic disable: duplicate-set-field
 function player.move(dt)
     if console.render then
+        return
+    end
+
+    if player.vals.cantMove then
         return
     end
 

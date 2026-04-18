@@ -20,6 +20,8 @@ if game.os ~= "PSP" then
     settings.keys.openInventory = "e"
     settings.keys.openConsole = "t"
 
+    settings.keys.dash = "space"
+
     settings.keys.entityInteract = {"f"}
 elseif game.os == "PSP" then
     settings.keys.up = "triangle"
