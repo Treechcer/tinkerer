@@ -4,8 +4,12 @@ specialMoves = {
             last = 2.5,
             next = 1,
             dashing = false,
+            length = 2.5, --tiles
             unlocked = true, -- idk if this will really be in the game later...
             keyBind = settings.keys.dash,
+            timer = nil,
+            startPos = {tilex = nil, tiley = nil},
+            screenSide = 1,
             run = function (dt)
                 player.vals.cantMove = true
                 player.vals.specialRender = true
@@ -18,6 +22,20 @@ specialMoves = {
                     dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt)
                     --console.f.callConsoleFunction("print", tostring(dash.rotateValue) .. " " .. tostring(dash.last / dash.next))
 
+                    if dash.timer == nil then
+                        dash.startPos.tilex = player.position.tileX
+                        dash.startPos.tiley = player.position.tileY
+                        dash.screenSide = player.cursor.screenSide
+                        dash.timer = true
+                        timer.f.addTimer(dash.next, function (self)
+                            print(self.progress)
+                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress * dash.screenSide)
+                            player.position.x = player.position.tileX * map.tileSize
+                            player.shiftCam()
+                            shadows.functions.updateShadow(1, player.position.x + (player.size.width / 2), player.position.y + player.size.height - 4)
+                        end, "linear")
+                    end
+
                     if dash.last >= dash.next then
                         dash.rotateValue = 0
                         player.vals.cantMove = false
@@ -26,6 +44,7 @@ specialMoves = {
                         player.vals.state = "walking"
                         dash.running = false
                         player.vals.specialRenderFunc = nil
+                        dash.timer = nil
 
                         --console.f.callConsoleFunction("print", "end")
                     end

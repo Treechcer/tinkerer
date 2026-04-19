@@ -175,6 +175,14 @@ function player.init() -- initialises the position of player
     player.position.tileX, player.position.tileY = renderer.calculateTile(player.position.x, player.position.y)
 end
 
+function player.shiftCam()
+    local midX = math.floor(game.width / 2 - player.size.width / 2)
+    local midY = math.floor(game.height / 2 - player.size.height / 2)
+
+    player.camera.x = player.position.x - midX
+    player.camera.y = player.position.y - midY
+end
+
 function player.moveToTile(xTile, yTile)
     player.position.x = xTile * map.tileSize
     player.position.y = yTile * map.tileSize

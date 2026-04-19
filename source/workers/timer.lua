@@ -7,9 +7,8 @@ timer = {
 }
 
 function timer.f.addTimer(length, run, type)
-    table.insert(timer.timers, {starTime = timer.currentTime, endTime = timer.currentTime + length, remaing = length, wholeTimer = length, run = run, type = type, progress = 0})
-
-    return #timer.timers
+    table.insert(timer.timers, {starTime = timer.currentTime, endTime = timer.currentTime + length, remaing = 0, wholeTimer = length, run = run, type = type, progress = 0})
+    --return #timer.timers
 end
 
 function timer.f.updateTimer(dt)
@@ -20,6 +19,7 @@ function timer.f.run(dt)
     local index = 1
     for key, value in pairs(timer.timers) do
         if value.type == "linear" then
+            print(value.remaing, value.wholeTimer)
             local p = value.remaing / value.wholeTimer
             value.progress = p
             value.run(value)
@@ -37,10 +37,11 @@ function timer.f.run(dt)
             end
         end
 
-        value.remaing = value.remaing - dt
-        if value.remaing <= 0 then
-            --hmm I can't really remove the timers, I have to think what shall I do with them...
-            --table.remove(timer.timers, index)
+        value.remaing = value.remaing + dt
+        if value.remaing >= value.wholeTimer then
+            --hmm I can't really remove the timers, I have to think what shall I do with them... 
+            --I can, because it's creates the timer and then the code shouldn't work with the timer!
+            table.remove(timer.timers, index)
         end
 
         index = index + 1

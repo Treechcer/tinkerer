@@ -68,10 +68,12 @@ function love.load()
 end
 
 function love.draw()
-    shaderWorker.shaders.lerpShader:send("b", 0.2)
-    shaderWorker.shaders.lerpShader:send("t", timer.timers[ABFIAI].progress)
-    love.graphics.setShader(shaderWorker.shaders.lerpShader)
-    print(timer.timers[ABFIAI].progress)
+    --shader test
+    --shaderWorker.shaders.lerpShader:send("b", 0.2)
+    --shaderWorker.shaders.lerpShader:send("t", timer.timers[ABFIAI].progress)
+    --love.graphics.setShader(shaderWorker.shaders.lerpShader)
+    --print(timer.timers[ABFIAI].progress)
+
     love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
 
     love.graphics.setColor(1,1,1)
