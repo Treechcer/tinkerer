@@ -17,6 +17,11 @@ specialMoves = {
                 player.vals.state = "dashing"
                 player.vals.specialRenderFunc = function (spr)
                     local dash = specialMoves.moves.dash
+                    if dash.angle == nil then
+                        local pscreenx, pscreeny = renderer.getAbsolutePos(player.position.x, player.position.y)
+                        local mscreenx, mscreeny = love.mouse.getPosition()
+                        dash.angle = mathWorker.getAngle(mscreenx, mscreeny, pscreenx, pscreeny)
+                    end
                     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
                     love.graphics.draw(spr, x + player.size.width / 2, y + player.size.height / 2, dash.rotateValue, (player.size.width / spr:getWidth()) * (player.cursor.screenSide), player.size.height / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
                     dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt)
@@ -28,9 +33,11 @@ specialMoves = {
                         dash.screenSide = player.cursor.screenSide
                         dash.timer = true
                         timer.f.addTimer(dash.next, function (self)
-                            print(self.progress)
-                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress * dash.screenSide)
+                            --print(self.progress)
+                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress * dash.screenSide * math.sin(dash.angle))
+                            player.position.tileY = dash.startPos.tiley + (dash.length * self.progress * dash.screenSide * math.cos(dash.angle))
                             player.position.x = player.position.tileX * map.tileSize
+                            player.position.y = player.position.tileY * map.tileSize
                             player.shiftCam()
                             shadows.functions.updateShadow(1, player.position.x + (player.size.width / 2), player.position.y + player.size.height - 4)
                         end, "linear")
@@ -45,6 +52,7 @@ specialMoves = {
                         dash.running = false
                         player.vals.specialRenderFunc = nil
                         dash.timer = nil
+                        dash.angle = nil
 
                         --console.f.callConsoleFunction("print", "end")
                     end

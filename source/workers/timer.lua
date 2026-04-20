@@ -19,7 +19,7 @@ function timer.f.run(dt)
     local index = 1
     for key, value in pairs(timer.timers) do
         if value.type == "linear" then
-            print(value.remaing, value.wholeTimer)
+            --print(value.remaing, value.wholeTimer)
             local p = value.remaing / value.wholeTimer
             value.progress = p
             value.run(value)
