@@ -20,7 +20,7 @@ specialMoves = {
                     if dash.angle == nil then
                         local pscreenx, pscreeny = renderer.getAbsolutePos(player.position.x, player.position.y)
                         local mscreenx, mscreeny = love.mouse.getPosition()
-                        dash.angle = mathWorker.getAngle(mscreenx, mscreeny, pscreenx, pscreeny)
+                        dash.angle = mathWorker.getAngle(pscreenx, pscreeny, mscreenx, mscreeny)
                     end
                     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
                     love.graphics.draw(spr, x + player.size.width / 2, y + player.size.height / 2, dash.rotateValue, (player.size.width / spr:getWidth()) * (player.cursor.screenSide), player.size.height / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
@@ -34,8 +34,8 @@ specialMoves = {
                         dash.timer = true
                         timer.f.addTimer(dash.next, function (self)
                             --print(self.progress)
-                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress * dash.screenSide * math.sin(dash.angle))
-                            player.position.tileY = dash.startPos.tiley + (dash.length * self.progress * dash.screenSide * math.cos(dash.angle))
+                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress --[[* dash.screenSide]] * math.cos(dash.angle))
+                            player.position.tileY = dash.startPos.tiley + (dash.length * self.progress --[[* dash.screenSide]] * math.sin(dash.angle))
                             player.position.x = player.position.tileX * map.tileSize
                             player.position.y = player.position.tileY * map.tileSize
                             player.shiftCam()
