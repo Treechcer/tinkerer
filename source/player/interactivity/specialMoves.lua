@@ -24,7 +24,7 @@ specialMoves = {
                     end
                     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
                     love.graphics.draw(spr, x + player.size.width / 2, y + player.size.height / 2, dash.rotateValue, (player.size.width / spr:getWidth()) * (player.cursor.screenSide), player.size.height / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
-                    dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt)
+                    dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt * 2)
                     --console.f.callConsoleFunction("print", tostring(dash.rotateValue) .. " " .. tostring(dash.last / dash.next))
 
                     if dash.timer == nil then
@@ -32,12 +32,9 @@ specialMoves = {
                         dash.startPos.tiley = player.position.tileY
                         dash.screenSide = player.cursor.screenSide
                         dash.timer = true
+                        --player.atributes.speed = player.startingStats.speed * 2
                         timer.f.addTimer(dash.next, function (self)
-                            --print(self.progress)
-                            player.position.tileX = dash.startPos.tilex + (dash.length * self.progress --[[* dash.screenSide]] * math.cos(dash.angle))
-                            player.position.tileY = dash.startPos.tiley + (dash.length * self.progress --[[* dash.screenSide]] * math.sin(dash.angle))
-                            player.position.x = player.position.tileX * map.tileSize
-                            player.position.y = player.position.tileY * map.tileSize
+                            player.walkBit(dt, math.cos(dash.angle), math.sin(dash.angle))
                             player.shiftCam()
                             shadows.functions.updateShadow(1, player.position.x + (player.size.width / 2), player.position.y + player.size.height - 4)
                         end, "linear")
@@ -53,6 +50,7 @@ specialMoves = {
                         player.vals.specialRenderFunc = nil
                         dash.timer = nil
                         dash.angle = nil
+                        --player.atributes.speed = player.startingStats.speed
 
                         --console.f.callConsoleFunction("print", "end")
                     end

@@ -227,6 +227,11 @@ function player.move(dt)
     mvXp, mvYp = mathWorker.normalise(mvXp, mvYp)
     mvXc, mvYc = mvXp, mvYp
 
+    player.walkBit(dt, mvXp, mvYp)
+end
+
+function player.walkBit(dt, mvXp, mvYp)
+    mvXc, mvYc = mvXp, mvYp
     local nextX = player.position.x + mvXp * player.atributes.speed * dt
     local nextY = player.position.y + mvYp * player.atributes.speed * dt
 
