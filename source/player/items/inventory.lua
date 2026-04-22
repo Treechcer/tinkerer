@@ -756,4 +756,18 @@ function inventory.functions.removeSpecificAmmountOfItem(item, count)
     return true
 end
 
+function inventory.functions.spendCash(cost)
+    if cost <= inventory.itemsOutsideOfInventory.coins then
+        inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - cost
+        renderer.vars.moneyRenderer.opacityTrajectory = 1
+        timer.f.addTimer(3.25, function (self)
+            renderer.vars.moneyRenderer.opacityTrajectory = 0
+        end, "instant")
+        
+        return true
+    end
+
+    return false
+end
+
 return inventory

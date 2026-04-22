@@ -24,6 +24,7 @@ function timer.f.run(dt)
             value.progress = p
             value.run(value)
         elseif value.type == "instant" then
+            --console.f.callConsoleFunction("print", value.progress)
             local p = value.remaing / value.wholeTimer
             value.progress = p
             if p >= 1 then
@@ -35,15 +36,18 @@ function timer.f.run(dt)
             if p >= 1 then
                 value.run(value)
             end
+        else
+            print("invalid timer")
+            love.event.quit()
         end
 
-        value.remaing = value.remaing + dt
         if value.remaing >= value.wholeTimer then
             --hmm I can't really remove the timers, I have to think what shall I do with them... 
             --I can, because it's creates the timer and then the code shouldn't work with the timer!
             table.remove(timer.timers, index)
         end
 
+        value.remaing = value.remaing + dt
         index = index + 1
     end
 end

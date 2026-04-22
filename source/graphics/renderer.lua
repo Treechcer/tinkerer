@@ -2,7 +2,18 @@ player = require("source.player.player")
 spw = require("source.workers.spriteWorker")
 map = require("source.world.map")
 
-renderer = {}
+renderer = {
+    vars = {
+        moneyRenderer = {
+            opacity = 0,
+            opacityTrajectory = 0,
+            x = 10,
+            y = 10,
+            w = 64,
+            h = 64
+        }
+    }
+}
 
 function renderer.mapRender()
     local tileSize = map.tileSize
@@ -207,9 +218,17 @@ function renderer.menuStateRenderer() -- render when it's menu time
 end
 
 function renderer.renderMoney()
+    local mVal = renderer.vars.moneyRenderer
+    local dt = love.timer.getDelta()
+    mVal.opacity = mathWorker.lerp(mVal.opacity, mVal.opacityTrajectory, dt * 1.5)
+    mVal.opacity = (mVal.opacityTrajectory == 1) and math.min(0.9, mVal.opacity) or math.max(0.1, mVal.opacity)
+    --console.f.callConsoleFunction("print", mVal.opacity)
+    love.graphics.setColor(1,1,1,(mVal.opacity <= 0.11) and 0 or mVal.opacity)
     local spr = spw.sprites["money"].sprs
-    love.graphics.draw(spr, 10, 10, 0, 64 / spr:getWidth(), 64 / spr:getHeight())
+    love.graphics.draw(spr, 10, 10, 0, mVal.w / spr:getWidth(), mVal.h / spr:getHeight())
     love.graphics.print(inventory.itemsOutsideOfInventory.coins, 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
+
+    love.graphics.setColor(1,1,1,1)
 end
 
 function renderer.getWorldPos(x,y) -- this gets you world position **from tile**

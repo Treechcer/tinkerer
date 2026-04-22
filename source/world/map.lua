@@ -51,12 +51,13 @@ function map.f.buyIsland(chX, chY)
     end
 
     local coins = inventory.itemsOutsideOfInventory.coins
-    if coins >= mapData.price then
+    --if coins >= mapData.price then
+    if inventory.functions.spendCash(mapData.price) then
         mapData.owned = true
         if chunks[mapData.chunkIndex].execute ~= nil then
             chunks[mapData.chunkIndex].execute()
         end
-        inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - mapData.price
+        --inventory.itemsOutsideOfInventory.coins = inventory.itemsOutsideOfInventory.coins - mapData.price
         return true
     end
 
