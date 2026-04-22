@@ -22,6 +22,7 @@ specialMoves = {
                         local mscreenx, mscreeny = love.mouse.getPosition()
                         dash.angle = mathWorker.getAngle(pscreenx, pscreeny, mscreenx, mscreeny)
                     end
+
                     x, y = renderer.getAbsolutePos(player.position.x, player.position.y)
                     love.graphics.draw(spr, x + player.size.width / 2, y + player.size.height / 2, dash.rotateValue, (player.size.width / spr:getWidth()) * (player.cursor.screenSide), player.size.height / spr:getHeight(), spr:getWidth() / 2, spr:getHeight() / 2)
                     dash.rotateValue = mathWorker.lerp(dash.rotateValue, dash.rotIncrease, dash.last / dash.next * dt * 2)
@@ -34,6 +35,11 @@ specialMoves = {
                         dash.timer = true
                         --player.atributes.speed = player.startingStats.speed * 2
                         timer.f.addTimer(dash.next, function (self)
+                            if dash.angle == nil then
+                                local pscreenx, pscreeny = renderer.getAbsolutePos(player.position.x, player.position.y)
+                                local mscreenx, mscreeny = love.mouse.getPosition()
+                                dash.angle = mathWorker.getAngle(pscreenx, pscreeny, mscreenx, mscreeny)
+                            end
                             player.walkBit(dt, math.cos(dash.angle), math.sin(dash.angle))
                             player.shiftCam()
                             shadows.functions.updateShadow(1, player.position.x + (player.size.width / 2), player.position.y + player.size.height - 4)
