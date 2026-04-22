@@ -198,10 +198,18 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
     inventory.functions.renderItemOnCursor(renderer.getAbsolutePos(player.cursor.x, player.cursor.y))
     skillUI.f.render()
     console.f.render()
+
+    renderer.renderMoney()
 end
 
 function renderer.menuStateRenderer() -- render when it's menu time
 
+end
+
+function renderer.renderMoney()
+    local spr = spw.sprites["money"].sprs
+    love.graphics.draw(spr, 10, 10, 0, 64 / spr:getWidth(), 64 / spr:getHeight())
+    love.graphics.print(inventory.itemsOutsideOfInventory.coins, 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
 end
 
 function renderer.getWorldPos(x,y) -- this gets you world position **from tile**
