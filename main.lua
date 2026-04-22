@@ -60,11 +60,7 @@ function love.load()
 
     require("source.workers.override")
 
-    droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
-
-    ABFIAI = timer.f.addTimer(5, function (self)
-        return self.progress
-    end, "linear")
+    --droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
 end
 
 function love.draw()

@@ -345,4 +345,17 @@ function UI.f.format(text)
     return text
 end
 
+function UI.f.formatNumber(number)
+    local constShorters = {"K", "M", "B", "T", "Q", "Qi", "S"}
+    local stringNum = tostring(number)
+    local index = math.min(math.floor(#stringNum / 3)-1, #constShorters)
+    local numbers = #stringNum % 3 + 1
+    local decNum = stringNum:sub(numbers+1, numbers+1)
+    if decNum ~= "0" then
+        return stringNum:sub(1, numbers) .. "." .. decNum .. constShorters[index]
+    else
+        return stringNum:sub(1, numbers) .. constShorters[index]
+    end
+end
+
 return UI

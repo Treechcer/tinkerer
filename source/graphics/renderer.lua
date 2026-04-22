@@ -226,7 +226,7 @@ function renderer.renderMoney()
     love.graphics.setColor(1,1,1,(mVal.opacity <= 0.11) and 0 or mVal.opacity)
     local spr = spw.sprites["money"].sprs
     love.graphics.draw(spr, 10, 10, 0, mVal.w / spr:getWidth(), mVal.h / spr:getHeight())
-    love.graphics.print(inventory.itemsOutsideOfInventory.coins, 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
+    love.graphics.print(UI.f.formatNumber(inventory.itemsOutsideOfInventory.coins), 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
 
     love.graphics.setColor(1,1,1,1)
 end
