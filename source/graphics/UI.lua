@@ -358,4 +358,29 @@ function UI.f.formatNumber(number)
     end
 end
 
+--[[
+sprSheet is table that has 9 things in itself (all the sprites should be same dimesions):
+topLeft -- unchanging sprite
+topMid -- changing sprite
+topRight -- unchanging sprite
+MidLeft -- chaging sprite
+MidMid -- changing sprite
+MidRight -- changing sprite
+BottomLeft -- unchanging sprite
+BottomMid -- changing sprite
+BottomRight -- unchanging sprite
+]]
+function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
+    --mindwidth = the width of the unchanging sprites in sprite
+    local topWidth = width - sprSheet.topLeft:getWidth() - sprSheet.topRight:getWidth()
+    local sideHeight = height - sprSheet.topLeft:getHeight() - sprSheet.BottomLeft:getHeight()
+
+    topWidth = topWidth < 0 and 0 or topWidth
+    sideHeight = sideHeight < 0 and 0 or sideHeight
+
+    love.graphics.draw(sprSheet.topLeft, xScreen, yScreen)
+    love.graphics.draw(sprSheet.topMid, xScreen + sprSheet.topLeft:getWidth(), yScreen, 0, topWidth / sprSheet.topMid:getWidth())
+    love.graphics.draw(sprSheet.topRight, xScreen + sprSheet.topLeft:getWidth() + topWidth, yScreen)
+end
+
 return UI
