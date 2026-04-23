@@ -64,6 +64,9 @@ function love.load()
 end
 
 function love.draw()
+
+    UI.f.renderNineSquare({topLeft = spw.sprites["description_topLeft"].sprs, topMid = spw.sprites["description_topMid"].sprs, topRight = spw.sprites["description_topRight"].sprs, midLeft = spw.sprites["description_midLeft"].sprs, midMid = spw.sprites["description_midMid"].sprs, midRight = spw.sprites["description_midRight"].sprs, bottomLeft = spw.sprites["description_bottomLeft"].sprs, bottomMid = spw.sprites["description_bottomMid"].sprs, bottomRight = spw.sprites["description_bottomRight"].sprs}, 545, 15, 128, 128)
+
     --shader test
     --shaderWorker.shaders.lerpShader:send("b", 0.2)
     --shaderWorker.shaders.lerpShader:send("t", timer.timers[ABFIAI].progress)
