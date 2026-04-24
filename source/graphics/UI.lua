@@ -379,7 +379,7 @@ function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
     sideHeight = sideHeight < 0 and 0 or sideHeight
 
     love.graphics.draw(sprSheet.topLeft, xScreen, yScreen)
-    love.graphics.draw(sprSheet.topMid, xScreen + sprSheet.topLeft:getWidth(), yScreen, 0, topWidth / sprSheet.topMid:getWidth())
+    love.graphics.draw(sprSheet.topMid, xScreen + sprSheet.topLeft:getWidth(), yScreen, 0, topWidth / sprSheet.topMid:getWidth(), sprSheet.topLeft:getWidth() / sprSheet.topMid:getWidth())
     love.graphics.draw(sprSheet.topRight, xScreen + sprSheet.topLeft:getWidth() + topWidth, yScreen)
 
     
