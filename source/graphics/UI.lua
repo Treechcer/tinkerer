@@ -374,6 +374,7 @@ function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
     --mindwidth = the width of the unchanging sprites in sprite
     local topWidth = width - sprSheet.topLeft:getWidth() - sprSheet.topRight:getWidth()
     local sideHeight = height - sprSheet.topLeft:getHeight() - sprSheet.bottomLeft:getHeight()
+    local bottomHeight = height - sprSheet.topLeft:getHeight()
 
     topWidth = topWidth < 0 and 0 or topWidth
     sideHeight = sideHeight < 0 and 0 or sideHeight
@@ -382,7 +383,13 @@ function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
     love.graphics.draw(sprSheet.topMid, xScreen + sprSheet.topLeft:getWidth(), yScreen, 0, topWidth / sprSheet.topMid:getWidth(), sprSheet.topLeft:getWidth() / sprSheet.topMid:getWidth())
     love.graphics.draw(sprSheet.topRight, xScreen + sprSheet.topLeft:getWidth() + topWidth, yScreen)
 
-    
+    love.graphics.draw(sprSheet.midLeft, xScreen, yScreen + sprSheet.topLeft:getHeight(), 0, sprSheet.topLeft:getWidth() / sprSheet.midLeft:getWidth(), (height - sprSheet.topLeft:getHeight() - sprSheet.bottomLeft:getHeight()) / sprSheet.midLeft:getHeight())
+    love.graphics.draw(sprSheet.midMid, xScreen + sprSheet.topLeft:getWidth(), yScreen + sprSheet.topLeft:getHeight(), 0, (width - sprSheet.topLeft:getWidth() - sprSheet.bottomLeft:getWidth()) / sprSheet.midMid:getHeight(), (height - sprSheet.topLeft:getHeight() - sprSheet.bottomLeft:getHeight()) / sprSheet.midMid:getHeight())
+    love.graphics.draw(sprSheet.midRight, xScreen + sprSheet.midRight:getWidth() + topWidth, yScreen + sprSheet.topLeft:getWidth(), 0, sprSheet.midRight:getWidth() / sprSheet.midRight:getWidth(), (height - sprSheet.topLeft:getHeight() - sprSheet.bottomLeft:getHeight()) / sprSheet.midRight:getHeight())
+
+    love.graphics.draw(sprSheet.bottomLeft, xScreen, yScreen + bottomHeight)
+    love.graphics.draw(sprSheet.bottomMid, xScreen + sprSheet.bottomLeft:getWidth(), yScreen + bottomHeight, 0, topWidth / sprSheet.topMid:getWidth(), sprSheet.topLeft:getWidth() / sprSheet.topMid:getWidth())
+    love.graphics.draw(sprSheet.bottomRight, xScreen + sprSheet.bottomLeft:getWidth() + topWidth, yScreen + bottomHeight)
 end
 
 return UI
