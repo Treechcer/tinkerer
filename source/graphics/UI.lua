@@ -1,4 +1,8 @@
 UI = {
+    nineSquareSpriteSheet = {
+        --name = {topLeft = image.obj ...}
+        --description = UI.f.createNineSquareTable("description")
+    },
     fonts = {
         normal = love.graphics.newFont(13),
         big = love.graphics.newFont(25),
@@ -88,19 +92,6 @@ UI = {
         }
     },
     f = {}
-}
-
---emojis use random ASCII escape characters noted in decimal, from it's look I can go from 1 - 31 (maybe even 0? but I haven't tested)
-
-UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6"
-UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
-UI.fonts.emojis = {
-    [";neutraley;"] = "\1",
-    [";smiley;"] = "\2",
-    [";frowney;"] = "\3",
-    [";neutral;"] = "\4",
-    [";smile;"] = "\5",
-    [";frown;"] = "\6"
 }
 
 function UI.f.checkStateFurnace(self)
@@ -193,6 +184,20 @@ function UI.f.init()
     UI.renderder.furnaceUI.buttons[1].startY = crafting.y - (UI.renderder.furnaceUI.blockSize * 1.25)
     UI.renderder.furnaceUI.buttons[2].startY = crafting.y
     UI.renderder.furnaceUI.buttons[3].startY = crafting.y + (UI.renderder.furnaceUI.blockSize * 1.25)
+
+    UI.nineSquareSpriteSheet.description = UI.f.createNineSquareTable("description")
+
+    --emojis use random ASCII escape characters noted in decimal, from it's look I can go from 1 - 31 (maybe even 0? but I haven't tested)
+    UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6"
+    UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
+    UI.fonts.emojis = {
+        [";neutraley;"] = "\1",
+        [";smiley;"] = "\2",
+        [";frowney;"] = "\3",
+        [";neutral;"] = "\4",
+        [";smile;"] = "\5",
+        [";frown;"] = "\6"
+    }
 end
 
 function UI.renderder.furnaceUI.render()
@@ -390,6 +395,18 @@ function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
     love.graphics.draw(sprSheet.bottomLeft, xScreen, yScreen + bottomHeight)
     love.graphics.draw(sprSheet.bottomMid, xScreen + sprSheet.bottomLeft:getWidth(), yScreen + bottomHeight, 0, topWidth / sprSheet.topMid:getWidth(), sprSheet.topLeft:getWidth() / sprSheet.topMid:getWidth())
     love.graphics.draw(sprSheet.bottomRight, xScreen + sprSheet.bottomLeft:getWidth() + topWidth, yScreen + bottomHeight)
+end
+
+function UI.f.createNineSquareTable(name)
+    local pos = "assets/sprites/" .. name .. "_"
+    local names = {"topRight", "topLeft", "topMid", "midLeft", "midMid", "midRight", "bottomLeft", "bottomMid", "bottomRight"}
+    local t = {}
+
+    for index, value in ipairs(names) do
+        t[value] = love.graphics.newImage(pos .. value .. ".png")
+    end
+
+    return t
 end
 
 return UI
