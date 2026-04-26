@@ -361,7 +361,9 @@ function inventory.functions.renderWholeInventory()
         return
     end
 
-    if next(item) ~= nil then
+    inventory.inventoryBar.itemOnCursor = {item = inventory.inventoryBar.itemOnCursor.item or nil, count = inventory.inventoryBar.itemOnCursor.count or nil}
+
+    if next(item) ~= nil and inventory.inventoryBar.itemOnCursor.item == nil then
         UI.renderder.descriptions.f.render(x + 15, y + 15, description.f.gen(item.item))
     end
 
