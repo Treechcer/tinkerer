@@ -378,8 +378,40 @@ BottomLeft -- unchanging sprite
 BottomMid -- changing sprite
 BottomRight -- unchanging sprite
 ]]
-function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height)
+function UI.f.renderNineSquare(sprSheet, xScreen, yScreen, width, height --[[, scale]])
     --mindwidth = the width of the unchanging sprites in sprite
+    --scale = scale or 1
+    --local topLeftWidth = sprSheet.topLeft:getWidth() * scale
+    --local topRightWidth = sprSheet.topRight:getWidth() * scale
+    --local topLeftHeight = sprSheet.topLeft:getHeight() * scale
+    --local bottomLeftHeight = sprSheet.bottomLeft:getHeight() * scale
+    --local topMidWidth = sprSheet.topMid:getWidth() * scale
+    --local midLeftWidth = sprSheet.midLeft:getWidth() * scale
+    --local midRightWidth = sprSheet.midRight:getWidth() * scale
+    --local bottomLeftWidth = sprSheet.bottomLeft:getWidth() * scale
+    --local midMidheight = sprSheet.midMid:getHeight() * scale
+    --local midLeftHeight = sprSheet.midLeft:getHeight() * scale
+    --local midRightHeight = sprSheet.midRight:getHeight() * scale
+    --
+    --local topWidth = width - topLeftWidth - topRightWidth
+    --local sideHeight = height - topLeftHeight - bottomLeftHeight
+    --local bottomHeight = height - topLeftHeight
+    --
+    --topWidth = topWidth < 0 and 0 or topWidth
+    --sideHeight = sideHeight < 0 and 0 or sideHeight
+    --
+    --love.graphics.draw(sprSheet.topLeft, xScreen, yScreen, 0, scale, scale)
+    --love.graphics.draw(sprSheet.topMid, xScreen + topLeftWidth, yScreen, 0, topWidth / topMidWidth, topLeftWidth / topMidWidth)
+    --love.graphics.draw(sprSheet.topRight, xScreen + topLeftWidth + topWidth, yScreen, 0, scale, scale)
+    --
+    --love.graphics.draw(sprSheet.midLeft, xScreen, yScreen + topLeftHeight, 0, topLeftWidth / midLeftWidth, (height - topLeftHeight - bottomLeftHeight) / midLeftHeight)
+    --love.graphics.draw(sprSheet.midMid, xScreen + topLeftWidth, yScreen + topLeftHeight, 0, (width - topLeftWidth - bottomLeftWidth) / midMidheight, (height - topLeftHeight - bottomLeftHeight) / midMidheight)
+    --love.graphics.draw(sprSheet.midRight, xScreen + midRightWidth + topWidth, yScreen + topLeftWidth, 0, midRightWidth / midRightWidth, (height - topLeftHeight - bottomLeftHeight) / midRightHeight)
+    --
+    --love.graphics.draw(sprSheet.bottomLeft, xScreen, yScreen + bottomHeight, 0, scale, scale)
+    --love.graphics.draw(sprSheet.bottomMid, xScreen + bottomLeftWidth, yScreen + bottomHeight, 0, topWidth / topMidWidth, topLeftWidth / topMidWidth)
+    --love.graphics.draw(sprSheet.bottomRight, xScreen + bottomLeftWidth + topWidth, yScreen + bottomHeight, 0, scale, scale)
+
     local topWidth = width - sprSheet.topLeft:getWidth() - sprSheet.topRight:getWidth()
     local sideHeight = height - sprSheet.topLeft:getHeight() - sprSheet.bottomLeft:getHeight()
     local bottomHeight = height - sprSheet.topLeft:getHeight()
