@@ -82,6 +82,7 @@ UI = {
 
         },
         descriptions = {
+            offset = 10,
             data = {
                 defaultX = 50,
                 defaultY = 20,
@@ -305,9 +306,9 @@ function UI.renderder.descriptions.f.render(x,y,description)
     --love.graphics.setLineWidth(4)
     --love.graphics.rectangle("line", x - padX, y - padY, width + (padX * 2), height + (padY * 2))
     love.graphics.setColor(1,1,1,.85)
-    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, x, y, width + 2.5, height + 2.5)
+    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, x - objDesc.offset, y - objDesc.offset, width + objDesc.offset, height + objDesc.offset)
     love.graphics.setColor(1,1,1,1)
-    love.graphics.print(description, x, y)
+    love.graphics.print(description, x - (objDesc.offset / 2), y - (objDesc.offset / 2))
     --love.graphics.setColor(1,1,1)
 end
 
