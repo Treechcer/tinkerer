@@ -221,12 +221,16 @@ function renderer.renderMoney()
     local mVal = renderer.vars.moneyRenderer
     local dt = love.timer.getDelta()
     mVal.opacity = mathWorker.lerp(mVal.opacity, mVal.opacityTrajectory, dt * 1.5)
-    mVal.opacity = (mVal.opacityTrajectory == 1) and math.min(0.9, mVal.opacity) or math.max(0.1, mVal.opacity)
+    mVal.opacity = (mVal.opacityTrajectory == 1) and math.min(0.99999999, mVal.opacity) or math.max(0.00001, mVal.opacity)
     --console.f.callConsoleFunction("print", mVal.opacity)
-    love.graphics.setColor(1,1,1,(mVal.opacity <= 0.11) and 0 or mVal.opacity)
+    love.graphics.setColor(1,1,1,(mVal.opacity <= 0.025) and 0 or mVal.opacity)
     local spr = spw.sprites["money"].sprs
+    local strNum = UI.f.formatNumber(inventory.itemsOutsideOfInventory.coins)
+
+    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, 5, 10, mVal.w + UI.fonts.UIfontBig:getWidth(strNum) + 10, mVal.h)
+
     love.graphics.draw(spr, 10, 10, 0, mVal.w / spr:getWidth(), mVal.h / spr:getHeight())
-    love.graphics.print(UI.f.formatNumber(inventory.itemsOutsideOfInventory.coins), 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
+    love.graphics.print(strNum, 10 + 64, 10 + 32 - UI.fonts.UIfontBig:getHeight() / 2)
 
     love.graphics.setColor(1,1,1,1)
 end
