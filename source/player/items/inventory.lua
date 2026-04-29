@@ -550,7 +550,7 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats, equipFunctions)
     if spriteWorker.sprites[item] == nil then
         spriteWorker.generateNewSprite(item)
     end
@@ -583,6 +583,12 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
     }
 
     itemIndex[item].type = description.f.gen(item) or ""
+
+    if equipFunctions ~= nil then
+        itemIndex[item].equipFuncs = {}
+        itemIndex[item].equipFuncs.equip = equipFunctions.equip
+        itemIndex[item].equipFuncs.deEquip = equipFunctions.deEquip
+    end
 end
 
 function inventory.functions.expandInventory()
@@ -671,7 +677,7 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("rock", 64, 1, bit.addBit({ bit.BIT4 }), 1, 5, { item = "rock", count = 5 }, 7, 1, false, false, 0, "Resource", {item = "hammer", count = 1, needs = 1}, "tastes nice", 1, 1)
     inventory.functions.AddNewItemIndex("leaf", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
     inventory.functions.AddNewItemIndex("log", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 5)
-    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2)
+    inventory.functions.AddNewItemIndex("stick", 128, 1, 0, 0, 0, {}, 10, 1, false, true, 2, nil, nil, nil, nil, nil, nil, {--[[equip = function () love.event.quit() end]]})
     inventory.functions.AddNewItemIndex("flowers", 128, 0, 0, 0, 0, {}, 10, 1, true, true, 1)
     inventory.functions.AddNewItemIndex("pebble", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0)
     inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Resource", {item = "iron_ingot", count = 1, needs = 1})

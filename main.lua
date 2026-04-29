@@ -100,6 +100,8 @@ function love.update(dt)
 end
 
 function love.wheelmoved(x, y)
+    local lastItemIndex = inventory.hotBar.selectedItem
+    local lastItem = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem]
     if y >= 1 and (inventory.hotBar.lastTime >= inventory.hotBar.coolDown) and not (inventory.hotBar.selectedItem >= inventory.hotBar.maxItems) and not (inventory.hotBar.selectedItem > 9) then
         inventory.hotBar.selectedItem = inventory.hotBar.selectedItem + 1
         inventory.hotBar.lastTime = 0
@@ -114,6 +116,19 @@ function love.wheelmoved(x, y)
         inventory.hotBar.selectedItem = inventory.hotBar.maxItems
         inventory.hotBar.lastTime = 0
     end
+    --print(#inventory.inventoryBar.inventory)
+    --tables.writeTable(inventory.inventoryBar.inventory)
+    
+    if lastItemIndex == inventory.hotBar.selectedItem then
+        return
+    end
+
+    local itemInhand = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem]
+
+    tables.writeTable(itemIndex[itemInhand.item])
+
+    local a = (itemInhand.item) and ((itemIndex[itemInhand.item].equipFuncs and itemIndex[itemInhand.item].equipFuncs.equip) and itemIndex[itemInhand.item].equipFuncs.equip() or nil) or nil
+    local b = (lastItem.item) and ((itemIndex[lastItem.item].equipFuncs and itemIndex[lastItem.item].equipFuncs.deEquip) and itemIndex[lastItem.item].equipFuncs.deEquip() or nil) or nil
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
