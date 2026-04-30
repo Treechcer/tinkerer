@@ -97,6 +97,9 @@ end
     end
 ]]
 
+function building.f.conveyorBeltState(self)
+    return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
+end
 
 function building.f.furnaceState(self)
     --print(self.state)

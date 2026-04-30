@@ -106,6 +106,10 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
         local itemName = i[#i][inventory.hotBar.selectedItem].item
 
         local spr = spw.sprites[itemName].sprs
+        if type(spr) == "table" then
+            spr = spw.sprites[itemName].sprs[spw.sprites[itemName].index]
+        end
+        
         love.graphics.draw(spr,
             (game.width / 2) + ((player.size.width * 0.75 + (map.tileSize * itemIndex[itemName].width / 5)) * player.cursor.screenSide) + player.floatyMovement.x,
             yT + player.size.height / 3 + player.floatyMovement.y,

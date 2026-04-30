@@ -21,7 +21,7 @@ inventory = {
             {{},{},{},{},{}},
             {{},{},{},{},{}},
             {
-                { --[[item = "hammer", count = 1]] },
+                { item = "conveyor_belt", count = 1 },
                 { item = "rock", count = 5 },
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 128 },
@@ -414,6 +414,10 @@ function inventory.functions.renderHotbar()
             local spr = spw.sprites[inventoryHB[i].item].sprs
             local item = itemIndex[inventoryHB[i].item]
 
+            if type(spr) == "table" then
+                spr = spw.sprites[inventoryHB[i].item].sprs[spw.sprites[inventoryHB[i].item].index]
+            end
+
             local itemWidth = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getWidth() * item.height)
             local itemHeight = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getHeight() * item.width)
 
@@ -683,9 +687,10 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("iron_ore", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Resource", {item = "iron_ingot", count = 1, needs = 1})
     inventory.functions.AddNewItemIndex("iron_ingot", 64, 1, bit.addBit({bit.BIT1, bit.BIT2}), 1, 0, {}, 7, 0.85, false, false, 0, "Resource")
 
-    --crafting stations
+    --crafting stations / buiings
 
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
+    inventory.functions.AddNewItemIndex("conveyor_belt", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
 
     -- equipment
 
