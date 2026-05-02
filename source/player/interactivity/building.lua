@@ -98,7 +98,12 @@ end
 ]]
 
 function building.f.conveyorBeltState(self)
-    return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
+    self.state = self.state or "straight"
+    if self.state == "straight" then
+        return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
+    elseif self.state == "turn" then
+        return spw.sprites["conveyor_turn"].sprs[spw.sprites["conveyor_turn"].index]
+    end
 end
 
 function building.f.furnaceState(self)
