@@ -2,7 +2,7 @@
 
 --This is temporary item, it shows how I want to store items later
 
-items = {
+itemIndex = {
     --This is here just to show how items are stored with some comments
 
     --rock = {
@@ -30,7 +30,7 @@ items = {
     --    weakness = bit.addBit({ bit.BIT1, bit.BIT4 }),
     --    strength = 1,
     --    defaultHp = nil,
-    --    drop = nil,
+    --    drop = nil,   
     --    speedAttackMultiplayer = 5,
     --    attackRotation = 1.5,
     --    buildable = false,
@@ -41,6 +41,13 @@ items = {
     --    smeltsTo = nil,
     --    type = "hurts when you hit yourself with it"
     --}
+    f = {
+
+    }
 }
 
-return items
+function itemIndex.f.returnSprite(itemName)
+    return (type(spw.sprites[itemIndex[itemName].sprName]) == "table") and spw.sprites[itemIndex[itemName].sprName].sprs[spw.sprites[itemName].index] or spw.sprites[itemIndex[itemName].sprName].sprs
+end
+
+return itemIndex

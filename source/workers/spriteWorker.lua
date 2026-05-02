@@ -70,6 +70,7 @@ function spw.generateNewSprite(name, sprs, timer, canMove)
     end
 
     if sprs == nil then
+        --print(name)
         sprs = love.graphics.newImage("assets/sprites/" .. name .. ".png")
     end
 

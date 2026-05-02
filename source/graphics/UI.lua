@@ -28,8 +28,8 @@ UI = {
                 {
                     index = 2,
                     press = function (self)
-                        local cursorItem = itemIndex[inventory.inventoryBar.itemOnCursor.item]
-
+                        --local cursorItem = itemIndex[inventory.inventoryBar.itemOnCursor.item]
+                        local cursorItem = itemIndex.f.returnSprite(inventory.inventoryBar.itemOnCursor.item)
                         if cursorItem == nil and not UI.f.isSLotEmpty(self.index) then
                             return
                         elseif cursorItem == nil and UI.f.isSLotEmpty(self.index) then

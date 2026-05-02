@@ -134,7 +134,8 @@ end
 function inventory.functions.renderItemOnCursor(x, y)
     --love.graphics.setColor(1,1,1)
     if inventory.inventoryBar.render and inventory.inventoryBar.itemOnCursor.item ~= nil then
-        local spr = spriteWorker.sprites[inventory.inventoryBar.itemOnCursor.item].sprs
+        --local spr = spriteWorker.sprites[inventory.inventoryBar.itemOnCursor.item].sprs
+        local spr = itemIndex.f.returnSprite(inventory.inventoryBar.itemOnCursor.item)
         local blockSize = inventory.inventoryBar.blockSize
         local item = itemIndex[inventory.inventoryBar.itemOnCursor.item]
         local w = spr:getWidth() * item.height
@@ -328,7 +329,9 @@ function inventory.functions.renderWholeInventory()
                 end
                 --print(item)
                 --print("----")
-                local spr = spw.sprites[item].sprs
+                --local spr = spw.sprites[item].sprs
+                --print(item)
+                local spr = itemIndex.f.returnSprite(item)
                 --print(spr)
                 --print("---")
                 local itemW = spr:getWidth()  * width
@@ -554,11 +557,12 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats, equipFunctions)
-    if spriteWorker.sprites[item] == nil then
-        spriteWorker.generateNewSprite(item)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats, equipFunctions, sprName)
+    sprName = sprName or item
+    if spriteWorker.sprites[sprName] == nil then
+        spriteWorker.generateNewSprite(sprName)
     end
-    
+
     width = width or 1
     height = height or 1
     burnStrength = burnStrength or 0
@@ -583,7 +587,8 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         burnable = burnable,
         burnStrength = burnStrength,
         smeltsTo = smeltsTo,
-        equipmentStats = equipmentStats
+        equipmentStats = equipmentStats,
+        sprName = sprName
     }
 
     itemIndex[item].type = description.f.gen(item) or ""
@@ -690,7 +695,7 @@ function inventory.functions.init()
     --crafting stations / buiings
 
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
-    inventory.functions.AddNewItemIndex("conveyor_belt", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
+    inventory.functions.AddNewItemIndex("conveyor_belt", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station", nil, nil, nil, nil, nil, nil, "conveyor belt")
     itemIndex["conveyor_belt"].rotatable = true
 
     -- equipment
