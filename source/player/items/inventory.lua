@@ -691,6 +691,7 @@ function inventory.functions.init()
 
     inventory.functions.AddNewItemIndex("furnace", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
     inventory.functions.AddNewItemIndex("conveyor_belt", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station")
+    itemIndex["conveyor_belt"].rotatable = true
 
     -- equipment
 

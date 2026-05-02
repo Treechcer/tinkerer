@@ -70,7 +70,8 @@ player = {
         invincible = false,
         cantMove = false,
         specialRender = false,
-        specialRenderFunc = nil
+        specialRenderFunc = nil,
+        buildingRotate = 0,
     },
     skills = {
         foraging    = {

@@ -159,7 +159,7 @@ function love.mousepressed(x, y, button, istouch, presses)
             if itemName ~= nil then
                 if itemIndex[itemName].buildable then
                     local enData = entitiesIndex[itemName]
-                    local res = building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName)
+                    local res = building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName, player.vals.buildingRotate)
 
                     if res then
                         local it = i[#i][inventory.hotBar.selectedItem]
@@ -177,6 +177,8 @@ function love.mousepressed(x, y, button, istouch, presses)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+    local i = inventory.inventoryBar.inventory
+    local itemName = i[#i][inventory.hotBar.selectedItem].item
     --print(key)
     if console.render then
         if key == "return" or key == "kpenter" then
@@ -212,5 +214,11 @@ function love.keypressed(key, scancode, isrepeat)
 
         console.currentType = UI.f.format(console.currentType)
         --print(console.currentType)
+    elseif i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
+        if itemIndex[itemName].buildable then
+            if key == "r" then
+                player.vals.buildingRotate = player.vals.buildingRotate + math.rad(90)
+            end
+        end
     end
 end

@@ -2,7 +2,8 @@ building = {
     f = {},
 }
 
-function building.f.build(tileX, tileY, width, height, enName)
+function building.f.build(tileX, tileY, width, height, enName, rot)
+    rot = rot or 0
     if entities.isEntityOnTile(tileX, tileY, width, height) ~= -1 then
         return false
     end
@@ -12,18 +13,24 @@ function building.f.build(tileX, tileY, width, height, enName)
     --tables.writeTable(en)
 
     entities.makeNewOne(tileX, tileY, enName, en.HP, en.drop, en.width, en.height, en.xp, false)
+    if itemIndex[enName] ~= nil and itemIndex[enName].rotatable then
+        entities.ents[#entities.ents].rotate = rot
+    end
     return true
 end
 
-function building.f.render(sprite, x, y, width, height, itemName)
+function building.f.render(sprite, x, y, width, height, itemName, rotate)
+    rotate = rotate or 0
     love.graphics.setColor(0.35,1,0.35,0.75)
-    love.graphics.draw(sprite, x, y, 0, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight())
+    --lowkey, don't knwo why 1.5 works but it's probably because I move it technically by 0.5 or something like that when rotationg and changin the ox / oy
+    love.graphics.draw(sprite, x + sprite:getWidth() * 1.5, y + sprite:getWidth() * 1.5, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
     love.graphics.setColor(1,1,1,1)
 end
 
-function building.f.renderIncorrect(sprite, x, y, width, height, itemName)
+function building.f.renderIncorrect(sprite, x, y, width, height, itemName, rotate)
+    rotate = rotate or 0
     love.graphics.setColor(1,0.35,0.35,0.75)
-    love.graphics.draw(sprite, x, y, 0, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight())
+    love.graphics.draw(sprite, x + sprite:getWidth() * 1.5, y + sprite:getWidth() * 1.5, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
     love.graphics.setColor(1,1,1,1)
 end
 

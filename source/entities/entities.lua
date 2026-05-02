@@ -75,7 +75,7 @@ function entities.render()
                         local offsetY = value.offsetY or 0
                         specialDraws.f.outline(spr, posX, posY + offsetY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
                     else
-                        love.graphics.draw(spr, posX, posY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
+                        love.graphics.draw(spr, posX + spr:getWidth() * 1.5, posY + spr:getHeight() * 1.5, value.rotate or 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1), spr:getWidth() / 2, spr:getHeight() / 2)
                     end
                 end
                 love.graphics.setColor(1,1,1)
