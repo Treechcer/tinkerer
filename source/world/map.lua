@@ -49,6 +49,10 @@ function map.f.buyIsland(chX, chY)
     if mapData == nil then
         return false
     end
+    
+    if mapData.owned then -- I was making it pay everytime someone clicked... if they had money lmao even if they owned it
+        return false
+    end
 
     local coins = inventory.itemsOutsideOfInventory.coins
     --if coins >= mapData.price then

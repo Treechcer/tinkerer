@@ -233,4 +233,16 @@ function entities.special()
     end
 end
 
+function entities.getAllEntitiesByIndex(index) -- this return all indices of all entities with of the same type (rock, tree...)
+    local ret = {}
+
+    for index_, value in ipairs(entities.ents) do
+        if value.index == index then
+            table.insert(ret, index_)
+        end
+    end
+
+    return ret
+end
+
 return entities

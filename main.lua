@@ -88,8 +88,9 @@ function love.draw()
 
     --FONT TEST
 
-    --love.graphics.print("the quick brown fox jumps over the lazy dog '", 10, 10)
-    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG ✓⨻⨺", 10, 30)
+    --love.graphics.print("the quick brown fox jumps over the lazy dog", 10, 10)
+    --love.graphics.print("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", 10, 30)
+    --love.graphics.print("0123456789:-<>", 10, 50)
     --love.graphics.print(mathWorker.getAngle(game.width / 2, game.height / 2, love.mouse.getPosition()), 10, 10)
 end
 
@@ -217,7 +218,7 @@ function love.keypressed(key, scancode, isrepeat)
     elseif i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
         if itemIndex[itemName].buildable then
             if key == "r" then
-                player.vals.buildingRotate = (player.vals.buildingRotate >= math.rad(360)) and 0 or player.vals.buildingRotate + math.rad(90)
+                player.vals.buildingRotate = (player.vals.buildingRotate >= math.rad(360)) and math.rad(90) or player.vals.buildingRotate + math.rad(90)
             end
         end
     end
