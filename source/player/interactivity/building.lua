@@ -1,6 +1,40 @@
 building = {
     f = {},
 }
+--special function, to make / add state for conveyor_belt, this is hacky way but whatever
+function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
+    local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, mening we hae to think about it!
+    local indexOfCurrentBuild = #entities.ents
+    local entObject = entities.ents[indexOfCurrentBuild]
+
+    local rotIndex = {
+        right = math.rad(0),
+        left = math.rad(0),
+        up = math.rad(270),
+        down = math.rad(90)
+    }
+
+    for i = 1, #indexOfConveyors-1 do
+        local ent = entities.ents[indexOfConveyors[i]]
+        local whereIs = ""
+        if ent.tileX -1 == tileX and ent.tileY == tileY then
+            whereIs = "right"
+        elseif ent.tileX + 1 == tileX and ent.tileY == tileY then
+            whereIs = "left"
+        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
+            whereIs = "down"
+        elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
+            whereIs = "up"
+        end
+
+        if whereIs ~= "" then
+            print(whereIs)
+            local lRot = rotIndex[whereIs]
+            entities.ents[indexOfCurrentBuild].rotate = lRot
+            break
+        end
+    end
+end
 
 function building.f.build(tileX, tileY, width, height, enName, rot)
     rot = rot or 0
@@ -16,6 +50,11 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
     if itemIndex[enName] ~= nil and itemIndex[enName].rotatable then
         entities.ents[#entities.ents].rotate = rot
     end
+
+    if building.f[enName] ~= nil and type(building.f[enName]) == "function" then
+        building.f[enName](tileX, tileY, width, height, enName, rot)
+    end
+
     return true
 end
 
