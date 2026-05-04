@@ -57,7 +57,7 @@ end
 function npcs.functions.init()
     npcs.functions.makeNewIndex()
 
-    npcs.functions.spawn()
+    --npcs.functions.spawn()
 end
 
 function npcs.functions.loop()

@@ -11,6 +11,13 @@ function entityCleaner.f.update(dt)
     if entityCleaner.lastClean >= entityCleaner.cdToClean then
         for index, value in ipairs(entities.ents) do
             --tables.writeTable(entitiesIndex[value.index])
+            
+            --Thsi might not be the best fix, but it's enought I suppose, because it crashed with dropped ents, idk why lowkey
+
+            if entitiesIndex[value.index] == nil then
+                break
+            end
+
             if entitiesIndex[value.index].isCleanUp(value, entityCleaner.lastClean) then
                 table.insert(entityCleaner.indexesToDelete, index)
             end

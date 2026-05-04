@@ -28,7 +28,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
         shadowIndexSprite = entitiesIndex[index].shadowIndexSprite
         if entitiesIndex[index].shadows then
             --print(shadowIndexSprite)
-            shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize + ((height - 1) * map.tileSize), shadowIndexSprite, width, height)
+            shadowIndex = shadows.functions.newShadow(tileX * map.tileSize, (tileY + 0.25) * map.tileSize --[[+ ((height - 1) * map.tileSize)]], shadowIndexSprite, width, height)
         end
     end
     --print(tileX, tileY, index)

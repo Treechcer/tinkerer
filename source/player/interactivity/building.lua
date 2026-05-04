@@ -10,30 +10,41 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
 
     local rotIndex = {
         right = math.rad(0),
-        left = math.rad(0),
-        up = math.rad(270),
-        down = math.rad(90)
+        left = math.rad(180),
+        up = math.rad(90),
+        down = math.rad(270)
     }
 
+    local indexRots = {
+        left = 1,
+        up = 2,
+        right = 3,
+        down = 4
+    }
+
+    local whereIs = {}
     for i = 1, #indexOfConveyors-1 do
         local ent = entities.ents[indexOfConveyors[i]]
-        local whereIs = ""
-        if ent.tileX -1 == tileX and ent.tileY == tileY then
-            whereIs = "right"
-        elseif ent.tileX + 1 == tileX and ent.tileY == tileY then
-            whereIs = "left"
+        if ent.tileX + 1 == tileX and ent.tileY == tileY then
+            whereIs[#whereIs+1] = "right"
+        elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
+            whereIs[#whereIs+1] = "left"
         elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
-            whereIs = "down"
+            whereIs[#whereIs+1] = "down"
         elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
-            whereIs = "up"
+            whereIs[#whereIs+1] = "up"
         end
+    end
 
-        if whereIs ~= "" then
-            print(whereIs)
-            local lRot = rotIndex[whereIs]
-            entities.ents[indexOfCurrentBuild].rotate = lRot
-            ent.rotate = lRot
-            break
+    --if it has more neighbour it's user error (jk)
+
+    if #whereIs == 2 then
+        --print(indexRots[whereIs[1]] % 4, indexRots[whereIs[2]] % 4)
+        if indexRots[whereIs[1]] + 1 == indexRots[whereIs[2]] or indexRots[whereIs[1]] == indexRots[whereIs[2]] + 1
+            or indexRots[whereIs[1]] - 1 == indexRots[whereIs[2]] or indexRots[whereIs[1]] == indexRots[whereIs[2]] - 1
+            or math.floor(indexRots[whereIs[1]] / 4) == indexRots[whereIs[2]] or indexRots[whereIs[1]] == math.floor(indexRots[whereIs[2]] / 4) then
+            entities.ents[indexOfCurrentBuild].state = "turn"
+            entities.ents[indexOfCurrentBuild].rotate = math.min(rotIndex[whereIs[2]], rotIndex[whereIs[1]])
         end
     end
 end
