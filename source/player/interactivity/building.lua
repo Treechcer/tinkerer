@@ -1,6 +1,7 @@
 building = {
     f = {},
 }
+
 --special function, to make / add state for conveyor_belt, this is hacky way but whatever
 function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, mening we hae to think about it!
@@ -21,9 +22,9 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             whereIs = "right"
         elseif ent.tileX + 1 == tileX and ent.tileY == tileY then
             whereIs = "left"
-        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
-            whereIs = "down"
         elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
+            whereIs = "down"
+        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
             whereIs = "up"
         end
 
@@ -31,6 +32,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             print(whereIs)
             local lRot = rotIndex[whereIs]
             entities.ents[indexOfCurrentBuild].rotate = lRot
+            ent.rotate = lRot
             break
         end
     end
@@ -61,15 +63,14 @@ end
 function building.f.render(sprite, x, y, width, height, itemName, rotate)
     rotate = rotate or 0
     love.graphics.setColor(0.35,1,0.35,0.75)
-    --lowkey, don't knwo why 1.5 works but it's probably because I move it technically by 0.5 or something like that when rotationg and changin the ox / oy
-    love.graphics.draw(sprite, x + sprite:getWidth() * 1.5, y + sprite:getWidth() * 1.5, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
+    love.graphics.draw(sprite, x + map.tileSize / 2, y + map.tileSize / 2, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
     love.graphics.setColor(1,1,1,1)
 end
 
 function building.f.renderIncorrect(sprite, x, y, width, height, itemName, rotate)
     rotate = rotate or 0
     love.graphics.setColor(1,0.35,0.35,0.75)
-    love.graphics.draw(sprite, x + sprite:getWidth() * 1.5, y + sprite:getWidth() * 1.5, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
+    love.graphics.draw(sprite, x + map.tileSize / 2, y + map.tileSize / 2, rotate, (width * itemIndex[itemName].width) / sprite:getWidth(), (height * itemIndex[itemName].height) / sprite:getHeight(), sprite:getWidth() / 2, sprite:getHeight() / 2)
     love.graphics.setColor(1,1,1,1)
 end
 
