@@ -39,12 +39,12 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     --if it has more neighbour it's user error (jk)
 
     if #whereIs == 2 then
+        local w1, w2 = math.min(indexRots[whereIs[1]], indexRots[whereIs[2]]), math.max(indexRots[whereIs[1]], indexRots[whereIs[2]])
         --print(indexRots[whereIs[1]] % 4, indexRots[whereIs[2]] % 4)
-        if indexRots[whereIs[1]] + 1 == indexRots[whereIs[2]] or indexRots[whereIs[1]] == indexRots[whereIs[2]] + 1
-            or indexRots[whereIs[1]] - 1 == indexRots[whereIs[2]] or indexRots[whereIs[1]] == indexRots[whereIs[2]] - 1
-            or math.floor(indexRots[whereIs[1]] / 4) == indexRots[whereIs[2]] or indexRots[whereIs[1]] == math.floor(indexRots[whereIs[2]] / 4) then
+        if w1 + 1 == w2 or w2 - 1 == w1 or math.floor(w2 / 4) == w1 then
             entities.ents[indexOfCurrentBuild].state = "turn"
-            entities.ents[indexOfCurrentBuild].rotate = math.min(rotIndex[whereIs[2]], rotIndex[whereIs[1]])
+            local n1, n2 = rotIndex[whereIs[1]], rotIndex[whereIs[2]]
+            entities.ents[indexOfCurrentBuild].rotate = (n1 + 1 == n2 or n1 == n2 - 1) and math.max(rotIndex[whereIs[1]], rotIndex[whereIs[2]]) or math.min(rotIndex[whereIs[1]], rotIndex[whereIs[2]])
         end
     end
 end
