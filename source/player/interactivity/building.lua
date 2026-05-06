@@ -71,7 +71,11 @@ end
 
 function building.f.build(tileX, tileY, width, height, enName, rot)
     rot = rot or 0
-    if entities.isEntityOnTile(tileX, tileY, width, height) ~= -1 then
+    --if entities.isEntityOnTile(tileX, tileY, width, height) ~= -1 then
+    --    return false
+    --end
+
+    if not building.f.canBuildThere(tileX, tileY, enName) then
         return false
     end
 
@@ -89,6 +93,13 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
     end
 
     return true
+end
+
+function building.f.canBuildThere(tileX, tileY, itemName)
+    if entities.isEntityOnTile(tileX, tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
+        return true
+    end
+    return false
 end
 
 function building.f.render(sprite, x, y, width, height, itemName, rotate)

@@ -154,14 +154,13 @@ function love.mousepressed(x, y, button, istouch, presses)
             return
         end
 
-        if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileX) and building.f.canBuild(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item) then
+        if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY) and building.f.canBuild(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item) then
             local i = inventory.inventoryBar.inventory
             local itemName = i[#i][inventory.hotBar.selectedItem].item
             if itemName ~= nil then
                 if itemIndex[itemName].buildable then
-                    local enData = entitiesIndex[itemName]
+                    local enData = itemIndex[itemName]
                     local res = building.f.build(player.cursor.tileX, player.cursor.tileY, enData.width, enData.height, itemName, player.vals.buildingRotate)
-
                     if res then
                         local it = i[#i][inventory.hotBar.selectedItem]
                         it.count = it.count - 1

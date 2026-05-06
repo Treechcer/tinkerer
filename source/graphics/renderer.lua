@@ -124,7 +124,8 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
             sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
 
-            if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
+            --if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
+            if building.f.canBuildThere(player.cursor.tileX, player.cursor.tileY, itemName) then
                 building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, player.vals.buildingRotate)
             else
                 building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, player.vals.buildingRotate)
