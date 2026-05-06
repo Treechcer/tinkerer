@@ -26,13 +26,13 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     for i = 1, #indexOfConveyors-1 do
         local ent = entities.ents[indexOfConveyors[i]]
         if ent.tileX + 1 == tileX and ent.tileY == tileY then
-            whereIs[#whereIs+1] = "right"
-        elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
             whereIs[#whereIs+1] = "left"
+        elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
+            whereIs[#whereIs+1] = "right"
         elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
-            whereIs[#whereIs+1] = "down"
-        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
             whereIs[#whereIs+1] = "up"
+        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
+            whereIs[#whereIs+1] = "down"
         end
     end
 
@@ -43,8 +43,28 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
         --print(indexRots[whereIs[1]] % 4, indexRots[whereIs[2]] % 4)
         if w1 + 1 == w2 or w2 - 1 == w1 or math.floor(w2 / 4) == w1 then
             entities.ents[indexOfCurrentBuild].state = "turn"
-            local n1, n2 = rotIndex[whereIs[1]], rotIndex[whereIs[2]]
-            entities.ents[indexOfCurrentBuild].rotate = (n1 + 1 == n2 or n1 == n2 - 1) and math.max(rotIndex[whereIs[1]], rotIndex[whereIs[2]]) or math.min(rotIndex[whereIs[1]], rotIndex[whereIs[2]])
+            local rotator = 0
+
+            obj = {
+                [whereIs[1]] = true,
+                [whereIs[2]] = true
+            }
+
+            --print(whereIs[1], whereIs[2])
+
+            if obj.left and obj.down then
+                rotator = math.rad(0)
+            elseif obj.down and obj.right then
+                rotator = math.rad(270)
+            elseif obj.right and obj.up then
+                rotator = math.rad(180)
+            elseif obj.up and obj.left then
+                rotator = math.rad(90)
+            else
+                console.f.callConsoleFunction("debugPrint", "rotate incorrect, coveyor_belt :(")
+            end
+
+            entities.ents[indexOfCurrentBuild].rotate = rotator
         end
     end
 end
