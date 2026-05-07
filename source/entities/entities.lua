@@ -55,6 +55,18 @@ function entities.render()
                     spr = entitiesIndex[value.index].getSprite(value)
                 else
                     spr = spw.sprites[value.index].sprs
+
+--[[
+--TODO: Test
+-- this was programmed during power outage on phone, test this later
+-- this is here to prevent technically possible thing that it COULS be an table because anim. sprites
+
+if type(spr) == "table" then
+    spr = spw.sprites[value.index].sprs[value.index]
+end
+
+]]
+
                 end
                 if value.isNPC then
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
