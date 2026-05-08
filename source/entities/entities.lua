@@ -89,7 +89,11 @@ function entities.render()
                         --    tables.writeTable(entitiesIndex[value.index])
                         --    spr = entitiesIndex[value.index].getSprite(value)
                         --end
-                        love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1), spr:getWidth() / 2, spr:getHeight() / 2)
+
+                        local scalatorX, scalatorY = (value.scaleX ~= nil) and value.scaleX or value.width, (value.scaleY ~= nil) and value.scaleY or value.width
+                        local scaleX, scaleY = map.tileSize / spr:getWidth() * (scalatorX or 1), map.tileSize / spr:getHeight() * (scalatorY or 1)
+
+                        love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, scaleX, scaleY , spr:getWidth() / 2, spr:getHeight() / 2)
                     end
                 end
                 love.graphics.setColor(1,1,1)

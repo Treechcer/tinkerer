@@ -217,7 +217,8 @@ function love.keypressed(key, scancode, isrepeat)
     elseif i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
         if itemIndex[itemName].buildable then
             if key == "r" then
-                player.vals.buildingRotate = (player.vals.buildingRotate >= math.rad(360)) and math.rad(90) or player.vals.buildingRotate + math.rad(90)
+                player.vals.buildingRotate = player.vals.buildingRotate + math.rad(90)
+                player.vals.buildingRotate = (player.vals.buildingRotate >= math.rad(360)) and math.rad(0) or player.vals.buildingRotate
             end
         end
     end

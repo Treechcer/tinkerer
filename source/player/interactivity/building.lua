@@ -9,8 +9,8 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     local entObject = entities.ents[indexOfCurrentBuild]
 
     local rotIndex = {
-        right = math.rad(0),
-        left = math.rad(180),
+        right = math.rad(180),
+        left = math.rad(0),
         up = math.rad(90),
         down = math.rad(270)
     }
@@ -41,7 +41,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
         end
     end
 
-    --if it has more neighbour it's user error (jk)
+    --print(#whereIs)
 
     if #whereIs == 2 then
         local w1, w2 = math.min(indexRots[whereIs[1]], indexRots[whereIs[2]]), math.max(indexRots[whereIs[1]], indexRots[whereIs[2]])
@@ -55,7 +55,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
                 [whereIs[2]] = true
             }
 
-            print(whereIs[1], whereIs[2])
+            --print(whereIs[1], whereIs[2])
 
             if obj.left and obj.down then
                 rotator = math.rad(0)
@@ -75,6 +75,25 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
                 entities.ents[indexOfCurrentBuild].rotate = entities.ents[conveyorEntIndexes[1]].rotate
             end
         end
+    elseif #whereIs == 3 then
+        local canBuild = false
+        local aim = 0
+
+        for i = 1, #conveyorEntIndexes, 1 do
+            print(player.vals.buildingRotate, entities.ents[conveyorEntIndexes[i]].rotate)
+            if player.vals.buildingRotate == entities.ents[conveyorEntIndexes[i]].rotate then
+                canBuild = true
+                aim = entities.ents[conveyorEntIndexes[i]].rotate
+                break
+            end
+        end
+
+        if canBuild then
+            entities.ents[indexOfCurrentBuild].state = "merge3"
+            entities.ents[indexOfCurrentBuild].rotate = aim
+            entities.ents[indexOfCurrentBuild].scaleX = -1
+            entities.ents[indexOfCurrentBuild].scaleY = -1
+        end
     end
 end
 
@@ -87,6 +106,8 @@ function building.f.conveyorBeltState(self)
         else
             return spw.sprites["conveyor_turn"].sprs[math.abs(spw.sprites["conveyor_turn"].index - #spw.sprites["conveyor_turn"].sprs) + 1]
         end
+    elseif self.state == "merge3" then
+        return spw.sprites["conveyor_merge3"].sprs[spw.sprites["conveyor_merge3"].index]
     end
 end
 
