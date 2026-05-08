@@ -23,16 +23,21 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     }
 
     local whereIs = {}
+    local conveyorEntIndexes = {}
     for i = 1, #indexOfConveyors-1 do
         local ent = entities.ents[indexOfConveyors[i]]
         if ent.tileX + 1 == tileX and ent.tileY == tileY then
             whereIs[#whereIs+1] = "left"
+            conveyorEntIndexes[#conveyorEntIndexes+1] = i
         elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
             whereIs[#whereIs+1] = "right"
+            conveyorEntIndexes[#conveyorEntIndexes+1] = i
         elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
             whereIs[#whereIs+1] = "up"
+            conveyorEntIndexes[#conveyorEntIndexes+1] = i
         elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
             whereIs[#whereIs+1] = "down"
+            conveyorEntIndexes[#conveyorEntIndexes+1] = i
         end
     end
 
@@ -50,8 +55,6 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
                 [whereIs[2]] = true
             }
 
-            --print(whereIs[1], whereIs[2])
-
             print(whereIs[1], whereIs[2])
 
             if obj.left and obj.down then
@@ -67,6 +70,10 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             end
 
             entities.ents[indexOfCurrentBuild].rotate = rotator
+        else
+            if entities.ents[conveyorEntIndexes[1]].rotate == entities.ents[conveyorEntIndexes[2]].rotate then
+                entities.ents[indexOfCurrentBuild].rotate = entities.ents[conveyorEntIndexes[1]].rotate
+            end
         end
     end
 end
