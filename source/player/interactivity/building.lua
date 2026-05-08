@@ -52,6 +52,8 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
 
             --print(whereIs[1], whereIs[2])
 
+            print(whereIs[1], whereIs[2])
+
             if obj.left and obj.down then
                 rotator = math.rad(0)
             elseif obj.down and obj.right then
@@ -65,6 +67,19 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             end
 
             entities.ents[indexOfCurrentBuild].rotate = rotator
+        end
+    end
+end
+
+function building.f.conveyorBeltState(self)
+    self.state = self.state or "straight"
+    if self.state == "straight" then
+        return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
+    elseif self.state == "turn" then
+        if self.rotate ~= math.rad(180) and self.rotate ~= math.rad(90) then
+            return spw.sprites["conveyor_turn"].sprs[spw.sprites["conveyor_turn"].index]
+        else
+            return spw.sprites["conveyor_turn"].sprs[math.abs(spw.sprites["conveyor_turn"].index - #spw.sprites["conveyor_turn"].sprs) + 1]
         end
     end
 end
@@ -185,15 +200,6 @@ end
         self.state = nil
     end
 ]]
-
-function building.f.conveyorBeltState(self)
-    self.state = self.state or "straight"
-    if self.state == "straight" then
-        return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
-    elseif self.state == "turn" then
-        return spw.sprites["conveyor_turn"].sprs[spw.sprites["conveyor_turn"].index]
-    end
-end
 
 function building.f.furnaceState(self)
     --print(self.state)
