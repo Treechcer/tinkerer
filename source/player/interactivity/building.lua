@@ -50,7 +50,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             entities.ents[indexOfCurrentBuild].state = "turn"
             local rotator = 0
 
-            obj = {
+            local obj = {
                 [whereIs[1]] = true,
                 [whereIs[2]] = true
             }
@@ -78,21 +78,40 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     elseif #whereIs == 3 then
         local canBuild = false
         local aim = 0
+        local aimDir = nil
 
         for i = 1, #conveyorEntIndexes, 1 do
             print(player.vals.buildingRotate, entities.ents[conveyorEntIndexes[i]].rotate)
             if player.vals.buildingRotate == entities.ents[conveyorEntIndexes[i]].rotate then
                 canBuild = true
                 aim = entities.ents[conveyorEntIndexes[i]].rotate
+                aimDir = whereIs[i]
                 break
             end
         end
 
         if canBuild then
+            local obj = {
+                [whereIs[1]] = true,
+                [whereIs[2]] = true,
+                [whereIs[3]] = true
+            }
+
             entities.ents[indexOfCurrentBuild].state = "merge3"
             entities.ents[indexOfCurrentBuild].rotate = aim
-            entities.ents[indexOfCurrentBuild].scaleX = -1
-            entities.ents[indexOfCurrentBuild].scaleY = -1
+
+            entities.ents[indexOfCurrentBuild].scaleY = 1
+            entities.ents[indexOfCurrentBuild].scaleX = 1
+
+            if obj.up then
+                entities.ents[indexOfCurrentBuild].scaleY = -1
+            end
+            
+            if aim == rotIndex[aimDir] then
+                entities.ents[indexOfCurrentBuild].scaleX = -1
+            end
+
+            
         end
     end
 end
