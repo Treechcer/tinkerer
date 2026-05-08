@@ -84,6 +84,11 @@ function entities.render()
                         local offsetY = value.offsetY or 0
                         specialDraws.f.outline(spr, posX, posY + offsetY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
                     else
+                        --cooked this to fix problem, realised it was broken elsewhere....
+                        --if spr == nil then
+                        --    tables.writeTable(entitiesIndex[value.index])
+                        --    spr = entitiesIndex[value.index].getSprite(value)
+                        --end
                         love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1), spr:getWidth() / 2, spr:getHeight() / 2)
                     end
                 end

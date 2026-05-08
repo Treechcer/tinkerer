@@ -72,8 +72,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
 end
 
 function building.f.conveyorBeltState(self)
-    self.state = self.state or "straight"
-    if self.state == "straight" then
+    if self.state == "straight" or self.state == nil then
         return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
     elseif self.state == "turn" then
         if self.rotate ~= math.rad(180) and self.rotate ~= math.rad(90) then

@@ -330,7 +330,7 @@ function inventory.functions.renderWholeInventory()
                 --print(item)
                 --print("----")
                 --local spr = spw.sprites[item].sprs
-                --print(item)
+                print(item)
                 local spr = itemIndex.f.returnSprite(item)
                 --print(spr)
                 --print("---")
@@ -414,8 +414,11 @@ function inventory.functions.renderHotbar()
             love.graphics.draw(cross, blockX, y, 0, hotbar.boxSize / cross:getWidth(), hotbar.boxSize / cross:getHeight())
         elseif inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
             love.graphics.setColor(1, 1, 1)
-            local spr = spw.sprites[inventoryHB[i].item].sprs
             local item = itemIndex[inventoryHB[i].item]
+
+            --this is definitely a way to get a sprite lmao
+
+            local spr = itemIndex.f.returnSprite(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][i].item)
 
             if type(spr) == "table" then
                 spr = spw.sprites[inventoryHB[i].item].sprs[spw.sprites[inventoryHB[i].item].index]
