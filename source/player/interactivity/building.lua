@@ -2,6 +2,18 @@ building = {
     f = {},
 }
 
+function building.f.radiansToDir(rad)
+    print(rad)
+    local rotIndex = {
+        [math.rad(180)] = "right",
+        [math.rad(0)] = "left",
+        [math.rad(90)] = "up",
+        [math.rad(270)] = "down"
+    }
+
+    return rotIndex[rad] or false
+end
+
 --special function, to make / add state for conveyor_belt, this is hacky way but whatever
 function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
     local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, mening we hae to think about it!
@@ -106,12 +118,21 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
             if obj.up then
                 entities.ents[indexOfCurrentBuild].scaleY = -1
             end
-            
+
             if aim == rotIndex[aimDir] then
                 entities.ents[indexOfCurrentBuild].scaleX = -1
             end
 
-            
+            if obj.up and obj.left then
+                entities.ents[indexOfCurrentBuild].scaleY = 1
+            elseif obj.up and obj.right then
+                entities.ents[indexOfCurrentBuild].scaleY = -1
+            end
+
+            for key, value in pairs(conveyorEntIndexes) do
+                local conv = entities.ents[value]
+                print(building.f.radiansToDir(conv.rotate))
+            end
         end
     end
 end
