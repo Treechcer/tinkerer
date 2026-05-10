@@ -16,7 +16,7 @@ end
 
 --special function, to make / add state for conveyor_belt, this is hacky way but whatever
 function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
-    local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, mening we hae to think about it!
+    local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, meaning we have to think about it!
     local indexOfCurrentBuild = #entities.ents
     local entObject = entities.ents[indexOfCurrentBuild]
 
@@ -87,16 +87,17 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
                 entities.ents[indexOfCurrentBuild].rotate = entities.ents[conveyorEntIndexes[1]].rotate
             end
         end
-    elseif #whereIs == 3 then
+    --TODO actually add merger or whatever, this code kinda sucks and kinda works at the same time, so I'll have to fix it, but I would love to make conveyors work to trasfer items and whatnot
+    --[[elseif #whereIs == 3 then
         local canBuild = false
         local aim = 0
         local aimDir = nil
 
         for i = 1, #conveyorEntIndexes, 1 do
-            print(player.vals.buildingRotate, entities.ents[conveyorEntIndexes[i]].rotate)
-            if player.vals.buildingRotate == entities.ents[conveyorEntIndexes[i]].rotate then
+            print(player.vals.buildingRotate, entities.ents[conveyorEntIndexes[i] ].rotate)
+            if player.vals.buildingRotate == entities.ents[conveyorEntIndexes[i] ].rotate then
                 canBuild = true
-                aim = entities.ents[conveyorEntIndexes[i]].rotate
+                aim = entities.ents[conveyorEntIndexes[i] ].rotate
                 aimDir = whereIs[i]
                 break
             end
@@ -104,9 +105,9 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
 
         if canBuild then
             local obj = {
-                [whereIs[1]] = true,
-                [whereIs[2]] = true,
-                [whereIs[3]] = true
+                [whereIs[1] ] = true,
+                [whereIs[2] ] = true,
+                [whereIs[3] ] = true
             }
 
             entities.ents[indexOfCurrentBuild].state = "merge3"
@@ -133,7 +134,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
                 local conv = entities.ents[value]
                 print(building.f.radiansToDir(conv.rotate))
             end
-        end
+        end]]
     end
 end
 
