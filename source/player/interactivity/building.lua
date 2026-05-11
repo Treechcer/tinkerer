@@ -1,5 +1,6 @@
 building = {
     f = {},
+    data = {}
 }
 
 function building.f.radiansToDir(rad)
@@ -15,9 +16,9 @@ function building.f.radiansToDir(rad)
 end
 
 --special function, to make / add state for conveyor_belt, this is hacky way but whatever
-function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
-    local indexOfConveyors = entities.getAllEntitiesByIndex(enName) --this gave the current building in itself, meaning we have to think about it!
-    local indexOfCurrentBuild = #entities.ents
+function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, indexOfCurrentBuild)
+    local indexOfConveyors = #building.data[enName].refs --this gave the current building in itself, meaning we have to think about it!
+    indexOfCurrentBuild = indexOfCurrentBuild or #entities.ents
     local entObject = entities.ents[indexOfCurrentBuild]
 
     local rotIndex = {
@@ -34,10 +35,12 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot)
         down = 4
     }
 
+    print(indexOfConveyors)
+
     local whereIs = {}
     local conveyorEntIndexes = {}
-    for i = 1, #indexOfConveyors-1 do
-        local ent = entities.ents[indexOfConveyors[i]]
+    for i = 1, indexOfConveyors-1 do
+        local ent = building.data[enName].refs[i]
         if ent.tileX + 1 == tileX and ent.tileY == tileY then
             whereIs[#whereIs+1] = "left"
             conveyorEntIndexes[#conveyorEntIndexes+1] = i
@@ -172,6 +175,9 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
     end
 
     if building.f[enName] ~= nil and type(building.f[enName]) == "function" then
+        building.data[enName] = building.data[enName] or {}
+        building.data[enName].refs = building.data[enName].refs or {}
+        table.insert(building.data[enName].refs, entities.ents[#entities.ents])
         building.f[enName](tileX, tileY, width, height, enName, rot)
     end
 
