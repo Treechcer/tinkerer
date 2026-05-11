@@ -35,7 +35,7 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
         down = 4
     }
 
-    print(indexOfConveyors)
+    --print(indexOfConveyors)
 
     local whereIs = {}
     local conveyorEntIndexes = {}
@@ -178,7 +178,12 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
         building.data[enName] = building.data[enName] or {}
         building.data[enName].refs = building.data[enName].refs or {}
         table.insert(building.data[enName].refs, entities.ents[#entities.ents])
-        building.f[enName](tileX, tileY, width, height, enName, rot)
+        --building.f[enName](tileX, tileY, width, height, enName, rot)
+        for i = 1, #building.data[enName].refs, 1 do
+            --print(i, #building.data[enName].refs)
+            local ent = building.data[enName].refs[i]
+            building.f[enName](ent.tileX, ent.tileY, ent.width, ent.height, enName, ent.rot, i)
+        end
     end
 
     return true
