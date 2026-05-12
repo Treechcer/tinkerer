@@ -60,11 +60,13 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
 
     --print(#whereIs)
 
+    local stateRet = "straight"
+
     if #whereIs == 2 then
         local w1, w2 = math.min(indexRots[whereIs[1]], indexRots[whereIs[2]]), math.max(indexRots[whereIs[1]], indexRots[whereIs[2]])
         --print(indexRots[whereIs[1]] % 4, indexRots[whereIs[2]] % 4)
         if w1 + 1 == w2 or w2 - 1 == w1 or math.floor(w2 / 4) == w1 then
-            entities.ents[indexOfCurrentBuild].state = "turn"
+            stateRet = "turn"
             local rotator = 0
 
             local obj = {
@@ -86,7 +88,10 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
                 console.f.callConsoleFunction("debugPrint", "rotate incorrect, coveyor_belt :(")
             end
 
-            entities.ents[indexOfCurrentBuild].rotate = rotator
+            if indexOfCurrentBuild ~= -1 then
+                entities.ents[indexOfCurrentBuild].state = "turn"
+                entities.ents[indexOfCurrentBuild].rotate = rotator
+            end
         else
             if entities.ents[conveyorEntIndexes[1]].rotate == entities.ents[conveyorEntIndexes[2]].rotate then
                 entities.ents[indexOfCurrentBuild].rotate = entities.ents[conveyorEntIndexes[1]].rotate
@@ -141,18 +146,23 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
             end
         end]]
     end
+
+    return stateRet
 end
 
-function building.f.conveyorBeltState(self)
-    if self.state == "straight" or self.state == nil then
+function building.f.conveyorBeltState(self, state)
+    state = (self == nil) and state or self.state
+    local rotate = (self == nil) and player.vals.buildingRotate or self.rotate
+
+    if state == "straight" or state == nil then
         return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
-    elseif self.state == "turn" then
-        if self.rotate ~= math.rad(180) and self.rotate ~= math.rad(90) then
+    elseif state == "turn" then
+        if rotate ~= math.rad(180) and rotate ~= math.rad(90) then
             return spw.sprites["conveyor_turn"].sprs[spw.sprites["conveyor_turn"].index]
         else
             return spw.sprites["conveyor_turn"].sprs[math.abs(spw.sprites["conveyor_turn"].index - #spw.sprites["conveyor_turn"].sprs) + 1]
         end
-    elseif self.state == "merge3" then
+    elseif state == "merge3" then
         return spw.sprites["conveyor_merge3"].sprs[spw.sprites["conveyor_merge3"].index]
     end
 end

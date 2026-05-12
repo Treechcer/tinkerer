@@ -119,12 +119,22 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
             spr:getWidth() / 2,
             spr:getHeight() / 2)
         if itemIndex[itemName].buildable then
+            local itemIndexIndexed = itemIndex[itemName]
 
             cursorHeight, cursorWidth = itemIndex[itemName].height, itemIndex[itemName].width
 
             sx, sy = renderer.getAbsolutePos(renderer.getWorldPos(player.cursor.tileX, player.cursor.tileY))
 
             --if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
+
+            if building.f[itemName] ~= nil and type(building.f[itemName]) == "function" then
+                building.data[itemName] = building.data[itemName] or {}
+                building.data[itemName].refs = building.data[itemName].refs or {}
+
+                local state = building.f[itemName](player.cursor.tileX, player.cursor.tileY, itemIndexIndexed.width, itemIndexIndexed.height, itemName, player.vals.buildingRotate, -1)
+                spr = entitiesIndex[itemName].getSprite(nil, state)
+            end
+
             if building.f.canBuildThere(player.cursor.tileX, player.cursor.tileY, itemName) then
                 building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, player.vals.buildingRotate)
             else
