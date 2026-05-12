@@ -39,20 +39,22 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
 
     local whereIs = {}
     local conveyorEntIndexes = {}
-    for i = 1, indexOfConveyors-1 do
-        local ent = building.data[enName].refs[i]
-        if ent.tileX + 1 == tileX and ent.tileY == tileY then
-            whereIs[#whereIs+1] = "left"
-            conveyorEntIndexes[#conveyorEntIndexes+1] = i
-        elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
-            whereIs[#whereIs+1] = "right"
-            conveyorEntIndexes[#conveyorEntIndexes+1] = i
-        elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
-            whereIs[#whereIs+1] = "up"
-            conveyorEntIndexes[#conveyorEntIndexes+1] = i
-        elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
-            whereIs[#whereIs+1] = "down"
-            conveyorEntIndexes[#conveyorEntIndexes+1] = i
+    for i = 1, indexOfConveyors do
+        if i ~= indexOfCurrentBuild then
+            local ent = building.data[enName].refs[i]
+            if ent.tileX + 1 == tileX and ent.tileY == tileY then
+                whereIs[#whereIs+1] = "left"
+                conveyorEntIndexes[#conveyorEntIndexes+1] = i
+            elseif ent.tileX - 1 == tileX and ent.tileY == tileY then
+                whereIs[#whereIs+1] = "right"
+                conveyorEntIndexes[#conveyorEntIndexes+1] = i
+            elseif ent.tileX == tileX and ent.tileY + 1 == tileY then
+                whereIs[#whereIs+1] = "up"
+                conveyorEntIndexes[#conveyorEntIndexes+1] = i
+            elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
+                whereIs[#whereIs+1] = "down"
+                conveyorEntIndexes[#conveyorEntIndexes+1] = i
+            end 
         end
     end
 
@@ -180,7 +182,6 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
         table.insert(building.data[enName].refs, entities.ents[#entities.ents])
         --building.f[enName](tileX, tileY, width, height, enName, rot)
         for i = 1, #building.data[enName].refs, 1 do
-            --print(i, #building.data[enName].refs)
             local ent = building.data[enName].refs[i]
             building.f[enName](ent.tileX, ent.tileY, ent.width, ent.height, enName, ent.rot, i)
         end
