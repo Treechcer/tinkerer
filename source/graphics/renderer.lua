@@ -127,18 +127,20 @@ function renderer.gameStateRenderer() -- rendere everything when it's gamestate
 
             --if entities.isEntityOnTile(player.cursor.tileX, player.cursor.tileY, itemIndex[itemName].width, itemIndex[itemName].height) == -1 and building.f.canBuild(itemName) then
 
+            local state, rot = "straight", 0
+
             if building.f[itemName] ~= nil and type(building.f[itemName]) == "function" then
                 building.data[itemName] = building.data[itemName] or {}
                 building.data[itemName].refs = building.data[itemName].refs or {}
 
-                local state = building.f[itemName](player.cursor.tileX, player.cursor.tileY, itemIndexIndexed.width, itemIndexIndexed.height, itemName, player.vals.buildingRotate, -1)
+                state, rot = building.f[itemName](player.cursor.tileX, player.cursor.tileY, itemIndexIndexed.width, itemIndexIndexed.height, itemName, player.vals.buildingRotate, -1)
                 spr = entitiesIndex[itemName].getSprite(nil, state)
             end
 
             if building.f.canBuildThere(player.cursor.tileX, player.cursor.tileY, itemName) then
-                building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, player.vals.buildingRotate)
+                building.f.render(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, (rot ~= 0) and rot or player.vals.buildingRotate)
             else
-                building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, player.vals.buildingRotate)
+                building.f.renderIncorrect(spr, sx, sy, 1 * map.tileSize, 1 * map.tileSize, itemName, (rot ~= 0) and rot or player.vals.buildingRotate)
             end
         end
         

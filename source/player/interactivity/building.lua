@@ -54,20 +54,25 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
             elseif ent.tileX == tileX and ent.tileY - 1 == tileY then
                 whereIs[#whereIs+1] = "down"
                 conveyorEntIndexes[#conveyorEntIndexes+1] = i
-            end 
+            end
         end
     end
 
     --print(#whereIs)
 
     local stateRet = "straight"
+    local rotator = 0
+
+    if indexOfCurrentBuild ~= -1 then
+        stateRet = entities.ents[indexOfCurrentBuild].state
+        rotator = entities.ents[indexOfCurrentBuild].rotate
+    end
 
     if #whereIs == 2 then
         local w1, w2 = math.min(indexRots[whereIs[1]], indexRots[whereIs[2]]), math.max(indexRots[whereIs[1]], indexRots[whereIs[2]])
         --print(indexRots[whereIs[1]] % 4, indexRots[whereIs[2]] % 4)
         if w1 + 1 == w2 or w2 - 1 == w1 or math.floor(w2 / 4) == w1 then
             stateRet = "turn"
-            local rotator = 0
 
             local obj = {
                 [whereIs[1]] = true,
@@ -86,11 +91,6 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
                 rotator = math.rad(90)
             else
                 console.f.callConsoleFunction("debugPrint", "rotate incorrect, coveyor_belt :(")
-            end
-
-            if indexOfCurrentBuild ~= -1 then
-                entities.ents[indexOfCurrentBuild].state = "turn"
-                entities.ents[indexOfCurrentBuild].rotate = rotator
             end
         else
             if entities.ents[conveyorEntIndexes[1]].rotate == entities.ents[conveyorEntIndexes[2]].rotate then
@@ -147,7 +147,12 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
         end]]
     end
 
-    return stateRet
+    if indexOfCurrentBuild ~= -1 then
+        entities.ents[indexOfCurrentBuild].state = stateRet
+        entities.ents[indexOfCurrentBuild].rotate = rotator
+    end
+
+    return stateRet, rotator
 end
 
 function building.f.conveyorBeltState(self, state)
