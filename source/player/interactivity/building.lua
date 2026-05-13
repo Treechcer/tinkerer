@@ -20,6 +20,9 @@ function building.f.conveyor_belt(tileX, tileY, width, height, enName, rot, inde
     local indexOfConveyors = #building.data[enName].refs --this gave the current building in itself, meaning we have to think about it!
     indexOfCurrentBuild = indexOfCurrentBuild or #entities.ents
     local entObject = entities.ents[indexOfCurrentBuild]
+    if entObject ~= nil then
+        entObject.item = entObject.item or {item = "", count = "", posx = 0, posy = 0, enRef = nil}
+    end
 
     local rotIndex = {
         right = math.rad(180),
@@ -158,6 +161,15 @@ end
 function building.f.conveyorBeltState(self, state)
     state = (self == nil) and state or self.state
     local rotate = (self == nil) and player.vals.buildingRotate or self.rotate
+
+    if self ~= nil then
+        self.item = self.item or {item = "", count = "", posx = 0, posy = 0, enRef = nil}
+
+        if self.item.item ~= "" and self.item.itemRef == nil then
+            entities.makeNewOne(self.tileX, self.tileY, self.item.item, 1, {}, 1, 1, {}, nil)
+            self.item.enRef = entities.ents[#entities.ents]
+        end
+    end
 
     if state == "straight" or state == nil then
         return spw.sprites["conveyor_belt"].sprs[spw.sprites["conveyor_belt"].index]
