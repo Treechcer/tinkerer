@@ -182,7 +182,9 @@ function entities.damageEntity(entityIndex, damageNumber)
     en.health = en.health - damageNumber
     if en.health <= 0 then
         if en.drop ~= nil then
-            table.remove(shadows.shadows, en.shadowIndex)
+            if entitiesIndex[en.index].shadows then
+                table.remove(shadows.shadows, en.shadowIndex) 
+            end
             table.remove(entities.ents, entityIndex)
             entities.moveByOneIndexAllSubClasses(entityIndex)
             

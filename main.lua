@@ -126,7 +126,7 @@ function love.wheelmoved(x, y)
 
     local itemInhand = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem]
 
-    tables.writeTable(itemIndex[itemInhand.item])
+    --tables.writeTable(itemIndex[itemInhand.item])
 
     local a = (itemInhand.item) and ((itemIndex[itemInhand.item].equipFuncs and itemIndex[itemInhand.item].equipFuncs.equip) and itemIndex[itemInhand.item].equipFuncs.equip() or nil) or nil
     local b = (lastItem.item) and ((itemIndex[lastItem.item].equipFuncs and itemIndex[lastItem.item].equipFuncs.deEquip) and itemIndex[lastItem.item].equipFuncs.deEquip() or nil) or nil
