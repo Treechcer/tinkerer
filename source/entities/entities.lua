@@ -1,5 +1,6 @@
 entities = {
     ents = { }, --all entity data stored here!
+    num = 1,
 }
 
 function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, xp, isDrop)
@@ -33,7 +34,8 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     end
     --print(tileX, tileY, index)
 
-    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE })
+    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE, enNum = entities.num })
+    entities.num = entities.num + 1 -- primary key of some sorts, might not be reliabe after I add saves?
 end
 
 function entities.render()
@@ -183,8 +185,20 @@ function entities.damageEntity(entityIndex, damageNumber)
     if en.health <= 0 then
         if en.drop ~= nil then
             if entitiesIndex[en.index].shadows then
-                table.remove(shadows.shadows, en.shadowIndex) 
+                table.remove(shadows.shadows, en.shadowIndex)
             end
+
+            if building.data[en.index].refs ~= nil then
+                local index = 1
+                for key, value in pairs(building.data[en.index].refs) do
+                    if value.num == en.num and en.tileX == value.tileX and en.tileY == value.tileY then
+                        table.remove(building.data[en.index].refs, index)
+                    end
+
+                    index = index + 1
+                end
+            end
+
             table.remove(entities.ents, entityIndex)
             entities.moveByOneIndexAllSubClasses(entityIndex)
             

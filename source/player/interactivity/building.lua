@@ -207,6 +207,7 @@ function building.f.build(tileX, tileY, width, height, enName, rot)
         building.data[enName] = building.data[enName] or {}
         building.data[enName].refs = building.data[enName].refs or {}
         table.insert(building.data[enName].refs, entities.ents[#entities.ents])
+        --print(#building.data[enName].refs)
         --building.f[enName](tileX, tileY, width, height, enName, rot)
         for i = 1, #building.data[enName].refs, 1 do
             local ent = building.data[enName].refs[i]
