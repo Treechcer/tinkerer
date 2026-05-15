@@ -65,6 +65,11 @@ console = {
     }
 }
 
+function console.f.varNameToValue(varName)
+    local str = "return $str$"
+    return loadstring(str:gsub("%$str%$", varName))()
+end
+
 function console.f.render()
     love.graphics.setColor(0.7,0.7,0.7,0.85)
 
