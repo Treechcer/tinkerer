@@ -67,6 +67,7 @@ console = {
 
 function console.f.varNameToValue(varName)
     local str = "return $str$"
+    ---@diagnostic disable-next-line: deprecated
     return loadstring(str:gsub("%$str%$", varName))()
 end
 

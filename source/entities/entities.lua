@@ -81,22 +81,24 @@ function entities.render()
                         spr:getWidth() / 2,
                         yMV
                     )
+                elseif value.isDroppedItem then
+                    local offsetY = value.offsetY or 0
+                    specialDraws.f.outline(spr, posX, posY + offsetY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
                 else
-                    if value.isDroppedItem then
-                        local offsetY = value.offsetY or 0
-                        specialDraws.f.outline(spr, posX, posY + offsetY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
-                    else
-                        --cooked this to fix problem, realised it was broken elsewhere....
-                        --if spr == nil then
-                        --    tables.writeTable(entitiesIndex[value.index])
-                        --    spr = entitiesIndex[value.index].getSprite(value)
-                        --end
+                    --cooked this to fix problem, realised it was broken elsewhere....
+                    --if spr == nil then
+                    --    tables.writeTable(entitiesIndex[value.index])
+                    --    spr = entitiesIndex[value.index].getSprite(value)
+                    --end
 
-                        local scalatorX, scalatorY = (value.scaleX ~= nil) and value.scaleX or value.width, (value.scaleY ~= nil) and value.scaleY or value.width
-                        local scaleX, scaleY = map.tileSize / spr:getWidth() * (scalatorX or 1), map.tileSize / spr:getHeight() * (scalatorY or 1)
+                    local scalatorX, scalatorY = (value.scaleX ~= nil) and value.scaleX or value.width, (value.scaleY ~= nil) and value.scaleY or value.width
+                    local scaleX, scaleY = map.tileSize / spr:getWidth() * (scalatorX or 1), map.tileSize / spr:getHeight() * (scalatorY or 1)
 
-                        love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, scaleX, scaleY , spr:getWidth() / 2, spr:getHeight() / 2)
+                    love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, scaleX, scaleY , spr:getWidth() / 2, spr:getHeight() / 2)
+                    if value.weakness ~= 0 then
+                        entities.drawHealthBar(value.tileX, value.tileY, value.width, value.height, value.health, entitiesIndex[value.index].HP)
                     end
+                    
                 end
                 love.graphics.setColor(1,1,1)
             else
@@ -225,6 +227,19 @@ function entities.damageEntity(entityIndex, damageNumber)
 
         --print(en.xp)
     end
+end
+
+function entities.drawHealthBar(tileX, tileY, enWidth, enHeight, hpNow, hpMax)
+    if hpNow / hpMax ~= 1 then
+        local screenX, screenY = renderer.getAbsolutePos((tileX + (enWidth / 2)) * map.tileSize - map.tileSize * (1/3), (tileY + enHeight) * map.tileSize)
+        --print(screenX, screenY)
+        love.graphics.setColor(0,0,0)
+        love.graphics.rectangle("fill", screenX, screenY, map.tileSize * (2/3), 10)
+        love.graphics.setColor(1,0,0)
+        love.graphics.rectangle("fill", screenX + 2, screenY + 2, map.tileSize * (2/3) * (hpNow / hpMax) - 4, 10 - 4)
+        love.graphics.setColor(1,1,1)
+    end
+    --print(tileX, tileY, enWidth, enHeight, hpNow, hpMax)
 end
 
 function entities.moveByOneIndexAllSubClasses(index)
