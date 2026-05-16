@@ -119,4 +119,9 @@ function spw.changeFrames(dt) -- this is for changing the frames it's in every n
     end
 end
 
+function spw.getSprite(name)
+    local spr = spw.sprites[name].sprs
+    return (type(spr) == "table") and spr[spw.sprites[name].index] or spr
+end
+
 return spw
