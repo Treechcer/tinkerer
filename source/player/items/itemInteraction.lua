@@ -6,8 +6,8 @@ function itemInteraction.breakEntity()
         return false
     end
 
-    local entIndexs = entities.isEntityOnTileTableRet(player.cursor.tileX - (player.cursor.width / 2),
-    player.cursor.tileY - (player.cursor.height / 2),
+    local entIndexs = entities.isEntityOnTileTableRet(player.cursor.tileX - math.floor(player.cursor.width / 2),
+    player.cursor.tileY - math.floor(player.cursor.height / 2),
     player.cursor.width,
     player.cursor.height)
     if type(entIndexs) == "table" then
