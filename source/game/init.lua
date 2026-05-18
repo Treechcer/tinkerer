@@ -28,6 +28,8 @@ function init.initAll() -- this fuctions for inits that have to start on the beg
     npcs.functions.init()
 
     specialMoves.f.init()
+
+    console.f.init()
 end
 
 return init

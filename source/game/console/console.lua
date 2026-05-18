@@ -65,6 +65,17 @@ console = {
     }
 }
 
+function console.f.init()
+    console.f.addCommand("ua", function ()
+        for key, value in pairs(map.map.chunks) do
+            for key_, value_ in pairs(value) do
+                tables.writeTable(value_)
+                value_.owned = true
+            end
+        end
+    end)
+end
+
 function console.f.varNameToValue(varName)
     local str = "return $str$"
     ---@diagnostic disable-next-line: deprecated
