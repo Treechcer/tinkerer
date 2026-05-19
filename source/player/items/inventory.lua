@@ -436,7 +436,10 @@ function inventory.functions.renderHotbar()
             local centerX = blockX + hotbar.boxSize / 2
             local centerY = y + hotbar.boxSize / 2
             love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
-            love.graphics.draw(spr, centerX - sprW / 2 + (sprW / sprite:getWidth()), centerY - sprH / 2 + (sprH / sprite:getHeight()), 0, scaleX - (scaleX / sprite:getWidth()), scaleY - (scaleY / sprite:getHeight()))
+            --love.graphics.draw(spr, centerX - sprW / 2 + (sprW / sprite:getWidth()), centerY - sprH / 2 + (sprH / sprite:getHeight()), 0, scaleX - (scaleX / sprite:getWidth()), scaleY - (scaleY / sprite:getHeight()))
+
+            --TODO: this looks right, but proove it's right? 
+            renderer.drawImageByWH(spr, centerX - sprW / 2 + (sprW / sprite:getWidth()), centerY - sprH / 2 + (sprH / sprite:getHeight()), 0, hotbar.boxSize - hotbar.itemPad * 2 - (hotbar.boxSize / sprite:getWidth() * 1.8), hotbar.boxSize - hotbar.itemPad * 2 - (hotbar.boxSize / sprite:getHeight() * 1.8))
 
             --love.graphics.setColor(1,1,1)
 
