@@ -353,4 +353,11 @@ function renderer.AABB(aX, aY, aW, aH, bX, bY, bW, bH)
     return false
 end
 
+function renderer.drawImageByWH(spr, x, y, r, w, h)
+    local scaleX = w / spr:getWidth()
+    local scaleY = h / spr:getHeight()
+
+    love.graphics.draw(spr, x, y, r, scaleX, scaleY)
+end
+
 return renderer

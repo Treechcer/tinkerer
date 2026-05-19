@@ -176,7 +176,7 @@ function console.f.run(dt)
         console.lastDel = -.1
     end
 
-    print(console.delCd)
+    --print(console.delCd)
 
     if love.keyboard.isDown("backspace") and console.lastDel >= console.delCd then
         console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)

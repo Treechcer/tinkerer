@@ -22,7 +22,7 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { item = "conveyor_belt", count = 15 },
-                { item = "rock", count = 5 },
+                { item = "red", count = 5 },
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 128 },
                 { item = "basic_backpack", count = 1}
@@ -383,7 +383,7 @@ function inventory.functions.renderHotbar()
     local font = UI.fonts.UIfontBig
     love.graphics.setFont(font)
     for i = 1, hotbar.maxItems do
-        love.graphics.setColor(1,1,1)
+        --love.graphics.setColor(1,1,1)
         local hbName = ""
         if i == 1 then
             --sprite = spw.sprites["hotbar_left"].sprs
@@ -409,7 +409,7 @@ function inventory.functions.renderHotbar()
         --love.graphics.setColor(0, 0, 0)
         --love.graphics.rectangle("line", blockX, y, hotbar.boxSize, hotbar.boxSize)
         if i > 10 then
-            love.graphics.setColor(1,1,1)
+            --love.graphics.setColor(1,1,1)
             local cross = spw.sprites.cross.sprs
             love.graphics.draw(cross, blockX, y, 0, hotbar.boxSize / cross:getWidth(), hotbar.boxSize / cross:getHeight())
         elseif inventoryHB[i] ~= nil and next(inventoryHB[i]) ~= nil then
@@ -424,8 +424,8 @@ function inventory.functions.renderHotbar()
                 spr = spw.sprites[inventoryHB[i].item].sprs[spw.sprites[inventoryHB[i].item].index]
             end
 
-            local itemWidth = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getWidth() * item.height)
-            local itemHeight = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getHeight() * item.width)
+            local itemWidth = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getWidth() * item.width)
+            local itemHeight = (hotbar.boxSize - hotbar.itemPad * 2) / (spr:getHeight() * item.height)
 
             local scaleX = itemWidth
             local scaleY = itemHeight
@@ -438,7 +438,7 @@ function inventory.functions.renderHotbar()
             love.graphics.draw(sprite, blockX, y, 0, hotbar.boxSize / sprite:getWidth(), hotbar.boxSize / sprite:getHeight())
             love.graphics.draw(spr, centerX - sprW / 2 + (sprW / sprite:getWidth()), centerY - sprH / 2 + (sprH / sprite:getHeight()), 0, scaleX - (scaleX / sprite:getWidth()), scaleY - (scaleY / sprite:getHeight()))
 
-            love.graphics.setColor(1,1,1)
+            --love.graphics.setColor(1,1,1)
 
             local w = font:getWidth(tostring(inventoryHB[i].count))
             local h = font:getHeight()
@@ -450,7 +450,7 @@ function inventory.functions.renderHotbar()
         end
     end
 
-    love.graphics.setColor(1, 1, 1)
+    --love.graphics.setColor(1, 1, 1)
 end
 
 function inventory.functions.update(dt)
@@ -705,10 +705,16 @@ function inventory.functions.init()
 
     inventory.functions.AddNewItemIndex("basic_backpack", 1, 0, 0, 0, 0, {}, 7, 0.85, false, false, 0, "backpack", nil, "you can wear this to gain bigger inventory", nil, nil, {inventoryRows = 1, maxItemsPerInventory = 1, maxItems = 1})
 
+    --TODO: Fix these, they're broken!!!!
+
     --decorations
 
     inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
+
+
+
+    inventory.functions.AddNewItemIndex("red", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station", nil, nil, nil, nil, nil, nil)
 
     --inventory.functions.fillHitBoxTable()
 end
