@@ -13,6 +13,12 @@ console = {
     rmCooldown = 2.5,
     lastRM = 0,
     lastMsgNum = 1,
+    startDelCd = 0.15,
+    delCd = 0.15,
+    lastDel = 0,
+    delStreak = 0,
+    copyCd = 0.25,
+    lastCopy = 0,
     commands = {
         print = function (...)
             local msg = ""
@@ -164,6 +170,24 @@ end
 function console.f.run(dt)
     console.lastOpen = console.lastOpen + dt
 
+    if love.keyboard.isDown("rctrl") or love.keyboard.isDown("lctrl") and love.keyboard.isDown("v") and console.lastCopy >= console.copyCd then
+        console.currentType = console.currentType .. love.system.getClipboardText()
+        console.lastCopy = 0
+        console.lastDel = -.1
+    end
+
+    print(console.delCd)
+
+    if love.keyboard.isDown("backspace") and console.lastDel >= console.delCd then
+        console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
+        console.delStreak = console.delStreak + 1
+        console.delCd = math.max(console.startDelCd - (console.delStreak/100), 0.02)
+        console.lastDel = 0
+    elseif console.lastDel >= console.delCd then
+        console.delStreak = 0
+        console.delCd = console.startDelCd
+    end
+
     if console.numberOfRender >= 1 then
         console.lastRM = console.lastRM + dt
         if console.lastRM >= console.rmCooldown then
@@ -176,6 +200,9 @@ function console.f.run(dt)
         console.render = true
         console.lastOpen = 0
     end
+
+    console.lastDel = console.lastDel + dt
+    console.lastCopy = console.lastCopy + dt
 end
 
 function console.f.addMessage(message)

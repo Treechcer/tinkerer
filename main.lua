@@ -194,12 +194,13 @@ function love.keypressed(key, scancode, isrepeat)
         elseif key == "escape" then
             console.currentType = ""
             console.render = false
-        else
+        end
+        --[[else
             if key == "space" then
                 console.currentType = console.currentType .. " "
             elseif key == "backspace" then
                 console.currentType = string.sub(console.currentType, 1, string.len(console.currentType) - 1)
-            elseif key:match("kp") then --peak lua programming lol -- awful difference between gmatch and match
+            elseif key:match("kp") then --peak lua programming lol - awful difference between gmatch and match
                 --no way of telling if numlock is on / off in love 11.5., when 12.0. releases I'll instantly change it smh (it's the same with capslock)
                 console.currentType = console.currentType .. key:gsub("kp", "")
             elseif string.len(key) > 1 then
@@ -213,7 +214,7 @@ function love.keypressed(key, scancode, isrepeat)
         end
 
         console.currentType = UI.f.format(console.currentType)
-        --print(console.currentType)
+        --print(console.currentType)]]
     elseif i[#i][inventory.hotBar.selectedItem] ~= nil and next(i[#i][inventory.hotBar.selectedItem]) ~= nil then
         if itemIndex[itemName].buildable then
             if key == "r" then
@@ -221,5 +222,11 @@ function love.keypressed(key, scancode, isrepeat)
                 player.vals.buildingRotate = (player.vals.buildingRotate >= math.rad(360)) and math.rad(0) or player.vals.buildingRotate
             end
         end
+    end
+end
+
+function love.textinput(t)
+    if console.render then
+       console.currentType = console.currentType .. t
     end
 end

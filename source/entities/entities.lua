@@ -94,9 +94,9 @@ function entities.render()
                     local scalatorX, scalatorY = (value.scaleX ~= nil) and value.scaleX or value.width, (value.scaleY ~= nil) and value.scaleY or value.height
                     local scaleX, scaleY = map.tileSize / spr:getWidth() * (scalatorX or 1), map.tileSize / spr:getHeight() * (scalatorY or 1)
 
-                    if value.index == "tree" then
-                        print(scalatorX, value.width, value.scaleX, " | ", scalatorY, value.height, value.scaleY)
-                    end
+                    --if value.index == "tree" then
+                    --    print(scalatorX, value.width, value.scaleX, " | ", scalatorY, value.height, value.scaleY)
+                    --end
 
                     love.graphics.draw(spr, posX + map.tileSize / 2, posY + map.tileSize / 2, value.rotate or 0, scaleX, scaleY , spr:getWidth() / 2, spr:getHeight() / 2)
                     if value.weakness ~= 0 then
