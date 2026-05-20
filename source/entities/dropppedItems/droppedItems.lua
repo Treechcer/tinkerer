@@ -9,7 +9,7 @@ droppedItems = {
 }
 
 function droppedItems.f.changeIndexByOne(index)
-    for i = index, #droppedItems.items do
+    for i = index+1, #droppedItems.items do
         droppedItems.items[i].id = droppedItems.items[i].id - 1
     end
 end
@@ -24,7 +24,7 @@ end
 
 function droppedItems.f.delete(index)
     local DI = droppedItems.items[index]
-    entities.moveByOneIndexAllSubClasses(droppedItems.items[index].id)
+    entities.moveByOneIndexAllSubClasses(DI.id)
     inventory.functions.addItem(DI.item.item, DI.item.count)
     table.remove(entities.ents, DI.id)
     table.remove(droppedItems.items, index)

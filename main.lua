@@ -60,7 +60,7 @@ function love.load()
 
     require("source.workers.override")
 
-    --droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
+    droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
 end
 
 function love.draw()
