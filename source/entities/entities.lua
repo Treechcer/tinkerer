@@ -39,6 +39,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
 end
 
 function entities.render()
+    local renderLater = {}
     local renderDistance = settings.graphic.renderDistance^2
     local defaultColor = { 1, 1, 1, 1 }
     local px, py = player.position.tileX, player.position.tileY
@@ -69,18 +70,21 @@ function entities.render()
                 end
                 if value.isNPC then
                     --local x, y = renderer.getAbsolutePos(value.tileX * map.tileSize, value.tileY * map.tileSize)
-                    local yMV = spr:getHeight() * 1.2
+                    --local yMV = spr:getHeight() * 1.2
                     --print(value.moveX, value.moveY)
-                    local h, w = value.height * map.tileSize, value.width * map.tileSize
-                    love.graphics.draw(spr,
-                        posX + w / 2 --[[+ ((value.moveX or 0) * map.tileSize)]],
-                        posY + h / 2 + yMV + 25 - (value.jumpySpace) --[[+ ((value.moveY or 0) * map.tileSize)]],
-                        (value.rotateM or 0),
-                        (w / spr:getWidth()) * (value.screenSide),
-                        h / spr:getHeight(),
-                        spr:getWidth() / 2,
-                        yMV
-                    )
+                    --local h, w = value.height * map.tileSize, value.width * map.tileSize
+
+                    table.insert(renderLater, {en = value, posX = posX, posY = posY})
+
+                    --love.graphics.draw(spr,
+                    --    posX + w / 2 --[[+ ((value.moveX or 0) * map.tileSize)]],
+                    --    posY + h / 2 + yMV + 25 - (value.jumpySpace) --[[+ ((value.moveY or 0) * map.tileSize)]],
+                    --    (value.rotateM or 0),
+                    --    (w / spr:getWidth()) * (value.screenSide),
+                    --    h / spr:getHeight(),
+                    --    spr:getWidth() / 2,
+                    --    yMV
+                    --)
                 elseif value.isDroppedItem then
                     local offsetY = value.offsetY or 0
                     specialDraws.f.outline(spr, posX, posY + offsetY, 0, map.tileSize / spr:getWidth() * (value.width or 1), map.tileSize / spr:getHeight() * (value.height or 1))
@@ -111,6 +115,22 @@ function entities.render()
                 love.graphics.setColor(1,1,1)
             end
         end
+    end
+
+    for key, value in pairs(renderLater) do
+        local spr = entitiesIndex[value.en.index].getSprite(value.en)
+        local yMV = spr:getHeight() * 1.2
+        local h, w = value.en.height * map.tileSize, value.en.width * map.tileSize
+
+        love.graphics.draw(spr,
+            value.posX + w / 2 --[[+ ((value.moveX or 0) * map.tileSize)]],
+            value.posY + h / 2 + yMV + 25 - (value.en.jumpySpace) --[[+ ((value.moveY or 0) * map.tileSize)]],
+            (value.en.rotateM or 0),
+            (w / spr:getWidth()) * (value.en.screenSide),
+            h / spr:getHeight(),
+            spr:getWidth() / 2,
+            yMV
+        )
     end
 end
 
