@@ -4,7 +4,7 @@ building = {
 }
 
 function building.f.radiansToDir(rad)
-    print(rad)
+    --print(rad)
     local rotIndex = {
         [math.rad(180)] = "right",
         [math.rad(0)] = "left",

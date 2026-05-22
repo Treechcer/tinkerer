@@ -330,7 +330,7 @@ function inventory.functions.renderWholeInventory()
                 --print(item)
                 --print("----")
                 --local spr = spw.sprites[item].sprs
-                print(item)
+                --print(item)
                 local spr = itemIndex.f.returnSprite(item)
                 --print(spr)
                 --print("---")
