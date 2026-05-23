@@ -34,7 +34,7 @@ function entities.makeNewOne(tileX, tileY, index, health, drop, width, height, x
     end
     --print(tileX, tileY, index)
 
-    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE, enNum = entities.num })
+    table.insert(entities.ents, { tileX = tileX, tileY = tileY, index = index, health = health, drop = drop, width = width, height = height, xp = xp, killTime = killTime, shadowIndex = shadowIndex, typeE = typeE, enNum = entities.num, healing = false })
     entities.num = entities.num + 1 -- primary key of some sorts, might not be reliabe after I add saves?
 end
 
@@ -291,6 +291,21 @@ function entities.updateAll(dt)
             --tables.writeTable(entitiesIndex[value.index])
             if entitiesIndex[value.index].update ~= nil then
                 entitiesIndex[value.index].update(value, dt)
+            end
+
+            if entitiesIndex[value.index].HP > value.health and not value.healing then
+                value.healing = true
+                local currentIndex = index
+                ---@diagnostic disable-next-line: deprecated
+                local f = function ()
+                    entities.ents[currentIndex].health =
+                    entities.ents[currentIndex].health + 1
+                    entities.ents[currentIndex].healing = false
+
+                    return true
+                end
+                print(f)
+                timer.f.addTimer(2.5, f, "instant")
             end
         end
     end

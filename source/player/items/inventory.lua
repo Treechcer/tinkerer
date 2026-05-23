@@ -22,7 +22,7 @@ inventory = {
             {{},{},{},{},{}},
             {
                 { item = "conveyor_belt", count = 15 },
-                { },
+                { item = "rock", count = 1},
                 { item = "stick", count = 5 },
                 { item = "furnace", count = 128 },
                 { item = "basic_backpack", count = 1}
