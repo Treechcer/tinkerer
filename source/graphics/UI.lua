@@ -187,6 +187,7 @@ function UI.f.init()
     UI.renderder.furnaceUI.buttons[3].startY = crafting.y + (UI.renderder.furnaceUI.blockSize * 1.25)
 
     UI.nineSquareSpriteSheet.description = UI.f.createNineSquareTable("description")
+    UI.nineSquareSpriteSheet.wiki = UI.f.createNineSquareTable("wiki")
 
     --emojis use random ASCII escape characters noted in decimal, from it's look I can go from 1 - 31 (maybe even 0? but I haven't tested)
     UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6"
@@ -306,7 +307,7 @@ function UI.renderder.descriptions.f.render(x,y,description)
     --love.graphics.setLineWidth(4)
     --love.graphics.rectangle("line", x - padX, y - padY, width + (padX * 2), height + (padY * 2))
     love.graphics.setColor(1,1,1,.85)
-    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, x - objDesc.offset, y - objDesc.offset, width + objDesc.offset, height + objDesc.offset)
+    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, x - objDesc.offset, y - objDesc.offset, width + objDesc.offset, height + objDesc.offset, 2)
     love.graphics.setColor(1,1,1,1)
     love.graphics.print(description, x - (objDesc.offset / 2), y - (objDesc.offset / 2))
     --love.graphics.setColor(1,1,1)

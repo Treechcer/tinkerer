@@ -7,7 +7,7 @@ wiki = {
 }
 
 function wiki.f.renderer()
-    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.description, 5, 5, game.width - 10, game.height - 10, 10)
+    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.wiki, 5, 5, game.width - 10, game.height - 10, 10)
 end
 
 return wiki

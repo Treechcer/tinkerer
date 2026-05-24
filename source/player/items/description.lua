@@ -1,7 +1,7 @@
 --this is for item descriptions, there is also "description" in the itemIndex or it can be auto generated in a way
 
 description = {
-    splitBy = 32,
+    splitBy = 28,
     f = {}
 }
 ---@param item string

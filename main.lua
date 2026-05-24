@@ -53,6 +53,7 @@ function love.load()
     shaderWorker = require("source.workers.shaderWorker")
     specialMoves = require("source.player.interactivity.specialMoves")
     wiki = require("source.graphics.wiki")
+    strings = require("source.workers.libs.strings")
 
     init.initAll()
 
