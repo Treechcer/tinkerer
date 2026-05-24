@@ -52,6 +52,7 @@ function love.load()
     dropppedItems = require("source.entities.dropppedItems.droppedItems")
     shaderWorker = require("source.workers.shaderWorker")
     specialMoves = require("source.player.interactivity.specialMoves")
+    wiki = require("source.graphics.wiki")
 
     init.initAll()
 
@@ -61,6 +62,8 @@ function love.load()
     require("source.workers.override")
 
     --droppedItems.f.create(player.position.tileX, player.position.tileY, "rock", 5)
+
+    love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
 end
 
 function love.draw()
@@ -70,21 +73,14 @@ function love.draw()
     --love.graphics.setShader(shaderWorker.shaders.lerpShader)
     --print(timer.timers[ABFIAI].progress)
 
-    love.graphics.setBackgroundColor(28 / 255, 163 / 255, 236 / 255)
-
     love.graphics.setColor(1,1,1)
     if game.state == "game" then
         renderer.gameStateRenderer()
     end
 
-    --for key, value in pairs(npcs.npcIndexes) do
-    --    local path = entities.ents[value.index].path
-    --    if path ~= nil and path ~= {} then
-    --        pathfinding.functions.visualisePath(path)
-    --    end
-    --end
-
-    --map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY)
+    if wiki.data.render then
+        wiki.f.renderer()
+    end
 
     --FONT TEST
 
@@ -95,9 +91,11 @@ function love.draw()
 end
 
 function love.update(dt)
-    REF.everyFrameStart(dt)
+    if not game.pause then
+        REF.everyFrameStart(dt)
 
-    REF.everyFrameEnd(dt)
+        REF.everyFrameEnd(dt)
+    end
 end
 
 function love.wheelmoved(x, y)
@@ -152,6 +150,10 @@ function love.mousepressed(x, y, button, istouch, presses)
     elseif button == 2 then
         if inventory.functions.click(button) then
             return
+        end
+
+        if itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item].rightClickFunctionality ~= nil then
+            itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item].rightClickFunctionality()
         end
 
         if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY) and building.f.canBuild(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item) then

@@ -70,7 +70,7 @@ function run.everyFrameStart(dt) -- used to run on every frame when it starts
 
     droppedItems.f.collect()
 
-    entitySpawner.func.spawn(dt)
+    entitySpawner.func.spawn(dt, false)
 
     player.checkIfColided(dt)
     inventory.functions.coolDown(dt)

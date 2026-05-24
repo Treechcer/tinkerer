@@ -15,10 +15,11 @@ function entitySpawner.func.init()
     }
 end
 
-function entitySpawner.func.spawn(dt)
+function entitySpawner.func.spawn(dt, spawnRandom) --spawnRandom => makes something spawn (or at least it tries*), doesn't matter if it cooldown is down
+    spawnRandom = spawnRandom or false
     entitySpawner.lastTimeSpawned = entitySpawner.lastTimeSpawned + dt
 
-    if not (entitySpawner.lastTimeSpawned >= entitySpawner.timeToSpawn) then
+    if not (entitySpawner.lastTimeSpawned >= entitySpawner.timeToSpawn) and not spawnRandom then
         return
     end
 

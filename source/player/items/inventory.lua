@@ -23,8 +23,8 @@ inventory = {
             {
                 { item = "conveyor_belt", count = 15 },
                 { item = "rock", count = 1},
-                { item = "stick", count = 5 },
-                { item = "furnace", count = 128 },
+                { item = "book", count = 5 },
+                { },
                 { item = "basic_backpack", count = 1}
             },
         }, --this is sectioned into 4 x 4 inventory parts, the last one is hotbar but it kinda supports getting different sizes yk
@@ -563,7 +563,7 @@ function inventory.functions.coolDown(dt)
     inventory.inventoryBar.lastOpened = inventory.inventoryBar.lastOpened + dt
 end
 
-function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats, equipFunctions, sprName)
+function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weakness, strength, defaultHp, drop, speedAttackMultiplayer, attackRotation, buildable, burnable, burnStrength, typeI, smeltsTo, descriptor, width, height, equipmentStats, equipFunctions, sprName, rightClickFunctionality)
     sprName = sprName or item
     if spriteWorker.sprites[sprName] == nil then
         spriteWorker.generateNewSprite(sprName)
@@ -594,7 +594,8 @@ function inventory.functions.AddNewItemIndex(item, maxStackSize, attack, weaknes
         burnStrength = burnStrength,
         smeltsTo = smeltsTo,
         equipmentStats = equipmentStats,
-        sprName = sprName
+        sprName = sprName,
+        rightClickFunctionality = rightClickFunctionality,
     }
 
     itemIndex[item].type = description.f.gen(item) or ""
@@ -715,7 +716,15 @@ function inventory.functions.init()
     inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
     inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
 
+    --help
 
+    inventory.functions.AddNewItemIndex("book", 1, 0, 0, 0, 0, {}, 7, 0.85, false, false, 1, "Guide", nil, "wikipedia in your pocket!", nil, nil, nil, nil, nil, function ()
+        game.pause = true
+        wiki.data.render = true
+    end)
+
+
+    --temp / test
 
     inventory.functions.AddNewItemIndex("red", 16, 0, 0, 0, 0, {}, 10, 1, true, false, 0, "Crafting station", nil, nil, nil, nil, nil, nil)
 

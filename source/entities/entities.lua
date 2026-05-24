@@ -304,7 +304,7 @@ function entities.updateAll(dt)
 
                     return true
                 end
-                print(f)
+                --print(f)
                 timer.f.addTimer(2.5, f, "instant")
             end
         end
