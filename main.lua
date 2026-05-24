@@ -152,11 +152,17 @@ function love.mousepressed(x, y, button, istouch, presses)
             return
         end
 
-        if itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item].rightClickFunctionality ~= nil then
-            itemIndex[inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item].rightClickFunctionality()
+        local itemInHand = inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item
+        
+        if itemInHand == nil then
+            return
         end
 
-        if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY) and building.f.canBuild(inventory.inventoryBar.inventory[#inventory.inventoryBar.inventory][inventory.hotBar.selectedItem].item) then
+        if itemIndex[itemInHand].rightClickFunctionality ~= nil then
+            itemIndex[itemInHand].rightClickFunctionality()
+        end
+
+        if map.f.accesibleTile(player.cursor.tileX, player.cursor.tileY) and building.f.canBuild(itemInHand) then
             local i = inventory.inventoryBar.inventory
             local itemName = i[#i][inventory.hotBar.selectedItem].item
             if itemName ~= nil then
