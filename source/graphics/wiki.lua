@@ -115,7 +115,8 @@ function wiki.f.generateText(pageName)
         for index, value in ipairs(dropsToText) do
             dropText = dropText .. "drops from an entity '" .. value.source .. "' and drops in a base count of " .. value.count .. "\n"
         end
-
+        
+        --TODO: fix the normalText2, it talks about it as this was an item, this is entity
         str = {
             header1 = pageName,
             normalText1 = upperPageName .. " is and entity.",
