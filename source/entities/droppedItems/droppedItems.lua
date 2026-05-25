@@ -75,4 +75,4 @@ function droppedItems.f.move(index)
     en.offsetY = math.sin(en.mvt) * 10
 end
 
-return false
+return droppedItems
