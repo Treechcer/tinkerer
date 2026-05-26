@@ -73,8 +73,8 @@ function wiki.f.renderer()
     
     wiki.f.buttonCheck()
 
-    tables.writeTable(wiki.f.generateText("rock"))
-    love.event.quit()
+    --tables.writeTable(wiki.f.generateText("rock"))
+    --love.event.quit()
 end
 
 function wiki.f.buttonCheck()
@@ -90,7 +90,7 @@ function wiki.f.buttonCheck()
 end
 
 function wiki.f.findUsage(typePage, pageName)
-    if typePage == "entity" then
+    if typePage == "item" then
         local itemDrops = {}
         for key, value in pairs(entitiesIndex) do
             if key ~= "f" then
@@ -103,6 +103,16 @@ function wiki.f.findUsage(typePage, pageName)
         end
 
         return itemDrops
+    elseif typePage == "entity" then
+        local ret = ""
+        for key, value in pairs(entitiesIndex[pageName].drop) do
+            ret = ret .. value.baseCount .. "x " .. value.item .. ", "
+        end
+
+        ret = ret:sub(1, #ret-2)
+        ret = ret .. "."
+
+        return ret
     end
 end
 
@@ -110,13 +120,9 @@ function wiki.f.generateText(pageName)
     local upperPageName = pageName:sub(1,1):upper() .. pageName:sub(2, pageName:len())
     if entitiesIndex[pageName] ~= nil then
 
-        local dropsToText = wiki.f.findUsage("entity", pageName)
-        local dropText = ""
-        for index, value in ipairs(dropsToText) do
-            dropText = dropText .. "drops from an entity '" .. value.source .. "' and drops in a base count of " .. value.count .. "\n"
-        end
-        
-        --TODO: fix the normalText2, it talks about it as this was an item, this is entity
+        local dropText = wiki.f.findUsage("entity", pageName)
+        dropText = "has loot table of: " .. dropText
+
         str = {
             header1 = pageName,
             normalText1 = upperPageName .. " is and entity.",
@@ -124,9 +130,13 @@ function wiki.f.generateText(pageName)
             header2 = "Usage",
             normalText2 = dropText
         }
+
+        ord = {
+            "header1", "normalText1", "lineRender1", "header2", "normalText2"
+        }
     end
 
-    return str
+    return {page = str, order = ord}
 end
 
 return wiki
