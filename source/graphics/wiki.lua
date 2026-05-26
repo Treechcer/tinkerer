@@ -3,6 +3,13 @@ wiki = {
         render = false,
         currentPage = nil,
     },
+    sheet = {
+        x = 5,
+        y = 5,
+        width = game.width - 10,
+        height = game.height - 10,
+        scale = 11
+    },
     buttons = {
         exit = {
             pos = {
@@ -24,14 +31,16 @@ wiki = {
     textEnumType = {
         header = {
             textSize = 32,
+            moveDownBy = 48,
             color = {1,1,1,1},
             underline = false,
             highLight = false,
             nextLine = true,
             linePage = false,
         },
-        nomalText = {
+        normalText = {
             textSize = 16,
+            moveDownBy = 24,
             color = {1,1,1,1},
             underline = false,
             highLight = false,
@@ -40,6 +49,7 @@ wiki = {
         },
         highLightedText = {
             textSize = 16,
+            moveDownBy = 24,
             color = {1,1,1,1},
             underline = false,
             highLight = true,
@@ -48,6 +58,7 @@ wiki = {
         },
         lineBreak = {
             textSize = 16,
+            moveDownBy = function(lineIndex, pageObj) local a = pageObj.order[lineIndex-1]; local mv = wiki.textEnumType[a:gsub("%d*", "")].moveDownBy; if type(mv) == "function" then mv = mv(lineIndex-1, pageObj) end return mv end,
             color = {1,1,1,1},
             underline = false,
             highLight = false,
@@ -56,6 +67,7 @@ wiki = {
         },
         lineRender = {
             textSize = 16,
+            moveDownBy = function(lineIndex, pageObj) local a = pageObj.order[lineIndex-1]; local mv = wiki.textEnumType[a:gsub("%d*", "")].moveDownBy; if type(mv) == "function" then mv = mv(lineIndex-1, pageObj) end return mv * 3 end,
             color = {1,1,1,1},
             underline = false,
             highLight = false,
@@ -67,14 +79,38 @@ wiki = {
 }
 
 function wiki.f.renderer()
-    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.wiki, 5, 5, game.width - 10, game.height - 10, 11)
+    local sheet = wiki.sheet
+    UI.f.renderNineSquare(UI.nineSquareSpriteSheet.wiki, sheet.x, sheet.y, sheet.width, sheet.height, sheet.scale)
     local xBut = wiki.buttons.exit
     love.graphics.draw(spw.getSprite("x_circle"), xBut.pos.x, xBut.pos.y, 0, xBut.pos.scalarX, xBut.pos.scalarY)
     
     wiki.f.buttonCheck()
 
-    --tables.writeTable(wiki.f.generateText("rock"))
-    --love.event.quit()
+    wiki.f.renderPage(wiki.f.generateText("rock"))
+end
+
+function wiki.f.renderPage(pageObj)
+    local sheet = wiki.sheet
+    love.graphics.setScissor(sheet.x, sheet.y, sheet.width, sheet.height)
+    
+    local pixelPosFromTop = 64
+    for index, value_ in ipairs(pageObj.order) do
+        local value = pageObj.page[value_]
+
+        local mvby = wiki.textEnumType[value_:gsub("%d*", "")].moveDownBy
+        if type(mvby) == "function" then
+            mvby = mvby(index, pageObj)
+        end
+
+        pixelPosFromTop = pixelPosFromTop + mvby
+        print(pixelPosFromTop)
+    end
+
+    love.graphics.setScissor()
+end
+
+function wiki.f.renderHeader(headerText, pixelPosFromTop)
+    
 end
 
 function wiki.f.buttonCheck()
