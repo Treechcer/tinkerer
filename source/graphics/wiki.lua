@@ -96,21 +96,29 @@ function wiki.f.renderPage(pageObj)
     local pixelPosFromTop = 64
     for index, value_ in ipairs(pageObj.order) do
         local value = pageObj.page[value_]
+        local typeOfText = value_:gsub("%d*", "")
 
-        local mvby = wiki.textEnumType[value_:gsub("%d*", "")].moveDownBy
+        local mvby = wiki.textEnumType[typeOfText].moveDownBy
         if type(mvby) == "function" then
             mvby = mvby(index, pageObj)
         end
 
+        if wiki.f[typeOfText] ~= nil then
+            wiki.f[typeOfText](pageObj.page[value_], pixelPosFromTop)
+        end
+
         pixelPosFromTop = pixelPosFromTop + mvby
-        print(pixelPosFromTop)
+        --print(pixelPosFromTop)
     end
 
     love.graphics.setScissor()
 end
 
-function wiki.f.renderHeader(headerText, pixelPosFromTop)
-    
+function wiki.f.header(headerText, pixelPosFromTop)
+    local font = love.graphics.getFont()
+    local w, h = font:getWidth(headerText), font:getHeight(headerText)
+
+    love.graphics.print(headerText, (game.width/2) - (w/2), pixelPosFromTop)
 end
 
 function wiki.f.buttonCheck()
