@@ -30,7 +30,7 @@ wiki = {
     },
     textEnumType = {
         header = {
-            textSize = 32,
+            textSizeScale = 2,
             moveDownBy = 48,
             color = {1,1,1,1},
             underline = false,
@@ -39,7 +39,7 @@ wiki = {
             linePage = false,
         },
         normalText = {
-            textSize = 16,
+            textSizeScale = 1,
             moveDownBy = 24,
             color = {1,1,1,1},
             underline = false,
@@ -48,7 +48,7 @@ wiki = {
             linePage = false,
         },
         highLightedText = {
-            textSize = 16,
+            textSizeScale = 1,
             moveDownBy = 24,
             color = {1,1,1,1},
             underline = false,
@@ -57,7 +57,7 @@ wiki = {
             linePage = false,
         },
         lineBreak = {
-            textSize = 16,
+            textSizeScale = 1,
             moveDownBy = function(lineIndex, pageObj) local a = pageObj.order[lineIndex-1]; local mv = wiki.textEnumType[a:gsub("%d*", "")].moveDownBy; if type(mv) == "function" then mv = mv(lineIndex-1, pageObj) end return mv end,
             color = {1,1,1,1},
             underline = false,
@@ -66,7 +66,7 @@ wiki = {
             linePage = false,
         },
         lineRender = {
-            textSize = 16,
+            textSizeScale = 1,
             moveDownBy = function(lineIndex, pageObj) local a = pageObj.order[lineIndex-1]; local mv = wiki.textEnumType[a:gsub("%d*", "")].moveDownBy; if type(mv) == "function" then mv = mv(lineIndex-1, pageObj) end return mv * 3 end,
             color = {1,1,1,1},
             underline = false,
@@ -92,33 +92,53 @@ end
 function wiki.f.renderPage(pageObj)
     local sheet = wiki.sheet
     love.graphics.setScissor(sheet.x, sheet.y, sheet.width, sheet.height)
-    
-    local pixelPosFromTop = 64
+    local pixelPosFromTop = 24
+    local xmove = (game.width/2) 
     for index, value_ in ipairs(pageObj.order) do
         local value = pageObj.page[value_]
         local typeOfText = value_:gsub("%d*", "")
 
-        local mvby = wiki.textEnumType[typeOfText].moveDownBy
-        if type(mvby) == "function" then
-            mvby = mvby(index, pageObj)
-        end
-
         if wiki.f[typeOfText] ~= nil then
-            wiki.f[typeOfText](pageObj.page[value_], pixelPosFromTop)
+            xmove = wiki.f[typeOfText](pageObj.page[value_], pixelPosFromTop, wiki.textEnumType[typeOfText].textSizeScale, xmove)
         end
 
-        pixelPosFromTop = pixelPosFromTop + mvby
+        if wiki.textEnumType[typeOfText].nextLine then
+            ---@type integer | function
+            local mvby = wiki.textEnumType[typeOfText].moveDownBy
+
+            if type(mvby) == "function" then
+                mvby = mvby(index, pageObj)
+            end
+
+            pixelPosFromTop = pixelPosFromTop + mvby
+
+            xmove = (game.width/2)
+        end
         --print(pixelPosFromTop)
     end
 
     love.graphics.setScissor()
 end
 
-function wiki.f.header(headerText, pixelPosFromTop)
+function wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
     local font = love.graphics.getFont()
-    local w, h = font:getWidth(headerText), font:getHeight(headerText)
+    local w, h = font:getWidth(headerText) * scale, font:getHeight(headerText) * scale
 
-    love.graphics.print(headerText, (game.width/2) - (w/2), pixelPosFromTop)
+    love.graphics.print(headerText, xmove - (w/2), pixelPosFromTop, 0, scale, scale)
+
+    return xmove + (w/2)
+end
+
+function wiki.f.normalText(headerText, pixelPosFromTop, scale, xmove)
+    return wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
+end
+
+function wiki.f.highLightedText(headerText, pixelPosFromTop, scale, xmove)
+    love.graphics.setColor(1, 0.9, 0)
+    xmove = wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
+    love.graphics.setColor(1, 1, 1)
+
+    return xmove
 end
 
 function wiki.f.buttonCheck()
@@ -169,14 +189,15 @@ function wiki.f.generateText(pageName)
 
         str = {
             header1 = pageName,
-            normalText1 = upperPageName .. " is and entity.",
+            normalText1 = upperPageName .. " is an entity.",
+            highLightedText1 = "TEST",
             lineRender1 = "",
             header2 = "Usage",
             normalText2 = dropText
         }
 
         ord = {
-            "header1", "normalText1", "lineRender1", "header2", "normalText2"
+            "header1", "normalText1", "highLightedText1", "lineRender1", "header2", "normalText2"
         }
     end
 
