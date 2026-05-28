@@ -93,7 +93,7 @@ function wiki.f.renderPage(pageObj)
     local sheet = wiki.sheet
     love.graphics.setScissor(sheet.x, sheet.y, sheet.width, sheet.height)
     local pixelPosFromTop = 24
-    local xmove = (game.width/2) 
+    local xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[1]])) / 2
     for index, value_ in ipairs(pageObj.order) do
         local value = pageObj.page[value_]
         local typeOfText = value_:gsub("%d*", "")
@@ -112,7 +112,7 @@ function wiki.f.renderPage(pageObj)
 
             pixelPosFromTop = pixelPosFromTop + mvby
 
-            xmove = (game.width/2)
+            xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
         end
         --print(pixelPosFromTop)
     end
@@ -126,20 +126,24 @@ function wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
 
     love.graphics.print(headerText, xmove - (w/2), pixelPosFromTop, 0, scale, scale)
 
-    return xmove + (w/2)
+    return xmove + w
 end
 
 function wiki.f.normalText(headerText, pixelPosFromTop, scale, xmove)
-    return wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
+    local nonHighligtPart, highLightPart, nonHighligtPartRest = headerText:match("([^$]+)$([^.$]+)%$([a-zA-Z%s]+)")
+
+    xmove = wiki.f.header(nonHighligtPart or "", pixelPosFromTop, scale, xmove)
+    xmove = wiki.f.header(highLightPart or "", pixelPosFromTop, scale, xmove)
+    return wiki.f.header(nonHighligtPartRest or "", pixelPosFromTop, scale, xmove)
 end
 
-function wiki.f.highLightedText(headerText, pixelPosFromTop, scale, xmove)
-    love.graphics.setColor(1, 0.9, 0)
-    xmove = wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
-    love.graphics.setColor(1, 1, 1)
-
-    return xmove
-end
+--function wiki.f.highLightedText(headerText, pixelPosFromTop, scale, xmove)
+--    love.graphics.setColor(1, 0.9, 0)
+--    xmove = wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
+--    love.graphics.setColor(1, 1, 1)
+--
+--    return xmove
+--end
 
 function wiki.f.buttonCheck()
     local mx, my = love.mouse.getPosition()
@@ -189,15 +193,14 @@ function wiki.f.generateText(pageName)
 
         str = {
             header1 = pageName,
-            normalText1 = upperPageName .. " is an entity.",
-            highLightedText1 = "TEST",
+            normalText1 = upperPageName .. " is an entity. $highlight$ bb",
             lineRender1 = "",
             header2 = "Usage",
             normalText2 = dropText
         }
 
         ord = {
-            "header1", "normalText1", "highLightedText1", "lineRender1", "header2", "normalText2"
+            "header1", "normalText1", "lineRender1", "header2", "normalText2"
         }
     end
 

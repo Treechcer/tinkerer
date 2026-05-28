@@ -14,4 +14,8 @@ function strings.split(str, splitBy)
     return parts
 end
 
+function strings.trim(str)
+    return str:gsub("^/s", ""):gsub("/s$", "")
+end
+
 return strings
