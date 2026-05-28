@@ -132,8 +132,18 @@ end
 function wiki.f.normalText(headerText, pixelPosFromTop, scale, xmove)
     local nonHighligtPart, highLightPart, nonHighligtPartRest = headerText:match("([^$]+)$([^.$]+)%$([a-zA-Z%s]+)")
 
+    local arr = {nonHighligtPart, highLightPart, nonHighligtPartRest}
+    local finasStr = ""
+    for index, value in ipairs(arr) do
+        finasStr = finasStr .. strings.trim(value)
+    end
+    xmove = love.graphics.getFont():getWidth(finasStr) / #arr
+    print(xmove)
+
     xmove = wiki.f.header(nonHighligtPart or "", pixelPosFromTop, scale, xmove)
+    love.graphics.setColor(1,0.9,0)
     xmove = wiki.f.header(highLightPart or "", pixelPosFromTop, scale, xmove)
+    love.graphics.setColor(1,1,1)
     return wiki.f.header(nonHighligtPartRest or "", pixelPosFromTop, scale, xmove)
 end
 
