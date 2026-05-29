@@ -86,7 +86,7 @@ function wiki.f.renderer()
     
     wiki.f.buttonCheck()
 
-    wiki.f.renderPage(wiki.f.generateText("rock"))
+    wiki.f.renderPage(wiki.f.generateText("en:rock"))
 end
 
 function wiki.f.renderPage(pageObj)
@@ -112,7 +112,8 @@ function wiki.f.renderPage(pageObj)
 
             pixelPosFromTop = pixelPosFromTop + mvby
 
-            xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
+            --This doesn't need to be here? I think?
+            --xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
         end
         --print(pixelPosFromTop)
     end
@@ -195,14 +196,16 @@ function wiki.f.findUsage(typePage, pageName)
 end
 
 function wiki.f.generateText(pageName)
-    local upperPageName = pageName:sub(1,1):upper() .. pageName:sub(2, pageName:len())
-    if entitiesIndex[pageName] ~= nil then
 
-        local dropText = wiki.f.findUsage("entity", pageName)
+    local source, name = pageName:match("([a-zA-Z]*):([a-zA-Z]*)")
+
+    local upperPageName = name:sub(1,1):upper() .. name:sub(2, name:len())
+    if source == "en" then
+        local dropText = wiki.f.findUsage("entity", name)
         dropText = "has loot table of: " .. dropText
 
         str = {
-            header1 = pageName,
+            header1 = name,
             normalText1 = upperPageName .. " is an entity. $highlight$ bb",
             lineRender1 = "",
             header2 = "Usage",
