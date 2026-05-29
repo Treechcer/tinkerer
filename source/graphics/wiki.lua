@@ -112,8 +112,7 @@ function wiki.f.renderPage(pageObj)
 
             pixelPosFromTop = pixelPosFromTop + mvby
 
-            --This doesn't need to be here? I think?
-            --xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
+            xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
         end
         --print(pixelPosFromTop)
     end
@@ -139,7 +138,7 @@ function wiki.f.normalText(headerText, pixelPosFromTop, scale, xmove)
         finasStr = finasStr .. strings.trim(value)
     end
     xmove = love.graphics.getFont():getWidth(finasStr) / #arr
-    print(xmove)
+    --print(xmove)
 
     xmove = wiki.f.header(nonHighligtPart or "", pixelPosFromTop, scale, xmove)
     love.graphics.setColor(1,0.9,0)
@@ -201,8 +200,7 @@ function wiki.f.generateText(pageName)
 
     local upperPageName = name:sub(1,1):upper() .. name:sub(2, name:len())
     if source == "en" then
-        local dropText = wiki.f.findUsage("entity", name)
-        dropText = "has loot table of: " .. dropText
+        local dropText = "has loot table of: " .. wiki.f.findUsage("entity", name)
 
         str = {
             header1 = name,
