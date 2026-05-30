@@ -86,7 +86,7 @@ function wiki.f.renderer()
     
     wiki.f.buttonCheck()
 
-    wiki.f.renderPage(wiki.f.generateText("en:rock"))
+    wiki.f.renderPage(wiki.f.generateText("in:rock"))
 end
 
 function wiki.f.renderPage(pageObj)
@@ -182,7 +182,15 @@ function wiki.f.findUsage(typePage, pageName)
             end
         end
 
-        return itemDrops
+        local ret = ""
+        for index, value in ipairs(itemDrops) do
+            ret = ret .. value.source .. " (" .. value.count .. "x)"
+            if index ~= #itemDrops then
+                ret = ret .. ", "
+            end
+        end
+
+        return ret
     elseif typePage == "entity" then
         local ret = ""
         for key, value in pairs(entitiesIndex[pageName].drop) do
@@ -209,6 +217,20 @@ function wiki.f.generateText(pageName)
             normalText1 = upperPageName .. " is an entity. $highlight$ bb",
             lineRender1 = "",
             header2 = "Usage",
+            normalText2 = dropText
+        }
+
+        ord = {
+            "header1", "normalText1", "lineRender1", "header2", "normalText2"
+        }
+    elseif source == "in" then
+        local dropText = "Base drops from these entities: " .. wiki.f.findUsage("item", name)
+
+        str = {
+            header1 = name,
+            normalText1 = upperPageName .. " is an material.",
+            lineRender1 = "",
+            header2 = "Obtaining",
             normalText2 = dropText
         }
 
