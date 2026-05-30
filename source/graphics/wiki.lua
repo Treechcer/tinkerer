@@ -111,7 +111,6 @@ function wiki.f.renderPage(pageObj)
             end
 
             pixelPosFromTop = pixelPosFromTop + mvby
-
             xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(pageObj.page[pageObj.order[index+1]])) / 2
         end
         --print(pixelPosFromTop)
@@ -130,21 +129,24 @@ function wiki.f.header(headerText, pixelPosFromTop, scale, xmove)
 end
 
 function wiki.f.normalText(headerText, pixelPosFromTop, scale, xmove)
-    local nonHighligtPart, highLightPart, nonHighligtPartRest = headerText:match("([^$]+)$([^.$]+)%$([a-zA-Z%s]+)")
-
-    local arr = {nonHighligtPart, highLightPart, nonHighligtPartRest}
-    local finasStr = ""
-    for index, value in ipairs(arr) do
-        finasStr = finasStr .. strings.trim(value)
+    local function drawTextPart(text, x, y)
+        love.graphics.print(text, x, y, 0, scale, scale)
+        return x + (love.graphics.getFont():getWidth(text) * scale)
     end
-    xmove = love.graphics.getFont():getWidth(finasStr) / #arr
-    --print(xmove)
 
-    xmove = wiki.f.header(nonHighligtPart or "", pixelPosFromTop, scale, xmove)
-    love.graphics.setColor(1,0.9,0)
-    xmove = wiki.f.header(highLightPart or "", pixelPosFromTop, scale, xmove)
-    love.graphics.setColor(1,1,1)
-    return wiki.f.header(nonHighligtPartRest or "", pixelPosFromTop, scale, xmove)
+    local nonHighligtPart, highLightPart, nonHighligtPartRest = headerText:match("([^$]*)$([^$]*)$([^$]*)")
+    
+    if not nonHighligtPart then
+        return drawTextPart(headerText, xmove, pixelPosFromTop)
+    end
+
+    xmove = drawTextPart(nonHighligtPart, xmove, pixelPosFromTop)
+    love.graphics.setColor(1, 0.9, 0)
+    xmove = drawTextPart(highLightPart, xmove, pixelPosFromTop)
+    love.graphics.setColor(1, 1, 1)
+    xmove = drawTextPart(nonHighligtPartRest, xmove, pixelPosFromTop)
+
+    return xmove
 end
 
 --function wiki.f.highLightedText(headerText, pixelPosFromTop, scale, xmove)

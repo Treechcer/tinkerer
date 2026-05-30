@@ -15,7 +15,7 @@ function strings.split(str, splitBy)
 end
 
 function strings.trim(str)
-    return str:gsub("^/s", ""):gsub("/s$", "")
+    return str:gsub("^%s", ""):gsub("%s$", "")
 end
 
 return strings
