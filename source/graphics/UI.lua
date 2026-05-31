@@ -190,7 +190,7 @@ function UI.f.init()
     UI.nineSquareSpriteSheet.wiki = UI.f.createNineSquareTable("wiki")
 
     --emojis use random ASCII escape characters noted in decimal, from it's look I can go from 1 - 31 (maybe even 0? but I haven't tested)
-    UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6()"
+    UI.fonts.possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ :-/<>=▢✓⨻⨺.\1\2\3\4\5\6(),"
     UI.fonts.UIfontBig = love.graphics.newImageFont("assets/fonts/font.png", UI.fonts.possibleChars)
     UI.fonts.emojis = {
         [";neutraley;"] = "\1",

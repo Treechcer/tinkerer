@@ -99,7 +99,17 @@ function wiki.f.renderPage(pageObj)
         local typeOfText = value_:gsub("%d*", "")
 
         if wiki.f[typeOfText] ~= nil then
-            xmove = wiki.f[typeOfText](pageObj.page[value_], pixelPosFromTop, wiki.textEnumType[typeOfText].textSizeScale, xmove)
+            
+            local arr = strings.split(pageObj.page[value_], "[^\n]+")
+            if #arr == 1 then
+                xmove = wiki.f[typeOfText](pageObj.page[value_], pixelPosFromTop, wiki.textEnumType[typeOfText].textSizeScale, xmove)
+            else
+                for _key, _value in pairs(arr) do
+                    xmove = game.width/2 - love.graphics.getFont():getWidth(strings.trim(_value)) / 2
+                    xmove = wiki.f[typeOfText](_value, pixelPosFromTop, wiki.textEnumType[typeOfText].textSizeScale, xmove)
+                    pixelPosFromTop = pixelPosFromTop + wiki.textEnumType[typeOfText].moveDownBy
+                end
+            end
         end
 
         if wiki.textEnumType[typeOfText].nextLine then
@@ -175,6 +185,7 @@ function wiki.f.buttonCheck()
 end
 
 function wiki.f.findUsage(typePage, pageName)
+    local ret = ""
     if typePage == "item" then
         local itemDrops = {}
         for key, value in pairs(entitiesIndex) do
@@ -187,21 +198,16 @@ function wiki.f.findUsage(typePage, pageName)
             end
         end
 
-        local ret = ""
         for index, value in ipairs(itemDrops) do
             ret = ret .. value.source .. " (" .. value.count .. "x)"
             if index ~= #itemDrops then
                 ret = ret .. ", "
             end
         end
-
-        return ret
     elseif typePage == "itemCraft" then
         local t = string.trimBy
 
-        local ret = ""
         local crafting = false
-
         for key, value in pairs(recipes.recipes) do
             for key_, value_ in pairs(value.recipe) do
                 if value_.item == pageName then
@@ -215,8 +221,11 @@ function wiki.f.findUsage(typePage, pageName)
             end
         end
 
-        ret = t(ret, 2)
-        ret = ret .. "\n"
+        if crafting then
+            ret = t(ret, 2)
+            ret = ret .. "\n"
+        end
+
         local smelt = false
         for key, value in pairs(itemIndex) do
             if value.smeltsTo ~= nil then
@@ -229,20 +238,20 @@ function wiki.f.findUsage(typePage, pageName)
             end
         end
 
-        ret = t(ret, 2)
+        if smelt then
+            ret = t(ret, 2)
+        end
 
-        return ret
     elseif typePage == "entity" then
-        local ret = ""
         for key, value in pairs(entitiesIndex[pageName].drop) do
             ret = ret .. value.baseCount .. "x " .. value.item .. ", "
         end
 
         ret = ret:sub(1, #ret-2)
         ret = ret .. "."
-
-        return ret
     end
+
+    return ret:gsub("_", " ")
 end
 
 function wiki.f.generateText(pageName)
