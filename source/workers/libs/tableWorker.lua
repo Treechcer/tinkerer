@@ -3,6 +3,10 @@
 tables = {}
 
 function tables.writeTable(t, index)
+    if t == nil then
+        print("NIL TABLE!!!")
+        return
+    end
     if index == nil then
         index = 1
     end

@@ -44,7 +44,7 @@ wiki = {
             color = {1,1,1,1},
             underline = false,
             highLight = false,
-            nextLine = false,
+            nextLine = true,
             linePage = false,
         },
         highLightedText = {
@@ -103,6 +103,11 @@ function wiki.f.renderPage(pageObj)
         end
 
         if wiki.textEnumType[typeOfText].nextLine then
+
+            if index+1 > #pageObj.order then
+                break
+            end
+
             ---@type integer | function
             local mvby = wiki.textEnumType[typeOfText].moveDownBy
 
@@ -191,6 +196,42 @@ function wiki.f.findUsage(typePage, pageName)
         end
 
         return ret
+    elseif typePage == "itemCraft" then
+        local t = string.trimBy
+
+        local ret = ""
+        local crafting = false
+
+        for key, value in pairs(recipes.recipes) do
+            for key_, value_ in pairs(value.recipe) do
+                if value_.item == pageName then
+                    if not crafting then
+                        ret = ret .. "Crafting: "
+                        crafting = true
+                    end
+
+                    ret = ret .. key .. " uses " .. value_.count .. "x, "
+                end
+            end
+        end
+
+        ret = t(ret, 2)
+        ret = ret .. "\n"
+        local smelt = false
+        for key, value in pairs(itemIndex) do
+            if value.smeltsTo ~= nil then
+                if not smelt then
+                    ret = ret .. "Furnace: "
+                    smelt = true
+                end
+
+                ret = ret .. key .. " uses " .. value.smeltsTo.count .. "x, "
+            end
+        end
+
+        ret = t(ret, 2)
+
+        return ret
     elseif typePage == "entity" then
         local ret = ""
         for key, value in pairs(entitiesIndex[pageName].drop) do
@@ -231,11 +272,13 @@ function wiki.f.generateText(pageName)
             normalText1 = upperPageName .. " is an material.",
             lineRender1 = "",
             header2 = "Obtaining",
-            normalText2 = dropText
+            normalText2 = dropText,
+            header3 = "Usage",
+            normalText3 = wiki.f.findUsage("itemCraft", name)
         }
 
         ord = {
-            "header1", "normalText1", "lineRender1", "header2", "normalText2"
+            "header1", "normalText1", "lineRender1", "header2", "normalText2", "header3", "normalText3"
         }
     end
 

@@ -709,12 +709,12 @@ function inventory.functions.init()
 
     inventory.functions.AddNewItemIndex("basic_backpack", 1, 0, 0, 0, 0, {}, 7, 0.85, false, false, 0, "backpack", nil, "you can wear this to gain bigger inventory", nil, nil, {inventoryRows = 1, maxItemsPerInventory = 1, maxItems = 1})
 
-    --TODO: Fix these, they're broken!!!!
+    --TODO: Fix these, they're broken!!!! - might be fixed, check later
 
     --decorations
 
-    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, "Decoration")
-    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {}, 10, 1, true, true, 10, nil, 2, 1, "Decoration")
+    inventory.functions.AddNewItemIndex("small_chair", 16, 0, 0, 0, 0, {item = "small_chair", count = 1}, 10, 1, true, true, 10, "Decoration")
+    inventory.functions.AddNewItemIndex("table", 16, 0, 0, 0, 0, {item = "table", count = 1}, 10, 1, true, true, 10, "Decoration")
 
     --help
 

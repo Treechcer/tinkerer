@@ -18,4 +18,8 @@ function strings.trim(str)
     return str:gsub("^%s", ""):gsub("%s$", "")
 end
 
+function string.trimBy(str, num)
+    return str:sub(1, str:len()-num)
+end
+
 return strings
