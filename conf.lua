@@ -3,4 +3,5 @@ function love.conf(t)
     --t.window.height = 272
     t.identity = "Tinkerer"
     --t.keyconf = "PS"
+    t.version = "11.5"
 end
